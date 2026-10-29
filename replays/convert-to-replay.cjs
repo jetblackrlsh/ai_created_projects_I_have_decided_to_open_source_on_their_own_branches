@@ -1,0 +1,5 @@
+#!/usr/bin/env node
+// Optional validator/bundler. No imported code is executed; files are text/JSON only.
+globalThis.crypto ||= require('node:crypto').webcrypto;
+const fs=require('node:fs'),R=require('./replay-engine.cjs');
+(async()=>{const args=process.argv.slice(2);if(args.length<2||args.length>3||args.includes('--help')){console.log('Usage: node convert-to-replay.cjs INPUT [SECOND-INPUT] OUTPUT.json\nSupports one complete match export, or matching multiplayer offer + response. New output never overwrites an existing file.');process.exitCode=args.includes('--help')?0:1;return;}const output=args.pop(),sources=args.map(p=>{if(fs.statSync(p).size>5*1024*1024)throw Error('Input exceeds 5 MiB');return fs.readFileSync(p,'utf8');});const replay=await R.reconstruct(sources);fs.writeFileSync(output,JSON.stringify({schema:'aether-snap-replay-bundle-v1',sources:replay.sources},null,2)+'\n',{flag:'wx'});console.log(JSON.stringify({ok:true,output,format:replay.format,frames:replay.frames.length,result:replay.result,notes:replay.notes},null,2));})().catch(error=>{console.error(JSON.stringify({ok:false,error:error.message}));process.exitCode=1;});

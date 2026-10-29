@@ -1,0 +1,9 @@
+{
+  "sourceName":"Aether-Snap-Standalone-Playable.html",
+  "sourceVersion":"original standalone game, 2026-10-28",
+  "sourceBytes":217761,
+  "sourceSHA256":"107ecef1b46a9b8389c28d4495101313e43edcd74cfae7afb3e41c417636a933",
+  "engineCoreSHA256":"ef957e369ae46809d89bdf70e4849eeb3392757239b008a63e1a833e208e549a",
+  "extraction":"Original seeded utilities, procedural SVG/card/deck/location generation and complete GameEngine; audio and DOM controller excluded only from headless core. Rules unchanged.",
+  "publicFixtures":"Fresh synthetic public-only seeds and generic agent labels; no personal match records or live challenges."
+}

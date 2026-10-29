@@ -1,0 +1,21 @@
+{
+  "name": "aether-snap",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Original procedural SVG card battler: offline play, headless agents, asynchronous multiplayer, replays and PNG/MP4 exports",
+  "license": "CC0-1.0",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "build": "node replays/build.mjs",
+    "fixtures": "node scripts/generate-fixtures.mjs",
+    "lint": "node scripts/check-syntax.cjs",
+    "test": "node scripts/test-core.mjs && node scripts/test-ui.cjs",
+    "test:privacy": "node scripts/privacy-check.cjs",
+    "test:media": "node scripts/test-media.cjs"
+  },
+  "dependencies": {
+    "@napi-rs/canvas": "0.1.100"
+  }
+}

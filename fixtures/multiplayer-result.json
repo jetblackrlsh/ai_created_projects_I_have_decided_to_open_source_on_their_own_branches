@@ -1,0 +1,1617 @@
+{
+  "protocol": "aether-snap-async-v1",
+  "kind": "result",
+  "engineSHA256": "ef957e369ae46809d89bdf70e4849eeb3392757239b008a63e1a833e208e549a",
+  "adapterSHA256": "afeabce7012a207d3b25c823f95e7d190ea4d7859e7b08978230eb7ad6bb76fe",
+  "runtimeSHA256": "929c30c82abfda2eaf24ccbbe04584ab47cf978a1c9229c8ed99aded960f08ea",
+  "challengeId": "PUBLIC-DEMO-1",
+  "offerSHA256": "da11a61322a823fb7505244cb70b8334f8332351ca540aebbe755a56ff9ca557",
+  "responseSHA256": "2b9e36bb2e2e1e3148f0f3e72a05f75a70d016b65395a7978f82f151d3797d10",
+  "responseId": "PUBLIC-EXAMPLE-RESPONSE",
+  "winner": "B",
+  "powers": {
+    "A": 40,
+    "B": 55
+  },
+  "lanesWon": {
+    "A": 1,
+    "B": 2
+  },
+  "reason": "CPU won 2 of 3 Locations.",
+  "audit": [
+    {
+      "turn": 1,
+      "side": "A",
+      "step": {
+        "choices": [
+          {
+            "cardSlot": 11,
+            "lane": 0
+          },
+          {
+            "cardSlot": 11,
+            "lane": 1
+          },
+          {
+            "cardSlot": 11,
+            "lane": 2
+          }
+        ],
+        "otherwise": "skip"
+      },
+      "selected": {
+        "cardSlot": 11,
+        "lane": 0
+      },
+      "choiceIndex": 0,
+      "rejected": []
+    },
+    {
+      "turn": 2,
+      "side": "A",
+      "step": {
+        "choices": [
+          {
+            "cardSlot": 9,
+            "lane": 1
+          },
+          {
+            "cardSlot": 9,
+            "lane": 2
+          },
+          {
+            "cardSlot": 9,
+            "lane": 0
+          }
+        ],
+        "otherwise": "skip"
+      },
+      "selected": {
+        "cardSlot": 9,
+        "lane": 1
+      },
+      "choiceIndex": 0,
+      "rejected": []
+    },
+    {
+      "turn": 2,
+      "side": "A",
+      "step": {
+        "choices": [
+          {
+            "cardSlot": 3,
+            "lane": 1
+          },
+          {
+            "cardSlot": 3,
+            "lane": 2
+          },
+          {
+            "cardSlot": 3,
+            "lane": 0
+          }
+        ],
+        "otherwise": "skip"
+      },
+      "selected": {
+        "cardSlot": 3,
+        "lane": 1
+      },
+      "choiceIndex": 0,
+      "rejected": []
+    },
+    {
+      "turn": 2,
+      "side": "A",
+      "step": {
+        "choices": [
+          {
+            "cardSlot": 10,
+            "lane": 1
+          },
+          {
+            "cardSlot": 10,
+            "lane": 2
+          },
+          {
+            "cardSlot": 10,
+            "lane": 0
+          }
+        ],
+        "otherwise": "skip"
+      },
+      "selected": {
+        "cardSlot": 10,
+        "lane": 1
+      },
+      "choiceIndex": 0,
+      "rejected": []
+    },
+    {
+      "turn": 2,
+      "side": "B",
+      "step": {
+        "choices": [
+          {
+            "cardSlot": 4,
+            "lane": 2
+          },
+          {
+            "cardSlot": 4,
+            "lane": 0
+          },
+          {
+            "cardSlot": 4,
+            "lane": 1
+          }
+        ],
+        "otherwise": "skip"
+      },
+      "selected": {
+        "cardSlot": 4,
+        "lane": 2
+      },
+      "choiceIndex": 0,
+      "rejected": []
+    },
+    {
+      "turn": 2,
+      "side": "B",
+      "step": {
+        "choices": [
+          {
+            "cardSlot": 10,
+            "lane": 2
+          },
+          {
+            "cardSlot": 10,
+            "lane": 0
+          },
+          {
+            "cardSlot": 10,
+            "lane": 1
+          }
+        ],
+        "otherwise": "skip"
+      },
+      "selected": {
+        "cardSlot": 10,
+        "lane": 2
+      },
+      "choiceIndex": 0,
+      "rejected": []
+    },
+    {
+      "turn": 3,
+      "side": "B",
+      "step": {
+        "choices": [
+          {
+            "cardSlot": 8,
+            "lane": 0
+          },
+          {
+            "cardSlot": 8,
+            "lane": 1
+          },
+          {
+            "cardSlot": 8,
+            "lane": 2
+          }
+        ],
+        "otherwise": "skip"
+      },
+      "selected": {
+        "cardSlot": 8,
+        "lane": 0
+      },
+      "choiceIndex": 0,
+      "rejected": []
+    },
+    {
+      "turn": 4,
+      "side": "A",
+      "step": {
+        "choices": [
+          {
+            "cardSlot": 2,
+            "lane": 2
+          },
+          {
+            "cardSlot": 2,
+            "lane": 0
+          },
+          {
+            "cardSlot": 2,
+            "lane": 1
+          }
+        ],
+        "otherwise": "skip"
+      },
+      "selected": {
+        "cardSlot": 2,
+        "lane": 2
+      },
+      "choiceIndex": 0,
+      "rejected": []
+    },
+    {
+      "turn": 4,
+      "side": "B",
+      "step": {
+        "choices": [
+          {
+            "cardSlot": 9,
+            "lane": 1
+          },
+          {
+            "cardSlot": 9,
+            "lane": 0
+          },
+          {
+            "cardSlot": 9,
+            "lane": 2
+          }
+        ],
+        "otherwise": "skip"
+      },
+      "selected": {
+        "cardSlot": 9,
+        "lane": 1
+      },
+      "choiceIndex": 0,
+      "rejected": []
+    },
+    {
+      "turn": 5,
+      "side": "A",
+      "step": {
+        "choices": [
+          {
+            "cardSlot": 8,
+            "lane": 2
+          },
+          {
+            "cardSlot": 8,
+            "lane": 0
+          },
+          {
+            "cardSlot": 8,
+            "lane": 1
+          }
+        ],
+        "otherwise": "skip"
+      },
+      "selected": {
+        "cardSlot": 8,
+        "lane": 2
+      },
+      "choiceIndex": 0,
+      "rejected": []
+    },
+    {
+      "turn": 5,
+      "side": "A",
+      "step": {
+        "choices": [
+          {
+            "cardSlot": 5,
+            "lane": 2
+          },
+          {
+            "cardSlot": 5,
+            "lane": 0
+          },
+          {
+            "cardSlot": 5,
+            "lane": 1
+          }
+        ],
+        "otherwise": "skip"
+      },
+      "selected": {
+        "cardSlot": 5,
+        "lane": 2
+      },
+      "choiceIndex": 0,
+      "rejected": []
+    },
+    {
+      "turn": 5,
+      "side": "B",
+      "step": {
+        "choices": [
+          {
+            "cardSlot": 3,
+            "lane": 0
+          },
+          {
+            "cardSlot": 3,
+            "lane": 2
+          },
+          {
+            "cardSlot": 3,
+            "lane": 1
+          }
+        ],
+        "otherwise": "skip"
+      },
+      "selected": {
+        "cardSlot": 3,
+        "lane": 0
+      },
+      "choiceIndex": 0,
+      "rejected": []
+    },
+    {
+      "turn": 5,
+      "side": "B",
+      "step": {
+        "choices": [
+          {
+            "cardSlot": 7,
+            "lane": 0
+          },
+          {
+            "cardSlot": 7,
+            "lane": 2
+          },
+          {
+            "cardSlot": 7,
+            "lane": 1
+          }
+        ],
+        "otherwise": "skip"
+      },
+      "selected": {
+        "cardSlot": 7,
+        "lane": 0
+      },
+      "choiceIndex": 0,
+      "rejected": []
+    },
+    {
+      "turn": 6,
+      "side": "A",
+      "step": {
+        "choices": [
+          {
+            "cardSlot": 1,
+            "lane": 0
+          },
+          {
+            "cardSlot": 1,
+            "lane": 2
+          },
+          {
+            "cardSlot": 1,
+            "lane": 1
+          }
+        ],
+        "otherwise": "skip"
+      },
+      "selected": {
+        "cardSlot": 1,
+        "lane": 0
+      },
+      "choiceIndex": 0,
+      "rejected": []
+    },
+    {
+      "turn": 6,
+      "side": "B",
+      "step": {
+        "choices": [
+          {
+            "cardSlot": 1,
+            "lane": 2
+          },
+          {
+            "cardSlot": 1,
+            "lane": 1
+          },
+          {
+            "cardSlot": 1,
+            "lane": 0
+          }
+        ],
+        "otherwise": "skip"
+      },
+      "selected": {
+        "cardSlot": 1,
+        "lane": 2
+      },
+      "choiceIndex": 0,
+      "rejected": []
+    }
+  ],
+  "turns": [
+    {
+      "resolvedTurn": 1,
+      "board": [
+        {
+          "lane": 0,
+          "revealed": true,
+          "revealTurn": 1,
+          "name": "Collapsed Monolith",
+          "effectText": "Cards here have -1 Power.",
+          "effectId": "LOC_ONGOING_ALL_MINUS",
+          "ownCards": [
+            {
+              "seed": "N-REV-S38UP",
+              "name": "Frost Automaton of Dawn",
+              "cost": 1,
+              "power": 7,
+              "currentPower": 3,
+              "baseCost": 1,
+              "basePower": 7,
+              "tier": "NEGATIVE",
+              "trigger": "ON_REVEAL",
+              "effectId": "NEG_SELF_DECAY_IF_ALONE",
+              "effectParam": 3,
+              "effectText": "On Reveal: If you have no other cards here, lose 3 Power.",
+              "instanceId": "PUBLIC-COMMON-DECK-1_c11_4j9i0",
+              "owner": "PLAYER",
+              "uid": "PLAYER_11_N-REV-S38UP",
+              "permPowerMod": -3,
+              "ongoingPowerMod": -1,
+              "isFaceDown": false
+            }
+          ],
+          "opponentCards": [],
+          "ownPower": 3,
+          "opponentPower": 0
+        },
+        {
+          "lane": 1,
+          "revealed": true,
+          "revealTurn": 2,
+          "name": "Infinite Foundry",
+          "effectText": "When Revealed: Both players get +1 Energy next turn.",
+          "effectId": "LOC_REVEAL_BONUS_ENERGY",
+          "ownCards": [],
+          "opponentCards": [],
+          "ownPower": 0,
+          "opponentPower": 0
+        },
+        {
+          "lane": 2,
+          "revealed": false,
+          "revealTurn": 3,
+          "ownCards": [],
+          "opponentCards": [],
+          "ownPower": 0,
+          "opponentPower": 0
+        }
+      ]
+    },
+    {
+      "resolvedTurn": 2,
+      "board": [
+        {
+          "lane": 0,
+          "revealed": true,
+          "revealTurn": 1,
+          "name": "Collapsed Monolith",
+          "effectText": "Cards here have -1 Power.",
+          "effectId": "LOC_ONGOING_ALL_MINUS",
+          "ownCards": [
+            {
+              "seed": "N-REV-S38UP",
+              "name": "Frost Automaton of Dawn",
+              "cost": 1,
+              "power": 7,
+              "currentPower": 3,
+              "baseCost": 1,
+              "basePower": 7,
+              "tier": "NEGATIVE",
+              "trigger": "ON_REVEAL",
+              "effectId": "NEG_SELF_DECAY_IF_ALONE",
+              "effectParam": 3,
+              "effectText": "On Reveal: If you have no other cards here, lose 3 Power.",
+              "instanceId": "PUBLIC-COMMON-DECK-1_c11_4j9i0",
+              "owner": "PLAYER",
+              "uid": "PLAYER_11_N-REV-S38UP",
+              "permPowerMod": -3,
+              "ongoingPowerMod": -1,
+              "isFaceDown": false
+            }
+          ],
+          "opponentCards": [],
+          "ownPower": 3,
+          "opponentPower": 0
+        },
+        {
+          "lane": 1,
+          "revealed": true,
+          "revealTurn": 2,
+          "name": "Infinite Foundry",
+          "effectText": "When Revealed: Both players get +1 Energy next turn.",
+          "effectId": "LOC_REVEAL_BONUS_ENERGY",
+          "ownCards": [
+            {
+              "seed": "N-ANY-W66X4",
+              "name": "Verdant Harbinger Alpha",
+              "cost": 1,
+              "power": 12,
+              "currentPower": 14,
+              "baseCost": 1,
+              "basePower": 12,
+              "tier": "NEGATIVE",
+              "trigger": "ONGOING",
+              "effectId": "ONGOING_NEG_ALLY_AURA",
+              "effectParam": 3,
+              "effectText": "Ongoing: Your other cards at this location have -3 Power.",
+              "instanceId": "PUBLIC-COMMON-DECK-1_c9_pgb27",
+              "owner": "PLAYER",
+              "uid": "PLAYER_9_N-ANY-W66X4",
+              "permPowerMod": 0,
+              "ongoingPowerMod": 2,
+              "isFaceDown": false
+            },
+            {
+              "seed": "S-DSC-BCT5Q",
+              "name": "Astral Specter",
+              "cost": 1,
+              "power": 4,
+              "currentPower": 3,
+              "baseCost": 1,
+              "basePower": 4,
+              "tier": "SYNERGY",
+              "trigger": "WHEN_DISCARDED",
+              "effectId": "SYN_DISCARD_RETURN_BUFFED",
+              "effectParam": 4,
+              "effectText": "When Discarded: Return this card to your hand with +4 Power and -1 Cost.",
+              "instanceId": "PUBLIC-COMMON-DECK-1_c3_3j00k",
+              "owner": "PLAYER",
+              "uid": "PLAYER_3_S-DSC-BCT5Q",
+              "permPowerMod": 0,
+              "ongoingPowerMod": -1,
+              "isFaceDown": false
+            },
+            {
+              "seed": "S-ONG-LR3M3",
+              "name": "Valkyrie Conjurer",
+              "cost": 1,
+              "power": 2,
+              "currentPower": 0,
+              "baseCost": 1,
+              "basePower": 2,
+              "tier": "SYNERGY",
+              "trigger": "ONGOING",
+              "effectId": "ONGOING_SYN_ALLY_HERE_BUFF",
+              "effectParam": 2,
+              "effectText": "Ongoing: Your other cards here have +2 Power.",
+              "instanceId": "PUBLIC-COMMON-DECK-1_c10_67w2f",
+              "owner": "PLAYER",
+              "uid": "PLAYER_10_S-ONG-LR3M3",
+              "permPowerMod": 0,
+              "ongoingPowerMod": -3,
+              "isFaceDown": false
+            }
+          ],
+          "opponentCards": [],
+          "ownPower": 17,
+          "opponentPower": 0
+        },
+        {
+          "lane": 2,
+          "revealed": true,
+          "revealTurn": 3,
+          "name": "Crimson Catacombs",
+          "effectText": "At the end of Turn 4, destroy the lowest-Power card on each side here.",
+          "effectId": "LOC_TURN4_DESTROY_LOWEST",
+          "ownCards": [],
+          "opponentCards": [
+            {
+              "seed": "N-ONG-ZW29Q",
+              "name": "Hyperion Seraph Protocol",
+              "cost": 2,
+              "power": 11,
+              "currentPower": 13,
+              "baseCost": 2,
+              "basePower": 11,
+              "tier": "NEGATIVE",
+              "trigger": "ONGOING",
+              "effectId": "ONGOING_NEG_ENEMY_AURA",
+              "effectParam": 3,
+              "effectText": "Ongoing: Enemy cards at this location have +3 Power.",
+              "instanceId": "PUBLIC-COMMON-DECK-1_c4_2wl9r",
+              "owner": "CPU",
+              "uid": "CPU_4_N-ONG-ZW29Q",
+              "permPowerMod": 0,
+              "ongoingPowerMod": 2,
+              "isFaceDown": false
+            },
+            {
+              "seed": "S-ONG-LR3M3",
+              "name": "Valkyrie Conjurer",
+              "cost": 1,
+              "power": 2,
+              "currentPower": 2,
+              "baseCost": 1,
+              "basePower": 2,
+              "tier": "SYNERGY",
+              "trigger": "ONGOING",
+              "effectId": "ONGOING_SYN_ALLY_HERE_BUFF",
+              "effectParam": 2,
+              "effectText": "Ongoing: Your other cards here have +2 Power.",
+              "instanceId": "PUBLIC-COMMON-DECK-1_c10_0inok",
+              "owner": "CPU",
+              "uid": "CPU_10_S-ONG-LR3M3",
+              "permPowerMod": 0,
+              "ongoingPowerMod": 0,
+              "isFaceDown": false
+            }
+          ],
+          "ownPower": 0,
+          "opponentPower": 15
+        }
+      ]
+    },
+    {
+      "resolvedTurn": 3,
+      "board": [
+        {
+          "lane": 0,
+          "revealed": true,
+          "revealTurn": 1,
+          "name": "Collapsed Monolith",
+          "effectText": "Cards here have -1 Power.",
+          "effectId": "LOC_ONGOING_ALL_MINUS",
+          "ownCards": [
+            {
+              "seed": "N-REV-S38UP",
+              "name": "Frost Automaton of Dawn",
+              "cost": 1,
+              "power": 7,
+              "currentPower": 3,
+              "baseCost": 1,
+              "basePower": 7,
+              "tier": "NEGATIVE",
+              "trigger": "ON_REVEAL",
+              "effectId": "NEG_SELF_DECAY_IF_ALONE",
+              "effectParam": 3,
+              "effectText": "On Reveal: If you have no other cards here, lose 3 Power.",
+              "instanceId": "PUBLIC-COMMON-DECK-1_c11_4j9i0",
+              "owner": "PLAYER",
+              "uid": "PLAYER_11_N-REV-S38UP",
+              "permPowerMod": -3,
+              "ongoingPowerMod": -1,
+              "isFaceDown": false
+            }
+          ],
+          "opponentCards": [
+            {
+              "seed": "S-DST-T8KN6",
+              "name": "Starlight Herald",
+              "cost": 3,
+              "power": 4,
+              "currentPower": 3,
+              "baseCost": 3,
+              "basePower": 4,
+              "tier": "SYNERGY",
+              "trigger": "WHEN_DESTROYED",
+              "effectId": "SYN_DESTROY_RETURN_ZERO_COST",
+              "effectParam": 5,
+              "effectText": "When Destroyed: Return this to your hand with Cost 0 and +5 Power.",
+              "instanceId": "PUBLIC-COMMON-DECK-1_c8_rlvlk",
+              "owner": "CPU",
+              "uid": "CPU_8_S-DST-T8KN6",
+              "permPowerMod": 0,
+              "ongoingPowerMod": -1,
+              "isFaceDown": false
+            }
+          ],
+          "ownPower": 3,
+          "opponentPower": 3
+        },
+        {
+          "lane": 1,
+          "revealed": true,
+          "revealTurn": 2,
+          "name": "Infinite Foundry",
+          "effectText": "When Revealed: Both players get +1 Energy next turn.",
+          "effectId": "LOC_REVEAL_BONUS_ENERGY",
+          "ownCards": [
+            {
+              "seed": "N-ANY-W66X4",
+              "name": "Verdant Harbinger Alpha",
+              "cost": 1,
+              "power": 12,
+              "currentPower": 14,
+              "baseCost": 1,
+              "basePower": 12,
+              "tier": "NEGATIVE",
+              "trigger": "ONGOING",
+              "effectId": "ONGOING_NEG_ALLY_AURA",
+              "effectParam": 3,
+              "effectText": "Ongoing: Your other cards at this location have -3 Power.",
+              "instanceId": "PUBLIC-COMMON-DECK-1_c9_pgb27",
+              "owner": "PLAYER",
+              "uid": "PLAYER_9_N-ANY-W66X4",
+              "permPowerMod": 0,
+              "ongoingPowerMod": 2,
+              "isFaceDown": false
+            },
+            {
+              "seed": "S-DSC-BCT5Q",
+              "name": "Astral Specter",
+              "cost": 1,
+              "power": 4,
+              "currentPower": 3,
+              "baseCost": 1,
+              "basePower": 4,
+              "tier": "SYNERGY",
+              "trigger": "WHEN_DISCARDED",
+              "effectId": "SYN_DISCARD_RETURN_BUFFED",
+              "effectParam": 4,
+              "effectText": "When Discarded: Return this card to your hand with +4 Power and -1 Cost.",
+              "instanceId": "PUBLIC-COMMON-DECK-1_c3_3j00k",
+              "owner": "PLAYER",
+              "uid": "PLAYER_3_S-DSC-BCT5Q",
+              "permPowerMod": 0,
+              "ongoingPowerMod": -1,
+              "isFaceDown": false
+            },
+            {
+              "seed": "S-ONG-LR3M3",
+              "name": "Valkyrie Conjurer",
+              "cost": 1,
+              "power": 2,
+              "currentPower": 0,
+              "baseCost": 1,
+              "basePower": 2,
+              "tier": "SYNERGY",
+              "trigger": "ONGOING",
+              "effectId": "ONGOING_SYN_ALLY_HERE_BUFF",
+              "effectParam": 2,
+              "effectText": "Ongoing: Your other cards here have +2 Power.",
+              "instanceId": "PUBLIC-COMMON-DECK-1_c10_67w2f",
+              "owner": "PLAYER",
+              "uid": "PLAYER_10_S-ONG-LR3M3",
+              "permPowerMod": 0,
+              "ongoingPowerMod": -3,
+              "isFaceDown": false
+            }
+          ],
+          "opponentCards": [],
+          "ownPower": 17,
+          "opponentPower": 0
+        },
+        {
+          "lane": 2,
+          "revealed": true,
+          "revealTurn": 3,
+          "name": "Crimson Catacombs",
+          "effectText": "At the end of Turn 4, destroy the lowest-Power card on each side here.",
+          "effectId": "LOC_TURN4_DESTROY_LOWEST",
+          "ownCards": [],
+          "opponentCards": [
+            {
+              "seed": "N-ONG-ZW29Q",
+              "name": "Hyperion Seraph Protocol",
+              "cost": 2,
+              "power": 11,
+              "currentPower": 13,
+              "baseCost": 2,
+              "basePower": 11,
+              "tier": "NEGATIVE",
+              "trigger": "ONGOING",
+              "effectId": "ONGOING_NEG_ENEMY_AURA",
+              "effectParam": 3,
+              "effectText": "Ongoing: Enemy cards at this location have +3 Power.",
+              "instanceId": "PUBLIC-COMMON-DECK-1_c4_2wl9r",
+              "owner": "CPU",
+              "uid": "CPU_4_N-ONG-ZW29Q",
+              "permPowerMod": 0,
+              "ongoingPowerMod": 2,
+              "isFaceDown": false
+            },
+            {
+              "seed": "S-ONG-LR3M3",
+              "name": "Valkyrie Conjurer",
+              "cost": 1,
+              "power": 2,
+              "currentPower": 2,
+              "baseCost": 1,
+              "basePower": 2,
+              "tier": "SYNERGY",
+              "trigger": "ONGOING",
+              "effectId": "ONGOING_SYN_ALLY_HERE_BUFF",
+              "effectParam": 2,
+              "effectText": "Ongoing: Your other cards here have +2 Power.",
+              "instanceId": "PUBLIC-COMMON-DECK-1_c10_0inok",
+              "owner": "CPU",
+              "uid": "CPU_10_S-ONG-LR3M3",
+              "permPowerMod": 0,
+              "ongoingPowerMod": 0,
+              "isFaceDown": false
+            }
+          ],
+          "ownPower": 0,
+          "opponentPower": 15
+        }
+      ]
+    },
+    {
+      "resolvedTurn": 4,
+      "board": [
+        {
+          "lane": 0,
+          "revealed": true,
+          "revealTurn": 1,
+          "name": "Collapsed Monolith",
+          "effectText": "Cards here have -1 Power.",
+          "effectId": "LOC_ONGOING_ALL_MINUS",
+          "ownCards": [
+            {
+              "seed": "N-REV-S38UP",
+              "name": "Frost Automaton of Dawn",
+              "cost": 1,
+              "power": 7,
+              "currentPower": 3,
+              "baseCost": 1,
+              "basePower": 7,
+              "tier": "NEGATIVE",
+              "trigger": "ON_REVEAL",
+              "effectId": "NEG_SELF_DECAY_IF_ALONE",
+              "effectParam": 3,
+              "effectText": "On Reveal: If you have no other cards here, lose 3 Power.",
+              "instanceId": "PUBLIC-COMMON-DECK-1_c11_4j9i0",
+              "owner": "PLAYER",
+              "uid": "PLAYER_11_N-REV-S38UP",
+              "permPowerMod": -3,
+              "ongoingPowerMod": -1,
+              "isFaceDown": false
+            }
+          ],
+          "opponentCards": [
+            {
+              "seed": "S-DST-T8KN6",
+              "name": "Starlight Herald",
+              "cost": 3,
+              "power": 4,
+              "currentPower": 3,
+              "baseCost": 3,
+              "basePower": 4,
+              "tier": "SYNERGY",
+              "trigger": "WHEN_DESTROYED",
+              "effectId": "SYN_DESTROY_RETURN_ZERO_COST",
+              "effectParam": 5,
+              "effectText": "When Destroyed: Return this to your hand with Cost 0 and +5 Power.",
+              "instanceId": "PUBLIC-COMMON-DECK-1_c8_rlvlk",
+              "owner": "CPU",
+              "uid": "CPU_8_S-DST-T8KN6",
+              "permPowerMod": 0,
+              "ongoingPowerMod": -1,
+              "isFaceDown": false
+            }
+          ],
+          "ownPower": 3,
+          "opponentPower": 3
+        },
+        {
+          "lane": 1,
+          "revealed": true,
+          "revealTurn": 2,
+          "name": "Infinite Foundry",
+          "effectText": "When Revealed: Both players get +1 Energy next turn.",
+          "effectId": "LOC_REVEAL_BONUS_ENERGY",
+          "ownCards": [
+            {
+              "seed": "N-ANY-W66X4",
+              "name": "Verdant Harbinger Alpha",
+              "cost": 1,
+              "power": 12,
+              "currentPower": 14,
+              "baseCost": 1,
+              "basePower": 12,
+              "tier": "NEGATIVE",
+              "trigger": "ONGOING",
+              "effectId": "ONGOING_NEG_ALLY_AURA",
+              "effectParam": 3,
+              "effectText": "Ongoing: Your other cards at this location have -3 Power.",
+              "instanceId": "PUBLIC-COMMON-DECK-1_c9_pgb27",
+              "owner": "PLAYER",
+              "uid": "PLAYER_9_N-ANY-W66X4",
+              "permPowerMod": 0,
+              "ongoingPowerMod": 2,
+              "isFaceDown": false
+            },
+            {
+              "seed": "S-DSC-BCT5Q",
+              "name": "Astral Specter",
+              "cost": 1,
+              "power": 4,
+              "currentPower": 3,
+              "baseCost": 1,
+              "basePower": 4,
+              "tier": "SYNERGY",
+              "trigger": "WHEN_DISCARDED",
+              "effectId": "SYN_DISCARD_RETURN_BUFFED",
+              "effectParam": 4,
+              "effectText": "When Discarded: Return this card to your hand with +4 Power and -1 Cost.",
+              "instanceId": "PUBLIC-COMMON-DECK-1_c3_3j00k",
+              "owner": "PLAYER",
+              "uid": "PLAYER_3_S-DSC-BCT5Q",
+              "permPowerMod": 0,
+              "ongoingPowerMod": -1,
+              "isFaceDown": false
+            },
+            {
+              "seed": "S-ONG-LR3M3",
+              "name": "Valkyrie Conjurer",
+              "cost": 1,
+              "power": 2,
+              "currentPower": 0,
+              "baseCost": 1,
+              "basePower": 2,
+              "tier": "SYNERGY",
+              "trigger": "ONGOING",
+              "effectId": "ONGOING_SYN_ALLY_HERE_BUFF",
+              "effectParam": 2,
+              "effectText": "Ongoing: Your other cards here have +2 Power.",
+              "instanceId": "PUBLIC-COMMON-DECK-1_c10_67w2f",
+              "owner": "PLAYER",
+              "uid": "PLAYER_10_S-ONG-LR3M3",
+              "permPowerMod": 0,
+              "ongoingPowerMod": -3,
+              "isFaceDown": false
+            }
+          ],
+          "opponentCards": [
+            {
+              "seed": "N-ANY-W66X4",
+              "name": "Verdant Harbinger Alpha",
+              "cost": 1,
+              "power": 12,
+              "currentPower": 12,
+              "baseCost": 1,
+              "basePower": 12,
+              "tier": "NEGATIVE",
+              "trigger": "ONGOING",
+              "effectId": "ONGOING_NEG_ALLY_AURA",
+              "effectParam": 3,
+              "effectText": "Ongoing: Your other cards at this location have -3 Power.",
+              "instanceId": "PUBLIC-COMMON-DECK-1_c9_7vi7n",
+              "owner": "CPU",
+              "uid": "CPU_9_N-ANY-W66X4",
+              "permPowerMod": 0,
+              "ongoingPowerMod": 0,
+              "isFaceDown": false
+            }
+          ],
+          "ownPower": 17,
+          "opponentPower": 12
+        },
+        {
+          "lane": 2,
+          "revealed": true,
+          "revealTurn": 3,
+          "name": "Crimson Catacombs",
+          "effectText": "At the end of Turn 4, destroy the lowest-Power card on each side here.",
+          "effectId": "LOC_TURN4_DESTROY_LOWEST",
+          "ownCards": [],
+          "opponentCards": [
+            {
+              "seed": "N-ONG-ZW29Q",
+              "name": "Hyperion Seraph Protocol",
+              "cost": 2,
+              "power": 11,
+              "currentPower": 11,
+              "baseCost": 2,
+              "basePower": 11,
+              "tier": "NEGATIVE",
+              "trigger": "ONGOING",
+              "effectId": "ONGOING_NEG_ENEMY_AURA",
+              "effectParam": 3,
+              "effectText": "Ongoing: Enemy cards at this location have +3 Power.",
+              "instanceId": "PUBLIC-COMMON-DECK-1_c4_2wl9r",
+              "owner": "CPU",
+              "uid": "CPU_4_N-ONG-ZW29Q",
+              "permPowerMod": 0,
+              "ongoingPowerMod": 0,
+              "isFaceDown": false
+            }
+          ],
+          "ownPower": 0,
+          "opponentPower": 11
+        }
+      ]
+    },
+    {
+      "resolvedTurn": 5,
+      "board": [
+        {
+          "lane": 0,
+          "revealed": true,
+          "revealTurn": 1,
+          "name": "Collapsed Monolith",
+          "effectText": "Cards here have -1 Power.",
+          "effectId": "LOC_ONGOING_ALL_MINUS",
+          "ownCards": [
+            {
+              "seed": "N-REV-S38UP",
+              "name": "Frost Automaton of Dawn",
+              "cost": 1,
+              "power": 7,
+              "currentPower": 3,
+              "baseCost": 1,
+              "basePower": 7,
+              "tier": "NEGATIVE",
+              "trigger": "ON_REVEAL",
+              "effectId": "NEG_SELF_DECAY_IF_ALONE",
+              "effectParam": 3,
+              "effectText": "On Reveal: If you have no other cards here, lose 3 Power.",
+              "instanceId": "PUBLIC-COMMON-DECK-1_c11_4j9i0",
+              "owner": "PLAYER",
+              "uid": "PLAYER_11_N-REV-S38UP",
+              "permPowerMod": -3,
+              "ongoingPowerMod": -1,
+              "isFaceDown": false
+            }
+          ],
+          "opponentCards": [
+            {
+              "seed": "S-DST-T8KN6",
+              "name": "Starlight Herald",
+              "cost": 3,
+              "power": 4,
+              "currentPower": 3,
+              "baseCost": 3,
+              "basePower": 4,
+              "tier": "SYNERGY",
+              "trigger": "WHEN_DESTROYED",
+              "effectId": "SYN_DESTROY_RETURN_ZERO_COST",
+              "effectParam": 5,
+              "effectText": "When Destroyed: Return this to your hand with Cost 0 and +5 Power.",
+              "instanceId": "PUBLIC-COMMON-DECK-1_c8_rlvlk",
+              "owner": "CPU",
+              "uid": "CPU_8_S-DST-T8KN6",
+              "permPowerMod": 0,
+              "ongoingPowerMod": -1,
+              "isFaceDown": false
+            },
+            {
+              "seed": "S-DSC-BCT5Q",
+              "name": "Astral Specter",
+              "cost": 1,
+              "power": 4,
+              "currentPower": 3,
+              "baseCost": 1,
+              "basePower": 4,
+              "tier": "SYNERGY",
+              "trigger": "WHEN_DISCARDED",
+              "effectId": "SYN_DISCARD_RETURN_BUFFED",
+              "effectParam": 4,
+              "effectText": "When Discarded: Return this card to your hand with +4 Power and -1 Cost.",
+              "instanceId": "PUBLIC-COMMON-DECK-1_c3_uzljt",
+              "owner": "CPU",
+              "uid": "CPU_3_S-DSC-BCT5Q",
+              "permPowerMod": 0,
+              "ongoingPowerMod": -1,
+              "isFaceDown": false
+            },
+            {
+              "seed": "P-ONG-HYAWM",
+              "name": "Vortex Behemoth from Beyond",
+              "cost": 4,
+              "power": 1,
+              "currentPower": 15,
+              "baseCost": 4,
+              "basePower": 1,
+              "tier": "POWERFUL",
+              "trigger": "ONGOING",
+              "effectId": "ONGOING_SCALE_PER_FRIENDLY_GLOBAL",
+              "effectParam": 3,
+              "effectText": "Ongoing: Has +3 Power for each friendly card in play across all locations.",
+              "instanceId": "PUBLIC-COMMON-DECK-1_c7_dk535",
+              "owner": "CPU",
+              "uid": "CPU_7_P-ONG-HYAWM",
+              "permPowerMod": 0,
+              "ongoingPowerMod": 14,
+              "isFaceDown": false
+            }
+          ],
+          "ownPower": 3,
+          "opponentPower": 21
+        },
+        {
+          "lane": 1,
+          "revealed": true,
+          "revealTurn": 2,
+          "name": "Infinite Foundry",
+          "effectText": "When Revealed: Both players get +1 Energy next turn.",
+          "effectId": "LOC_REVEAL_BONUS_ENERGY",
+          "ownCards": [
+            {
+              "seed": "N-ANY-W66X4",
+              "name": "Verdant Harbinger Alpha",
+              "cost": 1,
+              "power": 12,
+              "currentPower": 14,
+              "baseCost": 1,
+              "basePower": 12,
+              "tier": "NEGATIVE",
+              "trigger": "ONGOING",
+              "effectId": "ONGOING_NEG_ALLY_AURA",
+              "effectParam": 3,
+              "effectText": "Ongoing: Your other cards at this location have -3 Power.",
+              "instanceId": "PUBLIC-COMMON-DECK-1_c9_pgb27",
+              "owner": "PLAYER",
+              "uid": "PLAYER_9_N-ANY-W66X4",
+              "permPowerMod": 0,
+              "ongoingPowerMod": 2,
+              "isFaceDown": false
+            },
+            {
+              "seed": "S-DSC-BCT5Q",
+              "name": "Astral Specter",
+              "cost": 1,
+              "power": 4,
+              "currentPower": 3,
+              "baseCost": 1,
+              "basePower": 4,
+              "tier": "SYNERGY",
+              "trigger": "WHEN_DISCARDED",
+              "effectId": "SYN_DISCARD_RETURN_BUFFED",
+              "effectParam": 4,
+              "effectText": "When Discarded: Return this card to your hand with +4 Power and -1 Cost.",
+              "instanceId": "PUBLIC-COMMON-DECK-1_c3_3j00k",
+              "owner": "PLAYER",
+              "uid": "PLAYER_3_S-DSC-BCT5Q",
+              "permPowerMod": 0,
+              "ongoingPowerMod": -1,
+              "isFaceDown": false
+            },
+            {
+              "seed": "S-ONG-LR3M3",
+              "name": "Valkyrie Conjurer",
+              "cost": 1,
+              "power": 2,
+              "currentPower": 0,
+              "baseCost": 1,
+              "basePower": 2,
+              "tier": "SYNERGY",
+              "trigger": "ONGOING",
+              "effectId": "ONGOING_SYN_ALLY_HERE_BUFF",
+              "effectParam": 2,
+              "effectText": "Ongoing: Your other cards here have +2 Power.",
+              "instanceId": "PUBLIC-COMMON-DECK-1_c10_67w2f",
+              "owner": "PLAYER",
+              "uid": "PLAYER_10_S-ONG-LR3M3",
+              "permPowerMod": 0,
+              "ongoingPowerMod": -3,
+              "isFaceDown": false
+            }
+          ],
+          "opponentCards": [
+            {
+              "seed": "N-ANY-W66X4",
+              "name": "Verdant Harbinger Alpha",
+              "cost": 1,
+              "power": 12,
+              "currentPower": 12,
+              "baseCost": 1,
+              "basePower": 12,
+              "tier": "NEGATIVE",
+              "trigger": "ONGOING",
+              "effectId": "ONGOING_NEG_ALLY_AURA",
+              "effectParam": 3,
+              "effectText": "Ongoing: Your other cards at this location have -3 Power.",
+              "instanceId": "PUBLIC-COMMON-DECK-1_c9_7vi7n",
+              "owner": "CPU",
+              "uid": "CPU_9_N-ANY-W66X4",
+              "permPowerMod": 0,
+              "ongoingPowerMod": 0,
+              "isFaceDown": false
+            }
+          ],
+          "ownPower": 17,
+          "opponentPower": 12
+        },
+        {
+          "lane": 2,
+          "revealed": true,
+          "revealTurn": 3,
+          "name": "Crimson Catacombs",
+          "effectText": "At the end of Turn 4, destroy the lowest-Power card on each side here.",
+          "effectId": "LOC_TURN4_DESTROY_LOWEST",
+          "ownCards": [
+            {
+              "seed": "S-DST-T8KN6",
+              "name": "Starlight Herald",
+              "cost": 3,
+              "power": 4,
+              "currentPower": 9,
+              "baseCost": 3,
+              "basePower": 4,
+              "tier": "SYNERGY",
+              "trigger": "WHEN_DESTROYED",
+              "effectId": "SYN_DESTROY_RETURN_ZERO_COST",
+              "effectParam": 5,
+              "effectText": "When Destroyed: Return this to your hand with Cost 0 and +5 Power.",
+              "instanceId": "PUBLIC-COMMON-DECK-1_c8_n7i3s",
+              "owner": "PLAYER",
+              "uid": "PLAYER_8_S-DST-T8KN6",
+              "permPowerMod": 2,
+              "ongoingPowerMod": 3,
+              "isFaceDown": false
+            },
+            {
+              "seed": "S-REV-42R8Y",
+              "name": "Crimson Behemoth",
+              "cost": 2,
+              "power": 1,
+              "currentPower": 4,
+              "baseCost": 2,
+              "basePower": 1,
+              "tier": "SYNERGY",
+              "trigger": "ON_REVEAL",
+              "effectId": "SYN_BUFF_ALLIES_HERE",
+              "effectParam": 2,
+              "effectText": "On Reveal: Give all other friendly cards here +2 Power.",
+              "instanceId": "PUBLIC-COMMON-DECK-1_c5_lki05",
+              "owner": "PLAYER",
+              "uid": "PLAYER_5_S-REV-42R8Y",
+              "permPowerMod": 0,
+              "ongoingPowerMod": 3,
+              "isFaceDown": false
+            }
+          ],
+          "opponentCards": [
+            {
+              "seed": "N-ONG-ZW29Q",
+              "name": "Hyperion Seraph Protocol",
+              "cost": 2,
+              "power": 11,
+              "currentPower": 11,
+              "baseCost": 2,
+              "basePower": 11,
+              "tier": "NEGATIVE",
+              "trigger": "ONGOING",
+              "effectId": "ONGOING_NEG_ENEMY_AURA",
+              "effectParam": 3,
+              "effectText": "Ongoing: Enemy cards at this location have +3 Power.",
+              "instanceId": "PUBLIC-COMMON-DECK-1_c4_2wl9r",
+              "owner": "CPU",
+              "uid": "CPU_4_N-ONG-ZW29Q",
+              "permPowerMod": 0,
+              "ongoingPowerMod": 0,
+              "isFaceDown": false
+            }
+          ],
+          "ownPower": 13,
+          "opponentPower": 11
+        }
+      ]
+    },
+    {
+      "resolvedTurn": 6,
+      "board": [
+        {
+          "lane": 0,
+          "revealed": true,
+          "revealTurn": 1,
+          "name": "Collapsed Monolith",
+          "effectText": "Cards here have -1 Power.",
+          "effectId": "LOC_ONGOING_ALL_MINUS",
+          "ownCards": [
+            {
+              "seed": "N-REV-S38UP",
+              "name": "Frost Automaton of Dawn",
+              "cost": 1,
+              "power": 7,
+              "currentPower": 3,
+              "baseCost": 1,
+              "basePower": 7,
+              "tier": "NEGATIVE",
+              "trigger": "ON_REVEAL",
+              "effectId": "NEG_SELF_DECAY_IF_ALONE",
+              "effectParam": 3,
+              "effectText": "On Reveal: If you have no other cards here, lose 3 Power.",
+              "instanceId": "PUBLIC-COMMON-DECK-1_c11_4j9i0",
+              "owner": "PLAYER",
+              "uid": "PLAYER_11_N-REV-S38UP",
+              "permPowerMod": -3,
+              "ongoingPowerMod": -1,
+              "isFaceDown": false
+            },
+            {
+              "seed": "W-ONG-UTDME",
+              "name": "Tempest Sovereign",
+              "cost": 6,
+              "power": 8,
+              "currentPower": 7,
+              "baseCost": 6,
+              "basePower": 8,
+              "tier": "WEAK",
+              "trigger": "ONGOING",
+              "effectId": "ONGOING_WEAK_FULL_LANE_BONUS",
+              "effectParam": 1,
+              "effectText": "Ongoing: +1 Power if you have 4 cards at this location.",
+              "instanceId": "PUBLIC-COMMON-DECK-1_c1_ewcf9",
+              "owner": "PLAYER",
+              "uid": "PLAYER_1_W-ONG-UTDME",
+              "permPowerMod": 0,
+              "ongoingPowerMod": -1,
+              "isFaceDown": false
+            }
+          ],
+          "opponentCards": [
+            {
+              "seed": "S-DST-T8KN6",
+              "name": "Starlight Herald",
+              "cost": 3,
+              "power": 4,
+              "currentPower": 3,
+              "baseCost": 3,
+              "basePower": 4,
+              "tier": "SYNERGY",
+              "trigger": "WHEN_DESTROYED",
+              "effectId": "SYN_DESTROY_RETURN_ZERO_COST",
+              "effectParam": 5,
+              "effectText": "When Destroyed: Return this to your hand with Cost 0 and +5 Power.",
+              "instanceId": "PUBLIC-COMMON-DECK-1_c8_rlvlk",
+              "owner": "CPU",
+              "uid": "CPU_8_S-DST-T8KN6",
+              "permPowerMod": 0,
+              "ongoingPowerMod": -1,
+              "isFaceDown": false
+            },
+            {
+              "seed": "S-DSC-BCT5Q",
+              "name": "Astral Specter",
+              "cost": 1,
+              "power": 4,
+              "currentPower": 3,
+              "baseCost": 1,
+              "basePower": 4,
+              "tier": "SYNERGY",
+              "trigger": "WHEN_DISCARDED",
+              "effectId": "SYN_DISCARD_RETURN_BUFFED",
+              "effectParam": 4,
+              "effectText": "When Discarded: Return this card to your hand with +4 Power and -1 Cost.",
+              "instanceId": "PUBLIC-COMMON-DECK-1_c3_uzljt",
+              "owner": "CPU",
+              "uid": "CPU_3_S-DSC-BCT5Q",
+              "permPowerMod": 0,
+              "ongoingPowerMod": -1,
+              "isFaceDown": false
+            },
+            {
+              "seed": "P-ONG-HYAWM",
+              "name": "Vortex Behemoth from Beyond",
+              "cost": 4,
+              "power": 1,
+              "currentPower": 18,
+              "baseCost": 4,
+              "basePower": 1,
+              "tier": "POWERFUL",
+              "trigger": "ONGOING",
+              "effectId": "ONGOING_SCALE_PER_FRIENDLY_GLOBAL",
+              "effectParam": 3,
+              "effectText": "Ongoing: Has +3 Power for each friendly card in play across all locations.",
+              "instanceId": "PUBLIC-COMMON-DECK-1_c7_dk535",
+              "owner": "CPU",
+              "uid": "CPU_7_P-ONG-HYAWM",
+              "permPowerMod": 0,
+              "ongoingPowerMod": 17,
+              "isFaceDown": false
+            }
+          ],
+          "ownPower": 10,
+          "opponentPower": 24
+        },
+        {
+          "lane": 1,
+          "revealed": true,
+          "revealTurn": 2,
+          "name": "Infinite Foundry",
+          "effectText": "When Revealed: Both players get +1 Energy next turn.",
+          "effectId": "LOC_REVEAL_BONUS_ENERGY",
+          "ownCards": [
+            {
+              "seed": "N-ANY-W66X4",
+              "name": "Verdant Harbinger Alpha",
+              "cost": 1,
+              "power": 12,
+              "currentPower": 14,
+              "baseCost": 1,
+              "basePower": 12,
+              "tier": "NEGATIVE",
+              "trigger": "ONGOING",
+              "effectId": "ONGOING_NEG_ALLY_AURA",
+              "effectParam": 3,
+              "effectText": "Ongoing: Your other cards at this location have -3 Power.",
+              "instanceId": "PUBLIC-COMMON-DECK-1_c9_pgb27",
+              "owner": "PLAYER",
+              "uid": "PLAYER_9_N-ANY-W66X4",
+              "permPowerMod": 0,
+              "ongoingPowerMod": 2,
+              "isFaceDown": false
+            },
+            {
+              "seed": "S-DSC-BCT5Q",
+              "name": "Astral Specter",
+              "cost": 1,
+              "power": 4,
+              "currentPower": 3,
+              "baseCost": 1,
+              "basePower": 4,
+              "tier": "SYNERGY",
+              "trigger": "WHEN_DISCARDED",
+              "effectId": "SYN_DISCARD_RETURN_BUFFED",
+              "effectParam": 4,
+              "effectText": "When Discarded: Return this card to your hand with +4 Power and -1 Cost.",
+              "instanceId": "PUBLIC-COMMON-DECK-1_c3_3j00k",
+              "owner": "PLAYER",
+              "uid": "PLAYER_3_S-DSC-BCT5Q",
+              "permPowerMod": 0,
+              "ongoingPowerMod": -1,
+              "isFaceDown": false
+            },
+            {
+              "seed": "S-ONG-LR3M3",
+              "name": "Valkyrie Conjurer",
+              "cost": 1,
+              "power": 2,
+              "currentPower": 0,
+              "baseCost": 1,
+              "basePower": 2,
+              "tier": "SYNERGY",
+              "trigger": "ONGOING",
+              "effectId": "ONGOING_SYN_ALLY_HERE_BUFF",
+              "effectParam": 2,
+              "effectText": "Ongoing: Your other cards here have +2 Power.",
+              "instanceId": "PUBLIC-COMMON-DECK-1_c10_67w2f",
+              "owner": "PLAYER",
+              "uid": "PLAYER_10_S-ONG-LR3M3",
+              "permPowerMod": 0,
+              "ongoingPowerMod": -3,
+              "isFaceDown": false
+            }
+          ],
+          "opponentCards": [
+            {
+              "seed": "N-ANY-W66X4",
+              "name": "Verdant Harbinger Alpha",
+              "cost": 1,
+              "power": 12,
+              "currentPower": 12,
+              "baseCost": 1,
+              "basePower": 12,
+              "tier": "NEGATIVE",
+              "trigger": "ONGOING",
+              "effectId": "ONGOING_NEG_ALLY_AURA",
+              "effectParam": 3,
+              "effectText": "Ongoing: Your other cards at this location have -3 Power.",
+              "instanceId": "PUBLIC-COMMON-DECK-1_c9_7vi7n",
+              "owner": "CPU",
+              "uid": "CPU_9_N-ANY-W66X4",
+              "permPowerMod": 0,
+              "ongoingPowerMod": 0,
+              "isFaceDown": false
+            }
+          ],
+          "ownPower": 17,
+          "opponentPower": 12
+        },
+        {
+          "lane": 2,
+          "revealed": true,
+          "revealTurn": 3,
+          "name": "Crimson Catacombs",
+          "effectText": "At the end of Turn 4, destroy the lowest-Power card on each side here.",
+          "effectId": "LOC_TURN4_DESTROY_LOWEST",
+          "ownCards": [
+            {
+              "seed": "S-DST-T8KN6",
+              "name": "Starlight Herald",
+              "cost": 3,
+              "power": 4,
+              "currentPower": 9,
+              "baseCost": 3,
+              "basePower": 4,
+              "tier": "SYNERGY",
+              "trigger": "WHEN_DESTROYED",
+              "effectId": "SYN_DESTROY_RETURN_ZERO_COST",
+              "effectParam": 5,
+              "effectText": "When Destroyed: Return this to your hand with Cost 0 and +5 Power.",
+              "instanceId": "PUBLIC-COMMON-DECK-1_c8_n7i3s",
+              "owner": "PLAYER",
+              "uid": "PLAYER_8_S-DST-T8KN6",
+              "permPowerMod": 2,
+              "ongoingPowerMod": 3,
+              "isFaceDown": false
+            },
+            {
+              "seed": "S-REV-42R8Y",
+              "name": "Crimson Behemoth",
+              "cost": 2,
+              "power": 1,
+              "currentPower": 4,
+              "baseCost": 2,
+              "basePower": 1,
+              "tier": "SYNERGY",
+              "trigger": "ON_REVEAL",
+              "effectId": "SYN_BUFF_ALLIES_HERE",
+              "effectParam": 2,
+              "effectText": "On Reveal: Give all other friendly cards here +2 Power.",
+              "instanceId": "PUBLIC-COMMON-DECK-1_c5_lki05",
+              "owner": "PLAYER",
+              "uid": "PLAYER_5_S-REV-42R8Y",
+              "permPowerMod": 0,
+              "ongoingPowerMod": 3,
+              "isFaceDown": false
+            }
+          ],
+          "opponentCards": [
+            {
+              "seed": "N-ONG-ZW29Q",
+              "name": "Hyperion Seraph Protocol",
+              "cost": 2,
+              "power": 11,
+              "currentPower": 11,
+              "baseCost": 2,
+              "basePower": 11,
+              "tier": "NEGATIVE",
+              "trigger": "ONGOING",
+              "effectId": "ONGOING_NEG_ENEMY_AURA",
+              "effectParam": 3,
+              "effectText": "Ongoing: Enemy cards at this location have +3 Power.",
+              "instanceId": "PUBLIC-COMMON-DECK-1_c4_2wl9r",
+              "owner": "CPU",
+              "uid": "CPU_4_N-ONG-ZW29Q",
+              "permPowerMod": 0,
+              "ongoingPowerMod": 0,
+              "isFaceDown": false
+            },
+            {
+              "seed": "W-ONG-UTDME",
+              "name": "Tempest Sovereign",
+              "cost": 6,
+              "power": 8,
+              "currentPower": 8,
+              "baseCost": 6,
+              "basePower": 8,
+              "tier": "WEAK",
+              "trigger": "ONGOING",
+              "effectId": "ONGOING_WEAK_FULL_LANE_BONUS",
+              "effectParam": 1,
+              "effectText": "Ongoing: +1 Power if you have 4 cards at this location.",
+              "instanceId": "PUBLIC-COMMON-DECK-1_c1_s9k65",
+              "owner": "CPU",
+              "uid": "CPU_1_W-ONG-UTDME",
+              "permPowerMod": 0,
+              "ongoingPowerMod": 0,
+              "isFaceDown": false
+            }
+          ],
+          "ownPower": 13,
+          "opponentPower": 19
+        }
+      ]
+    }
+  ],
+  "originalResult": {
+    "outcome": "DEFEAT",
+    "reason": "CPU won 2 of 3 Locations.",
+    "playerLanesWon": 1,
+    "cpuLanesWon": 2,
+    "playerTotalPower": 40,
+    "cpuTotalPower": 55,
+    "score": 930,
+    "matchSeed": "PUBLIC-MULTIPLAYER-DEMO-1",
+    "playerDeckName": "Seeded Deck [PUBLIC-COMMON-DECK-1]",
+    "playerDeckSeed": "PUBLIC-COMMON-DECK-1",
+    "playerShareCode": "RIFTDECK1:eyJ2IjoxLCJuYW1lIjoiU2VlZGVkIERlY2sgW1BVQkxJQy1DT01NT04tREVDSy0xXSIsImRlY2tTZWVkIjoiUFVCTElDLUNPTU1PTi1ERUNLLTEiLCJjYXJkU2VlZHMiOlsiUC1BTlktNkZCWVEiLCJXLU9ORy1VVERNRSIsIlctUkVWLVA0WFBWIiwiUy1EU0MtQkNUNVEiLCJOLU9ORy1aVzI5USIsIlMtUkVWLTQyUjhZIiwiUC1SRVYtTVZDSlQiLCJQLU9ORy1IWUFXTSIsIlMtRFNULVQ4S042IiwiTi1BTlktVzY2WDQiLCJTLU9ORy1MUjNNMyIsIk4tUkVWLVMzOFVQIl19",
+    "cpuDeckName": "Seeded Deck [PUBLIC-COMMON-DECK-1]",
+    "cpuDeckSeed": "PUBLIC-COMMON-DECK-1",
+    "cpuShareCode": "RIFTDECK1:eyJ2IjoxLCJuYW1lIjoiU2VlZGVkIERlY2sgW1BVQkxJQy1DT01NT04tREVDSy0xXSIsImRlY2tTZWVkIjoiUFVCTElDLUNPTU1PTi1ERUNLLTEiLCJjYXJkU2VlZHMiOlsiUC1BTlktNkZCWVEiLCJXLU9ORy1VVERNRSIsIlctUkVWLVA0WFBWIiwiUy1EU0MtQkNUNVEiLCJOLU9ORy1aVzI5USIsIlMtUkVWLTQyUjhZIiwiUC1SRVYtTVZDSlQiLCJQLU9ORy1IWUFXTSIsIlMtRFNULVQ4S042IiwiTi1BTlktVzY2WDQiLCJTLU9ORy1MUjNNMyIsIk4tUkVWLVMzOFVQIl19",
+    "date": "2000-01-01"
+  },
+  "fullLog": "====================================================================\nAETHER SNAP: PROCEDURAL SVG CARD GAME - OFFICIAL MATCH LOG\n====================================================================\nMatch Seed   : PUBLIC-MULTIPLAYER-DEMO-1\nPlayed At    : 2000-01-01T00:00:00.000Z\nPlayer Deck  : Seeded Deck [PUBLIC-COMMON-DECK-1] (Seed: PUBLIC-COMMON-DECK-1)\nPlayer Code  : RIFTDECK1:eyJ2IjoxLCJuYW1lIjoiU2VlZGVkIERlY2sgW1BVQkxJQy1DT01NT04tREVDSy0xXSIsImRlY2tTZWVkIjoiUFVCTElDLUNPTU1PTi1ERUNLLTEiLCJjYXJkU2VlZHMiOlsiUC1BTlktNkZCWVEiLCJXLU9ORy1VVERNRSIsIlctUkVWLVA0WFBWIiwiUy1EU0MtQkNUNVEiLCJOLU9ORy1aVzI5USIsIlMtUkVWLTQyUjhZIiwiUC1SRVYtTVZDSlQiLCJQLU9ORy1IWUFXTSIsIlMtRFNULVQ4S042IiwiTi1BTlktVzY2WDQiLCJTLU9ORy1MUjNNMyIsIk4tUkVWLVMzOFVQIl19\nCPU Deck     : Seeded Deck [PUBLIC-COMMON-DECK-1] (Seed: PUBLIC-COMMON-DECK-1)\nCPU Code     : RIFTDECK1:eyJ2IjoxLCJuYW1lIjoiU2VlZGVkIERlY2sgW1BVQkxJQy1DT01NT04tREVDSy0xXSIsImRlY2tTZWVkIjoiUFVCTElDLUNPTU1PTi1ERUNLLTEiLCJjYXJkU2VlZHMiOlsiUC1BTlktNkZCWVEiLCJXLU9ORy1VVERNRSIsIlctUkVWLVA0WFBWIiwiUy1EU0MtQkNUNVEiLCJOLU9ORy1aVzI5USIsIlMtUkVWLTQyUjhZIiwiUC1SRVYtTVZDSlQiLCJQLU9ORy1IWUFXTSIsIlMtRFNULVQ4S042IiwiTi1BTlktVzY2WDQiLCJTLU9ORy1MUjNNMyIsIk4tUkVWLVMzOFVQIl19\nLocations    :\n  [Lane 1] Collapsed Monolith (Seed: PUBLIC-MULTIPLAYER-DEMO-1-L1) - Cards here have -1 Power. | Final Power: Player 10 vs CPU 24\n  [Lane 2] Infinite Foundry (Seed: PUBLIC-MULTIPLAYER-DEMO-1-L2) - When Revealed: Both players get +1 Energy next turn. | Final Power: Player 17 vs CPU 12\n  [Lane 3] Crimson Catacombs (Seed: PUBLIC-MULTIPLAYER-DEMO-1-L3) - At the end of Turn 4, destroy the lowest-Power card on each side here. | Final Power: Player 13 vs CPU 19\n--------------------------------------------------------------------\nFINAL RESULT : DEFEAT (CPU won 2 of 3 Locations.)\nLocations Won: Player 1 - CPU 2\nTotal Power  : Player 40 - CPU 55\nMatch Score  : 930\n--------------------------------------------------------------------\nCHRONOLOGICAL TURN EVENTS:\n[INIT] [SYSTEM] === MATCH INITIALIZED (Seed: PUBLIC-MULTIPLAYER-DEMO-1) ===\n[INIT] [SYSTEM] Player Deck: \"Seeded Deck [PUBLIC-COMMON-DECK-1]\" (Seed: PUBLIC-COMMON-DECK-1)\n[INIT] [SYSTEM] CPU Deck: \"Seeded Deck [PUBLIC-COMMON-DECK-1]\" (Seed: PUBLIC-COMMON-DECK-1)\n[T1] [TURN] --- TURN 1 OF 6 BEGINS ---\n[T1] [LOCATION] Location 1 Revealed: [Collapsed Monolith] (Seed: PUBLIC-MULTIPLAYER-DEMO-1-L1) — \"Cards here have -1 Power.\"\n[T1] [DRAW] PLAYER drew [Eldritch Vanguard] (Cost 5, Power 2, Seed: P-REV-MVCJT).\n[T1] [DRAW] CPU drew [Vortex Behemoth from Beyond] (Cost 4, Power 1, Seed: P-ONG-HYAWM).\n[T1] [TURN] Initiative: CPU reveals first.\n[T1] [PLAY] PLAYER revealed [Frost Automaton of Dawn] (Cost 1, Base Power 7, Tier: NEGATIVE) at [Collapsed Monolith].\n[T1] [ON_REVEAL] [Frost Automaton of Dawn] had no allies at [Collapsed Monolith] and lost 3 Power!\n[T1] [SUMMARY] End of Turn 1 Scores -> L1 (Collapsed Monolith): P 3 vs CPU 0 | L2 (Unrevealed): P 0 vs CPU 0 | L3 (Unrevealed): P 0 vs CPU 0\n[T2] [TURN] --- TURN 2 OF 6 BEGINS ---\n[T2] [LOCATION] Location 2 Revealed: [Infinite Foundry] (Seed: PUBLIC-MULTIPLAYER-DEMO-1-L2) — \"When Revealed: Both players get +1 Energy next turn.\"\n[T2] [LOCATION] [Infinite Foundry] granted both players +1 Energy for next turn.\n[T2] [DRAW] PLAYER drew [Verdant Harbinger Alpha] (Cost 1, Power 12, Seed: N-ANY-W66X4).\n[T2] [DRAW] CPU drew [Valkyrie Conjurer] (Cost 1, Power 2, Seed: S-ONG-LR3M3).\n[T2] [TURN] Initiative: PLAYER reveals first.\n[T2] [PLAY] PLAYER revealed [Verdant Harbinger Alpha] (Cost 1, Base Power 12, Tier: NEGATIVE) at [Infinite Foundry].\n[T2] [PLAY] PLAYER revealed [Astral Specter] (Cost 1, Base Power 4, Tier: SYNERGY) at [Infinite Foundry].\n[T2] [PLAY] PLAYER revealed [Valkyrie Conjurer] (Cost 1, Base Power 2, Tier: SYNERGY) at [Infinite Foundry].\n[T2] [PLAY] CPU revealed [Hyperion Seraph Protocol] (Cost 2, Base Power 11, Tier: NEGATIVE) at [Crimson Catacombs].\n[T2] [PLAY] CPU revealed [Valkyrie Conjurer] (Cost 1, Base Power 2, Tier: SYNERGY) at [Crimson Catacombs].\n[T2] [SUMMARY] End of Turn 2 Scores -> L1 (Collapsed Monolith): P 3 vs CPU 0 | L2 (Infinite Foundry): P 17 vs CPU 0 | L3 (Unrevealed): P 0 vs CPU 15\n[T3] [TURN] --- TURN 3 OF 6 BEGINS ---\n[T3] [LOCATION] Location 3 Revealed: [Crimson Catacombs] (Seed: PUBLIC-MULTIPLAYER-DEMO-1-L3) — \"At the end of Turn 4, destroy the lowest-Power card on each side here.\"\n[T3] [DRAW] PLAYER drew [Luminous Construct Unbound] (Cost 4, Power 12, Seed: W-REV-P4XPV).\n[T3] [DRAW] CPU drew [Tempest Sovereign] (Cost 6, Power 8, Seed: W-ONG-UTDME).\n[T3] [TURN] Initiative: PLAYER reveals first.\n[T3] [PLAY] CPU revealed [Starlight Herald] (Cost 3, Base Power 4, Tier: SYNERGY) at [Collapsed Monolith].\n[T3] [SUMMARY] End of Turn 3 Scores -> L1 (Collapsed Monolith): P 3 vs CPU 3 | L2 (Infinite Foundry): P 17 vs CPU 0 | L3 (Crimson Catacombs): P 0 vs CPU 15\n[T4] [TURN] --- TURN 4 OF 6 BEGINS ---\n[T4] [DRAW] PLAYER drew [Starlight Herald] (Cost 3, Power 4, Seed: S-DST-T8KN6).\n[T4] [DRAW] CPU drew [Verdant Harbinger Alpha] (Cost 1, Power 12, Seed: N-ANY-W66X4).\n[T4] [TURN] Initiative: PLAYER reveals first.\n[T4] [PLAY] PLAYER revealed [Luminous Construct Unbound] (Cost 4, Base Power 12, Tier: WEAK) at [Crimson Catacombs].\n[T4] [PLAY] CPU revealed [Verdant Harbinger Alpha] (Cost 1, Base Power 12, Tier: NEGATIVE) at [Infinite Foundry].\n[T4] [DESTROY] [Luminous Construct Unbound] (PLAYER) at [Crimson Catacombs] was DESTROYED by Crimson Catacombs!\n[T4] [DESTROY] [Valkyrie Conjurer] (CPU) at [Crimson Catacombs] was DESTROYED by Crimson Catacombs!\n[T4] [SUMMARY] End of Turn 4 Scores -> L1 (Collapsed Monolith): P 3 vs CPU 3 | L2 (Infinite Foundry): P 17 vs CPU 12 | L3 (Crimson Catacombs): P 0 vs CPU 11\n[T5] [TURN] --- TURN 5 OF 6 BEGINS ---\n[T5] [DRAW] PLAYER drew [Crimson Behemoth] (Cost 2, Power 1, Seed: S-REV-42R8Y).\n[T5] [DRAW] CPU drew [Astral Specter] (Cost 1, Power 4, Seed: S-DSC-BCT5Q).\n[T5] [TURN] Initiative: CPU reveals first.\n[T5] [PLAY] CPU revealed [Astral Specter] (Cost 1, Base Power 4, Tier: SYNERGY) at [Collapsed Monolith].\n[T5] [PLAY] CPU revealed [Vortex Behemoth from Beyond] (Cost 4, Base Power 1, Tier: POWERFUL) at [Collapsed Monolith].\n[T5] [PLAY] PLAYER revealed [Starlight Herald] (Cost 3, Base Power 4, Tier: SYNERGY) at [Crimson Catacombs].\n[T5] [PLAY] PLAYER revealed [Crimson Behemoth] (Cost 2, Base Power 1, Tier: SYNERGY) at [Crimson Catacombs].\n[T5] [ON_REVEAL] [Crimson Behemoth] gave all other friendly cards at [Crimson Catacombs] +2 Power.\n[T5] [SUMMARY] End of Turn 5 Scores -> L1 (Collapsed Monolith): P 3 vs CPU 21 | L2 (Infinite Foundry): P 17 vs CPU 12 | L3 (Crimson Catacombs): P 13 vs CPU 11\n[T6] [TURN] --- TURN 6 OF 6 BEGINS ---\n[T6] [DRAW] PLAYER drew [Tempest Sovereign] (Cost 6, Power 8, Seed: W-ONG-UTDME).\n[T6] [DRAW] CPU drew [Arcane Golem] (Cost 5, Power 2, Seed: P-ANY-6FBYQ).\n[T6] [TURN] Initiative: PLAYER reveals first.\n[T6] [PLAY] PLAYER revealed [Tempest Sovereign] (Cost 6, Base Power 8, Tier: WEAK) at [Collapsed Monolith].\n[T6] [PLAY] CPU revealed [Tempest Sovereign] (Cost 6, Base Power 8, Tier: WEAK) at [Crimson Catacombs].\n[T6] [SUMMARY] End of Turn 6 Scores -> L1 (Collapsed Monolith): P 10 vs CPU 24 | L2 (Infinite Foundry): P 17 vs CPU 12 | L3 (Crimson Catacombs): P 13 vs CPU 19\n[T6] [RESULT] === GAME OVER: DEFEAT — CPU won 2 of 3 Locations. (Score: 930) ===\n====================================================================",
+  "sha256": "f4d692af74fe895244c421da24ab6b55497449589db0edf84b6694ef304df699"
+}

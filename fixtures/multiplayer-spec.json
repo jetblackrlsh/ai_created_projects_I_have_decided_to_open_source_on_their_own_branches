@@ -1,0 +1,17 @@
+{
+  "protocol": "aether-snap-async-v1",
+  "kind": "challenge-spec",
+  "id": "PUBLIC-DEMO-1",
+  "engineSHA256": "ef957e369ae46809d89bdf70e4849eeb3392757239b008a63e1a833e208e549a",
+  "adapterSHA256": "afeabce7012a207d3b25c823f95e7d190ea4d7859e7b08978230eb7ad6bb76fe",
+  "runtimeSHA256": "929c30c82abfda2eaf24ccbbe04584ab47cf978a1c9229c8ed99aded960f08ea",
+  "matchSeed": "PUBLIC-MULTIPLAYER-DEMO-1",
+  "deckA": "PUBLIC-COMMON-DECK-1",
+  "deckB": "PUBLIC-COMMON-DECK-1",
+  "format": "shared-board-six-turn-plans",
+  "priority": "original-initiative-seeded-tie",
+  "fallback": "ordered-first-legal-otherwise-skip",
+  "labelA": "Example agent A",
+  "labelB": "Example agent B",
+  "sha256": "337c34b6d3c9af0ee2831e12e816fb4778f80036fd9b17854a4f479b2974c644"
+}

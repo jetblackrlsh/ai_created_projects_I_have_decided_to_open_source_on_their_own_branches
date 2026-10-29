@@ -1,0 +1,84 @@
+====================================================================
+AETHER SNAP: PROCEDURAL SVG CARD GAME - OFFICIAL MATCH LOG
+====================================================================
+Match Seed   : PUBLIC-SOLO-DEMO-1
+Played At    : 2000-01-01T00:00:00.000Z
+Player Deck  : Seeded Deck [PUBLIC-DECK-A] (Seed: PUBLIC-DECK-A)
+Player Code  : RIFTDECK1:eyJ2IjoxLCJuYW1lIjoiU2VlZGVkIERlY2sgW1BVQkxJQy1ERUNLLUFdIiwiZGVja1NlZWQiOiJQVUJMSUMtREVDSy1BIiwiY2FyZFNlZWRzIjpbIlMtT05HLVVRUUc1IiwiTi1BTlktOFlBQ1oiLCJQLU9ORy0yTUU1SCIsIlAtUkVWLTlaWVA5IiwiTi1PTkctQlpNVTUiLCJXLVJFVi1TMlg4NSIsIlMtRFNULUNaWEhYIiwiTi1SRVYtQVlKQTgiLCJTLURTQy04NlhCQyIsIlMtUkVWLVFLVkQ1IiwiUC1BTlktOEtKSzkiLCJXLU9ORy1ZWDlaTCJdfQ==
+CPU Deck     : Seeded Deck [PUBLIC-DECK-B] (Seed: PUBLIC-DECK-B)
+CPU Code     : RIFTDECK1:eyJ2IjoxLCJuYW1lIjoiU2VlZGVkIERlY2sgW1BVQkxJQy1ERUNLLUJdIiwiZGVja1NlZWQiOiJQVUJMSUMtREVDSy1CIiwiY2FyZFNlZWRzIjpbIlMtRFNDLUZSWUpRIiwiVy1SRVYtODNZWVoiLCJXLU9ORy1MTlhRMiIsIk4tUkVWLUYzU1VRIiwiTi1BTlktUjRCVUYiLCJOLU9ORy1UMkpCWCIsIlAtT05HLVZXNzk3IiwiUC1BTlktN0EzQkEiLCJQLVJFVi1OVTZINiIsIlMtUkVWLUhEUkVGIiwiUy1PTkctNlJSVEMiLCJTLURTVC03NUpYRyJdfQ==
+Locations    :
+  [Lane 1] Shattered Altar (Seed: PUBLIC-SOLO-DEMO-1-L1) - Cards here have +2 Power. | Final Power: Player 14 vs CPU 25
+  [Lane 2] Quantum Vortex (Seed: PUBLIC-SOLO-DEMO-1-L2) - Cards here that cost 2 or less have +2 Power. | Final Power: Player 9 vs CPU 20
+  [Lane 3] Shattered Observatory (Seed: PUBLIC-SOLO-DEMO-1-L3) - At the end of Turn 4, destroy the lowest-Power card on each side here. | Final Power: Player 8 vs CPU 7
+--------------------------------------------------------------------
+FINAL RESULT : DEFEAT (CPU won 2 of 3 Locations.)
+Locations Won: Player 1 - CPU 2
+Total Power  : Player 31 - CPU 52
+Match Score  : 822
+--------------------------------------------------------------------
+CHRONOLOGICAL TURN EVENTS:
+[INIT] [SYSTEM] === MATCH INITIALIZED (Seed: PUBLIC-SOLO-DEMO-1) ===
+[INIT] [SYSTEM] Player Deck: "Seeded Deck [PUBLIC-DECK-A]" (Seed: PUBLIC-DECK-A)
+[INIT] [SYSTEM] CPU Deck: "Seeded Deck [PUBLIC-DECK-B]" (Seed: PUBLIC-DECK-B)
+[T1] [TURN] --- TURN 1 OF 6 BEGINS ---
+[T1] [LOCATION] Location 1 Revealed: [Shattered Altar] (Seed: PUBLIC-SOLO-DEMO-1-L1) — "Cards here have +2 Power."
+[T1] [DRAW] PLAYER drew [Runic Anomaly Breaker] (Cost 1, Power 1, Seed: S-ONG-UQQG5).
+[T1] [DRAW] CPU drew [Valkyrie Behemoth MK-IV] (Cost 0, Power 2, Seed: S-DST-75JXG).
+[T1] [TURN] Initiative: PLAYER reveals first.
+[T1] [PLAY] PLAYER revealed [Runic Anomaly Breaker] (Cost 1, Base Power 1, Tier: SYNERGY) at [Shattered Altar].
+[T1] [PLAY] CPU revealed [Valkyrie Behemoth MK-IV] (Cost 0, Base Power 2, Tier: SYNERGY) at [Shattered Observatory].
+[T1] [SUMMARY] End of Turn 1 Scores -> L1 (Shattered Altar): P 3 vs CPU 0 | L2 (Unrevealed): P 0 vs CPU 0 | L3 (Unrevealed): P 0 vs CPU 2
+[T2] [TURN] --- TURN 2 OF 6 BEGINS ---
+[T2] [LOCATION] Location 2 Revealed: [Quantum Vortex] (Seed: PUBLIC-SOLO-DEMO-1-L2) — "Cards here that cost 2 or less have +2 Power."
+[T2] [DRAW] PLAYER drew [Prismatic Conjurer] (Cost 5, Power 3, Seed: P-ONG-2ME5H).
+[T2] [DRAW] CPU drew [Cyber Weaver] (Cost 4, Power 4, Seed: P-ANY-7A3BA).
+[T2] [TURN] Initiative: PLAYER reveals first.
+[T2] [PLAY] PLAYER revealed [Solar Specter Protocol] (Cost 2, Base Power 11, Tier: NEGATIVE) at [Shattered Observatory].
+[T2] [ON_REVEAL] [Solar Specter Protocol] drawback afflicted other friendly cards at [Shattered Observatory] with -3 Power.
+[T2] [PLAY] CPU revealed [Arcane Monolith] (Cost 2, Base Power 5, Tier: NEGATIVE) at [Shattered Observatory].
+[T2] [SUMMARY] End of Turn 2 Scores -> L1 (Shattered Altar): P 3 vs CPU 0 | L2 (Quantum Vortex): P 0 vs CPU 0 | L3 (Unrevealed): P 11 vs CPU 5
+[T3] [TURN] --- TURN 3 OF 6 BEGINS ---
+[T3] [LOCATION] Location 3 Revealed: [Shattered Observatory] (Seed: PUBLIC-SOLO-DEMO-1-L3) — "At the end of Turn 4, destroy the lowest-Power card on each side here."
+[T3] [DRAW] PLAYER drew [Chrono Catalyst] (Cost 2, Power 10, Seed: N-ONG-BZMU5).
+[T3] [DRAW] CPU drew [Cinder Oracle] (Cost 4, Power 9, Seed: W-REV-83YYZ).
+[T3] [TURN] Initiative: PLAYER reveals first.
+[T3] [PLAY] PLAYER revealed [Chrono Catalyst] (Cost 2, Base Power 10, Tier: NEGATIVE) at [Quantum Vortex].
+[T3] [PLAY] CPU revealed [Hyperion Paladin] (Cost 2, Base Power 2, Tier: SYNERGY) at [Shattered Altar].
+[T3] [SUMMARY] End of Turn 3 Scores -> L1 (Shattered Altar): P 3 vs CPU 4 | L2 (Quantum Vortex): P 12 vs CPU 0 | L3 (Shattered Observatory): P 11 vs CPU 5
+[T4] [TURN] --- TURN 4 OF 6 BEGINS ---
+[T4] [DRAW] PLAYER drew [Quantum Inquisitor] (Cost 4, Power 8, Seed: W-ONG-YX9ZL).
+[T4] [DRAW] CPU drew [Valkyrie Oracle] (Cost 1, Power 8, Seed: N-ANY-R4BUF).
+[T4] [TURN] Initiative: PLAYER reveals first.
+[T4] [PLAY] PLAYER revealed [Quantum Inquisitor] (Cost 4, Base Power 8, Tier: WEAK) at [Shattered Altar].
+[T4] [PLAY] CPU revealed [Cyber Weaver] (Cost 4, Base Power 4, Tier: POWERFUL) at [Shattered Altar].
+[T4] [SUMMON] CPU summoned [Astral Drone] (4 Power) at [Quantum Vortex] via Cyber Weaver.
+[T4] [SUMMON] CPU summoned [Astral Drone] (4 Power) at [Shattered Observatory] via Cyber Weaver.
+[T4] [DESTROY] [Solar Specter Protocol] (PLAYER) at [Shattered Observatory] was DESTROYED by Shattered Observatory!
+[T4] [DESTROY] [Valkyrie Behemoth MK-IV] (CPU) at [Shattered Observatory] was DESTROYED by Shattered Observatory!
+[T4] [WHEN_DESTROYED] [Valkyrie Behemoth MK-IV] triggered When Destroyed: returned to CPU's hand with Cost 0 and +4 Power!
+[T4] [SUMMARY] End of Turn 4 Scores -> L1 (Shattered Altar): P 14 vs CPU 12 | L2 (Quantum Vortex): P 12 vs CPU 6 | L3 (Shattered Observatory): P 0 vs CPU 7
+[T5] [TURN] --- TURN 5 OF 6 BEGINS ---
+[T5] [DRAW] PLAYER drew [Starlight Wyrm Alpha] (Cost 2, Power 3, Seed: S-DSC-86XBC).
+[T5] [DRAW] CPU drew [Frost Wyrm] (Cost 0, Power 1, Seed: S-DSC-FRYJQ).
+[T5] [TURN] Initiative: PLAYER reveals first.
+[T5] [PLAY] PLAYER revealed [Eldritch Leviathan of Ash] (Cost 5, Base Power 8, Tier: WEAK) at [Shattered Observatory].
+[T5] [PLAY] CPU revealed [Tempest Sentinel] (Cost 5, Base Power 3, Tier: POWERFUL) at [Quantum Vortex].
+[T5] [PLAY] CPU revealed [Valkyrie Behemoth MK-IV] (Cost 0, Base Power 2, Tier: SYNERGY) at [Quantum Vortex].
+[T5] [PLAY] CPU revealed [Frost Wyrm] (Cost 0, Base Power 1, Tier: SYNERGY) at [Quantum Vortex].
+[T5] [SUMMARY] End of Turn 5 Scores -> L1 (Shattered Altar): P 14 vs CPU 12 | L2 (Quantum Vortex): P 9 vs CPU 20 | L3 (Shattered Observatory): P 8 vs CPU 7
+[T6] [TURN] --- TURN 6 OF 6 BEGINS ---
+[T6] [DRAW] PLAYER drew [Shattered Golem Prime] (Cost 2, Power 6, Seed: N-ANY-8YACZ).
+[T6] [DRAW] CPU drew [Crimson Oracle Shard] (Cost 2, Power 5, Seed: N-REV-F3SUQ).
+[T6] [TURN] Initiative: PLAYER reveals first.
+[T6] [PLAY] PLAYER revealed [Shattered Golem Prime] (Cost 2, Base Power 6, Tier: NEGATIVE) at [Quantum Vortex].
+[T6] [ON_REVEAL] [Shattered Golem Prime] unstable core caused it to lose 2 Power on reveal.
+[T6] [PLAY] PLAYER revealed [Chrono Colossus of Ash] (Cost 3, Base Power 4, Tier: SYNERGY) at [Quantum Vortex].
+[T6] [PLAY] CPU revealed [Cinder Oracle] (Cost 4, Base Power 9, Tier: WEAK) at [Shattered Altar].
+[T6] [ON_REVEAL] [Cinder Oracle] gained +1 Power for having an ally here.
+[T6] [PLAY] CPU revealed [Crimson Oracle Shard] (Cost 2, Base Power 5, Tier: NEGATIVE) at [Shattered Altar].
+[T6] [ON_REVEAL] [Crimson Oracle Shard] drawback triggered: destroying friendly [Hyperion Paladin]!
+[T6] [DESTROY] [Hyperion Paladin] (CPU) at [Shattered Altar] was DESTROYED by Crimson Oracle Shard!
+[T6] [SUMMARY] End of Turn 6 Scores -> L1 (Shattered Altar): P 14 vs CPU 25 | L2 (Quantum Vortex): P 9 vs CPU 20 | L3 (Shattered Observatory): P 8 vs CPU 7
+[T6] [RESULT] === GAME OVER: DEFEAT — CPU won 2 of 3 Locations. (Score: 822) ===
+====================================================================

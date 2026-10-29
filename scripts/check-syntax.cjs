@@ -1,0 +1,2 @@
+const fs=require('fs'),path=require('path'),{spawnSync}=require('child_process');let count=0;
+function walk(dir){for(const n of fs.readdirSync(dir)){if(['node_modules','.git','outputs'].includes(n))continue;const p=path.join(dir,n),s=fs.lstatSync(p);if(s.isDirectory())walk(p);else if(/\.(?:mjs|cjs|js)$/.test(n)){const r=spawnSync(process.execPath,['--check',p],{encoding:'utf8'});if(r.status!==0)throw Error(r.stderr);count++;}}}walk(path.join(__dirname,'..'));console.log(`Syntax checked ${count} JavaScript files`);

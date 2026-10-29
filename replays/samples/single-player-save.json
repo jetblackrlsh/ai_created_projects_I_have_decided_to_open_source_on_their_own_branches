@@ -1,0 +1,65 @@
+{
+  "schema": "aether-snap-save-v1",
+  "engineSHA256": "ef957e369ae46809d89bdf70e4849eeb3392757239b008a63e1a833e208e549a",
+  "options": {
+    "matchSeed": "PUBLIC-SOLO-DEMO-1",
+    "playerDeck": "PUBLIC-DECK-A",
+    "cpuDeck": "PUBLIC-DECK-B"
+  },
+  "actions": [
+    {
+      "type": "play",
+      "cardUid": "PLAYER_0_S-ONG-UQQG5",
+      "lane": 0
+    },
+    {
+      "type": "end_turn"
+    },
+    {
+      "type": "play",
+      "cardUid": "PLAYER_7_N-REV-AYJA8",
+      "lane": 2
+    },
+    {
+      "type": "end_turn"
+    },
+    {
+      "type": "play",
+      "cardUid": "PLAYER_4_N-ONG-BZMU5",
+      "lane": 1
+    },
+    {
+      "type": "end_turn"
+    },
+    {
+      "type": "play",
+      "cardUid": "PLAYER_11_W-ONG-YX9ZL",
+      "lane": 0
+    },
+    {
+      "type": "end_turn"
+    },
+    {
+      "type": "play",
+      "cardUid": "PLAYER_5_W-REV-S2X85",
+      "lane": 2
+    },
+    {
+      "type": "end_turn"
+    },
+    {
+      "type": "play",
+      "cardUid": "PLAYER_1_N-ANY-8YACZ",
+      "lane": 1
+    },
+    {
+      "type": "play",
+      "cardUid": "PLAYER_6_S-DST-CZXHX",
+      "lane": 1
+    },
+    {
+      "type": "end_turn"
+    }
+  ],
+  "checksum": "ac475ecf67800b303a432c5d403c5fff8411e661815285ffc65bb9513458e2ec"
+}

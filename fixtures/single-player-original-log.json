@@ -1,0 +1,560 @@
+{
+  "matchSeed": "PUBLIC-SOLO-DEMO-1",
+  "matchStartTime": "2000-01-01T00:00:00.000Z",
+  "playerDeck": {
+    "name": "Seeded Deck [PUBLIC-DECK-A]",
+    "deckSeed": "PUBLIC-DECK-A",
+    "shareCode": "RIFTDECK1:eyJ2IjoxLCJuYW1lIjoiU2VlZGVkIERlY2sgW1BVQkxJQy1ERUNLLUFdIiwiZGVja1NlZWQiOiJQVUJMSUMtREVDSy1BIiwiY2FyZFNlZWRzIjpbIlMtT05HLVVRUUc1IiwiTi1BTlktOFlBQ1oiLCJQLU9ORy0yTUU1SCIsIlAtUkVWLTlaWVA5IiwiTi1PTkctQlpNVTUiLCJXLVJFVi1TMlg4NSIsIlMtRFNULUNaWEhYIiwiTi1SRVYtQVlKQTgiLCJTLURTQy04NlhCQyIsIlMtUkVWLVFLVkQ1IiwiUC1BTlktOEtKSzkiLCJXLU9ORy1ZWDlaTCJdfQ=="
+  },
+  "cpuDeck": {
+    "name": "Seeded Deck [PUBLIC-DECK-B]",
+    "deckSeed": "PUBLIC-DECK-B",
+    "shareCode": "RIFTDECK1:eyJ2IjoxLCJuYW1lIjoiU2VlZGVkIERlY2sgW1BVQkxJQy1ERUNLLUJdIiwiZGVja1NlZWQiOiJQVUJMSUMtREVDSy1CIiwiY2FyZFNlZWRzIjpbIlMtRFNDLUZSWUpRIiwiVy1SRVYtODNZWVoiLCJXLU9ORy1MTlhRMiIsIk4tUkVWLUYzU1VRIiwiTi1BTlktUjRCVUYiLCJOLU9ORy1UMkpCWCIsIlAtT05HLVZXNzk3IiwiUC1BTlktN0EzQkEiLCJQLVJFVi1OVTZINiIsIlMtUkVWLUhEUkVGIiwiUy1PTkctNlJSVEMiLCJTLURTVC03NUpYRyJdfQ=="
+  },
+  "locations": [
+    {
+      "name": "Shattered Altar",
+      "seed": "PUBLIC-SOLO-DEMO-1-L1",
+      "effectText": "Cards here have +2 Power.",
+      "playerTotalPower": 14,
+      "cpuTotalPower": 25
+    },
+    {
+      "name": "Quantum Vortex",
+      "seed": "PUBLIC-SOLO-DEMO-1-L2",
+      "effectText": "Cards here that cost 2 or less have +2 Power.",
+      "playerTotalPower": 9,
+      "cpuTotalPower": 20
+    },
+    {
+      "name": "Shattered Observatory",
+      "seed": "PUBLIC-SOLO-DEMO-1-L3",
+      "effectText": "At the end of Turn 4, destroy the lowest-Power card on each side here.",
+      "playerTotalPower": 8,
+      "cpuTotalPower": 7
+    }
+  ],
+  "result": {
+    "outcome": "DEFEAT",
+    "reason": "CPU won 2 of 3 Locations.",
+    "playerLanesWon": 1,
+    "cpuLanesWon": 2,
+    "playerTotalPower": 31,
+    "cpuTotalPower": 52,
+    "score": 822,
+    "matchSeed": "PUBLIC-SOLO-DEMO-1",
+    "playerDeckName": "Seeded Deck [PUBLIC-DECK-A]",
+    "playerDeckSeed": "PUBLIC-DECK-A",
+    "playerShareCode": "RIFTDECK1:eyJ2IjoxLCJuYW1lIjoiU2VlZGVkIERlY2sgW1BVQkxJQy1ERUNLLUFdIiwiZGVja1NlZWQiOiJQVUJMSUMtREVDSy1BIiwiY2FyZFNlZWRzIjpbIlMtT05HLVVRUUc1IiwiTi1BTlktOFlBQ1oiLCJQLU9ORy0yTUU1SCIsIlAtUkVWLTlaWVA5IiwiTi1PTkctQlpNVTUiLCJXLVJFVi1TMlg4NSIsIlMtRFNULUNaWEhYIiwiTi1SRVYtQVlKQTgiLCJTLURTQy04NlhCQyIsIlMtUkVWLVFLVkQ1IiwiUC1BTlktOEtKSzkiLCJXLU9ORy1ZWDlaTCJdfQ==",
+    "cpuDeckName": "Seeded Deck [PUBLIC-DECK-B]",
+    "cpuDeckSeed": "PUBLIC-DECK-B",
+    "cpuShareCode": "RIFTDECK1:eyJ2IjoxLCJuYW1lIjoiU2VlZGVkIERlY2sgW1BVQkxJQy1ERUNLLUJdIiwiZGVja1NlZWQiOiJQVUJMSUMtREVDSy1CIiwiY2FyZFNlZWRzIjpbIlMtRFNDLUZSWUpRIiwiVy1SRVYtODNZWVoiLCJXLU9ORy1MTlhRMiIsIk4tUkVWLUYzU1VRIiwiTi1BTlktUjRCVUYiLCJOLU9ORy1UMkpCWCIsIlAtT05HLVZXNzk3IiwiUC1BTlktN0EzQkEiLCJQLVJFVi1OVTZINiIsIlMtUkVWLUhEUkVGIiwiUy1PTkctNlJSVEMiLCJTLURTVC03NUpYRyJdfQ==",
+    "date": "2000-01-01"
+  },
+  "logs": [
+    {
+      "id": 1,
+      "turn": 0,
+      "timestamp": "00:00:00.001Z",
+      "category": "SYSTEM",
+      "message": "=== MATCH INITIALIZED (Seed: PUBLIC-SOLO-DEMO-1) ===",
+      "details": null
+    },
+    {
+      "id": 2,
+      "turn": 0,
+      "timestamp": "00:00:00.002Z",
+      "category": "SYSTEM",
+      "message": "Player Deck: \"Seeded Deck [PUBLIC-DECK-A]\" (Seed: PUBLIC-DECK-A)",
+      "details": null
+    },
+    {
+      "id": 3,
+      "turn": 0,
+      "timestamp": "00:00:00.003Z",
+      "category": "SYSTEM",
+      "message": "CPU Deck: \"Seeded Deck [PUBLIC-DECK-B]\" (Seed: PUBLIC-DECK-B)",
+      "details": null
+    },
+    {
+      "id": 4,
+      "turn": 1,
+      "timestamp": "00:00:00.004Z",
+      "category": "TURN",
+      "message": "--- TURN 1 OF 6 BEGINS ---",
+      "details": null
+    },
+    {
+      "id": 5,
+      "turn": 1,
+      "timestamp": "00:00:00.005Z",
+      "category": "LOCATION",
+      "message": "Location 1 Revealed: [Shattered Altar] (Seed: PUBLIC-SOLO-DEMO-1-L1) — \"Cards here have +2 Power.\"",
+      "details": null
+    },
+    {
+      "id": 6,
+      "turn": 1,
+      "timestamp": "00:00:00.006Z",
+      "category": "DRAW",
+      "message": "PLAYER drew [Runic Anomaly Breaker] (Cost 1, Power 1, Seed: S-ONG-UQQG5).",
+      "details": null
+    },
+    {
+      "id": 7,
+      "turn": 1,
+      "timestamp": "00:00:00.007Z",
+      "category": "DRAW",
+      "message": "CPU drew [Valkyrie Behemoth MK-IV] (Cost 0, Power 2, Seed: S-DST-75JXG).",
+      "details": null
+    },
+    {
+      "id": 8,
+      "turn": 1,
+      "timestamp": "00:00:00.008Z",
+      "category": "TURN",
+      "message": "Initiative: PLAYER reveals first.",
+      "details": null
+    },
+    {
+      "id": 9,
+      "turn": 1,
+      "timestamp": "00:00:00.009Z",
+      "category": "PLAY",
+      "message": "PLAYER revealed [Runic Anomaly Breaker] (Cost 1, Base Power 1, Tier: SYNERGY) at [Shattered Altar].",
+      "details": null
+    },
+    {
+      "id": 10,
+      "turn": 1,
+      "timestamp": "00:00:00.010Z",
+      "category": "PLAY",
+      "message": "CPU revealed [Valkyrie Behemoth MK-IV] (Cost 0, Base Power 2, Tier: SYNERGY) at [Shattered Observatory].",
+      "details": null
+    },
+    {
+      "id": 11,
+      "turn": 1,
+      "timestamp": "00:00:00.011Z",
+      "category": "SUMMARY",
+      "message": "End of Turn 1 Scores -> L1 (Shattered Altar): P 3 vs CPU 0 | L2 (Unrevealed): P 0 vs CPU 0 | L3 (Unrevealed): P 0 vs CPU 2",
+      "details": null
+    },
+    {
+      "id": 12,
+      "turn": 2,
+      "timestamp": "00:00:00.012Z",
+      "category": "TURN",
+      "message": "--- TURN 2 OF 6 BEGINS ---",
+      "details": null
+    },
+    {
+      "id": 13,
+      "turn": 2,
+      "timestamp": "00:00:00.013Z",
+      "category": "LOCATION",
+      "message": "Location 2 Revealed: [Quantum Vortex] (Seed: PUBLIC-SOLO-DEMO-1-L2) — \"Cards here that cost 2 or less have +2 Power.\"",
+      "details": null
+    },
+    {
+      "id": 14,
+      "turn": 2,
+      "timestamp": "00:00:00.014Z",
+      "category": "DRAW",
+      "message": "PLAYER drew [Prismatic Conjurer] (Cost 5, Power 3, Seed: P-ONG-2ME5H).",
+      "details": null
+    },
+    {
+      "id": 15,
+      "turn": 2,
+      "timestamp": "00:00:00.015Z",
+      "category": "DRAW",
+      "message": "CPU drew [Cyber Weaver] (Cost 4, Power 4, Seed: P-ANY-7A3BA).",
+      "details": null
+    },
+    {
+      "id": 16,
+      "turn": 2,
+      "timestamp": "00:00:00.016Z",
+      "category": "TURN",
+      "message": "Initiative: PLAYER reveals first.",
+      "details": null
+    },
+    {
+      "id": 17,
+      "turn": 2,
+      "timestamp": "00:00:00.017Z",
+      "category": "PLAY",
+      "message": "PLAYER revealed [Solar Specter Protocol] (Cost 2, Base Power 11, Tier: NEGATIVE) at [Shattered Observatory].",
+      "details": null
+    },
+    {
+      "id": 18,
+      "turn": 2,
+      "timestamp": "00:00:00.018Z",
+      "category": "ON_REVEAL",
+      "message": "[Solar Specter Protocol] drawback afflicted other friendly cards at [Shattered Observatory] with -3 Power.",
+      "details": null
+    },
+    {
+      "id": 19,
+      "turn": 2,
+      "timestamp": "00:00:00.019Z",
+      "category": "PLAY",
+      "message": "CPU revealed [Arcane Monolith] (Cost 2, Base Power 5, Tier: NEGATIVE) at [Shattered Observatory].",
+      "details": null
+    },
+    {
+      "id": 20,
+      "turn": 2,
+      "timestamp": "00:00:00.020Z",
+      "category": "SUMMARY",
+      "message": "End of Turn 2 Scores -> L1 (Shattered Altar): P 3 vs CPU 0 | L2 (Quantum Vortex): P 0 vs CPU 0 | L3 (Unrevealed): P 11 vs CPU 5",
+      "details": null
+    },
+    {
+      "id": 21,
+      "turn": 3,
+      "timestamp": "00:00:00.021Z",
+      "category": "TURN",
+      "message": "--- TURN 3 OF 6 BEGINS ---",
+      "details": null
+    },
+    {
+      "id": 22,
+      "turn": 3,
+      "timestamp": "00:00:00.022Z",
+      "category": "LOCATION",
+      "message": "Location 3 Revealed: [Shattered Observatory] (Seed: PUBLIC-SOLO-DEMO-1-L3) — \"At the end of Turn 4, destroy the lowest-Power card on each side here.\"",
+      "details": null
+    },
+    {
+      "id": 23,
+      "turn": 3,
+      "timestamp": "00:00:00.023Z",
+      "category": "DRAW",
+      "message": "PLAYER drew [Chrono Catalyst] (Cost 2, Power 10, Seed: N-ONG-BZMU5).",
+      "details": null
+    },
+    {
+      "id": 24,
+      "turn": 3,
+      "timestamp": "00:00:00.024Z",
+      "category": "DRAW",
+      "message": "CPU drew [Cinder Oracle] (Cost 4, Power 9, Seed: W-REV-83YYZ).",
+      "details": null
+    },
+    {
+      "id": 25,
+      "turn": 3,
+      "timestamp": "00:00:00.025Z",
+      "category": "TURN",
+      "message": "Initiative: PLAYER reveals first.",
+      "details": null
+    },
+    {
+      "id": 26,
+      "turn": 3,
+      "timestamp": "00:00:00.026Z",
+      "category": "PLAY",
+      "message": "PLAYER revealed [Chrono Catalyst] (Cost 2, Base Power 10, Tier: NEGATIVE) at [Quantum Vortex].",
+      "details": null
+    },
+    {
+      "id": 27,
+      "turn": 3,
+      "timestamp": "00:00:00.027Z",
+      "category": "PLAY",
+      "message": "CPU revealed [Hyperion Paladin] (Cost 2, Base Power 2, Tier: SYNERGY) at [Shattered Altar].",
+      "details": null
+    },
+    {
+      "id": 28,
+      "turn": 3,
+      "timestamp": "00:00:00.028Z",
+      "category": "SUMMARY",
+      "message": "End of Turn 3 Scores -> L1 (Shattered Altar): P 3 vs CPU 4 | L2 (Quantum Vortex): P 12 vs CPU 0 | L3 (Shattered Observatory): P 11 vs CPU 5",
+      "details": null
+    },
+    {
+      "id": 29,
+      "turn": 4,
+      "timestamp": "00:00:00.029Z",
+      "category": "TURN",
+      "message": "--- TURN 4 OF 6 BEGINS ---",
+      "details": null
+    },
+    {
+      "id": 30,
+      "turn": 4,
+      "timestamp": "00:00:00.030Z",
+      "category": "DRAW",
+      "message": "PLAYER drew [Quantum Inquisitor] (Cost 4, Power 8, Seed: W-ONG-YX9ZL).",
+      "details": null
+    },
+    {
+      "id": 31,
+      "turn": 4,
+      "timestamp": "00:00:00.031Z",
+      "category": "DRAW",
+      "message": "CPU drew [Valkyrie Oracle] (Cost 1, Power 8, Seed: N-ANY-R4BUF).",
+      "details": null
+    },
+    {
+      "id": 32,
+      "turn": 4,
+      "timestamp": "00:00:00.032Z",
+      "category": "TURN",
+      "message": "Initiative: PLAYER reveals first.",
+      "details": null
+    },
+    {
+      "id": 33,
+      "turn": 4,
+      "timestamp": "00:00:00.033Z",
+      "category": "PLAY",
+      "message": "PLAYER revealed [Quantum Inquisitor] (Cost 4, Base Power 8, Tier: WEAK) at [Shattered Altar].",
+      "details": null
+    },
+    {
+      "id": 34,
+      "turn": 4,
+      "timestamp": "00:00:00.034Z",
+      "category": "PLAY",
+      "message": "CPU revealed [Cyber Weaver] (Cost 4, Base Power 4, Tier: POWERFUL) at [Shattered Altar].",
+      "details": null
+    },
+    {
+      "id": 35,
+      "turn": 4,
+      "timestamp": "00:00:00.036Z",
+      "category": "SUMMON",
+      "message": "CPU summoned [Astral Drone] (4 Power) at [Quantum Vortex] via Cyber Weaver.",
+      "details": null
+    },
+    {
+      "id": 36,
+      "turn": 4,
+      "timestamp": "00:00:00.038Z",
+      "category": "SUMMON",
+      "message": "CPU summoned [Astral Drone] (4 Power) at [Shattered Observatory] via Cyber Weaver.",
+      "details": null
+    },
+    {
+      "id": 37,
+      "turn": 4,
+      "timestamp": "00:00:00.039Z",
+      "category": "DESTROY",
+      "message": "[Solar Specter Protocol] (PLAYER) at [Shattered Observatory] was DESTROYED by Shattered Observatory!",
+      "details": null
+    },
+    {
+      "id": 38,
+      "turn": 4,
+      "timestamp": "00:00:00.040Z",
+      "category": "DESTROY",
+      "message": "[Valkyrie Behemoth MK-IV] (CPU) at [Shattered Observatory] was DESTROYED by Shattered Observatory!",
+      "details": null
+    },
+    {
+      "id": 39,
+      "turn": 4,
+      "timestamp": "00:00:00.041Z",
+      "category": "WHEN_DESTROYED",
+      "message": "[Valkyrie Behemoth MK-IV] triggered When Destroyed: returned to CPU's hand with Cost 0 and +4 Power!",
+      "details": null
+    },
+    {
+      "id": 40,
+      "turn": 4,
+      "timestamp": "00:00:00.042Z",
+      "category": "SUMMARY",
+      "message": "End of Turn 4 Scores -> L1 (Shattered Altar): P 14 vs CPU 12 | L2 (Quantum Vortex): P 12 vs CPU 6 | L3 (Shattered Observatory): P 0 vs CPU 7",
+      "details": null
+    },
+    {
+      "id": 41,
+      "turn": 5,
+      "timestamp": "00:00:00.043Z",
+      "category": "TURN",
+      "message": "--- TURN 5 OF 6 BEGINS ---",
+      "details": null
+    },
+    {
+      "id": 42,
+      "turn": 5,
+      "timestamp": "00:00:00.044Z",
+      "category": "DRAW",
+      "message": "PLAYER drew [Starlight Wyrm Alpha] (Cost 2, Power 3, Seed: S-DSC-86XBC).",
+      "details": null
+    },
+    {
+      "id": 43,
+      "turn": 5,
+      "timestamp": "00:00:00.045Z",
+      "category": "DRAW",
+      "message": "CPU drew [Frost Wyrm] (Cost 0, Power 1, Seed: S-DSC-FRYJQ).",
+      "details": null
+    },
+    {
+      "id": 44,
+      "turn": 5,
+      "timestamp": "00:00:00.046Z",
+      "category": "TURN",
+      "message": "Initiative: PLAYER reveals first.",
+      "details": null
+    },
+    {
+      "id": 45,
+      "turn": 5,
+      "timestamp": "00:00:00.047Z",
+      "category": "PLAY",
+      "message": "PLAYER revealed [Eldritch Leviathan of Ash] (Cost 5, Base Power 8, Tier: WEAK) at [Shattered Observatory].",
+      "details": null
+    },
+    {
+      "id": 46,
+      "turn": 5,
+      "timestamp": "00:00:00.048Z",
+      "category": "PLAY",
+      "message": "CPU revealed [Tempest Sentinel] (Cost 5, Base Power 3, Tier: POWERFUL) at [Quantum Vortex].",
+      "details": null
+    },
+    {
+      "id": 47,
+      "turn": 5,
+      "timestamp": "00:00:00.049Z",
+      "category": "PLAY",
+      "message": "CPU revealed [Valkyrie Behemoth MK-IV] (Cost 0, Base Power 2, Tier: SYNERGY) at [Quantum Vortex].",
+      "details": null
+    },
+    {
+      "id": 48,
+      "turn": 5,
+      "timestamp": "00:00:00.050Z",
+      "category": "PLAY",
+      "message": "CPU revealed [Frost Wyrm] (Cost 0, Base Power 1, Tier: SYNERGY) at [Quantum Vortex].",
+      "details": null
+    },
+    {
+      "id": 49,
+      "turn": 5,
+      "timestamp": "00:00:00.051Z",
+      "category": "SUMMARY",
+      "message": "End of Turn 5 Scores -> L1 (Shattered Altar): P 14 vs CPU 12 | L2 (Quantum Vortex): P 9 vs CPU 20 | L3 (Shattered Observatory): P 8 vs CPU 7",
+      "details": null
+    },
+    {
+      "id": 50,
+      "turn": 6,
+      "timestamp": "00:00:00.052Z",
+      "category": "TURN",
+      "message": "--- TURN 6 OF 6 BEGINS ---",
+      "details": null
+    },
+    {
+      "id": 51,
+      "turn": 6,
+      "timestamp": "00:00:00.053Z",
+      "category": "DRAW",
+      "message": "PLAYER drew [Shattered Golem Prime] (Cost 2, Power 6, Seed: N-ANY-8YACZ).",
+      "details": null
+    },
+    {
+      "id": 52,
+      "turn": 6,
+      "timestamp": "00:00:00.054Z",
+      "category": "DRAW",
+      "message": "CPU drew [Crimson Oracle Shard] (Cost 2, Power 5, Seed: N-REV-F3SUQ).",
+      "details": null
+    },
+    {
+      "id": 53,
+      "turn": 6,
+      "timestamp": "00:00:00.055Z",
+      "category": "TURN",
+      "message": "Initiative: PLAYER reveals first.",
+      "details": null
+    },
+    {
+      "id": 54,
+      "turn": 6,
+      "timestamp": "00:00:00.056Z",
+      "category": "PLAY",
+      "message": "PLAYER revealed [Shattered Golem Prime] (Cost 2, Base Power 6, Tier: NEGATIVE) at [Quantum Vortex].",
+      "details": null
+    },
+    {
+      "id": 55,
+      "turn": 6,
+      "timestamp": "00:00:00.057Z",
+      "category": "ON_REVEAL",
+      "message": "[Shattered Golem Prime] unstable core caused it to lose 2 Power on reveal.",
+      "details": null
+    },
+    {
+      "id": 56,
+      "turn": 6,
+      "timestamp": "00:00:00.058Z",
+      "category": "PLAY",
+      "message": "PLAYER revealed [Chrono Colossus of Ash] (Cost 3, Base Power 4, Tier: SYNERGY) at [Quantum Vortex].",
+      "details": null
+    },
+    {
+      "id": 57,
+      "turn": 6,
+      "timestamp": "00:00:00.059Z",
+      "category": "PLAY",
+      "message": "CPU revealed [Cinder Oracle] (Cost 4, Base Power 9, Tier: WEAK) at [Shattered Altar].",
+      "details": null
+    },
+    {
+      "id": 58,
+      "turn": 6,
+      "timestamp": "00:00:00.060Z",
+      "category": "ON_REVEAL",
+      "message": "[Cinder Oracle] gained +1 Power for having an ally here.",
+      "details": null
+    },
+    {
+      "id": 59,
+      "turn": 6,
+      "timestamp": "00:00:00.061Z",
+      "category": "PLAY",
+      "message": "CPU revealed [Crimson Oracle Shard] (Cost 2, Base Power 5, Tier: NEGATIVE) at [Shattered Altar].",
+      "details": null
+    },
+    {
+      "id": 60,
+      "turn": 6,
+      "timestamp": "00:00:00.062Z",
+      "category": "ON_REVEAL",
+      "message": "[Crimson Oracle Shard] drawback triggered: destroying friendly [Hyperion Paladin]!",
+      "details": null
+    },
+    {
+      "id": 61,
+      "turn": 6,
+      "timestamp": "00:00:00.063Z",
+      "category": "DESTROY",
+      "message": "[Hyperion Paladin] (CPU) at [Shattered Altar] was DESTROYED by Crimson Oracle Shard!",
+      "details": null
+    },
+    {
+      "id": 62,
+      "turn": 6,
+      "timestamp": "00:00:00.064Z",
+      "category": "SUMMARY",
+      "message": "End of Turn 6 Scores -> L1 (Shattered Altar): P 14 vs CPU 25 | L2 (Quantum Vortex): P 9 vs CPU 20 | L3 (Shattered Observatory): P 8 vs CPU 7",
+      "details": null
+    },
+    {
+      "id": 63,
+      "turn": 6,
+      "timestamp": "00:00:00.066Z",
+      "category": "RESULT",
+      "message": "=== GAME OVER: DEFEAT — CPU won 2 of 3 Locations. (Score: 822) ===",
+      "details": null
+    }
+  ]
+}

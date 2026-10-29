@@ -1,0 +1,178 @@
+{
+  "protocol": "aether-snap-async-v1",
+  "kind": "offer",
+  "spec": {
+    "protocol": "aether-snap-async-v1",
+    "kind": "challenge-spec",
+    "id": "PUBLIC-DEMO-1",
+    "engineSHA256": "ef957e369ae46809d89bdf70e4849eeb3392757239b008a63e1a833e208e549a",
+    "adapterSHA256": "afeabce7012a207d3b25c823f95e7d190ea4d7859e7b08978230eb7ad6bb76fe",
+    "runtimeSHA256": "929c30c82abfda2eaf24ccbbe04584ab47cf978a1c9229c8ed99aded960f08ea",
+    "matchSeed": "PUBLIC-MULTIPLAYER-DEMO-1",
+    "deckA": "PUBLIC-COMMON-DECK-1",
+    "deckB": "PUBLIC-COMMON-DECK-1",
+    "format": "shared-board-six-turn-plans",
+    "priority": "original-initiative-seeded-tie",
+    "fallback": "ordered-first-legal-otherwise-skip",
+    "labelA": "Example agent A",
+    "labelB": "Example agent B",
+    "sha256": "337c34b6d3c9af0ee2831e12e816fb4778f80036fd9b17854a4f479b2974c644"
+  },
+  "planA": {
+    "protocol": "aether-snap-async-v1",
+    "kind": "plan",
+    "specSHA256": "337c34b6d3c9af0ee2831e12e816fb4778f80036fd9b17854a4f479b2974c644",
+    "side": "A",
+    "turns": [
+      [
+        {
+          "choices": [
+            {
+              "cardSlot": 11,
+              "lane": 0
+            },
+            {
+              "cardSlot": 11,
+              "lane": 1
+            },
+            {
+              "cardSlot": 11,
+              "lane": 2
+            }
+          ],
+          "otherwise": "skip"
+        }
+      ],
+      [
+        {
+          "choices": [
+            {
+              "cardSlot": 9,
+              "lane": 1
+            },
+            {
+              "cardSlot": 9,
+              "lane": 2
+            },
+            {
+              "cardSlot": 9,
+              "lane": 0
+            }
+          ],
+          "otherwise": "skip"
+        },
+        {
+          "choices": [
+            {
+              "cardSlot": 3,
+              "lane": 1
+            },
+            {
+              "cardSlot": 3,
+              "lane": 2
+            },
+            {
+              "cardSlot": 3,
+              "lane": 0
+            }
+          ],
+          "otherwise": "skip"
+        },
+        {
+          "choices": [
+            {
+              "cardSlot": 10,
+              "lane": 1
+            },
+            {
+              "cardSlot": 10,
+              "lane": 2
+            },
+            {
+              "cardSlot": 10,
+              "lane": 0
+            }
+          ],
+          "otherwise": "skip"
+        }
+      ],
+      [],
+      [
+        {
+          "choices": [
+            {
+              "cardSlot": 2,
+              "lane": 2
+            },
+            {
+              "cardSlot": 2,
+              "lane": 0
+            },
+            {
+              "cardSlot": 2,
+              "lane": 1
+            }
+          ],
+          "otherwise": "skip"
+        }
+      ],
+      [
+        {
+          "choices": [
+            {
+              "cardSlot": 8,
+              "lane": 2
+            },
+            {
+              "cardSlot": 8,
+              "lane": 0
+            },
+            {
+              "cardSlot": 8,
+              "lane": 1
+            }
+          ],
+          "otherwise": "skip"
+        },
+        {
+          "choices": [
+            {
+              "cardSlot": 5,
+              "lane": 2
+            },
+            {
+              "cardSlot": 5,
+              "lane": 0
+            },
+            {
+              "cardSlot": 5,
+              "lane": 1
+            }
+          ],
+          "otherwise": "skip"
+        }
+      ],
+      [
+        {
+          "choices": [
+            {
+              "cardSlot": 1,
+              "lane": 0
+            },
+            {
+              "cardSlot": 1,
+              "lane": 2
+            },
+            {
+              "cardSlot": 1,
+              "lane": 1
+            }
+          ],
+          "otherwise": "skip"
+        }
+      ]
+    ],
+    "sha256": "a901040c0f7dfcf4a7d155d48dc194dc5bd06e90ad257da11e79d576bd6f5459"
+  },
+  "sha256": "da11a61322a823fb7505244cb70b8334f8332351ca540aebbe755a56ff9ca557"
+}

@@ -1,0 +1,13 @@
+// Synthetic public demonstrations only. Never reads personal match records or network data.
+import fs from 'node:fs';
+import {HeadlessGame,chooseDemoAction} from '../lib/headless.mjs';
+import {createSpec,newDraft,preview,draftStep,draftEnd,finalizePlan,makeOffer,makeResponse,referee} from '../multiplayer.mjs';
+const root=new URL('../',import.meta.url),write=(n,x)=>fs.writeFileSync(new URL(n,root),typeof x==='string'?x:JSON.stringify(x,null,2)+'\n');
+const game=new HeadlessGame({matchSeed:'PUBLIC-SOLO-DEMO-1',playerDeck:'PUBLIC-DECK-A',cpuDeck:'PUBLIC-DECK-B'});while(game.engine.phase!=='GAME_OVER')await game.act(chooseDemoAction(game.observe()));
+write('fixtures/single-player-save.json',game.save());write('fixtures/single-player-original-log.json',game.engine.exportJsonLog());write('fixtures/single-player-original-log.txt',game.fullLog());
+const spec=createSpec({id:'PUBLIC-DEMO-1',matchSeed:'PUBLIC-MULTIPLAYER-DEMO-1',deckA:'PUBLIC-COMMON-DECK-1',deckB:'PUBLIC-COMMON-DECK-1',labelA:'Example agent A',labelB:'Example agent B'});
+async function plan(side,offset){let draft=newDraft(spec,side);for(let t=0;t<6;t++){for(let step=0;step<12;step++){const o=(await preview(spec,draft)).observe(side);if(!o.legalChoices.length)break;const bySlot=new Map(o.hand.map(c=>[c.cardSlot,c]));const choices=o.legalChoices.sort((a,b)=>{const x=bySlot.get(a.cardSlot),y=bySlot.get(b.cardSlot);return y.currentPower/(y.cost+1)-x.currentPower/(x.cost+1)||o.locations[a.lane].ownPower-o.locations[b.lane].ownPower||((a.lane+offset)%3)-((b.lane+offset)%3);});const primary=choices[0],alternatives=[primary,...choices.filter(c=>c.cardSlot===primary.cardSlot&&c.lane!==primary.lane)];draft=(await draftStep(spec,draft,{choices:alternatives,otherwise:'skip'})).draft;}draft=(await draftEnd(spec,draft)).draft;}return finalizePlan(spec,draft);}
+const a=await plan('A',0),b=await plan('B',1),offer=makeOffer(spec,a),response=makeResponse(offer,b,'PUBLIC-EXAMPLE-RESPONSE'),result=await referee(offer,response);
+for(const[name,obj]of Object.entries({'multiplayer-spec':spec,'multiplayer-plan-a':a,'multiplayer-plan-b':b,'multiplayer-offer':offer,'multiplayer-response':response,'multiplayer-result':result}))write('fixtures/'+name+'.json',obj);
+for(const name of ['single-player-save.json','single-player-original-log.json','single-player-original-log.txt','multiplayer-offer.json','multiplayer-response.json','multiplayer-result.json'])fs.copyFileSync(new URL('fixtures/'+name,root),new URL('replays/samples/'+name,root));
+console.log(JSON.stringify({synthetic:true,singlePlayer:game.engine.result.outcome,multiplayer:result.winner}));

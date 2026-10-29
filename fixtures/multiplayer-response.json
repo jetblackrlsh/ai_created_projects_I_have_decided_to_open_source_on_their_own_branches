@@ -1,0 +1,147 @@
+{
+  "protocol": "aether-snap-async-v1",
+  "kind": "response",
+  "challengeId": "PUBLIC-DEMO-1",
+  "offerSHA256": "da11a61322a823fb7505244cb70b8334f8332351ca540aebbe755a56ff9ca557",
+  "responseId": "PUBLIC-EXAMPLE-RESPONSE",
+  "planB": {
+    "protocol": "aether-snap-async-v1",
+    "kind": "plan",
+    "specSHA256": "337c34b6d3c9af0ee2831e12e816fb4778f80036fd9b17854a4f479b2974c644",
+    "side": "B",
+    "turns": [
+      [],
+      [
+        {
+          "choices": [
+            {
+              "cardSlot": 4,
+              "lane": 2
+            },
+            {
+              "cardSlot": 4,
+              "lane": 0
+            },
+            {
+              "cardSlot": 4,
+              "lane": 1
+            }
+          ],
+          "otherwise": "skip"
+        },
+        {
+          "choices": [
+            {
+              "cardSlot": 10,
+              "lane": 2
+            },
+            {
+              "cardSlot": 10,
+              "lane": 0
+            },
+            {
+              "cardSlot": 10,
+              "lane": 1
+            }
+          ],
+          "otherwise": "skip"
+        }
+      ],
+      [
+        {
+          "choices": [
+            {
+              "cardSlot": 8,
+              "lane": 0
+            },
+            {
+              "cardSlot": 8,
+              "lane": 1
+            },
+            {
+              "cardSlot": 8,
+              "lane": 2
+            }
+          ],
+          "otherwise": "skip"
+        }
+      ],
+      [
+        {
+          "choices": [
+            {
+              "cardSlot": 9,
+              "lane": 1
+            },
+            {
+              "cardSlot": 9,
+              "lane": 0
+            },
+            {
+              "cardSlot": 9,
+              "lane": 2
+            }
+          ],
+          "otherwise": "skip"
+        }
+      ],
+      [
+        {
+          "choices": [
+            {
+              "cardSlot": 3,
+              "lane": 0
+            },
+            {
+              "cardSlot": 3,
+              "lane": 2
+            },
+            {
+              "cardSlot": 3,
+              "lane": 1
+            }
+          ],
+          "otherwise": "skip"
+        },
+        {
+          "choices": [
+            {
+              "cardSlot": 7,
+              "lane": 0
+            },
+            {
+              "cardSlot": 7,
+              "lane": 2
+            },
+            {
+              "cardSlot": 7,
+              "lane": 1
+            }
+          ],
+          "otherwise": "skip"
+        }
+      ],
+      [
+        {
+          "choices": [
+            {
+              "cardSlot": 1,
+              "lane": 2
+            },
+            {
+              "cardSlot": 1,
+              "lane": 1
+            },
+            {
+              "cardSlot": 1,
+              "lane": 0
+            }
+          ],
+          "otherwise": "skip"
+        }
+      ]
+    ],
+    "sha256": "e558ff699a5283795da640368de7351b33965de2a1bb46eaa4e5847ef5cb50db"
+  },
+  "sha256": "2b9e36bb2e2e1e3148f0f3e72a05f75a70d016b65395a7978f82f151d3797d10"
+}
