@@ -1,0 +1,4 @@
+# Core model-independent tools; versions used for release validation (Python 3.12).
+Pillow==13.0.0
+numpy==2.3.5
+scipy==1.17.0

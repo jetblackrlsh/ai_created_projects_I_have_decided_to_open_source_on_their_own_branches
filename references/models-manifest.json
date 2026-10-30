@@ -1,0 +1,121 @@
+{
+  "sdxs": {
+    "repository": "https://huggingface.co/IDKiro/sdxs-512-dreamshaper",
+    "files": [
+      {
+        "source": "README.md",
+        "revision": "76f720262bb051da75666b22c902a78c8e16c763",
+        "bytes": 2224,
+        "sha256": "6b38a4c76fcdf184abfa6186e913f7badc5468e9d2ff8b16a909a9e8193bec47"
+      },
+      {
+        "source": "model_index.json",
+        "revision": "76f720262bb051da75666b22c902a78c8e16c763",
+        "bytes": 523,
+        "sha256": "4d18feafb537f185598af080e8894d99a00425e9ab7861d31c832043c68c840c"
+      },
+      {
+        "source": "scheduler/scheduler_config.json",
+        "revision": "76f720262bb051da75666b22c902a78c8e16c763",
+        "bytes": 480,
+        "sha256": "91d57030b1a965f4878c952acaaa84d6956b640697b69fc642a13d3bf83e5e9c"
+      },
+      {
+        "source": "text_encoder/config.json",
+        "revision": "76f720262bb051da75666b22c902a78c8e16c763",
+        "bytes": 724,
+        "sha256": "52e29b35e93261515dc07bf248ec8398a729e54f1886e946f8c095ede26be29b"
+      },
+      {
+        "source": "text_encoder/model.safetensors",
+        "revision": "76f720262bb051da75666b22c902a78c8e16c763",
+        "bytes": 492265168,
+        "sha256": "5cd76eb3ed326974cfd66795384e890742dfdb5a80f5f4e4cb1547d51ec75d86"
+      },
+      {
+        "source": "unet/config.json",
+        "revision": "76f720262bb051da75666b22c902a78c8e16c763",
+        "bytes": 1725,
+        "sha256": "cd3c93365b0b198163761cc39e1949412b96be7cd200bc17ae25fd16a1f976b1"
+      },
+      {
+        "source": "unet/diffusion_pytorch_model.safetensors",
+        "revision": "76f720262bb051da75666b22c902a78c8e16c763",
+        "bytes": 1263018648,
+        "sha256": "a9cb7932239b22d318f20d80c0062be5f06c9e96b620d3719db49b31f23927cf"
+      },
+      {
+        "source": "vae/config.json",
+        "revision": "76f720262bb051da75666b22c902a78c8e16c763",
+        "bytes": 635,
+        "sha256": "ad96f19ac8241278e5a472fe8bfec939bc80addea71c17f2501019b712cda23d"
+      },
+      {
+        "source": "vae/diffusion_pytorch_model.safetensors",
+        "revision": "76f720262bb051da75666b22c902a78c8e16c763",
+        "bytes": 9793292,
+        "sha256": "d7956d561b1efbd861ad9b03fd8f01510f9e87eddc07bdfd20837009433f6ee5"
+      }
+    ]
+  },
+  "anime": {
+    "repository": "https://huggingface.co/IDKiro/SDXS-512-DreamShaper-Anime",
+    "revision": "2faf8a65496cf66f3927ec48ae0f2ba7dd943e39",
+    "file": "adapter_model.bin",
+    "bytes": 108366210,
+    "sha256": "1cf076eef26ddf8be790735c50fa0b53c13e5d48cc73403339e244202586b585",
+    "converted_sha256": "6ab30c9665f5aa7dc6f4be15e6f3874dfdf7fb3b011fdbf5658db24efb7b9956"
+  },
+  "stable_audio": {
+    "repository": "https://huggingface.co/stabilityai/stable-audio-3-optimized",
+    "revision": "30cb2644da54bfa63275d1bc7f1fa67fc718680f",
+    "files": [
+      {
+        "source": "tflite/sa3-sm-music/dit_w8a8.tflite",
+        "bytes": 539350360,
+        "sha256": "1d8ef99bf10f51cc52b68f7b527d3773828e700758b253edd8a8e088a906e241"
+      },
+      {
+        "source": "tflite/sa3-sm-sfx/dit_w8a8.tflite",
+        "bytes": 539350360,
+        "sha256": "d3f99409f446eff9a625768ba2ee09a2347ea90c4897c1662fbcd8837fae3045"
+      },
+      {
+        "source": "tflite/same-s/dec_w8a8.tflite",
+        "bytes": 94092016,
+        "sha256": "2fc31cdc42a54342233fb8c6da636565b1191d97002665e21812e981490434a6"
+      },
+      {
+        "source": "tflite/t5gemma/encoder_fp16.tflite",
+        "bytes": 563818608,
+        "sha256": "8530d0b3e6b9b9dcf1239145c2a853fb749708eaddbb472ff8f0802b50059372"
+      }
+    ]
+  },
+  "kokoro": {
+    "release": "https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.0/",
+    "files": [
+      {
+        "source": "kokoro-v1.0.onnx",
+        "bytes": 325532387,
+        "sha256": "7d5df8ecf7d4b1878015a32686053fd0eebe2bc377234608764cc0ef3636a6c5"
+      },
+      {
+        "source": "voices-v1.0.bin",
+        "bytes": 28214398,
+        "sha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d"
+      }
+    ]
+  },
+  "whisper": {
+    "source": "https://huggingface.co/ggerganov/whisper.cpp/resolve/5359861c739e955e79d9a303bcbc70fb988958b1/ggml-base.en.bin",
+    "revision": "5359861c739e955e79d9a303bcbc70fb988958b1",
+    "size": 147964211,
+    "sha256": "a03779c86df3323075f5e796cb2ce5029f00ec8869eee3fdfb897afe36c6d002"
+  },
+  "u2netp": {
+    "source": "https://github.com/danielgatis/rembg/releases/download/v0.0.0/u2netp.onnx",
+    "bytes": 4574861,
+    "sha256": "309c8469258dda742793dce0ebea8e6dd393174f89934733ecc8b14c76f4ddd8"
+  }
+}
