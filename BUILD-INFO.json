@@ -1,0 +1,22 @@
+{
+  "version": "1.7.0",
+  "baseVersion": "1.6.0-rc1",
+  "status": "Optional preferred Kokoro speech; source-release build verified with DOM/native-canvas regressions",
+  "features": [
+    "preferred optional local Kokoro CLI and actual WAV import/embed",
+    "selectable bundled synthesized voices",
+    "per-speaker voice configuration and locks",
+    "headless Kokoro project import/synthesis",
+    "ten original thematic music tracks and seven original SFX",
+    "full generic rig, prop, background, effect and action libraries"
+  ],
+  "notVerified": [
+    "physical browser playback/dialogs/MediaRecorder",
+    "auditory listening review"
+  ],
+  "notImplemented": [
+    "phoneme lip sync",
+    "IK/physical foot planting",
+    "3D turning"
+  ]
+}

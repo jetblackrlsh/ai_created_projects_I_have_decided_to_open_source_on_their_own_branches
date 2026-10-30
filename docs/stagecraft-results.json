@@ -1,0 +1,16 @@
+{
+  "pass": true,
+  "views": 4,
+  "uniqueExtras": 18,
+  "checks": [
+    "view-aware face suppression",
+    "JSON deterministic roundtrip",
+    "locomotion root and leg keys",
+    "overlap atomic rejection",
+    "weapon visibility",
+    "paired carry link and travel",
+    "speaker voice consistency",
+    "cards",
+    "invalid inputs"
+  ]
+}

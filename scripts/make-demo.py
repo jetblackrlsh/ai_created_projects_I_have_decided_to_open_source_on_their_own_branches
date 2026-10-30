@@ -1,0 +1,26 @@
+import json,base64,wave,math,struct,pathlib
+root=pathlib.Path(__file__).resolve().parents[1]
+def node(id,tag,attrs={},children=[],pose={},keys=[],**kw):return dict(id=id,tag=tag,attrs=attrs,children=children,pose=pose,keys=keys,**kw)
+def text(id,txt,x,y,size=24,fill='#d1fff3'):return node(id,'text',{'x':x,'y':y,'font-size':size,'font-family':'Arial, sans-serif','fill':fill},text=txt)
+def garden(prefix,answer=False):
+ ns=[node(prefix+'ground','path',{'d':'M0 370 Q240 330 480 380 T960 365 L960 540 L0 540Z','fill':'#173e47'}),node(prefix+'ridge','path',{'d':'M0 320 Q250 270 480 330 T960 290','fill':'none','stroke':'#245064','stroke-width':3})]
+ for i in range(14):
+  x=20+i*74;y=335+(i%3)*16
+  ns += [node(prefix+'stem'+str(i),'path',{'d':f'M{x} {y+45} Q{x-18} {y} {x} {y-24}','fill':'none','stroke':'#4f9d91','stroke-width':3}),node(prefix+'bud'+str(i),'ellipse',{'cx':x,'cy':y-24,'rx':9,'ry':15,'fill':'#e7bd63' if answer else '#42698a'},keys=[{'t':0,'opacity':.3},{'t':4,'opacity':1}])]
+ for i in range(20):ns.append(node(prefix+'star'+str(i),'circle',{'cx':(i*163)%960,'cy':40+(i*53)%210,'r':1+i%2,'fill':'#a7cece'}))
+ return ns
+head=node('keeper_head','g',{},[node('face','circle',{'cx':0,'cy':-108,'r':26,'fill':'#f2cba5'}),node('hair','path',{'d':'M-27 -105 Q-33 -147 0 -142 Q33 -143 27 -105 L16 -123 L-15 -123Z','fill':'#14243c'}),node('eye','circle',{'cx':10,'cy':-110,'r':3,'fill':'#17233a'})])
+arm=node('keeper_arm','g',{},[node('sleeve','path',{'d':'M-5 -75 L34 -48','stroke':'#79d6c4','stroke-width':15,'stroke-linecap':'round'}),node('hand','circle',{'cx':34,'cy':-48,'r':8,'fill':'#f2cba5'}),node('lantern','g',{},[node('lamp','rect',{'x':27,'y':-42,'width':25,'height':34,'rx':5,'fill':'#f5cb69','stroke':'#fff2b5','stroke-width':3}),node('handle','path',{'d':'M30 -42 Q39 -60 49 -42','fill':'none','stroke':'#d9a754','stroke-width':3})])],pose={'pivotX':-5,'pivotY':-75},keys=[{'t':0,'rotation':12},{'t':2.4,'rotation':-65},{'t':5,'rotation':-65}])
+keeper=node('keeper','g',{},[node('legs','path',{'d':'M-14 -15 L-20 28 M12 -15 L22 28','stroke':'#91b9d1','stroke-width':13,'stroke-linecap':'round'}),node('body','path',{'d':'M-22 -82 L18 -82 L30 -12 L-30 -12Z','fill':'#4c9d9d'}),head,arm],pose={'x':300,'y':350},keys=[{'t':0,'x':210},{'t':1.8,'x':300},{'t':5,'x':300}])
+s1={'id':'s1','name':'01 · The keeper','duration':5,'background':'#101c31','nodes':garden('a')+[text('demo','ORIGINAL TOOL DEMONSTRATION',40,40,13,'#72e5c1'),text('title','SIGNAL GARDEN',40,91,38),text('subtitle','One small gesture. A distant answer.',42,125,17,'#a5bed0'),keeper], 'camera':{'keys':[{'t':0,'zoom':1},{'t':5,'zoom':1.045,'x':-8}]},'captions':[{'start':0,'end':2.8,'text':'This is an original studio demonstration.'},{'start':2.8,'end':5,'text':'In the signal garden, one small keeper raises a lantern.'}]}
+s2={'id':'s2','name':'02 · The answer','duration':6,'background':'#12223a','nodes':garden('b',True)+[text('answer','A LIGHT IS ANSWERED',48,80,32),node('flight_path','path',{'d':'M90 260 Q420 60 840 250','fill':'none','stroke':'#507b8d','stroke-width':3,'stroke-dasharray':'8 10'},keys=[{'t':0,'reveal':0},{'t':2,'reveal':1}]),node('signal','g',{},[node('signalhalo','circle',{'r':30,'fill':'#e4b45c','opacity':.16}),node('signalcore','circle',{'r':9,'fill':'#fff2b0'})],keys=[{'t':0,'x':90,'y':260},{'t':2,'x':420,'y':158},{'t':4,'x':840,'y':250},{'t':6,'x':840,'y':250,'opacity':0}]),node('beacon','g',{},[node('beaconpost','rect',{'x':825,'y':275,'width':30,'height':100,'rx':8,'fill':'#3e6e78'}),node('beaconlamp','circle',{'cx':840,'cy':260,'r':26,'fill':'#f3cf7a'},keys=[{'t':0,'opacity':.25},{'t':3,'opacity':.25},{'t':4.4,'opacity':1}])]),text('end','An original 2D studio test — not a story adaptation',48,425,18,'#9bbccb')],'camera':{'keys':[{'t':0,'zoom':1},{'t':6,'zoom':1.06,'x':20}]},'captions':[{'start':0,'end':3.5,'text':'A little light crosses the dark,'},{'start':3.5,'end':6,'text':'and another garden answers.'}]}
+# Original quiet synthesized two-note SFX, portable PCM.
+rate=24000; data=b''.join(struct.pack('<h',int(2800*math.sin(2*math.pi*(660 if i<rate//4 else 880)*i/rate)*max(0,1-i/(rate*.8)))) for i in range(int(rate*.8)))
+with wave.open(str(root/'demo/chime.wav'),'wb') as f:f.setnchannels(1);f.setsampwidth(2);f.setframerate(rate);f.writeframes(data)
+def audio(file,name,start,gain,kind):
+ b=(root/'demo'/file).read_bytes()
+ with wave.open(str(root/'demo'/file)) as f:dur=f.getnframes()/f.getframerate()
+ return dict(name=name,kind=kind,data='data:audio/wav;base64,'+base64.b64encode(b).decode(),start=start,offset=0,duration=dur,gain=gain)
+p=dict(format='jet2d',version=1,title='Signal Garden · Original demonstration',width=960,height=540,fps=24,scenes=[s1,s2],audio=[audio('narration.wav','Original demo narration',.15,.9,'narration'),audio('chime.wav','Signal answer',8.8,.55,'sfx')],ledger=[{'scene':'s1','source':'Original engineering demonstration','action':'Keeper approaches; right arm lifts owned lantern','propOwner':'keeper_arm → lantern','review':'Check hand and lantern stay together'},{'scene':'s2','action':'Signal crosses garden; fixed beacon answers','propOwner':'beacon fixed in garden','review':'Camera push, path reveal and chime align'}])
+(root/'demo/Signal-Garden.jet2d.json').write_text(json.dumps(p,indent=2))
+(root/'app/demo.js').write_text('window.DEMO_PROJECT='+json.dumps(p)+';\n')

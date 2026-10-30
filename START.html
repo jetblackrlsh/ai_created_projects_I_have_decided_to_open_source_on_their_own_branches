@@ -1,0 +1,723 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self' data: blob:; connect-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data: blob:; media-src data: blob:; object-src 'none'; base-uri 'none'"
+    />
+    <title>Jet Black RLSH · 2D Cartoon Studio</title>
+    <link rel="stylesheet" href="app/style.css" />
+  </head>
+  <body>
+    <header>
+      <div class="brand">
+        <span class="mark">J◆</span>
+        <div>JET BLACK RLSH <small>2D CARTOON STUDIO / v1.7.0</small></div>
+      </div>
+      <div class="actions">
+        <button id="new">New</button><button id="demo">Original demo</button
+        ><button id="undo">Undo</button><button id="redo">Redo</button
+        ><button id="save" class="primary">Save project</button
+        ><label class="button"
+          >Load project<input id="load" type="file" accept=".json"
+        /></label>
+      </div>
+    </header>
+    <div class="projectbar">
+      <input id="title" aria-label="Project title" /><span id="summary"></span
+      ><span class="badge">OFFLINE · SVG + FRAME MOTION</span>
+    </div>
+    <main>
+      <aside>
+        <h2>Scene desk</h2>
+        <select id="scenes" aria-label="Scene"></select>
+        <div class="actions">
+          <button id="addScene">+ Scene</button
+          ><button id="duplicateScene">Duplicate</button
+          ><button id="deleteScene">Delete</button>
+        </div>
+        <label>Scene name<input id="sceneName" /></label>
+        <div class="grid2">
+          <label
+            >Duration (s)<input
+              id="duration"
+              type="number"
+              min=".05"
+              step=".1" /></label
+          ><label>Background<input id="background" type="color" /></label>
+        </div>
+        <h2>Artwork</h2>
+        <label class="button"
+          >Import PNG/JPEG/WebP<input
+            id="bitmapImport2D"
+            type="file"
+            accept="image/png,image/jpeg,image/webp"
+        /></label>
+        <div class="shapegrid">
+          <button data-shape="rect">▣ Rectangle</button
+          ><button data-shape="circle">◯ Circle</button
+          ><button data-shape="ellipse">⬭ Ellipse</button
+          ><button data-shape="path">⌁ Path</button
+          ><button data-shape="line">╱ Line</button
+          ><button data-shape="text">T Text</button>
+        </div>
+        <label class="button wide"
+          >Import SVG<input
+            id="svgImport"
+            type="file"
+            accept=".svg,image/svg+xml"
+        /></label>
+        <p class="hint">
+          Safe subset: groups, shapes, paths, text. Styles, filters, images,
+          use, scripts, events and external resources are rejected.
+        </p>
+        <h2>Layers <small>Shift-click for multiple</small></h2>
+        <div id="layers"></div>
+        <div class="actions">
+          <button id="up">Raise</button><button id="down">Lower</button
+          ><button id="group">Group</button><button id="ungroup">Ungroup</button
+          ><button id="deleteNode">Delete</button>
+        </div>
+      </aside>
+      <section class="workspace">
+        <div class="stagebar">
+          <span id="shotLabel"></span
+          ><label
+            ><input id="captionsOn" type="checkbox" checked /> Captions</label
+          ><button id="svgExport">SVG still</button
+          ><button id="pngExport">PNG still</button>
+        </div>
+        <div id="stage" aria-label="Scene canvas"></div>
+        <div class="transport">
+          <button id="play" class="primary">▶ Play</button
+          ><select id="speed" aria-label="Playback speed">
+            <option value="1">1×</option>
+            <option value="2">2×</option></select
+          ><output id="clock"></output
+          ><input
+            id="scrub"
+            aria-label="Timeline"
+            type="range"
+            min="0"
+            step="0.0416666667"
+            value="0"
+          />
+        </div>
+        <div id="ruler"></div>
+        <div class="lower">
+          <section>
+            <h2>Music & SFX library</h2>
+            <div class="grid2">
+              <label
+                >Library category<select id="libraryType">
+                  <option value="music">Music</option>
+                  <option value="sfx">Sound effects</option>
+                </select></label
+              ><label>Recording<select id="libraryTrack"></select></label>
+            </div>
+            <p id="libraryInfo" class="hint"></p>
+            <div class="actions">
+              <button id="libraryPreview">▶ Audition</button
+              ><button id="libraryStop">Stop audition</button
+              ><button id="libraryAdd">+ Add at playhead</button
+              ><button id="libraryScene">+ Fit current scene</button>
+            </div>
+            <details>
+              <summary>Reusable custom library</summary>
+              <label class="button"
+                >Import recording into library<input
+                  id="libraryImport"
+                  type="file"
+                  accept="audio/*" /></label
+              ><button id="librarySave">Save library JSON</button
+              ><label class="button"
+                >Load library JSON<input
+                  id="libraryLoad"
+                  type="file"
+                  accept=".json"
+              /></label>
+              <p class="hint">
+                Imported library recordings stay in memory until saved. Added
+                cues embed their source in the project.
+              </p>
+            </details>
+            <h2>Sound desk</h2>
+            <label
+              >Imported clip role<select id="audioRole">
+                <option value="narration">Narration</option>
+                <option value="music">Music</option>
+                <option value="sfx">SFX</option>
+              </select></label
+            ><label class="button"
+              >+ Audio (narration / music / SFX)<input
+                id="audioImport"
+                type="file"
+                accept="audio/*"
+            /></label>
+            <div id="audioList"></div>
+            <h2>Captions <small>local scene seconds</small></h2>
+            <textarea
+              id="captions"
+              rows="5"
+              aria-label="Caption JSON"
+            ></textarea
+            ><button id="applyCaptions">Apply captions</button>
+          </section>
+          <section>
+            <h2>Camera</h2>
+            <div id="cameraFields" class="grid3"></div>
+            <button id="cameraKey">◆ Camera key at playhead</button
+            ><button id="cameraClear">Clear camera keys</button>
+            <h2>Scene / continuity ledger</h2>
+            <p class="hint">
+              Keep source paragraph IDs, action, prop owner and review notes
+              with the project.
+            </p>
+            <textarea
+              id="ledger"
+              rows="5"
+              aria-label="Continuity ledger JSON"
+            ></textarea
+            ><button id="applyLedger">Apply ledger</button>
+          </section>
+        </div>
+        <details>
+          <summary>Project source / format / headless export</summary>
+          <div class="grid3">
+            <label>Width<input id="width" type="number" /></label
+            ><label>Height<input id="height" type="number" /></label
+            ><label>FPS<input id="fps" type="number" /></label>
+          </div>
+          <button id="format">Apply format</button>
+          <p>
+            Movie: save JSON, then run
+            <code>node scripts/export.cjs movie project.json output-folder</code
+            >. Produces H.264 normal + pitch-preserving 2× MP4. Node, Chrome and
+            FFmpeg required. See README.
+          </p>
+          <textarea
+            id="projectSource"
+            rows="8"
+            aria-label="Project JSON"
+          ></textarea
+          ><button id="refreshSource">Refresh source</button
+          ><button id="applySource">Validate & apply source</button
+          ><button id="validate">Validate project</button>
+        </details>
+      </section>
+      <aside class="inspector">
+        <h2>Inspector <span id="selectedName"></span></h2>
+        <p class="hint">
+          Select a layer or click artwork. Edits change the base pose; use ◆ to
+          record the current pose at the playhead. Keys override base pose.
+        </p>
+        <div id="poseFields" class="grid2"></div>
+        <div class="grid2">
+          <label>Fill<input id="fill" value="#71e6c3" /></label
+          ><label>Stroke<input id="stroke" value="#14243a" /></label
+          ><label
+            >Stroke width<input id="strokeWidth" type="number" step=".5"
+          /></label>
+        </div>
+        <button id="paint">Apply paint</button
+        ><label>Text content<input id="textContent" /></label
+        ><button id="applyText">Apply text</button
+        ><label>Path d<textarea id="pathData" rows="3"></textarea></label
+        ><button id="applyPath">Apply path</button>
+        <h2>Motion keys</h2>
+        <select id="easing" aria-label="Keyframe easing">
+          <option value="smooth">Smooth</option>
+          <option value="linear">Linear</option>
+          <option value="hold">Hold</option></select
+        ><button id="addKey">◆ Pose key at playhead</button>
+        <div id="keys"></div>
+        <button id="clearKeys">Clear node keys</button
+        ><label
+          >Editable SVG attributes (JSON)<textarea
+            id="attributes"
+            rows="6"
+          ></textarea></label
+        ><button id="applyAttributes">Apply attributes</button>
+        <p class="hint">
+          Parent groups supply inherited transforms. Pivot X/Y are in local SVG
+          coordinates. Reveal wipes left-to-right across revealBox (defaults to
+          canvas bounds).
+        </p>
+        <label
+          >Node SVG source<textarea id="nodeSource" rows="5"></textarea></label
+        ><button id="applyNodeSource">Replace with safe SVG</button>
+        <details>
+          <summary>Timed prop ownership</summary>
+          <p>
+            Keys use local scene seconds. parentId is a group ID, or null to
+            drop onto the stage. Optional x/y/rotation specify local placement
+            after transfer. One node is rendered once; cycles are rejected.
+          </p>
+          <textarea
+            id="ownerSource2D"
+            rows="5"
+            aria-label="Ownership keys"
+          ></textarea
+          ><button id="applyOwners2D">Apply ownership keys</button>
+        </details>
+        <h2>Status</h2>
+        <output id="status" role="status">Ready. Original demo loaded.</output>
+        <p class="hint">
+          No automatic lip sync, path morphing, bezier handles, or professional
+          vector editing. Save JSON to preserve work.
+        </p>
+      </aside>
+    </main>
+    <section class="printdesk">
+      <h2>Independent stills</h2>
+      <p>
+        Copy a movie moment, then edit its separate scene without changing your
+        movie. Export a fresh high-resolution PNG and save its editable source.
+      </p>
+      <div class="actions">
+        <button id="stillCapture2D">Copy current movie moment</button
+        ><button id="stillSave2D">Save editable still</button
+        ><label class="button"
+          >Load still<input id="stillLoad2D" type="file" accept=".json"
+        /></label>
+      </div>
+      <div class="grid2">
+        <label
+          >Local scene time<input
+            id="stillTime2D"
+            type="number"
+            min="0"
+            step=".05"
+            value="0" /></label
+        ><label
+          >Width<input
+            id="stillWidth2D"
+            type="number"
+            min="64"
+            max="4096"
+            value="1600" /></label
+        ><label
+          >Height<input
+            id="stillHeight2D"
+            type="number"
+            min="64"
+            max="4096"
+            value="900" /></label
+        ><label
+          >Frame fit<select id="stillFit2D">
+            <option>contain</option>
+            <option>cover</option>
+            <option>stretch</option>
+          </select></label
+        >
+      </div>
+      <label
+        ><input id="stillCaptions2D" type="checkbox" /> Include movie
+        captions</label
+      >
+      <details>
+        <summary>Edit independent scene, camera, artwork and pose JSON</summary>
+        <textarea id="stillSource2D" rows="12"></textarea
+        ><button id="stillApply2D">Apply still JSON</button>
+      </details>
+      <div class="actions">
+        <button id="stillPreview2D">Preview still</button
+        ><button id="stillPng2D">Download fresh PNG</button>
+      </div>
+      <canvas id="stillCanvas2D" width="800" height="450"></canvas>
+      <h2>Editable comic pages</h2>
+      <p>
+        Panels contain independent scene snapshots. Speech, thought and caption
+        balloons are editable in page JSON. PDF is a finished comic; save JSON
+        to preserve editing.
+      </p>
+      <div class="actions">
+        <button id="comicNew2D">New comic from still/current moment</button
+        ><button id="comicSave2D">Save editable comic</button
+        ><label class="button"
+          >Load comic<input id="comicLoad2D" type="file" accept=".json"
+        /></label>
+      </div>
+      <label>Comic title<input id="comicTitle2D" /></label>
+      <div class="actions">
+        <select id="comicPages2D" aria-label="Comic page"></select
+        ><select id="comicLayout2D" aria-label="Comic layout">
+          <option value="cover">Cover</option>
+          <option value="one">1 panel</option>
+          <option value="two">2 panels</option>
+          <option value="four">4 panels</option>
+          <option value="six">6 panels</option>
+          <option value="nine">9 panels</option>
+          <option value="whos-who">Who's Who</option>
+          <option value="credits">Credits</option></select
+        ><button id="comicAddPage2D">Add page</button
+        ><button id="comicAddPanel2D">Add still/current moment as panel</button
+        ><button id="comicDuplicate2D">Duplicate page</button
+        ><button id="comicDelete2D">Delete page</button
+        ><button id="comicEarlier2D">Move earlier</button
+        ><button id="comicLater2D">Move later</button>
+      </div>
+      <details>
+        <summary>Edit panel, caption and balloon JSON</summary>
+        <p>
+          Example balloon:
+          {"kind":"speech","text":"Hello!","x":0.05,"y":0.05,"w":0.6,"h":0.3,"tail":[0.7,0.6],"fontSize":22}.
+          Panel fit may be contain, cover or stretch. Overflow is rejected.
+        </p>
+        <textarea id="comicSource2D" rows="14"></textarea
+        ><button id="comicApply2D">Apply page JSON</button>
+      </details>
+      <div class="actions">
+        <button id="comicPng2D">Download page PNG</button
+        ><button id="comicPdf2D">Download complete PDF</button>
+      </div>
+      <div id="printStatus" role="status">
+        Copy a moment to begin. All changes stay in memory until saved.
+      </div>
+      <canvas id="comicCanvas2D" width="637" height="825"></canvas>
+    </section>
+    <section class="printdesk">
+      <h2>Offline speech — Kokoro preferred</h2>
+      <label>Provider <select id="voiceProvider2D"><option value="kokoro">Kokoro — natural voice (local CLI + import)</option><option value="bundled">Bundled synthesized voices — instant, no setup</option></select></label>
+      <label>Speaker ID <input id="voiceSpeaker2D" value="narrator" maxlength="41"></label>
+      <label>Kokoro voice ID <input id="voiceKokoro2D" value="af_heart"></label>
+      <label>Speed <input id="voiceSpeed2D" type="number" min="0.5" max="2" step="0.05" value="1"></label>
+      <label>Language <input id="voiceLang2D" value="en-us"></label>
+      <button id="voiceLock2D">Lock speaker voice</button><button id="voicePreference2D">Save provider preference</button>
+      <p id="voiceSetup2D">Kokoro runs in a separate local Python CLI, not inside this page. No model downloads happen on opening. See docs/kokoro.md for explicit setup, then export a request, synthesize locally and import the resulting WAV with its optional JSON sidecar.</p>
+      <button id="voiceRequest2D">Download Kokoro request JSON</button>
+      <label>Import Kokoro WAV + optional .wav.json sidecar <input id="voiceImport2D" type="file" multiple accept=".wav,.json,audio/wav,application/json"></label>
+      <p>
+        Kokoro is preferred for new blank projects. Existing projects keep their voices and recordings unchanged. Bundled meSpeak/eSpeak voices remain available without setup.
+      </p>
+      <label
+        >Voice preset<select id="voicePreset2D">
+          <option>narrator</option>
+          <option>warm</option>
+          <option>bright</option>
+          <option>gruff</option>
+          <option>whisper</option>
+          <option>robot</option>
+        </select></label
+      ><button id="voiceUseCaptions2D">Use current scene captions</button
+      ><textarea
+        id="voiceText2D"
+        rows="5"
+        maxlength="8000"
+        aria-label="Narration text"
+      ></textarea>
+      <div class="actions">
+        <button id="voiceGenerate2D">Generate speech</button
+        ><button id="voiceAudition2D">Audition</button
+        ><button id="voiceStop2D">Stop voice</button
+        ><button id="voiceDownload2D">Download WAV</button
+        ><button id="voiceApply2D">Replace current scene narration</button><button id="voiceDialogue2D">Add speaker clip at playhead</button>
+      </div>
+      <div id="voiceStatus2D" role="status">
+        Generate a voice, then review before replacing narration.
+      </div>
+    </section>
+    <section class="printdesk">
+      <h2>Record a movie in this browser</h2>
+      <p>
+        Offline normal-speed recording with narration, music and SFX. Keep the
+        tab visible. Output is MP4 when supported, otherwise WebM. Actual timing
+        depends on browser performance; headless export remains the
+        deterministic normal/2x production path.
+      </p>
+      <div class="actions">
+        <label
+          >First scene (0-based)<input
+            id="recordFirst2D"
+            type="number"
+            min="0"
+            value="0" /></label
+        ><label
+          >Last scene (0-based)<input
+            id="recordLast2D"
+            type="number"
+            min="0"
+            value="0" /></label
+        ><button id="recordAll2D">Select whole project</button
+        ><button id="recordMovie2D">Record movie</button
+        ><button id="recordCancel2D">Cancel recording</button>
+      </div>
+      <div id="recordStatus2D" role="status">No recording in progress.</div>
+    </section>
+    <section class="printdesk">
+      <h2>Reusable artwork and action catalog</h2>
+      <p>
+        Original editable SVG interpretations of the existing studio's core
+        character palettes/species. These are 2D cutouts, not converted 3D
+        meshes. Action presets become ordinary editable keys.
+      </p>
+      <div class="actions">
+        <select id="catalogCharacter2D" aria-label="Character template"></select
+        ><button id="catalogAddCharacter2D">Add character</button
+        ><select
+          id="catalogEnvironment2D"
+          aria-label="Environment template"
+        ></select
+        ><button id="catalogAddEnvironment2D">Set library background</button>
+      </div>
+      <div class="actions">
+        <select id="catalogActor2D" aria-label="Scene character"></select
+        ><button id="catalogRefresh2D">Refresh scene characters</button
+        ><select id="catalogAction2D" aria-label="Action preset"></select
+        ><label
+          >Action seconds<input
+            id="catalogActionDuration2D"
+            type="number"
+            value="3"
+            min=".05"
+            max="120"
+            step=".1" /></label
+        ><button id="catalogApplyAction2D">Apply action at playhead</button>
+      </div>
+      <div class="actions">
+        <select id="catalogProp2D" aria-label="Prop template"></select
+        ><label
+          ><input id="catalogAttachProp2D" type="checkbox" checked /> Attach to
+          selected character's right hand</label
+        ><button id="catalogAddProp2D">Add prop</button
+        ><button id="catalogSaveTemplate2D">
+          Save selected artwork template</button
+        ><label class="button"
+          >Load artwork template<input
+            id="catalogLoadTemplate2D"
+            type="file"
+            accept=".json"
+        /></label>
+      </div>
+      <div class="actions">
+        <select id="catalogEffect2D" aria-label="Visual effect"></select
+        ><label
+          >Effect seconds<input
+            id="catalogEffectDuration2D"
+            type="number"
+            value=".8"
+            min=".05"
+            max="120"
+            step=".05" /></label
+        ><button id="catalogAddEffect2D">Add effect at playhead</button>
+      </div>
+      <div id="catalogStatus2D" role="status">
+        Choose a template, then edit its layers and keys normally.
+      </div>
+    </section>
+    <section class="printdesk">
+      <h2>Blank articulated person puppet</h2>
+      <p>
+        Reusable front-view SVG skeleton with pelvis, torso, neck, head,
+        shoulders, elbows, wrists, hips, knees and ankles. Appearance layers
+        stay separate from motion. Forward kinematics, not automatic foot
+        planting or 3D turning.
+      </p>
+      <div class="actions">
+        <button id="puppetAdd">Add blank person puppet</button
+        ><button id="puppetRefresh">Refresh puppets</button
+        ><select id="puppetSelect" aria-label="Articulated puppet"></select>
+      </div>
+      <details open>
+        <summary>Restyle without rebuilding animation</summary>
+        <label
+          >Skin <input id="puppetskin" type="color" value="#d7dce3" /></label
+        ><label
+          >Shirt <input id="puppetshirt" type="color" value="#b8c4d4" /></label
+        ><label
+          >Pants <input id="puppetpants" type="color" value="#8997ab" /></label
+        ><label
+          >Shoes <input id="puppetshoes" type="color" value="#465269" /></label
+        ><label
+          >Hair <input id="puppethair" type="color" value="#303a4c" /></label
+        ><label><input id="puppetHairVisible" type="checkbox" />Show hair</label
+        ><button id="puppetStyle">Apply appearance only</button>
+      </details>
+      <label
+        >Joint
+        <select id="puppetJoint"></select></label
+      ><label
+        >Rotation in degrees
+        <input id="puppetRotation" type="number" value="0" step="5" /></label
+      ><label
+        >Local X offset <input id="puppetX" type="number" value="0" /></label
+      ><label
+        >Local Y offset <input id="puppetY" type="number" value="0" /></label
+      ><button id="puppetSetJoint">Key this pose at playhead</button>
+      <label
+        >Hand
+        <select id="puppetHandSide">
+          <option value="L">Left</option>
+          <option value="R">Right</option>
+        </select></label
+      ><label
+        >Shape
+        <select id="puppetHandShape">
+          <option>open</option>
+          <option>fist</option>
+          <option>point</option>
+        </select></label
+      ><button id="puppetSetHand">Key hand shape</button>
+      <label
+        >Articulated action
+        <select id="puppetCategory" aria-label="Action category">
+          <option>All</option>
+          <option>Everyday</option>
+          <option>Combat</option>
+          <option>Powers</option>
+          <option>Emotions</option>
+        </select>
+        <select id="puppetAction"></select></label
+      ><label
+        >Action seconds
+        <input
+          id="puppetDuration"
+          type="number"
+          value="2"
+          min="0.1"
+          max="30"
+          step="0.1"
+      /></label>
+      <div class="actions">
+        <button id="puppetApplyAction">Apply puppet action at playhead</button
+        ><button id="puppetClear">Clear selected puppet animation</button
+        ><button id="puppetSavePose">Save reusable pose</button
+        ><button id="puppetSaveClip">Save selected action template</button
+        ><label
+          >Load pose/action template<input
+            id="puppetLoadTemplate"
+            type="file"
+            accept=".json"
+        /></label>
+      </div>
+      <p>
+        Manual poses key the current scene time. Action templates reject
+        overlapping clips rather than silently replacing them. Save your project
+        JSON to keep the puppet, appearance and motion. Open
+        docs/ARTICULATED-PUPPET.md for examples and limits.
+      </p>
+      <details>
+        <summary>Replace selected joint artwork with SVG</summary>
+        <p>
+          Uses the selected joint above. Only its decorative shapes are
+          replaced; child joints and animations stay intact. SVG viewBox origins
+          are normalized by import. Set local offsets to align the new artwork,
+          then inspect the result. See the puppet guide for a torso template.
+        </p>
+        <label
+          >Artwork local X
+          <input id="puppetArtX" type="number" value="-28" /></label
+        ><label
+          >Artwork local Y
+          <input id="puppetArtY" type="number" value="-104" /></label
+        ><label
+          >Import replacement artwork
+          <input id="puppetArtwork" type="file" accept=".svg,image/svg+xml"
+        /></label>
+      </details>
+      <label
+        >Action intensity
+        <input
+          id="puppetIntensity"
+          type="number"
+          min="0.25"
+          max="1.5"
+          step="0.1"
+          value="1" /></label
+      ><label
+        ><input id="puppetMirror" type="checkbox" />Mirror left/right
+        action</label
+      ><label
+        ><input id="puppetAddAccessory" type="checkbox" />Add matching generic
+        prop or power effect with this action</label
+      >
+      <p id="puppetActionHelp">
+        Choose a preset. Combat and power accessories are optional and editable.
+      </p>
+      <div id="puppetStatus" role="status">Add a blank puppet to begin.</div>
+    </section>
+    <section class="printdesk">
+      <h2>Local browser self-test</h2>
+      <p>
+        Optional diagnostics run entirely on this computer, without uploading
+        anything or changing your movie. Keep the tab visible for the
+        four-second test recording. The report includes browser version and test
+        results. These checks do not replace a listening review.
+      </p>
+      <div class="actions">
+        <button id="selfTestRun2D">Run local browser checks</button
+        ><button id="selfTestCancel2D">Cancel checks</button
+        ><button id="selfTestSave2D">Save test report</button
+        ><button id="selfTestMovie2D">Save diagnostic movie</button
+        ><button id="selfTestPdf2D">Save diagnostic PDF</button>
+      </div>
+      <div id="selfTestStatus2D" role="status">Not run on this browser.</div>
+      <details>
+        <summary>Detailed results</summary>
+        <pre id="selfTestResult2D"></pre>
+      </details>
+    </section>
+<section class="panel"><h2>Character views, staging &amp; dialogue</h2>
+<label>Identity <input id="stageIdentity" value="character"></label>
+<label>View <select id="stageView"><option>front</option><option>back</option><option>right</option><option>left</option></select></label>
+<label>Hair <select id="stageHair"><option>short</option><option>bald</option><option>curly</option><option>long</option><option>dreads</option><option>ponytail</option></select></label>
+<label>Outfit <select id="stageOutfit"><option>shirt</option><option>armor</option><option>coat</option><option>tunic</option></select></label>
+<label>Skin <input type="color" id="stageSkin" value="#936d51"></label><label>Shirt <input type="color" id="stageShirt" value="#647e69"></label><label><input type="checkbox" id="stageBeard"> Beard</label>
+<label><input type="checkbox" id="stageExtra"> Seeded extra (overrides manual appearance)</label><label>Extra seed <input type="number" id="stageSeed" min="0" value="0"></label><button id="stageAddCharacter">Add view character</button>
+<label>Travel to X <input type="number" id="stageTravelX" value="700"></label><label>Seconds <input type="number" id="stageTravelDuration" min="0.1" max="30" value="3"></label><select id="stageGait"><option>walk</option><option>run</option><option>quiet</option><option>carry</option></select><button id="stageTravel">Walk selected actor from playhead</button>
+<label>Prop visible until scene second <input type="number" id="stagePropEnd" value="3" min="0.1"></label><button id="stageHideProp">Restrict selected prop visibility</button>
+<label>Speaker ID <input id="stageSpeaker" value="narrator"></label><select id="stageVoice"><option>narrator</option><option>warm</option><option>bright</option><option>gruff</option><option>whisper</option><option>robot</option></select><button id="stageVoiceLock">Lock speaker voice</button><textarea id="stageSpeechText" placeholder="Speaker's actual line"></textarea><button id="stageDialogue">Generate and add speaker speech at playhead</button>
+<label>Card title <input id="stageCardTitle" value="Title"></label><textarea id="stageCardLines" placeholder="One credit line per row"></textarea><input id="stageCardDuration" type="number" min="0.1" max="120" value="8"><button id="stageCard">Append title / credits card</button><p id="stagecraftStatus" role="status">View-specific cutout art, not 3D turning. Narrate title and credits using speaker speech.</p></section>
+    <script src="app/audio.js"></script>
+    <section class="printdesk">
+      <h2>Reusable scene library</h2>
+      <p>Generic editable props, layered settings and transparent visual effects. Refresh after changing scenes or adding a puppet. Motion and audio stay separate.</p>
+      <button id="refreshSceneLibrary">Refresh puppet list</button>
+      <h3>Props and weapons</h3>
+      <div class="grid2"><label>Category<select id="propsCategory"></select></label><label>Prop<select id="propsAsset"></select></label></div>
+      <p id="propAssetHelp" class="hint"></p>
+      <div class="grid2"><label>Puppet<select id="propPuppet"></select></label><label>Hand<select id="propHand"><option value="R">Right</option><option value="L">Left</option></select></label></div>
+      <label><input type="checkbox" id="propAttach"/> Attach to articulated hand (otherwise add to stage)</label>
+      <div class="grid2"><label>Size<input id="propAssetScale" type="number" min=".1" max="3" step=".1" value="1"/></label><label>Grip rotation<input id="propGripRotation" type="number" min="-720" max="720" value="0"/></label><label>Grip X<input id="propGripX" type="number" min="-500" max="500" value="0"/></label><label>Grip Y<input id="propGripY" type="number" min="-500" max="500" value="0"/></label></div>
+      <div class="actions"><button id="addSceneProp">Add editable prop</button><button id="removeHandProp">Remove selected hand prop</button></div>
+      <h3>Biomes and settings</h3>
+      <div class="grid2"><label>Category<select id="backgroundsCategory"></select></label><label>Setting<select id="backgroundsAsset"></select></label></div>
+      <button id="addSceneBackground">Replace background only</button>
+      <h3>Animated visual overlays</h3>
+      <div class="grid2"><label>Category<select id="effectsCategory"></select></label><label>Effect<select id="effectsAsset"></select></label><label>Color<input id="effectTint" type="color" value="#98a8b5"/></label><label>Duration (seconds)<input id="overlayDuration" type="number" min=".1" max="30" step=".1" value="2"/></label><label>Size<input id="overlayScale" type="number" min=".1" max="4" step=".1" value="1"/></label><label>Intensity<input id="overlayIntensity" type="number" min=".25" max="2" step=".25" value="1"/></label></div>
+      <button id="addSceneOverlay">Add animated overlay at playhead</button>
+      <p class="hint">Visual SFX only. Rain/snow use the scene dimensions; other effects start at the center. Reposition the effect group in the layer editor. No physics, automatic contacts, or sound are implied.</p>
+      <div id="sceneLibraryStatus" role="status">Ready for reusable scenery.</div>
+    </section>
+    <script src="app/core.js"></script>
+    <script src="app/demo.js"></script>
+    <script src="app/library.js"></script>
+    <script src="app/timeline.js"></script>
+    <script src="app/editor.js"></script>
+    <script src="vendor/pdf-lib/pdf-lib.min.js"></script>
+    <script src="app/print.js"></script>
+    <script src="app/print-ui.js"></script>
+    <script src="vendor/voice/voice.bundle.js"></script>
+    <script src="app/voice-tools.js"></script>
+    <script src="app/voice-ui.js"></script>
+    <script src="app/recorder.js"></script>
+    <script src="app/recorder-ui.js"></script>
+    <script src="app/character-palettes.js"></script>
+    <script src="app/catalog.js"></script>
+    <script src="app/catalog-ui.js"></script>
+    <script src="app/bitmap-ui.js"></script>
+    <script src="app/puppet.js"></script>
+    <script src="app/puppet-actions.js"></script>
+    <script src="app/puppet-ui.js"></script>
+    <script src="app/scene-props.js"></script>
+    <script src="app/scene-backgrounds.js"></script>
+    <script src="app/scene-effects.js"></script>
+    <script src="app/scene-library.js"></script>
+    <script src="app/scene-library-ui.js"></script>
+    <script src="app/stagecraft.js"></script>
+    <script src="app/stagecraft-ui.js"></script>
+    <script src="app/browser-self-test.js"></script>
+  </body>
+</html>

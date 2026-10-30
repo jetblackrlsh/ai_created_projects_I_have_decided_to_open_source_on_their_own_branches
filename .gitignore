@@ -1,0 +1,10 @@
+node_modules/
+vendor/voice/voice.bundle.js
+output/
+__pycache__/
+*.pyc
+.DS_Store
+vendor/playwright-core/
+.venv/
+app/library.js
+library/library.jet-audio-library.json

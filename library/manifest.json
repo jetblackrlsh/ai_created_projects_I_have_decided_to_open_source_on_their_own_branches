@@ -1,0 +1,272 @@
+{
+  "format": "jet2d-audio-library",
+  "version": 1,
+  "title": "Jet Black \u00b7 Music & Action Effects",
+  "assets": [
+    {
+      "id": "music/Anger",
+      "name": "Anger",
+      "kind": "music",
+      "available": true,
+      "duration": 163.824,
+      "mime": "audio/mpeg",
+      "file": "Anger.mp3",
+      "sha256": "0e2c817dc40ef399b7b2e54a178f59ae3019e6cb9e6647ada2b31809af988180",
+      "provenance": {
+        "source": "Original music by Jet Black",
+        "author": "Jet Black",
+        "rights": "CC0 dedication of contributor-owned original music; public redistribution explicitly authorized",
+        "formatNote": "Original filename extension retained; MIME reflects detected container."
+      }
+    },
+    {
+      "id": "music/Determination",
+      "name": "Determination",
+      "kind": "music",
+      "available": true,
+      "duration": 179.328,
+      "mime": "audio/mpeg",
+      "file": "Determination.mp3",
+      "sha256": "35536bc68183896561e298500eac0207422ea792f280fa97ed73f0df155fa869",
+      "provenance": {
+        "source": "Original music by Jet Black",
+        "author": "Jet Black",
+        "rights": "CC0 dedication of contributor-owned original music; public redistribution explicitly authorized",
+        "formatNote": "Original filename extension retained; MIME reflects detected container."
+      }
+    },
+    {
+      "id": "music/Playfulness",
+      "name": "Playfulness",
+      "kind": "music",
+      "available": true,
+      "duration": 149.256,
+      "mime": "audio/mpeg",
+      "file": "Playfulness.mp3",
+      "sha256": "bbe50be8f3cf189ce8a013d5f96230a02ffa583df20d6634c50dc0f2d91b011e",
+      "provenance": {
+        "source": "Original music by Jet Black",
+        "author": "Jet Black",
+        "rights": "CC0 dedication of contributor-owned original music; public redistribution explicitly authorized",
+        "formatNote": "Original filename extension retained; MIME reflects detected container."
+      }
+    },
+    {
+      "id": "music/Fear",
+      "name": "Fear",
+      "kind": "music",
+      "available": true,
+      "duration": 122.136,
+      "mime": "audio/mpeg",
+      "file": "Fear.mp3",
+      "sha256": "c3b5d2d5cf4dd8827afa56d4f59711d6970bf77e42ddf2a2dbc2ccbb99bf75c0",
+      "provenance": {
+        "source": "Original music by Jet Black",
+        "author": "Jet Black",
+        "rights": "CC0 dedication of contributor-owned original music; public redistribution explicitly authorized",
+        "formatNote": "Original filename extension retained; MIME reflects detected container."
+      }
+    },
+    {
+      "id": "music/Nostalgia",
+      "name": "Nostalgia",
+      "kind": "music",
+      "available": true,
+      "duration": 170.28,
+      "mime": "audio/mpeg",
+      "file": "Nostalgia.mp3",
+      "sha256": "f9001100cf176629c6d11ea3110064dbfb3fd0f7a0db0373568649c00b7937d5",
+      "provenance": {
+        "source": "Original music by Jet Black",
+        "author": "Jet Black",
+        "rights": "CC0 dedication of contributor-owned original music; public redistribution explicitly authorized",
+        "formatNote": "Original filename extension retained; MIME reflects detected container."
+      }
+    },
+    {
+      "id": "music/Tranquility",
+      "name": "Tranquility",
+      "kind": "music",
+      "available": true,
+      "duration": 176.808,
+      "mime": "audio/mpeg",
+      "file": "Tranquility.mp3",
+      "sha256": "d178291d3222caeecb346baa973cb393b0b43b54ba085ca0a566f03e90c66abe",
+      "provenance": {
+        "source": "Original music by Jet Black",
+        "author": "Jet Black",
+        "rights": "CC0 dedication of contributor-owned original music; public redistribution explicitly authorized",
+        "formatNote": "Original filename extension retained; MIME reflects detected container."
+      }
+    },
+    {
+      "id": "music/Excitement",
+      "name": "Excitement",
+      "kind": "music",
+      "available": true,
+      "duration": 171.024,
+      "mime": "audio/mpeg",
+      "file": "Excitement.mp3",
+      "sha256": "e02235ea683306d5d8c53a8079989f53a815f86798f81f0086736703eaa71728",
+      "provenance": {
+        "source": "Original music by Jet Black",
+        "author": "Jet Black",
+        "rights": "CC0 dedication of contributor-owned original music; public redistribution explicitly authorized",
+        "formatNote": "Original filename extension retained; MIME reflects detected container."
+      }
+    },
+    {
+      "id": "music/Suspense",
+      "name": "Suspense",
+      "kind": "music",
+      "available": true,
+      "duration": 167.616,
+      "mime": "audio/mpeg",
+      "file": "Suspense.mp3",
+      "sha256": "315ebaab6320713b330151c8779e09c7d20e0a2c10f78fa46e90d1b64d074011",
+      "provenance": {
+        "source": "Original music by Jet Black",
+        "author": "Jet Black",
+        "rights": "CC0 dedication of contributor-owned original music; public redistribution explicitly authorized",
+        "formatNote": "Original filename extension retained; MIME reflects detected container."
+      }
+    },
+    {
+      "id": "music/Sorrow",
+      "name": "Sorrow",
+      "kind": "music",
+      "available": true,
+      "duration": 147.456,
+      "mime": "audio/mpeg",
+      "file": "Sorrow.mp3",
+      "sha256": "7b7468bff713d63af002c2041e8a88543652166e46bd3cffda54ccdff2b9901d",
+      "provenance": {
+        "source": "Original music by Jet Black",
+        "author": "Jet Black",
+        "rights": "CC0 dedication of contributor-owned original music; public redistribution explicitly authorized",
+        "formatNote": "Original filename extension retained; MIME reflects detected container."
+      }
+    },
+    {
+      "id": "music/Joy",
+      "name": "Joy",
+      "kind": "music",
+      "available": true,
+      "duration": 171.936,
+      "mime": "audio/mpeg",
+      "file": "Joy.mp3",
+      "sha256": "70a7331cf3df6300acf95af3cd5342b8667a3c751ce2576f251543fadf12e07a",
+      "provenance": {
+        "source": "Original music by Jet Black",
+        "author": "Jet Black",
+        "rights": "CC0 dedication of contributor-owned original music; public redistribution explicitly authorized",
+        "formatNote": "Original filename extension retained; MIME reflects detected container."
+      }
+    },
+    {
+      "id": "sfx/metal-step",
+      "name": "Metal Step",
+      "kind": "sfx",
+      "available": true,
+      "duration": 0.32,
+      "mime": "audio/wav",
+      "file": "metal-step.wav",
+      "sha256": "e82899c46e1ce339c323081bd0a343de17648e397f68d3938646ccfce341eb9c",
+      "provenance": {
+        "source": "Original local deterministic PCM synthesis",
+        "rights": "CC0 dedication of contributor-owned original asset; public redistribution explicitly authorized",
+        "author": "Jet Black"
+      }
+    },
+    {
+      "id": "sfx/blade-clang",
+      "name": "Blade Clang",
+      "kind": "sfx",
+      "available": true,
+      "duration": 0.8,
+      "mime": "audio/wav",
+      "file": "blade-clang.wav",
+      "sha256": "2f198aa79abb11ac9e0bec4e4bd3740ef1bcc6d791ed3e9b523d25fae7d186da",
+      "provenance": {
+        "source": "Original local deterministic PCM synthesis",
+        "rights": "CC0 dedication of contributor-owned original asset; public redistribution explicitly authorized",
+        "author": "Jet Black"
+      }
+    },
+    {
+      "id": "sfx/soft-impact",
+      "name": "Soft Impact",
+      "kind": "sfx",
+      "available": true,
+      "duration": 0.4,
+      "mime": "audio/wav",
+      "file": "soft-impact.wav",
+      "sha256": "5a869d6f127a84fe8b5f5fe01945ac0e5a50221b53aab952578210a3e5906e2f",
+      "provenance": {
+        "source": "Original local deterministic PCM synthesis",
+        "rights": "CC0 dedication of contributor-owned original asset; public redistribution explicitly authorized",
+        "author": "Jet Black"
+      }
+    },
+    {
+      "id": "sfx/panel-creak",
+      "name": "Panel Creak",
+      "kind": "sfx",
+      "available": true,
+      "duration": 0.75,
+      "mime": "audio/wav",
+      "file": "panel-creak.wav",
+      "sha256": "644595a968e567ab9415436f051a662bdbff3d6bbbe601e5ac0e70fece41a536",
+      "provenance": {
+        "source": "Original local deterministic PCM synthesis",
+        "rights": "CC0 dedication of contributor-owned original asset; public redistribution explicitly authorized",
+        "author": "Jet Black"
+      }
+    },
+    {
+      "id": "sfx/polarity-click",
+      "name": "Polarity Click",
+      "kind": "sfx",
+      "available": true,
+      "duration": 0.38,
+      "mime": "audio/wav",
+      "file": "polarity-click.wav",
+      "sha256": "947f01bb45b470b1add103d775ced8d7e49e90994d18748b23556c39a505bb2d",
+      "provenance": {
+        "source": "Original local deterministic PCM synthesis",
+        "rights": "CC0 dedication of contributor-owned original asset; public redistribution explicitly authorized",
+        "author": "Jet Black"
+      }
+    },
+    {
+      "id": "sfx/servo",
+      "name": "Servo",
+      "kind": "sfx",
+      "available": true,
+      "duration": 0.75,
+      "mime": "audio/wav",
+      "file": "servo.wav",
+      "sha256": "fe4f7e98647ff2bf1aeccfbd482e4d4cd80511e3713274983ac6321a4265cec0",
+      "provenance": {
+        "source": "Original local deterministic PCM synthesis",
+        "rights": "CC0 dedication of contributor-owned original asset; public redistribution explicitly authorized",
+        "author": "Jet Black"
+      }
+    },
+    {
+      "id": "sfx/furnace",
+      "name": "Furnace",
+      "kind": "sfx",
+      "available": true,
+      "duration": 2.8,
+      "mime": "audio/wav",
+      "file": "furnace.wav",
+      "sha256": "7cc67d63148a6086f2f80ed091e53d5f607a0630bd577b40fff39c193b0c6d97",
+      "provenance": {
+        "source": "Original local deterministic PCM synthesis",
+        "rights": "CC0 dedication of contributor-owned original asset; public redistribution explicitly authorized",
+        "author": "Jet Black"
+      }
+    }
+  ]
+}

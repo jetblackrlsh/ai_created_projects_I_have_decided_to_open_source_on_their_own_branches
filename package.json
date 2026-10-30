@@ -1,0 +1,29 @@
+{
+  "name": "jet-black-2d-cartoon-studio",
+  "version": "1.7.0",
+  "private": false,
+  "description": "Offline SVG cartoon studio, editor, audio and headless export tools.",
+  "optionalDependencies": {
+    "@napi-rs/canvas": "0.1.80"
+  },
+  "devDependencies": {
+    "jsdom": "30.1.2",
+    "esbuild": "0.25.12"
+  },
+  "scripts": {
+    "test:print": "node scripts/verify-print.cjs",
+    "test:ui": "node scripts/verify-parity-ui.cjs",
+    "test:voice": "node scripts/verify-voice.cjs",
+    "test:catalog": "node scripts/verify-catalog.cjs",
+    "test:recorder": "node scripts/verify-recorder.cjs",
+    "test:puppet": "node scripts/verify-puppet.cjs && node scripts/verify-puppet-ui.cjs",
+    "test:actions": "node scripts/verify-puppet-actions.cjs && node scripts/verify-puppet-ui.cjs",
+    "test:kokoro": "node scripts/verify-kokoro.cjs && node scripts/verify-kokoro-ui.cjs && node scripts/verify-kokoro-audio.cjs",
+    "build": "node scripts/build.cjs"
+  },
+  "license": "CC0-1.0",
+  "dependencies": {
+    "mespeak": "2.0.2",
+    "playwright-core": "1.58.2"
+  }
+}

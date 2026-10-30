@@ -1,0 +1,184 @@
+{
+  "provenance": "Palette and species metadata from the user\u2019s existing 3D Studio; new original editable SVG construction. Not a geometric conversion or exact model likeness.",
+  "characters": {
+    "jet": {
+      "skin": "#6b3c27",
+      "top": "#171b26",
+      "legs": "#101520",
+      "head": "jet",
+      "hair": true
+    },
+    "bat": {
+      "skin": "#6b3c27",
+      "top": "#722b9c",
+      "legs": "#4c2068",
+      "head": "jet",
+      "ears": true,
+      "hair": true
+    },
+    "guard": {
+      "skin": "#7e6562",
+      "top": "#652488",
+      "legs": "#38204b",
+      "head": "cloaked",
+      "ears": true
+    },
+    "timewoman": {
+      "skin": "#b68e68",
+      "top": "#9c4944",
+      "legs": "#292e48",
+      "head": "timewoman"
+    },
+    "cloaked": {
+      "skin": "#ae9d9b",
+      "top": "#151420",
+      "legs": "#171323",
+      "head": "cloaked",
+      "cloak": true
+    },
+    "bluevillain": {
+      "skin": "#3677b9",
+      "top": "#7737a7",
+      "legs": "#442868",
+      "head": "bluevillain"
+    },
+    "wizard": {
+      "skin": "#868eaa",
+      "top": "#435e83",
+      "legs": "#303b65",
+      "head": "cloaked",
+      "cloak": true
+    },
+    "extra": {
+      "skin": "#9b7056",
+      "top": "#2f827b",
+      "legs": "#323c5c",
+      "head": "timewoman"
+    },
+    "solar": {
+      "species": "bear",
+      "color": "#e8ab28",
+      "accent": "#fff1a1",
+      "height": 1.12
+    },
+    "clover": {
+      "species": "bear",
+      "color": "#36865d",
+      "accent": "#b8d68e"
+    },
+    "olympian": {
+      "species": "bear",
+      "color": "#3275bd",
+      "accent": "#b2d9ed",
+      "height": 1.3
+    },
+    "doctor": {
+      "species": "bear",
+      "color": "#936c52",
+      "accent": "#e8e4d7",
+      "coat": true
+    },
+    "roo": {
+      "species": "roo",
+      "color": "#b58961",
+      "accent": "#e4c0a1",
+      "cyber": true
+    },
+    "roo-young": {
+      "species": "roo",
+      "color": "#b58961",
+      "accent": "#e4c0a1"
+    },
+    "rex": {
+      "species": "rex",
+      "color": "#6a6350",
+      "accent": "#c6a27b"
+    },
+    "cyberrex": {
+      "species": "rex",
+      "color": "#434d60",
+      "accent": "#a1bec8",
+      "cyber": true
+    },
+    "damon": {
+      "species": "human",
+      "color": "#345877",
+      "accent": "#bd886b"
+    },
+    "bolt": {
+      "species": "human",
+      "color": "#267eb6",
+      "accent": "#bd886b",
+      "bolt": true
+    },
+    "mother": {
+      "species": "human",
+      "color": "#8c5d8e",
+      "accent": "#b68268"
+    },
+    "father": {
+      "species": "human",
+      "color": "#477b6c",
+      "accent": "#b68268"
+    },
+    "blue": {
+      "species": "robot",
+      "color": "#285394",
+      "accent": "#88bfe3"
+    },
+    "red": {
+      "species": "robot",
+      "color": "#ac3c4c",
+      "accent": "#ffbcb1"
+    },
+    "ninja": {
+      "species": "human",
+      "color": "#27233d",
+      "accent": "#4c405f",
+      "ninja": true
+    },
+    "mercenary": {
+      "species": "human",
+      "color": "#6c627c",
+      "accent": "#b59a83",
+      "armor": true
+    },
+    "aliencommander": {
+      "species": "insect",
+      "color": "#6a7662",
+      "accent": "#d8bd7e"
+    },
+    "dragon": {
+      "species": "dragon",
+      "color": "#719eae",
+      "accent": "#d9f1e1"
+    },
+    "slime": {
+      "species": "slime",
+      "color": "#ce8bd0",
+      "accent": "#a7d7e5"
+    },
+    "fire": {
+      "species": "elemental",
+      "color": "#eb804c",
+      "accent": "#fff2ae"
+    },
+    "water": {
+      "species": "elemental",
+      "color": "#4e95c6",
+      "accent": "#9fe5f2"
+    },
+    "earth": {
+      "species": "elemental",
+      "color": "#9b855c",
+      "accent": "#d4c59f"
+    },
+    "wind": {
+      "species": "elemental",
+      "color": "#b8c9d6",
+      "accent": "#f2ecf4"
+    }
+  },
+  "referenceEngineSha256": "cb82d972bb2c3235c9ec8709654e2f17b68cedfd103eebe943435c7e50303488",
+  "scope": "Existing core TYPES and BEARS metadata only. Story-specific rigs are separate, not falsely claimed as exact converted models."
+}
