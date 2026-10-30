@@ -1,0 +1,6 @@
+# Film-pipeline tools (Python 3.11+). The Stable Audio 3 LiteRT runtime
+# has its own environment — see references/models.md for its pins.
+numpy>=1.26
+soundfile>=0.12
+Pillow>=10.0
+kokoro-onnx>=0.4
