@@ -1,0 +1,127 @@
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  SA3 → TFLite/CPU  text-to-audio
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+       prompt  'One wooden harbor gate opens with a short gentle wooden creak and a small latch click, close dry natural foley, isolated, no music, no speech.'
+          dit  sm-sfx       decoder  same-s     precision  w8a8       threads  4
+         σmax  1.00           cfg  1.0
+      seconds  1.5s         steps  8          seed  6102
+        T_lat  17 (1.58s → trimmed to 1.50s)
+
+  [1/3] T5Gemma (tokenize + encode)
+INFO: Created TensorFlow Lite XNNPACK delegate for CPU.
+  [1/3] T5Gemma (tokenize + encode) ····················   928 ms
+        t5_hidden (1, 256, 768)   mask sum=32
+  [2/3] DiT — load + sample (8 steps, σmax=1.00)
+        loading DiT sm-sfx ...
+INFO: [environment.cc:36] Creating LiteRT environment with options
+INFO: [accelerator_registry.cc:54] RegisterAccelerator: ptr=0x8d58c10, name=NpuAccelerator
+INFO: [npu_registry.cc:30] NPU accelerator registered.
+INFO: [gpu_registry.cc:101] Attempting to load GPU accelerator(<runtime-install>/venv/lib/python3.12/site-packages/ai_edge_litert/libLiteRtGpuAccelerator.so).
+INFO: [gpu_registry.cc:101] Attempting to load GPU accelerator(<runtime-install>/venv/lib/python3.12/site-packages/ai_edge_litert/libLiteRtWebGpuAccelerator.so).
+INFO: [accelerator_registry.cc:54] RegisterAccelerator: ptr=0x8d33c50, name=GPU WebGPU
+INFO: [gpu_registry.cc:109] Dynamically loaded GPU accelerator(libLiteRtWebGpuAccelerator.so) registered.
+INFO: [accelerator_registry.cc:54] RegisterAccelerator: ptr=0x8d31290, name=CpuAccelerator
+INFO: [cpu_registry.cc:75] XNNPACK CPU accelerator registered.
+INFO: [environment.cc:36] Creating LiteRT environment with options
+WARNING: [npu_registry.cc:34] NPU accelerator could not be loaded and registered: kLiteRtStatusErrorInvalidArgument.
+INFO: [gpu_registry.cc:101] Attempting to load GPU accelerator(libLiteRtGpuAccelerator.so).
+INFO: [gpu_registry.cc:101] Attempting to load GPU accelerator(libLiteRtWebGpuAccelerator.so).
+INFO: [accelerator_registry.cc:54] RegisterAccelerator: ptr=0xbc14540, name=GPU WebGPU
+INFO: [gpu_registry.cc:109] Dynamically loaded GPU accelerator(libLiteRtWebGpuAccelerator.so) registered.
+INFO: [accelerator_registry.cc:54] RegisterAccelerator: ptr=0xbc145a0, name=CpuAccelerator
+INFO: [cpu_registry.cc:75] XNNPACK CPU accelerator registered.
+INFO: [compiler_plugin.cc:308] Attempting to load plugin at: <runtime-install>/venv/lib/python3.12/site-packages/ai_edge_litert/vendors/intel_openvino/compiler/libLiteRtCompilerPlugin_IntelOpenvino.so
+INFO: [compiler_plugin.cc:250] Loading plugin at: <runtime-install>/venv/lib/python3.12/site-packages/ai_edge_litert/vendors/intel_openvino/compiler/libLiteRtCompilerPlugin_IntelOpenvino.so
+WARNING: [compiler_plugin.cc:312] Failed to load plugin at: <runtime-install>/venv/lib/python3.12/site-packages/ai_edge_litert/vendors/intel_openvino/compiler/libLiteRtCompilerPlugin_IntelOpenvino.so with error: ERROR: [litert/compiler/plugin/compiler_plugin.cc:259]
+└ Could not load shared library <runtime-install>/venv/lib/python3.12/site-packages/ai_edge_litert/vendors/intel_openvino/compiler/libLiteRtCompilerPlugin_IntelOpenvino.so: libopenvino.so.2630: cannot open shared object file: No such file or directory.
+INFO: [compiled_model.cc:833] Flatbuffer model initialized directly from incoming litert model.
+INFO: [litert_dispatch.cc:159] Loading shared library: <runtime-install>/venv/lib/python3.12/site-packages/ai_edge_litert/vendors/intel_openvino/dispatch/libLiteRtDispatch_IntelOpenvino.so
+ERROR: [dispatch_delegate.cc:116] Failed to initialize Dispatch API: ERROR: [litert/runtime/dispatch/dispatch_delegate.cc:176]
+INFO: [litert_dispatch.cc:159] Loading shared library: <runtime-install>/venv/lib/python3.12/site-packages/ai_edge_litert/vendors/intel_openvino/dispatch/libLiteRtDispatch_IntelOpenvino.so
+ERROR: [dispatch_delegate.cc:116] Failed to initialize Dispatch API: ERROR: [litert/runtime/dispatch/dispatch_delegate.cc:176]
+INFO: [litert_dispatch.cc:159] Loading shared library: <runtime-install>/venv/lib/python3.12/site-packages/ai_edge_litert/vendors/intel_openvino/dispatch/libLiteRtDispatch_IntelOpenvino.so
+ERROR: [dispatch_delegate.cc:116] Failed to initialize Dispatch API: ERROR: [litert/runtime/dispatch/dispatch_delegate.cc:176]
+INFO: [litert_dispatch.cc:159] Loading shared library: <runtime-install>/venv/lib/python3.12/site-packages/ai_edge_litert/vendors/intel_openvino/dispatch/libLiteRtDispatch_IntelOpenvino.so
+ERROR: [dispatch_delegate.cc:116] Failed to initialize Dispatch API: ERROR: [litert/runtime/dispatch/dispatch_delegate.cc:176]
+INFO: [litert_dispatch.cc:159] Loading shared library: <runtime-install>/venv/lib/python3.12/site-packages/ai_edge_litert/vendors/intel_openvino/dispatch/libLiteRtDispatch_IntelOpenvino.so
+ERROR: [dispatch_delegate.cc:116] Failed to initialize Dispatch API: ERROR: [litert/runtime/dispatch/dispatch_delegate.cc:176]
+INFO: [litert_dispatch.cc:159] Loading shared library: <runtime-install>/venv/lib/python3.12/site-packages/ai_edge_litert/vendors/intel_openvino/dispatch/libLiteRtDispatch_IntelOpenvino.so
+ERROR: [dispatch_delegate.cc:116] Failed to initialize Dispatch API: ERROR: [litert/runtime/dispatch/dispatch_delegate.cc:176]
+INFO: [litert_dispatch.cc:159] Loading shared library: <runtime-install>/venv/lib/python3.12/site-packages/ai_edge_litert/vendors/intel_openvino/dispatch/libLiteRtDispatch_IntelOpenvino.so
+ERROR: [dispatch_delegate.cc:116] Failed to initialize Dispatch API: ERROR: [litert/runtime/dispatch/dispatch_delegate.cc:176]
+INFO: [litert_dispatch.cc:159] Loading shared library: <runtime-install>/venv/lib/python3.12/site-packages/ai_edge_litert/vendors/intel_openvino/dispatch/libLiteRtDispatch_IntelOpenvino.so
+ERROR: [dispatch_delegate.cc:116] Failed to initialize Dispatch API: ERROR: [litert/runtime/dispatch/dispatch_delegate.cc:176]
+INFO: [litert_dispatch.cc:159] Loading shared library: <runtime-install>/venv/lib/python3.12/site-packages/ai_edge_litert/vendors/intel_openvino/dispatch/libLiteRtDispatch_IntelOpenvino.so
+ERROR: [dispatch_delegate.cc:116] Failed to initialize Dispatch API: ERROR: [litert/runtime/dispatch/dispatch_delegate.cc:176]
+INFO: [environment.cc:36] Creating LiteRT environment with options
+WARNING: [npu_registry.cc:34] NPU accelerator could not be loaded and registered: kLiteRtStatusErrorInvalidArgument.
+INFO: [gpu_registry.cc:101] Attempting to load GPU accelerator(libLiteRtGpuAccelerator.so).
+INFO: [gpu_registry.cc:101] Attempting to load GPU accelerator(libLiteRtWebGpuAccelerator.so).
+INFO: [accelerator_registry.cc:54] RegisterAccelerator: ptr=0xf0e9b90, name=GPU WebGPU
+INFO: [gpu_registry.cc:109] Dynamically loaded GPU accelerator(libLiteRtWebGpuAccelerator.so) registered.
+INFO: [accelerator_registry.cc:54] RegisterAccelerator: ptr=0xd1d61e0, name=CpuAccelerator
+INFO: [cpu_registry.cc:75] XNNPACK CPU accelerator registered.
+        load 0.6s
+        schedule  1.000 · 0.994 · 0.984 · 0.958 · 0.891 · 0.746 · 0.512 · 0.274 · 0.000
+        sampling step 1/8  279 ms
+        sampling step 2/8  118 ms
+        sampling step 3/8  132 ms
+        sampling step 4/8  194 ms
+        sampling step 5/8  173 ms
+        sampling step 6/8  140 ms
+        sampling step 7/8  153 ms
+        sampling step 8/8  144 ms
+  [2/3] DiT — load + sample (8 steps, σmax=1.00) ·······  1890 ms
+        sample 1334 ms  (167 ms/step, 8 forwards)   latents (1, 256, 17)
+INFO: [accelerator_registry.cc:43] DestroyAccelerator: ptr=0x8d58c10, name=NpuAccelerator
+INFO: [accelerator_registry.cc:43] DestroyAccelerator: ptr=0x8d33c50, name=GPU WebGPU
+INFO: [accelerator_registry.cc:43] DestroyAccelerator: ptr=0x8d31290, name=CpuAccelerator
+  [3/3] Decoder (same-s, audio-out) + WAV
+        loading baked decoder same-s ...
+INFO: [environment.cc:36] Creating LiteRT environment with options
+INFO: [accelerator_registry.cc:54] RegisterAccelerator: ptr=0x9e3adc0, name=NpuAccelerator
+INFO: [npu_registry.cc:30] NPU accelerator registered.
+INFO: [gpu_registry.cc:101] Attempting to load GPU accelerator(<runtime-install>/venv/lib/python3.12/site-packages/ai_edge_litert/libLiteRtGpuAccelerator.so).
+INFO: [gpu_registry.cc:101] Attempting to load GPU accelerator(<runtime-install>/venv/lib/python3.12/site-packages/ai_edge_litert/libLiteRtWebGpuAccelerator.so).
+INFO: [accelerator_registry.cc:54] RegisterAccelerator: ptr=0xd1d6000, name=GPU WebGPU
+INFO: [gpu_registry.cc:109] Dynamically loaded GPU accelerator(libLiteRtWebGpuAccelerator.so) registered.
+INFO: [accelerator_registry.cc:54] RegisterAccelerator: ptr=0x9e3b220, name=CpuAccelerator
+INFO: [cpu_registry.cc:75] XNNPACK CPU accelerator registered.
+INFO: [compiler_plugin.cc:308] Attempting to load plugin at: <runtime-install>/venv/lib/python3.12/site-packages/ai_edge_litert/vendors/intel_openvino/compiler/libLiteRtCompilerPlugin_IntelOpenvino.so
+INFO: [compiler_plugin.cc:250] Loading plugin at: <runtime-install>/venv/lib/python3.12/site-packages/ai_edge_litert/vendors/intel_openvino/compiler/libLiteRtCompilerPlugin_IntelOpenvino.so
+WARNING: [compiler_plugin.cc:312] Failed to load plugin at: <runtime-install>/venv/lib/python3.12/site-packages/ai_edge_litert/vendors/intel_openvino/compiler/libLiteRtCompilerPlugin_IntelOpenvino.so with error: ERROR: [litert/compiler/plugin/compiler_plugin.cc:259]
+└ Could not load shared library <runtime-install>/venv/lib/python3.12/site-packages/ai_edge_litert/vendors/intel_openvino/compiler/libLiteRtCompilerPlugin_IntelOpenvino.so: libopenvino.so.2630: cannot open shared object file: No such file or directory.
+INFO: [compiled_model.cc:833] Flatbuffer model initialized directly from incoming litert model.
+INFO: [litert_dispatch.cc:159] Loading shared library: <runtime-install>/venv/lib/python3.12/site-packages/ai_edge_litert/vendors/intel_openvino/dispatch/libLiteRtDispatch_IntelOpenvino.so
+ERROR: [dispatch_delegate.cc:116] Failed to initialize Dispatch API: ERROR: [litert/runtime/dispatch/dispatch_delegate.cc:176]
+INFO: [litert_dispatch.cc:159] Loading shared library: <runtime-install>/venv/lib/python3.12/site-packages/ai_edge_litert/vendors/intel_openvino/dispatch/libLiteRtDispatch_IntelOpenvino.so
+ERROR: [dispatch_delegate.cc:116] Failed to initialize Dispatch API: ERROR: [litert/runtime/dispatch/dispatch_delegate.cc:176]
+INFO: [litert_dispatch.cc:159] Loading shared library: <runtime-install>/venv/lib/python3.12/site-packages/ai_edge_litert/vendors/intel_openvino/dispatch/libLiteRtDispatch_IntelOpenvino.so
+ERROR: [dispatch_delegate.cc:116] Failed to initialize Dispatch API: ERROR: [litert/runtime/dispatch/dispatch_delegate.cc:176]
+INFO: [litert_dispatch.cc:159] Loading shared library: <runtime-install>/venv/lib/python3.12/site-packages/ai_edge_litert/vendors/intel_openvino/dispatch/libLiteRtDispatch_IntelOpenvino.so
+ERROR: [dispatch_delegate.cc:116] Failed to initialize Dispatch API: ERROR: [litert/runtime/dispatch/dispatch_delegate.cc:176]
+INFO: [litert_dispatch.cc:159] Loading shared library: <runtime-install>/venv/lib/python3.12/site-packages/ai_edge_litert/vendors/intel_openvino/dispatch/libLiteRtDispatch_IntelOpenvino.so
+ERROR: [dispatch_delegate.cc:116] Failed to initialize Dispatch API: ERROR: [litert/runtime/dispatch/dispatch_delegate.cc:176]
+INFO: [litert_dispatch.cc:159] Loading shared library: <runtime-install>/venv/lib/python3.12/site-packages/ai_edge_litert/vendors/intel_openvino/dispatch/libLiteRtDispatch_IntelOpenvino.so
+ERROR: [dispatch_delegate.cc:116] Failed to initialize Dispatch API: ERROR: [litert/runtime/dispatch/dispatch_delegate.cc:176]
+INFO: [litert_dispatch.cc:159] Loading shared library: <runtime-install>/venv/lib/python3.12/site-packages/ai_edge_litert/vendors/intel_openvino/dispatch/libLiteRtDispatch_IntelOpenvino.so
+ERROR: [dispatch_delegate.cc:116] Failed to initialize Dispatch API: ERROR: [litert/runtime/dispatch/dispatch_delegate.cc:176]
+INFO: [litert_dispatch.cc:159] Loading shared library: <runtime-install>/venv/lib/python3.12/site-packages/ai_edge_litert/vendors/intel_openvino/dispatch/libLiteRtDispatch_IntelOpenvino.so
+ERROR: [dispatch_delegate.cc:116] Failed to initialize Dispatch API: ERROR: [litert/runtime/dispatch/dispatch_delegate.cc:176]
+INFO: [litert_dispatch.cc:159] Loading shared library: <runtime-install>/venv/lib/python3.12/site-packages/ai_edge_litert/vendors/intel_openvino/dispatch/libLiteRtDispatch_IntelOpenvino.so
+ERROR: [dispatch_delegate.cc:116] Failed to initialize Dispatch API: ERROR: [litert/runtime/dispatch/dispatch_delegate.cc:176]
+        load 39 ms  (9 rungs)
+        rung decode (auto-dispatch) ...
+  [3/3] Decoder (same-s, audio-out) + WAV ··············   149 ms
+        decode rung (auto, 9 rungs)  110 ms   audio (2, 66150)   peak 0.384 rms 0.073
+INFO: [accelerator_registry.cc:43] DestroyAccelerator: ptr=0x9e3adc0, name=NpuAccelerator
+INFO: [accelerator_registry.cc:43] DestroyAccelerator: ptr=0xd1d6000, name=GPU WebGPU
+INFO: [accelerator_registry.cc:43] DestroyAccelerator: ptr=0x9e3b220, name=CpuAccelerator
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  done   3.03s wall  →  1.5s audio  →  0.49× realtime   seed 6102
+  ▸ saved  <project-root>/assets/gate.wav
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+INFO: [accelerator_registry.cc:43] DestroyAccelerator: ptr=0xf0e9b90, name=GPU WebGPU
+INFO: [accelerator_registry.cc:43] DestroyAccelerator: ptr=0xd1d61e0, name=CpuAccelerator

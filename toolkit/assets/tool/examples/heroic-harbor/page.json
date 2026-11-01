@@ -1,0 +1,160 @@
+{
+  "version": 1,
+  "width": 1080,
+  "height": 700,
+  "background": "#eee4cc",
+  "objects": [
+    {
+      "kind": "panel",
+      "id": "dawn",
+      "x": 20,
+      "y": 30,
+      "width": 510,
+      "height": 640,
+      "background": "#b7c4d5",
+      "objects": [
+        {
+          "kind": "rect",
+          "id": "sky",
+          "x": 0,
+          "y": 0,
+          "width": 510,
+          "height": 640,
+          "fill": "#a7c3d2"
+        },
+        {
+          "kind": "rect",
+          "id": "sea",
+          "x": 0,
+          "y": 360,
+          "width": 510,
+          "height": 280,
+          "fill": "#37617f"
+        },
+        {
+          "kind": "path",
+          "id": "pier",
+          "d": "M0 640 L200 370 L330 370 L510 640 Z",
+          "fill": "#c0a682"
+        },
+        {
+          "kind": "path",
+          "id": "tower",
+          "d": "M50 360 L70 100 L145 100 L165 360 Z",
+          "fill": "#e8debf"
+        },
+        {
+          "kind": "rect",
+          "id": "lamp",
+          "x": 60,
+          "y": 65,
+          "width": 95,
+          "height": 40,
+          "fill": "#e8c567"
+        },
+        {
+          "kind": "figure",
+          "id": "keeper",
+          "x": 315,
+          "y": 150,
+          "scale": 0.65,
+          "pose": "stand",
+          "skin": "#ad7859",
+          "suit": "#235877"
+        },
+        {
+          "kind": "path",
+          "id": "gate",
+          "d": "M200 500 L200 340 L470 340 L470 500 M200 420 L470 420",
+          "stroke": "#252b30",
+          "width": 12
+        },
+        {
+          "kind": "caption",
+          "id": "caption",
+          "text": "At dawn, the keeper opens the gate.",
+          "x": 15,
+          "y": 15,
+          "width": 470,
+          "size": 22
+        }
+      ]
+    },
+    {
+      "kind": "panel",
+      "id": "gate",
+      "x": 550,
+      "y": 30,
+      "width": 510,
+      "height": 640,
+      "background": "#b7c4d5",
+      "objects": [
+        {
+          "kind": "rect",
+          "id": "sky",
+          "x": 0,
+          "y": 0,
+          "width": 510,
+          "height": 640,
+          "fill": "#a7c3d2"
+        },
+        {
+          "kind": "rect",
+          "id": "sea",
+          "x": 0,
+          "y": 360,
+          "width": 510,
+          "height": 280,
+          "fill": "#37617f"
+        },
+        {
+          "kind": "path",
+          "id": "pier",
+          "d": "M0 640 L200 370 L330 370 L510 640 Z",
+          "fill": "#c0a682"
+        },
+        {
+          "kind": "path",
+          "id": "tower",
+          "d": "M50 360 L70 100 L145 100 L165 360 Z",
+          "fill": "#e8debf"
+        },
+        {
+          "kind": "rect",
+          "id": "lamp",
+          "x": 60,
+          "y": 65,
+          "width": 95,
+          "height": 40,
+          "fill": "#e8c567"
+        },
+        {
+          "kind": "figure",
+          "id": "keeper",
+          "x": 315,
+          "y": 150,
+          "scale": 0.65,
+          "pose": "stand",
+          "skin": "#ad7859",
+          "suit": "#235877"
+        },
+        {
+          "kind": "path",
+          "id": "gate",
+          "d": "M460 500 L460 340 L500 315 L500 475 M460 420 L500 395",
+          "stroke": "#252b30",
+          "width": 12
+        },
+        {
+          "kind": "caption",
+          "id": "caption",
+          "text": "The harbor is safe.",
+          "x": 15,
+          "y": 15,
+          "width": 470,
+          "size": 22
+        }
+      ]
+    }
+  ]
+}

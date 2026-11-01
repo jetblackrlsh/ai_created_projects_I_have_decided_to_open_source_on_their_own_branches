@@ -1,0 +1,28 @@
+[
+  {
+    "id": "dawn",
+    "image": "assets/dawn.png",
+    "source": "assets/harbor.svg",
+    "sourceSha256": "a3a799cd8aca4ba8c4dd24aca785b5c11635868b193c700fc8611c27e6ac1352",
+    "sha256": "053de4a6944054e4a8dfaf496a99210606a12a915ba364cf95d63785a84d123f",
+    "rect": [
+      0,
+      0,
+      476,
+      480
+    ]
+  },
+  {
+    "id": "gate",
+    "image": "assets/gate.png",
+    "source": "assets/harbor.svg",
+    "sourceSha256": "a3a799cd8aca4ba8c4dd24aca785b5c11635868b193c700fc8611c27e6ac1352",
+    "sha256": "c988eb1f15a241c54a175d2c8829bbae545ae84a6898c5894e8261bf14d6999e",
+    "rect": [
+      484,
+      0,
+      476,
+      480
+    ]
+  }
+]

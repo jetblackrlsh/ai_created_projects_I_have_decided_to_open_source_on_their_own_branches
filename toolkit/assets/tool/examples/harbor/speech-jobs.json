@@ -1,0 +1,1 @@
+{"cast":{"Narrator":"af_heart","Keeper":"bm_george"},"speech":[{"id":"narrator","file":"assets/narrator.wav","text":"At dawn, the lighthouse keeper opened the gate.","speaker":"Narrator","voice":"af_heart","start":0.5},{"id":"keeper","file":"assets/keeper.wav","text":"The harbor is safe.","speaker":"Keeper","voice":"bm_george","start":5.0}]}

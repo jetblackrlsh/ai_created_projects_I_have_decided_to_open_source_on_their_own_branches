@@ -1,0 +1,35 @@
+{
+  "readingOrder": "pages array, then top-level panel object order (review explicitly)",
+  "panels": [
+    {
+      "id": "page-dawn",
+      "image": "page-dawn.png",
+      "source": "page.png",
+      "sourceJSON": "page.json",
+      "rect": [
+        20,
+        30,
+        510,
+        640
+      ],
+      "sourceSha256": "05795da12f2cb3f222c1039e1aae993336b95420833774d6033d4f1c0ab82dff",
+      "sourceJSONSha256": "3d61ac41a9b5930837f5ccb092d9bd454d44031cee388a902dd006200144c8f9",
+      "sha256": "4dec548053766467d84ad305f13c941daac9978cc878018326bdf38038326ba7"
+    },
+    {
+      "id": "page-gate",
+      "image": "page-gate.png",
+      "source": "page.png",
+      "sourceJSON": "page.json",
+      "rect": [
+        550,
+        30,
+        510,
+        640
+      ],
+      "sourceSha256": "05795da12f2cb3f222c1039e1aae993336b95420833774d6033d4f1c0ab82dff",
+      "sourceJSONSha256": "3d61ac41a9b5930837f5ccb092d9bd454d44031cee388a902dd006200144c8f9",
+      "sha256": "a0ca9ad7b917441b39359ba1f697e79a29caece517923c75523accc29849a3e8"
+    }
+  ]
+}

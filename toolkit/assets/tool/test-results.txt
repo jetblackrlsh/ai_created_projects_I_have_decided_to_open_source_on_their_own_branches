@@ -1,0 +1,30 @@
+test_50ms_drift_rejected (test_heroic.HeroicTests.test_50ms_drift_rejected) ... ok
+test_demo_contract (test_heroic.HeroicTests.test_demo_contract) ... ok
+test_drama_identity (test_heroic.HeroicTests.test_drama_identity) ... ok
+test_escape (test_heroic.HeroicTests.test_escape) ... ok
+test_full_decode (test_heroic.HeroicTests.test_full_decode) ... ok
+test_import_crop_exact (test_heroic.HeroicTests.test_import_crop_exact) ... ok
+test_import_overwrite_refused (test_heroic.HeroicTests.test_import_overwrite_refused) ... ok
+test_master_identity (test_heroic.HeroicTests.test_master_identity) ... ok
+test_missing_qa_never_exports (test_package.PackageTests.test_missing_qa_never_exports) ... ok
+test_stale_qa_never_exports (test_package.PackageTests.test_stale_qa_never_exports) ... ok
+test_duplicate_cast (test_project.ManifestTests.test_duplicate_cast) ... ok
+test_escape_path (test_project.ManifestTests.test_escape_path) ... ok
+test_external_svg_rejected (test_project.ManifestTests.test_external_svg_rejected) ... ok
+test_missing_panel (test_project.ManifestTests.test_missing_panel) ... ok
+test_missing_voice (test_project.ManifestTests.test_missing_voice) ... ok
+test_shot_drift (test_project.ManifestTests.test_shot_drift) ... ok
+test_unreviewed_script (test_project.ManifestTests.test_unreviewed_script) ... ok
+test_clipping_nonfinite_fail (test_verify.VerificationTests.test_clipping_nonfinite_fail) ... ok
+test_drift_fails_closed (test_verify.VerificationTests.test_drift_fails_closed) ... ok
+test_good_audio_and_negative_controls (test_verify.VerificationTests.test_good_audio_and_negative_controls) ... ok
+test_masking_fails_despite_perfect_full_mix (test_verify.VerificationTests.test_masking_fails_despite_perfect_full_mix) ... ok
+test_missing_cast_voice_fails (test_verify.VerificationTests.test_missing_cast_voice_fails) ... ok
+test_missing_voice_fails (test_verify.VerificationTests.test_missing_voice_fails) ... ok
+test_silent_voice_fails (test_verify.VerificationTests.test_silent_voice_fails) ... ok
+test_wrong_output_sample_rate (test_verify.VerificationTests.test_wrong_output_sample_rate) ... ok
+
+----------------------------------------------------------------------
+Ran 25 tests in 1.290s
+
+OK

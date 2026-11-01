@@ -1,0 +1,14 @@
+interface:
+  display_name: Heroic Motion Comic
+  short_description: Turn original heroic comic panels into narrated motion films
+  default_prompt: Create a heroic motion comic with a complete soundtrack and matching
+    audio-drama version.
+  icon_small: assets/icon.svg
+  icon_large: assets/icon.svg
+policy:
+  products:
+  - chatgpt
+  - codex
+  - api
+  - atlas
+  allow_implicit_invocation: true

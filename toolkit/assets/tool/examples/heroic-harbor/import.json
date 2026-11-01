@@ -1,0 +1,9 @@
+{
+  "pages": [
+    {
+      "json": "page.json",
+      "image": "page.png"
+    }
+  ],
+  "output": "panels"
+}

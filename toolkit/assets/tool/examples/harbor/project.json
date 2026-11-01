@@ -1,0 +1,102 @@
+{
+  "schemaVersion": 1,
+  "title": "Harbor at Dawn",
+  "subtitle": "Neutral workflow demonstration",
+  "credits": [
+    "Original demonstration art and script: AI-assisted",
+    "Motion Manga Tool \u2014 local CPU rendering"
+  ],
+  "audioOnlyReview": {
+    "approved": true,
+    "notes": "Narration names the keeper and describes opening the gate; the second voice belongs to the introduced keeper. No visual information is required to understand the event."
+  },
+  "visualMode": "comic-panels",
+  "duration": 12,
+  "fps": 24,
+  "size": 540,
+  "cast": {
+    "Narrator": "af_heart",
+    "Keeper": "bm_george"
+  },
+  "panels": [
+    {
+      "id": "dawn",
+      "image": "assets/dawn.png",
+      "source": "assets/harbor.svg",
+      "sourceSha256": "a3a799cd8aca4ba8c4dd24aca785b5c11635868b193c700fc8611c27e6ac1352",
+      "sha256": "053de4a6944054e4a8dfaf496a99210606a12a915ba364cf95d63785a84d123f",
+      "rect": [
+        0,
+        0,
+        476,
+        480
+      ]
+    },
+    {
+      "id": "gate",
+      "image": "assets/gate.png",
+      "source": "assets/harbor.svg",
+      "sourceSha256": "a3a799cd8aca4ba8c4dd24aca785b5c11635868b193c700fc8611c27e6ac1352",
+      "sha256": "c988eb1f15a241c54a175d2c8829bbae545ae84a6898c5894e8261bf14d6999e",
+      "rect": [
+        484,
+        0,
+        476,
+        480
+      ]
+    }
+  ],
+  "shots": [
+    {
+      "id": "dawn",
+      "panel": "dawn",
+      "image": "assets/dawn.png",
+      "start": 1,
+      "end": 4
+    },
+    {
+      "id": "gate",
+      "panel": "gate",
+      "image": "assets/gate.png",
+      "start": 4,
+      "end": 10
+    }
+  ],
+  "speech": [
+    {
+      "id": "narrator",
+      "shot": "dawn",
+      "file": "assets/narrator.wav",
+      "text": "At dawn, the lighthouse keeper opened the gate.",
+      "speaker": "Narrator",
+      "voice": "af_heart",
+      "start": 1.3
+    },
+    {
+      "id": "keeper",
+      "shot": "gate",
+      "file": "assets/keeper.wav",
+      "text": "The harbor is safe.",
+      "speaker": "Keeper",
+      "voice": "bm_george",
+      "start": 6.5
+    }
+  ],
+  "effects": [
+    {
+      "id": "gate",
+      "file": "assets/gate.wav",
+      "action": "The wooden gate opens before the keeper speaks.",
+      "at": 5.2,
+      "offset": 1.19,
+      "duration": 1.5,
+      "peak": 0.25,
+      "speech_gain": 0.65
+    }
+  ],
+  "music": {
+    "file": "assets/score.wav",
+    "peak": 0.15
+  },
+  "background": "assets/dawn.png"
+}
