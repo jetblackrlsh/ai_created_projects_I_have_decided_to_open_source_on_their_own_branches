@@ -1,0 +1,14 @@
+interface:
+  display_name: Motion Manga
+  short_description: Turn comic panels into voiced motion manga
+  default_prompt: Use $create-motion-manga to turn my comic into a narrated motion
+    manga with distinct voices, music, rich sound effects, and an audio-drama companion.
+  icon_small: assets/icon.svg
+  icon_large: assets/icon.svg
+policy:
+  products:
+  - chatgpt
+  - codex
+  - api
+  - atlas
+  allow_implicit_invocation: true

@@ -1,0 +1,610 @@
+{
+  "distribution": "public source, redundant delivery archives omitted",
+  "files": [
+    {
+      "path": ".gitignore",
+      "sha256": "0f43bcc6635aaa14a1879abe28d0d9916913a8c64c3f1f3831ecdd309bc577c0",
+      "bytes": 70
+    },
+    {
+      "path": "LICENSE",
+      "sha256": "71d4a7994f08ba8c3e3c7b55a66fde225f561fe6cb0066a5d4cb179caff92a02",
+      "bytes": 1087
+    },
+    {
+      "path": "NOTICE.md",
+      "sha256": "b7c3f7b3b614ed6e6e9658003e03268ff73202ffb4d4a9359e91639a0848e671",
+      "bytes": 1310
+    },
+    {
+      "path": "README.md",
+      "sha256": "c89266ef9007abee2b8b5149a898e4312e7fa36c52025eb6c89ba225932941be",
+      "bytes": 5572
+    },
+    {
+      "path": "docs/art-contract.md",
+      "sha256": "d7a09b4989560a4284a0a9d1a435b99d13b5a369c08f8455673a9c894b862d18",
+      "bytes": 2289
+    },
+    {
+      "path": "docs/commands.md",
+      "sha256": "78c68e87ac879de7bb7d116f66ba06cd7a80c5d6a779ce840839d511efe92ac3",
+      "bytes": 5660
+    },
+    {
+      "path": "docs/schema.md",
+      "sha256": "0c38c78cb63176e74bde886f3d5299400cf40608e48278006f6eea040b788788",
+      "bytes": 3476
+    },
+    {
+      "path": "examples/harbor/assets/dawn.png",
+      "sha256": "053de4a6944054e4a8dfaf496a99210606a12a915ba364cf95d63785a84d123f",
+      "bytes": 15533
+    },
+    {
+      "path": "examples/harbor/assets/gate.generation.log",
+      "sha256": "56f34ac44b2a03ce0367882ce632874c98f5d4c9fd8c4cc552ace858a4c6244a",
+      "bytes": 14084
+    },
+    {
+      "path": "examples/harbor/assets/gate.png",
+      "sha256": "c988eb1f15a241c54a175d2c8829bbae545ae84a6898c5894e8261bf14d6999e",
+      "bytes": 10463
+    },
+    {
+      "path": "examples/harbor/assets/gate.receipt.json",
+      "sha256": "264825adf5ed56022c12193b3e431f455d5df90efc79b04601f57a76719ba658",
+      "bytes": 1455
+    },
+    {
+      "path": "examples/harbor/assets/gate.wav",
+      "sha256": "aad5647d6657ce3df055fcc7c9bd8e09b94ba8fef4dfb091c757054ffe4df389",
+      "bytes": 264644
+    },
+    {
+      "path": "examples/harbor/assets/harbor.svg",
+      "sha256": "a3a799cd8aca4ba8c4dd24aca785b5c11635868b193c700fc8611c27e6ac1352",
+      "bytes": 1377
+    },
+    {
+      "path": "examples/harbor/assets/keeper.receipt.json",
+      "sha256": "031a9f2b4b287a02ad6e320f8db2d9f9563f1d532897b39e581e7781d5bf6eef",
+      "bytes": 921
+    },
+    {
+      "path": "examples/harbor/assets/keeper.wav",
+      "sha256": "83e98321e384ebb08ef08a301be45f69a384f5f6a703d83c4290b163f9c47618",
+      "bytes": 76844
+    },
+    {
+      "path": "examples/harbor/assets/narrator.receipt.json",
+      "sha256": "ad8b44ce04e81e24f012da2c78bfc69a928235f26fda3eddf632adefa2c54b2b",
+      "bytes": 957
+    },
+    {
+      "path": "examples/harbor/assets/narrator.wav",
+      "sha256": "f763b26dbc337b8e9944fe7af8e64868828f9088917a54a7b8d53d88695a4f9c",
+      "bytes": 113708
+    },
+    {
+      "path": "examples/harbor/assets/score.generation.log",
+      "sha256": "e9dc306b99afc511fd8ebb03d0dd8ad753a276e9123e3c6b6c9a357495a302b1",
+      "bytes": 14148
+    },
+    {
+      "path": "examples/harbor/assets/score.receipt.json",
+      "sha256": "bb5165f2f0c1c44636d6a346fc4562b06ec8ea31116f47a5df79a52ff6fe9caf",
+      "bytes": 1529
+    },
+    {
+      "path": "examples/harbor/assets/score.wav",
+      "sha256": "01d1a365244c63dbb2e8db0e44b08c6b59fbd48d8cc6bcab116ba9c5717ee8c0",
+      "bytes": 2116844
+    },
+    {
+      "path": "examples/harbor/audio-generation.json",
+      "sha256": "ab887b4419446819520c7a0e9c0c298a8dbab234bb5833c111aef1c275e8b753",
+      "bytes": 5413
+    },
+    {
+      "path": "examples/harbor/audio-jobs.json",
+      "sha256": "285d4c8efb4282309be546d1af8cd6c97b4064e585b8c51426500d6c6a9fae15",
+      "bytes": 529
+    },
+    {
+      "path": "examples/harbor/audio-smoke-report.json",
+      "sha256": "deb1f88da54a37672b4651cd1c8cc34ebfad1a34a84ab0f90c5333e8ba158950",
+      "bytes": 1559
+    },
+    {
+      "path": "examples/harbor/crop-provenance.json",
+      "sha256": "cfaaafd3d128d87cc3c0c714d62a76ad16b5b557e30aafba029ec6f38f587978",
+      "bytes": 650
+    },
+    {
+      "path": "examples/harbor/crops.json",
+      "sha256": "57701957cf75ce0fb26a74f1fb88293550d73e502bb50d5279c7e5a604fafdcf",
+      "bytes": 196
+    },
+    {
+      "path": "examples/harbor/metadata.json",
+      "sha256": "2d4b67c3c4a21982d3f0d8acbd5f5e5cf9a84994cfabbc8b0bffed0335b9d0e2",
+      "bytes": 410
+    },
+    {
+      "path": "examples/harbor/out/audio-drama-title-card.png",
+      "sha256": "d263e0bb4bae4b03d9db1ab852ed42378d61239d278a77420aa0ed9d06236311",
+      "bytes": 44288
+    },
+    {
+      "path": "examples/harbor/out/audio-drama.mp4",
+      "sha256": "e767fb7880e1ecf3c6fa87e086098f15dd7cf73a52953c5cd023c23205c65649",
+      "bytes": 346892
+    },
+    {
+      "path": "examples/harbor/out/film.mp4",
+      "sha256": "1fc26d838185e96174054ac30da38ec91fc4776a18ad2820b3b6b863b64bd6e9",
+      "bytes": 388166
+    },
+    {
+      "path": "examples/harbor/out/master-48k.wav",
+      "sha256": "8873313f657bed8a679427031278c4ae5022b660006d467c50d025618f2cc367",
+      "bytes": 2304044
+    },
+    {
+      "path": "examples/harbor/out/master.m4a",
+      "sha256": "97e80177142f99415a2e538e4c8f9d5ea780425af2bcb9e50871ea78af404ee5",
+      "bytes": 288589
+    },
+    {
+      "path": "examples/harbor/out/mix.json",
+      "sha256": "6e83d481aa0d9f1f7cb4f9244cecd74284e87ea3222c34ab5e2101472697a431",
+      "bytes": 1437
+    },
+    {
+      "path": "examples/harbor/out/music-stem-48k.wav",
+      "sha256": "ed261ff2a8bbb4207a27beef8e89a32452b15e1513dbe46056071a1e537d2a0f",
+      "bytes": 4608058
+    },
+    {
+      "path": "examples/harbor/out/sfx-stem-48k.wav",
+      "sha256": "82bb67fd0813ef68020003e4e1c0a44d57e1f037ee88ae13c6bc79c78cc736fd",
+      "bytes": 4608058
+    },
+    {
+      "path": "examples/harbor/out/verification.json",
+      "sha256": "9e9f16ca04351d030b5bd3ed3dd860735cc1bcb7fff529e6c0da9c6c3b81fd3a",
+      "bytes": 7097
+    },
+    {
+      "path": "examples/harbor/out/voice-stem-48k.wav",
+      "sha256": "9707c62589a9ef089f0fbb915ed4b6ce8dfbbdfa5743075f67b2e33ae32b2992",
+      "bytes": 4608058
+    },
+    {
+      "path": "examples/harbor/project.json",
+      "sha256": "d1c3adbddda0802a4f293b5fb5066408c94338efca00b300cd095613d5f08464",
+      "bytes": 2651
+    },
+    {
+      "path": "examples/harbor/speech-generation.json",
+      "sha256": "b2a24d35ecef53275c840cfbd57dd8073a7efbd18c0222b6e0d84c13ed337698",
+      "bytes": 2614
+    },
+    {
+      "path": "examples/harbor/speech-jobs.json",
+      "sha256": "8c55807480196fef595ecf21250971ca965cbe18795fb0ac89d54b776b7b6ac9",
+      "bytes": 344
+    },
+    {
+      "path": "examples/harbor/transcript.txt",
+      "sha256": "f44d549e3232821277d065a32472bc3a1e731927f5dfbe340dbd63cd45735c65",
+      "bytes": 87
+    },
+    {
+      "path": "examples/manga-harbor/assets/dawn.json",
+      "sha256": "58fdd75ba0552c740a8e165fa1af22a926e37dcc66fcb13f48efe160b452c32b",
+      "bytes": 7415
+    },
+    {
+      "path": "examples/manga-harbor/assets/dawn.png",
+      "sha256": "68a448d556924a4560796152543b2ff6dcb00c1a7eff920d49597cd252d0ef52",
+      "bytes": 61225
+    },
+    {
+      "path": "examples/manga-harbor/assets/dawn.svg",
+      "sha256": "82086cd2a49618cf892390a93b44f3440da93e919eea554dbf129f123577f7a1",
+      "bytes": 21803
+    },
+    {
+      "path": "examples/manga-harbor/assets/gate.generation.log",
+      "sha256": "56f34ac44b2a03ce0367882ce632874c98f5d4c9fd8c4cc552ace858a4c6244a",
+      "bytes": 14084
+    },
+    {
+      "path": "examples/manga-harbor/assets/gate.json",
+      "sha256": "398dacea6526cef0c7a7d3da8ecffefbcc3789591e4c13ac39810ff225ce0755",
+      "bytes": 8146
+    },
+    {
+      "path": "examples/manga-harbor/assets/gate.png",
+      "sha256": "0ce0edf97e7bb1b45c0b566bd1631ee11055fd2385f34fd9c2f7ef6a774c8c77",
+      "bytes": 99888
+    },
+    {
+      "path": "examples/manga-harbor/assets/gate.receipt.json",
+      "sha256": "264825adf5ed56022c12193b3e431f455d5df90efc79b04601f57a76719ba658",
+      "bytes": 1455
+    },
+    {
+      "path": "examples/manga-harbor/assets/gate.svg",
+      "sha256": "6eee253919e0144f540d013cf6f71f987a11b70a852bfd0588f57c30996b41eb",
+      "bytes": 22606
+    },
+    {
+      "path": "examples/manga-harbor/assets/gate.wav",
+      "sha256": "aad5647d6657ce3df055fcc7c9bd8e09b94ba8fef4dfb091c757054ffe4df389",
+      "bytes": 264644
+    },
+    {
+      "path": "examples/manga-harbor/assets/keeper.receipt.json",
+      "sha256": "031a9f2b4b287a02ad6e320f8db2d9f9563f1d532897b39e581e7781d5bf6eef",
+      "bytes": 921
+    },
+    {
+      "path": "examples/manga-harbor/assets/keeper.wav",
+      "sha256": "83e98321e384ebb08ef08a301be45f69a384f5f6a703d83c4290b163f9c47618",
+      "bytes": 76844
+    },
+    {
+      "path": "examples/manga-harbor/assets/narrator.receipt.json",
+      "sha256": "ad8b44ce04e81e24f012da2c78bfc69a928235f26fda3eddf632adefa2c54b2b",
+      "bytes": 957
+    },
+    {
+      "path": "examples/manga-harbor/assets/narrator.wav",
+      "sha256": "f763b26dbc337b8e9944fe7af8e64868828f9088917a54a7b8d53d88695a4f9c",
+      "bytes": 113708
+    },
+    {
+      "path": "examples/manga-harbor/assets/score.generation.log",
+      "sha256": "e9dc306b99afc511fd8ebb03d0dd8ad753a276e9123e3c6b6c9a357495a302b1",
+      "bytes": 14148
+    },
+    {
+      "path": "examples/manga-harbor/assets/score.receipt.json",
+      "sha256": "bb5165f2f0c1c44636d6a346fc4562b06ec8ea31116f47a5df79a52ff6fe9caf",
+      "bytes": 1529
+    },
+    {
+      "path": "examples/manga-harbor/assets/score.wav",
+      "sha256": "01d1a365244c63dbb2e8db0e44b08c6b59fbd48d8cc6bcab116ba9c5717ee8c0",
+      "bytes": 2116844
+    },
+    {
+      "path": "examples/manga-harbor/audio-jobs.json",
+      "sha256": "285d4c8efb4282309be546d1af8cd6c97b4064e585b8c51426500d6c6a9fae15",
+      "bytes": 529
+    },
+    {
+      "path": "examples/manga-harbor/audio-smoke-report.json",
+      "sha256": "deb1f88da54a37672b4651cd1c8cc34ebfad1a34a84ab0f90c5333e8ba158950",
+      "bytes": 1559
+    },
+    {
+      "path": "examples/manga-harbor/drawing-receipt.json",
+      "sha256": "a856e3cfcd937b00d2c67ab3f9a552a81287c9a725eb95e90646f2e103d1816d",
+      "bytes": 4294
+    },
+    {
+      "path": "examples/manga-harbor/drawing-tool/LICENSE",
+      "sha256": "71d4a7994f08ba8c3e3c7b55a66fde225f561fe6cb0066a5d4cb179caff92a02",
+      "bytes": 1087
+    },
+    {
+      "path": "examples/manga-harbor/drawing-tool/NOTICE.md",
+      "sha256": "8d37b79e46f1efb0ecafc905cbb6be61b6a53b207877891071d38563d256c0eb",
+      "bytes": 433
+    },
+    {
+      "path": "examples/manga-harbor/drawing-tool/choreography.py",
+      "sha256": "75320e4555a1ddbd2e51a3abbbd08d2e8ff76928062e1cd1a53aba1d7a2e7734",
+      "bytes": 887
+    },
+    {
+      "path": "examples/manga-harbor/drawing-tool/manga.py",
+      "sha256": "e104d9180aa957ac453fac25d274b4c3c77c7803636307dabf3daf3835645393",
+      "bytes": 27248
+    },
+    {
+      "path": "examples/manga-harbor/drawing-tool/modules/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "examples/manga-harbor/drawing-tool/modules/action_camera.py",
+      "sha256": "d7b67ea8d2ec3841ee2b8086a4ef7a84265ded1028c96dd6f536678fc415565b",
+      "bytes": 5402
+    },
+    {
+      "path": "examples/manga-harbor/drawing-tool/modules/action_characters.py",
+      "sha256": "e16bb7797c8e61db406fc55ce6bc8dd7b051f584093a9090c45302a67012e95e",
+      "bytes": 9671
+    },
+    {
+      "path": "examples/manga-harbor/drawing-tool/modules/action_effects.py",
+      "sha256": "e3e7dd3ed1ea79a7dfd5fccce63fb55d5ad2db289fd0bf424e058d4716ae4a83",
+      "bytes": 7068
+    },
+    {
+      "path": "examples/manga-harbor/drawing-tool/modules/characters.py",
+      "sha256": "6652a0edd6e756d1ded7bf73a67d9845dde8962fcba58bc5034ea2365c2b1a6f",
+      "bytes": 17444
+    },
+    {
+      "path": "examples/manga-harbor/drawing-tool/modules/cinematic_action.py",
+      "sha256": "299466fc09063797f9bb3ab71012a66e99b92188c0da318568b17b867d32cf2c",
+      "bytes": 7607
+    },
+    {
+      "path": "examples/manga-harbor/drawing-tool/modules/cinematic_composition.py",
+      "sha256": "4d92ab5f48c8b1de6b7dfb84fc59c9a914ff5527187d8d490c9731f6b912bf5f",
+      "bytes": 1775
+    },
+    {
+      "path": "examples/manga-harbor/drawing-tool/modules/cinematic_stage.py",
+      "sha256": "664b84476e939ab3daef1ed4bf17125992179e29f53cc4412bb57e68e28ead7e",
+      "bytes": 8886
+    },
+    {
+      "path": "examples/manga-harbor/drawing-tool/modules/cloth.py",
+      "sha256": "ce2a0228a0e0338339dfe5ad177cbb18a055693dad05c9764394255e09fc05b9",
+      "bytes": 3225
+    },
+    {
+      "path": "examples/manga-harbor/drawing-tool/modules/creatures.py",
+      "sha256": "1ad584ed7086aaf130cd8d97031afb47f23161653ea4f7300c407b9847d247df",
+      "bytes": 15709
+    },
+    {
+      "path": "examples/manga-harbor/drawing-tool/modules/fantasy_props.py",
+      "sha256": "dbba7e5efc9c8c3f41ab14808760303ad9b9ea3c58e4153d184d3e5c6e964749",
+      "bytes": 8388
+    },
+    {
+      "path": "examples/manga-harbor/drawing-tool/modules/fantasy_world.py",
+      "sha256": "b07dddfb1b6d83af77f82bf276961e31e6f2aa0068018dec6162b1719a586742",
+      "bytes": 6628
+    },
+    {
+      "path": "examples/manga-harbor/drawing-tool/modules/grips.py",
+      "sha256": "049be84bb2b571f4001b6547b205d940e1c06df09b2a6196c94f710c03c9127d",
+      "bytes": 5908
+    },
+    {
+      "path": "examples/manga-harbor/drawing-tool/modules/ink_props.py",
+      "sha256": "8106dfb358e7aa02226ff05ea9c85eeccea241c49aa246e47316b51aa73c8a53",
+      "bytes": 12435
+    },
+    {
+      "path": "examples/manga-harbor/drawing-tool/modules/interaction_figures.py",
+      "sha256": "b84b4298505f7b990eeb526f5245fc4766dfc38e32a9c5b10c1663f87458e759",
+      "bytes": 16997
+    },
+    {
+      "path": "examples/manga-harbor/drawing-tool/modules/organic_world.py",
+      "sha256": "62d77db58a9c39312e7a0a7ba8a470a533b348a1dfefd465ff1a37467f87b1e6",
+      "bytes": 11495
+    },
+    {
+      "path": "examples/manga-harbor/drawing-tool/modules/perspective.py",
+      "sha256": "dbdd52232f00587405efb51615096f1795e41dc64517fa97a2af1bec9346e9b2",
+      "bytes": 11960
+    },
+    {
+      "path": "examples/manga-harbor/drawing-tool/modules/scifi.py",
+      "sha256": "5d57dacd3a256898349d24d0b39f45886e95f8c1c5322370f163295636bbd2e8",
+      "bytes": 5658
+    },
+    {
+      "path": "examples/manga-harbor/drawing-tool/modules/sentai_design.py",
+      "sha256": "c955dd4c737e34adb0d2dedce94de1cfd8e0c4e58843a13635688b73690ed4db",
+      "bytes": 9084
+    },
+    {
+      "path": "examples/manga-harbor/drawing-tool/modules/superheroes.py",
+      "sha256": "cecbde5866413cd17b1ed814da773e102161dd6e1a89e731dd2a9c1887cab9d8",
+      "bytes": 7192
+    },
+    {
+      "path": "examples/manga-harbor/drawing-tool/modules/transform_effects.py",
+      "sha256": "5b30f5e13a604376a9dd496b79bde2b121f502a66fd3cbb7453bf65877c2cd94",
+      "bytes": 7603
+    },
+    {
+      "path": "examples/manga-harbor/drawing-tool/modules/transformation_heroes.py",
+      "sha256": "0b0674c8029861961e30650ac184d096ca297a0b8290d7ce75af462ff918da33",
+      "bytes": 10219
+    },
+    {
+      "path": "examples/manga-harbor/drawing-tool/modules/transformation_props.py",
+      "sha256": "2a66778436935139d95604f0fdd8c128d246f043df83e13730099ff43e710071",
+      "bytes": 5884
+    },
+    {
+      "path": "examples/manga-harbor/metadata.json",
+      "sha256": "e63abb21fba7becb21fd6464f98bf7ca139417a38767e240460ed5cbe84d283f",
+      "bytes": 131
+    },
+    {
+      "path": "examples/manga-harbor/out/audio-drama-title-card.png",
+      "sha256": "80bb9988c26ba268ed69741fa976f3a825b9838cca86a13901d891ccb0177bc5",
+      "bytes": 62455
+    },
+    {
+      "path": "examples/manga-harbor/out/audio-drama.mp4",
+      "sha256": "557624c2b15e89bdb6768af21957a2c2cb629a9c8841b6768134bafbecf167f9",
+      "bytes": 368257
+    },
+    {
+      "path": "examples/manga-harbor/out/film.mp4",
+      "sha256": "89295c29f5ffb7dda2a40089d5f0e98c47817d9fd99011c11f93f3f00054e5c7",
+      "bytes": 499367
+    },
+    {
+      "path": "examples/manga-harbor/out/master-48k.wav",
+      "sha256": "8873313f657bed8a679427031278c4ae5022b660006d467c50d025618f2cc367",
+      "bytes": 2304044
+    },
+    {
+      "path": "examples/manga-harbor/out/master.m4a",
+      "sha256": "97e80177142f99415a2e538e4c8f9d5ea780425af2bcb9e50871ea78af404ee5",
+      "bytes": 288589
+    },
+    {
+      "path": "examples/manga-harbor/out/mix.json",
+      "sha256": "6e83d481aa0d9f1f7cb4f9244cecd74284e87ea3222c34ab5e2101472697a431",
+      "bytes": 1437
+    },
+    {
+      "path": "examples/manga-harbor/out/music-stem-48k.wav",
+      "sha256": "ed261ff2a8bbb4207a27beef8e89a32452b15e1513dbe46056071a1e537d2a0f",
+      "bytes": 4608058
+    },
+    {
+      "path": "examples/manga-harbor/out/sfx-stem-48k.wav",
+      "sha256": "82bb67fd0813ef68020003e4e1c0a44d57e1f037ee88ae13c6bc79c78cc736fd",
+      "bytes": 4608058
+    },
+    {
+      "path": "examples/manga-harbor/out/verification.json",
+      "sha256": "1ea4379bc91ac8207a632ee89e09277a7e8090e71084a2ebafa6b98fc43b5e37",
+      "bytes": 7186
+    },
+    {
+      "path": "examples/manga-harbor/out/voice-stem-48k.wav",
+      "sha256": "9707c62589a9ef089f0fbb915ed4b6ce8dfbbdfa5743075f67b2e33ae32b2992",
+      "bytes": 4608058
+    },
+    {
+      "path": "examples/manga-harbor/project.json",
+      "sha256": "25ae4f1f48639c6754f6a841349e873540b391eb03c659046c4319ac4a5e3990",
+      "bytes": 11540
+    },
+    {
+      "path": "examples/manga-harbor/speech-generation.json",
+      "sha256": "b2a24d35ecef53275c840cfbd57dd8073a7efbd18c0222b6e0d84c13ed337698",
+      "bytes": 2614
+    },
+    {
+      "path": "examples/manga-harbor/speech-jobs.json",
+      "sha256": "8c55807480196fef595ecf21250971ca965cbe18795fb0ac89d54b776b7b6ac9",
+      "bytes": 344
+    },
+    {
+      "path": "examples/manga-harbor/transcript.txt",
+      "sha256": "f44d549e3232821277d065a32472bc3a1e731927f5dfbe340dbd63cd45735c65",
+      "bytes": 87
+    },
+    {
+      "path": "motion_manga.py",
+      "sha256": "74c4919cbb2df00d60c5938739e8da289e00f8ea7b9a29b3f9a78859fb9a5091",
+      "bytes": 1839
+    },
+    {
+      "path": "references/models.md",
+      "sha256": "a4ea37d866ae3194f1b6ddd2323356de3530bfaedc3d0efd93a5039835d8865f",
+      "bytes": 5277
+    },
+    {
+      "path": "requirements.txt",
+      "sha256": "86735eb6730b6f311257b2688b6432694434aad07a15b00cef82c32280f9d88b",
+      "bytes": 176
+    },
+    {
+      "path": "scripts/crop.py",
+      "sha256": "76ef6c7da57828841766ebd306d008557b2b500d31f8f711bb2bb4a3e27bc1e4",
+      "bytes": 2007
+    },
+    {
+      "path": "scripts/generate_audio.py",
+      "sha256": "93cc79254035c2eae80bb3445bf91e95fc2ef5280ae4db73dc026a5c795a6ab7",
+      "bytes": 8752
+    },
+    {
+      "path": "scripts/mix_audio.py",
+      "sha256": "2754d0b9ed3fa7a6e6ecce9690b889fae02962db9c1d7043169e14e4ca4b418e",
+      "bytes": 5533
+    },
+    {
+      "path": "scripts/package.py",
+      "sha256": "901fc2a4a84d57462b0cfe93979471c8ac97d83d75959bf39e4964cc5aa28127",
+      "bytes": 3514
+    },
+    {
+      "path": "scripts/plan.py",
+      "sha256": "f1427a04c2821c19c0f8786d8539974139d99d40795d5094461b32883ac3c0ee",
+      "bytes": 968
+    },
+    {
+      "path": "scripts/project.py",
+      "sha256": "8a8d614ddcf596f43788562728a5d9d42ea77ae80819257987e19fc320635b4c",
+      "bytes": 6563
+    },
+    {
+      "path": "scripts/render.py",
+      "sha256": "808d7a78cc185c33948da3ac9dbb7a09cfc41b1bacffa8bf716cbaba39cceee4",
+      "bytes": 4490
+    },
+    {
+      "path": "scripts/speech.py",
+      "sha256": "62e472160b4c870cce42892765616bd94497bb56b6f048e2c2356c3c4ef9e8b4",
+      "bytes": 5099
+    },
+    {
+      "path": "scripts/verify.py",
+      "sha256": "fa5a0205453aad52db4b361294889495d5eb0aa0c0b606603c23746187a0234b",
+      "bytes": 9441
+    },
+    {
+      "path": "tests/RESULTS.md",
+      "sha256": "d1e607f69afeaced624b42eadd81d2ec18995236ca6c7e47824776b11b9e48d3",
+      "bytes": 2734
+    },
+    {
+      "path": "tests/environment.json",
+      "sha256": "ca2e3979434b1b0be18be4ac5081b23642907cfadc29a462067d273d6bef68d1",
+      "bytes": 279
+    },
+    {
+      "path": "tests/latest-test-run.txt",
+      "sha256": "ce65d340474e7f93685a95ff61f8566481bbba054de7ea1191f072706170a00f",
+      "bytes": 2939
+    },
+    {
+      "path": "tests/test_art_contract.py",
+      "sha256": "78853a46d0abb552418cc89e6985d0c21e4850ae78134c92b0fea7fb37fc5f4e",
+      "bytes": 2911
+    },
+    {
+      "path": "tests/test_manga_example.py",
+      "sha256": "fefd52cef106b76eeb5f1c37dafcd9536f6c9fff3366d1b27f177f3097e6b9f2",
+      "bytes": 639
+    },
+    {
+      "path": "tests/test_package.py",
+      "sha256": "8a14adf21131c4ad82acd9a57b950d0de89d897ab056a90bc40075e1825e2469",
+      "bytes": 1110
+    },
+    {
+      "path": "tests/test_project.py",
+      "sha256": "6c2971ca3fec1be9a17d8cec8eac320b9cc9c18366f27d2b07cc2aa5edac795c",
+      "bytes": 1604
+    },
+    {
+      "path": "tests/test_verify.py",
+      "sha256": "da55fb6dea44283339b350bd3ce7b90adb4c0a65d4900591585863e18b24314f",
+      "bytes": 3257
+    }
+  ]
+}

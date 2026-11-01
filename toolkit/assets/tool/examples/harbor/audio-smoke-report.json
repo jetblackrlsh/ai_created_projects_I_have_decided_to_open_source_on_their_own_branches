@@ -1,0 +1,60 @@
+{
+  "checks": [
+    "nan rejected",
+    "inf rejected",
+    "bool rejected",
+    "negative rejected",
+    "unsafe path rejected",
+    "unsafe path rejected",
+    "unsafe path rejected",
+    "overwrite rejected",
+    "unknown-kind rejected",
+    "unknown-provider rejected",
+    "nonfinite-seconds rejected",
+    "unknown stock voice rejected"
+  ],
+  "artifacts": [
+    {
+      "sampleRate": 44100,
+      "channels": 2,
+      "samples": 66150,
+      "duration": 1.5,
+      "peakPCM": 0.384124755859375,
+      "sha256": "aad5647d6657ce3df055fcc7c9bd8e09b94ba8fef4dfb091c757054ffe4df389",
+      "file": "gate.wav",
+      "decodePassed": true,
+      "transientSeconds": 1.19
+    },
+    {
+      "sampleRate": 24000,
+      "channels": 1,
+      "samples": 38400,
+      "duration": 1.6,
+      "peakPCM": 0.412353515625,
+      "sha256": "83e98321e384ebb08ef08a301be45f69a384f5f6a703d83c4290b163f9c47618",
+      "file": "keeper.wav",
+      "decodePassed": true
+    },
+    {
+      "sampleRate": 24000,
+      "channels": 1,
+      "samples": 56832,
+      "duration": 2.368,
+      "peakPCM": 0.476318359375,
+      "sha256": "f763b26dbc337b8e9944fe7af8e64868828f9088917a54a7b8d53d88695a4f9c",
+      "file": "narrator.wav",
+      "decodePassed": true
+    },
+    {
+      "sampleRate": 44100,
+      "channels": 2,
+      "samples": 529200,
+      "duration": 12.0,
+      "peakPCM": 0.5965576171875,
+      "sha256": "01d1a365244c63dbb2e8db0e44b08c6b59fbd48d8cc6bcab116ba9c5717ee8c0",
+      "file": "score.wav",
+      "decodePassed": true
+    }
+  ],
+  "listeningPerformed": false
+}

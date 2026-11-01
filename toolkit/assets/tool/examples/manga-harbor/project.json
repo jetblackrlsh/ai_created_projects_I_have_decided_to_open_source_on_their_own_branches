@@ -1,0 +1,288 @@
+{
+  "schemaVersion": 1,
+  "title": "Harbor at Dawn",
+  "subtitle": "Original headless manga \u2014 a small source-to-film example",
+  "credits": [
+    "Original neutral art: headless manga drawing tool",
+    "Two-panel motion adaptation; limited articulated poses"
+  ],
+  "audioOnlyReview": {
+    "approved": true,
+    "notes": "Narration names the keeper and describes opening the gate; the second voice belongs to the introduced keeper. No visual information is required to understand the event."
+  },
+  "visualMode": "comic-panels",
+  "duration": 12,
+  "fps": 24,
+  "size": 540,
+  "cast": {
+    "Narrator": "af_heart",
+    "Keeper": "bm_george"
+  },
+  "panels": [
+    {
+      "id": "dawn",
+      "image": "assets/dawn.png",
+      "source": "assets/dawn.svg",
+      "sourceSha256": "82086cd2a49618cf892390a93b44f3440da93e919eea554dbf129f123577f7a1",
+      "sha256": "68a448d556924a4560796152543b2ff6dcb00c1a7eff920d49597cd252d0ef52"
+    },
+    {
+      "id": "gate",
+      "image": "assets/gate.png",
+      "source": "assets/gate.svg",
+      "sourceSha256": "6eee253919e0144f540d013cf6f71f987a11b70a852bfd0588f57c30996b41eb",
+      "sha256": "0ce0edf97e7bb1b45c0b566bd1631ee11055fd2385f34fd9c2f7ef6a774c8c77"
+    }
+  ],
+  "shots": [
+    {
+      "id": "dawn",
+      "panel": "dawn",
+      "image": "assets/dawn.png",
+      "start": 1,
+      "end": 4
+    },
+    {
+      "id": "gate",
+      "panel": "gate",
+      "image": "assets/gate.png",
+      "start": 4,
+      "end": 10
+    }
+  ],
+  "speech": [
+    {
+      "id": "narrator",
+      "shot": "dawn",
+      "file": "assets/narrator.wav",
+      "text": "At dawn, the lighthouse keeper opened the gate.",
+      "speaker": "Narrator",
+      "voice": "af_heart",
+      "start": 1.3
+    },
+    {
+      "id": "keeper",
+      "shot": "gate",
+      "file": "assets/keeper.wav",
+      "text": "The harbor is safe.",
+      "speaker": "Keeper",
+      "voice": "bm_george",
+      "start": 6.5
+    }
+  ],
+  "effects": [
+    {
+      "id": "gate",
+      "file": "assets/gate.wav",
+      "action": "The wooden gate opens before the keeper speaks.",
+      "at": 5.2,
+      "offset": 1.19,
+      "duration": 1.5,
+      "peak": 0.25,
+      "speech_gain": 0.65
+    }
+  ],
+  "music": {
+    "file": "assets/score.wav",
+    "peak": 0.15
+  },
+  "background": "assets/dawn.png",
+  "artContract": {
+    "mode": "manga",
+    "notes": "Original bounded vector manga example, not a claim of professional anatomy or fully animated motion. Reuses neutral local generated audio from technical fixture.",
+    "origin": "draw-headless-manga",
+    "evidence": [
+      {
+        "file": "assets/dawn.svg",
+        "sha256": "82086cd2a49618cf892390a93b44f3440da93e919eea554dbf129f123577f7a1",
+        "role": "source-page"
+      },
+      {
+        "file": "assets/gate.svg",
+        "sha256": "6eee253919e0144f540d013cf6f71f987a11b70a852bfd0588f57c30996b41eb",
+        "role": "source-page"
+      },
+      {
+        "file": "assets/dawn.json",
+        "sha256": "58fdd75ba0552c740a8e165fa1af22a926e37dcc66fcb13f48efe160b452c32b",
+        "role": "editable-scene"
+      },
+      {
+        "file": "assets/gate.json",
+        "sha256": "398dacea6526cef0c7a7d3da8ecffefbcc3789591e4c13ac39810ff225ce0755",
+        "role": "editable-scene"
+      },
+      {
+        "file": "drawing-receipt.json",
+        "sha256": "a856e3cfcd937b00d2c67ab3f9a552a81287c9a725eb95e90646f2e103d1816d",
+        "role": "drawing-receipt"
+      },
+      {
+        "file": "drawing-tool/choreography.py",
+        "sha256": "75320e4555a1ddbd2e51a3abbbd08d2e8ff76928062e1cd1a53aba1d7a2e7734",
+        "role": "drawing-tool"
+      },
+      {
+        "file": "drawing-tool/manga.py",
+        "sha256": "e104d9180aa957ac453fac25d274b4c3c77c7803636307dabf3daf3835645393",
+        "role": "drawing-tool"
+      },
+      {
+        "file": "drawing-tool/modules/superheroes.py",
+        "sha256": "cecbde5866413cd17b1ed814da773e102161dd6e1a89e731dd2a9c1887cab9d8",
+        "role": "drawing-tool"
+      },
+      {
+        "file": "drawing-tool/modules/fantasy_world.py",
+        "sha256": "b07dddfb1b6d83af77f82bf276961e31e6f2aa0068018dec6162b1719a586742",
+        "role": "drawing-tool"
+      },
+      {
+        "file": "drawing-tool/modules/transformation_props.py",
+        "sha256": "2a66778436935139d95604f0fdd8c128d246f043df83e13730099ff43e710071",
+        "role": "drawing-tool"
+      },
+      {
+        "file": "drawing-tool/modules/perspective.py",
+        "sha256": "dbdd52232f00587405efb51615096f1795e41dc64517fa97a2af1bec9346e9b2",
+        "role": "drawing-tool"
+      },
+      {
+        "file": "drawing-tool/modules/action_characters.py",
+        "sha256": "e16bb7797c8e61db406fc55ce6bc8dd7b051f584093a9090c45302a67012e95e",
+        "role": "drawing-tool"
+      },
+      {
+        "file": "drawing-tool/modules/cinematic_stage.py",
+        "sha256": "664b84476e939ab3daef1ed4bf17125992179e29f53cc4412bb57e68e28ead7e",
+        "role": "drawing-tool"
+      },
+      {
+        "file": "drawing-tool/modules/interaction_figures.py",
+        "sha256": "b84b4298505f7b990eeb526f5245fc4766dfc38e32a9c5b10c1663f87458e759",
+        "role": "drawing-tool"
+      },
+      {
+        "file": "drawing-tool/modules/transformation_heroes.py",
+        "sha256": "0b0674c8029861961e30650ac184d096ca297a0b8290d7ce75af462ff918da33",
+        "role": "drawing-tool"
+      },
+      {
+        "file": "drawing-tool/modules/creatures.py",
+        "sha256": "1ad584ed7086aaf130cd8d97031afb47f23161653ea4f7300c407b9847d247df",
+        "role": "drawing-tool"
+      },
+      {
+        "file": "drawing-tool/modules/action_effects.py",
+        "sha256": "e3e7dd3ed1ea79a7dfd5fccce63fb55d5ad2db289fd0bf424e058d4716ae4a83",
+        "role": "drawing-tool"
+      },
+      {
+        "file": "drawing-tool/modules/fantasy_props.py",
+        "sha256": "dbba7e5efc9c8c3f41ab14808760303ad9b9ea3c58e4153d184d3e5c6e964749",
+        "role": "drawing-tool"
+      },
+      {
+        "file": "drawing-tool/modules/scifi.py",
+        "sha256": "5d57dacd3a256898349d24d0b39f45886e95f8c1c5322370f163295636bbd2e8",
+        "role": "drawing-tool"
+      },
+      {
+        "file": "drawing-tool/modules/organic_world.py",
+        "sha256": "62d77db58a9c39312e7a0a7ba8a470a533b348a1dfefd465ff1a37467f87b1e6",
+        "role": "drawing-tool"
+      },
+      {
+        "file": "drawing-tool/modules/characters.py",
+        "sha256": "6652a0edd6e756d1ded7bf73a67d9845dde8962fcba58bc5034ea2365c2b1a6f",
+        "role": "drawing-tool"
+      },
+      {
+        "file": "drawing-tool/modules/transform_effects.py",
+        "sha256": "5b30f5e13a604376a9dd496b79bde2b121f502a66fd3cbb7453bf65877c2cd94",
+        "role": "drawing-tool"
+      },
+      {
+        "file": "drawing-tool/modules/sentai_design.py",
+        "sha256": "c955dd4c737e34adb0d2dedce94de1cfd8e0c4e58843a13635688b73690ed4db",
+        "role": "drawing-tool"
+      },
+      {
+        "file": "drawing-tool/modules/action_camera.py",
+        "sha256": "d7b67ea8d2ec3841ee2b8086a4ef7a84265ded1028c96dd6f536678fc415565b",
+        "role": "drawing-tool"
+      },
+      {
+        "file": "drawing-tool/modules/grips.py",
+        "sha256": "049be84bb2b571f4001b6547b205d940e1c06df09b2a6196c94f710c03c9127d",
+        "role": "drawing-tool"
+      },
+      {
+        "file": "drawing-tool/modules/__init__.py",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "role": "drawing-tool"
+      },
+      {
+        "file": "drawing-tool/modules/cinematic_composition.py",
+        "sha256": "4d92ab5f48c8b1de6b7dfb84fc59c9a914ff5527187d8d490c9731f6b912bf5f",
+        "role": "drawing-tool"
+      },
+      {
+        "file": "drawing-tool/modules/ink_props.py",
+        "sha256": "8106dfb358e7aa02226ff05ea9c85eeccea241c49aa246e47316b51aa73c8a53",
+        "role": "drawing-tool"
+      },
+      {
+        "file": "drawing-tool/modules/cinematic_action.py",
+        "sha256": "299466fc09063797f9bb3ab71012a66e99b92188c0da318568b17b867d32cf2c",
+        "role": "drawing-tool"
+      },
+      {
+        "file": "drawing-tool/modules/cloth.py",
+        "sha256": "ce2a0228a0e0338339dfe5ad177cbb18a055693dad05c9764394255e09fc05b9",
+        "role": "drawing-tool"
+      },
+      {
+        "file": "drawing-tool/LICENSE",
+        "sha256": "71d4a7994f08ba8c3e3c7b55a66fde225f561fe6cb0066a5d4cb179caff92a02",
+        "role": "license-notice"
+      },
+      {
+        "file": "drawing-tool/NOTICE.md",
+        "sha256": "8d37b79e46f1efb0ecafc905cbb6be61b6a53b207877891071d38563d256c0eb",
+        "role": "license-notice"
+      }
+    ],
+    "visualReview": {
+      "reviewer": "Dot Nova audit agent",
+      "method": "Viewed actual full-resolution PNGs through view_image after headless rendering; root also inspected prior candidate and requested hinge/fence repairs, now applied.",
+      "sequenceNotes": "Same dark short-haired coat-wearing adult keeper, same left-hinged gate, lighthouse and water; wide closed gate to close opening view. Held panel dialogue; modest static camera transform only.",
+      "panels": [
+        {
+          "id": "dawn",
+          "sha256": "68a448d556924a4560796152543b2ff6dcb00c1a7eff920d49597cd252d0ef52",
+          "sourceSha256": "82086cd2a49618cf892390a93b44f3440da93e919eea554dbf129f123577f7a1",
+          "accepted": true,
+          "form": "Original interaction_figure module gives manga eyes, angular hair, shaped coat and articulated arms; not circle-head pictogram.",
+          "perspective": "Pier plank lines converge at harbor horizon; lighthouse and sea establish depth. Gate stays left-hinged/right-latched; closer angle is stylized, not exact 3D reprojection.",
+          "actingContact": "Keeper approaches latched right edge with left hand.",
+          "lineTone": "Black contour and lighter background lines, limited gray values and trousers tone keep figure clear against sea.",
+          "readability": "Wide establishing view preserves full keeper, full gate, fence and lighthouse.",
+          "limitations": "Bounded stylized vector geometry; limited clothing folds and depth. Gate opening inferred from two drawings, not articulated animation. Close shot intentionally crops below knees. Not professional anatomy or rigorous camera projection."
+        },
+        {
+          "id": "gate",
+          "sha256": "0ce0edf97e7bb1b45c0b566bd1631ee11055fd2385f34fd9c2f7ef6a774c8c77",
+          "sourceSha256": "6eee253919e0144f540d013cf6f71f987a11b70a852bfd0588f57c30996b41eb",
+          "accepted": true,
+          "form": "Original interaction_figure module gives manga eyes, angular hair, shaped coat and articulated arms; not circle-head pictogram.",
+          "perspective": "Pier plank lines converge at harbor horizon; lighthouse and sea establish depth. Gate stays left-hinged/right-latched; closer angle is stylized, not exact 3D reprojection.",
+          "actingContact": "Left grip silhouette overlaps gate latch edge; wrist joins forearm. Fixed hinge post and far post establish an opened gap.",
+          "lineTone": "Black contour and lighter background lines, limited gray values and trousers tone keep figure clear against sea.",
+          "readability": "Medium shot emphasizes opening grip and smile. KRRK and swing lines clarify sound/action without obscuring face.",
+          "limitations": "Bounded stylized vector geometry; limited clothing folds and depth. Gate opening inferred from two drawings, not articulated animation. Close shot intentionally crops below knees. Not professional anatomy or rigorous camera projection."
+        }
+      ]
+    }
+  }
+}

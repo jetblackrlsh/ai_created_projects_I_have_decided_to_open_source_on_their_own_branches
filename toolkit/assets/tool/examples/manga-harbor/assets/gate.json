@@ -1,0 +1,384 @@
+{
+  "version": 1,
+  "canvas": [
+    700,
+    600
+  ],
+  "objects": [
+    {
+      "id": "paper",
+      "kind": "path",
+      "d": "M 0,0 H 700 V 600 H 0 Z",
+      "fill": "#faf9f5",
+      "width": 0.1,
+      "stroke": "none"
+    },
+    {
+      "id": "sea",
+      "kind": "path",
+      "d": "M 0,270 Q 320,260 700,275 V 470 H 0 Z",
+      "fill": "#d5d8e0",
+      "width": 0.1,
+      "stroke": "none"
+    },
+    {
+      "id": "wave300",
+      "kind": "path",
+      "d": "M 0,300 q 90,-10 150,0 m 35,5 q 90,-10 180,0 m 45,-7 q 90,-8 160,0",
+      "fill": "none",
+      "width": 0.8,
+      "stroke": "#737583"
+    },
+    {
+      "id": "wave323",
+      "kind": "path",
+      "d": "M 0,323 q 90,-10 150,0 m 35,5 q 90,-10 180,0 m 45,-7 q 90,-8 160,0",
+      "fill": "none",
+      "width": 0.8,
+      "stroke": "#737583"
+    },
+    {
+      "id": "wave346",
+      "kind": "path",
+      "d": "M 0,346 q 90,-10 150,0 m 35,5 q 90,-10 180,0 m 45,-7 q 90,-8 160,0",
+      "fill": "none",
+      "width": 0.8,
+      "stroke": "#737583"
+    },
+    {
+      "id": "wave369",
+      "kind": "path",
+      "d": "M 0,369 q 90,-10 150,0 m 35,5 q 90,-10 180,0 m 45,-7 q 90,-8 160,0",
+      "fill": "none",
+      "width": 0.8,
+      "stroke": "#737583"
+    },
+    {
+      "id": "wave392",
+      "kind": "path",
+      "d": "M 0,392 q 90,-10 150,0 m 35,5 q 90,-10 180,0 m 45,-7 q 90,-8 160,0",
+      "fill": "none",
+      "width": 0.8,
+      "stroke": "#737583"
+    },
+    {
+      "id": "wave415",
+      "kind": "path",
+      "d": "M 0,415 q 90,-10 150,0 m 35,5 q 90,-10 180,0 m 45,-7 q 90,-8 160,0",
+      "fill": "none",
+      "width": 0.8,
+      "stroke": "#737583"
+    },
+    {
+      "id": "wave438",
+      "kind": "path",
+      "d": "M 0,438 q 90,-10 150,0 m 35,5 q 90,-10 180,0 m 45,-7 q 90,-8 160,0",
+      "fill": "none",
+      "width": 0.8,
+      "stroke": "#737583"
+    },
+    {
+      "id": "headland",
+      "kind": "path",
+      "d": "M 0,290 L 70,265 110,235 190,250 210,289 Z",
+      "fill": "#bbbcc5",
+      "width": 1,
+      "stroke": "#20212b"
+    },
+    {
+      "id": "lighthouse",
+      "kind": "path",
+      "d": "M 80,260 L 96,128 H 128 L 145,260 Z",
+      "fill": "white",
+      "width": 2,
+      "stroke": "#20212b"
+    },
+    {
+      "id": "lantern",
+      "kind": "path",
+      "d": "M 90,128 V 104 H 134 V 128 Z",
+      "fill": "#eeeef2",
+      "width": 2,
+      "stroke": "#20212b"
+    },
+    {
+      "id": "roof",
+      "kind": "path",
+      "d": "M 84,105 L 112,83 140,105 Z",
+      "fill": "#343744",
+      "width": 2,
+      "stroke": "#20212b"
+    },
+    {
+      "id": "lamp",
+      "kind": "path",
+      "d": "M 100,106 V 128 M 123,106 V 128",
+      "fill": "none",
+      "width": 1,
+      "stroke": "#20212b"
+    },
+    {
+      "id": "tower-lines",
+      "kind": "path",
+      "d": "M 89,195 H 137 M 94,156 H 131 M 107,233 V 260 H 122 V 233 Z",
+      "fill": "#343744",
+      "width": 1,
+      "stroke": "#20212b"
+    },
+    {
+      "id": "pier",
+      "kind": "path",
+      "d": "M 0,490 L 360,350 700,405 V 600 H 0 Z",
+      "fill": "#eeedf1",
+      "width": 2,
+      "stroke": "#20212b"
+    },
+    {
+      "id": "plank-400",
+      "kind": "path",
+      "d": "M 360,350 L -400,600",
+      "fill": "none",
+      "width": 0.8,
+      "stroke": "#aaaab5"
+    },
+    {
+      "id": "plank-280",
+      "kind": "path",
+      "d": "M 360,350 L -280,600",
+      "fill": "none",
+      "width": 0.8,
+      "stroke": "#aaaab5"
+    },
+    {
+      "id": "plank-160",
+      "kind": "path",
+      "d": "M 360,350 L -160,600",
+      "fill": "none",
+      "width": 0.8,
+      "stroke": "#aaaab5"
+    },
+    {
+      "id": "plank-40",
+      "kind": "path",
+      "d": "M 360,350 L -40,600",
+      "fill": "none",
+      "width": 0.8,
+      "stroke": "#aaaab5"
+    },
+    {
+      "id": "plank80",
+      "kind": "path",
+      "d": "M 360,350 L 80,600",
+      "fill": "none",
+      "width": 0.8,
+      "stroke": "#aaaab5"
+    },
+    {
+      "id": "plank200",
+      "kind": "path",
+      "d": "M 360,350 L 200,600",
+      "fill": "none",
+      "width": 0.8,
+      "stroke": "#aaaab5"
+    },
+    {
+      "id": "plank320",
+      "kind": "path",
+      "d": "M 360,350 L 320,600",
+      "fill": "none",
+      "width": 0.8,
+      "stroke": "#aaaab5"
+    },
+    {
+      "id": "plank440",
+      "kind": "path",
+      "d": "M 360,350 L 440,600",
+      "fill": "none",
+      "width": 0.8,
+      "stroke": "#aaaab5"
+    },
+    {
+      "id": "plank560",
+      "kind": "path",
+      "d": "M 360,350 L 560,600",
+      "fill": "none",
+      "width": 0.8,
+      "stroke": "#aaaab5"
+    },
+    {
+      "id": "plank680",
+      "kind": "path",
+      "d": "M 360,350 L 680,600",
+      "fill": "none",
+      "width": 0.8,
+      "stroke": "#aaaab5"
+    },
+    {
+      "id": "plank800",
+      "kind": "path",
+      "d": "M 360,350 L 800,600",
+      "fill": "none",
+      "width": 0.8,
+      "stroke": "#aaaab5"
+    },
+    {
+      "id": "plank920",
+      "kind": "path",
+      "d": "M 360,350 L 920,600",
+      "fill": "none",
+      "width": 0.8,
+      "stroke": "#aaaab5"
+    },
+    {
+      "id": "cross460",
+      "kind": "path",
+      "d": "M 0,460 L 700,504",
+      "fill": "none",
+      "width": 0.7,
+      "stroke": "#aaaab5"
+    },
+    {
+      "id": "cross500",
+      "kind": "path",
+      "d": "M 0,500 L 700,544",
+      "fill": "none",
+      "width": 0.7,
+      "stroke": "#aaaab5"
+    },
+    {
+      "id": "cross550",
+      "kind": "path",
+      "d": "M 0,550 L 700,594",
+      "fill": "none",
+      "width": 0.7,
+      "stroke": "#aaaab5"
+    },
+    {
+      "id": "hinge-post",
+      "kind": "path",
+      "d": "M 18,195 H 40 V 475 H 18 Z",
+      "fill": "#525461",
+      "width": 2,
+      "stroke": "#20212b"
+    },
+    {
+      "id": "end-post",
+      "kind": "path",
+      "d": "M 345,290 H 362 V 498 H 345 Z",
+      "fill": "#525461",
+      "width": 2,
+      "stroke": "#20212b"
+    },
+    {
+      "id": "rail",
+      "kind": "path",
+      "d": "M 356,304 L 700,380 M 356,347 L 700,420",
+      "fill": "none",
+      "width": 9,
+      "stroke": "#686976"
+    },
+    {
+      "id": "gate",
+      "kind": "path",
+      "d": "M 30,215 L 282,300 V 490 L 30,445 Z",
+      "fill": "#e2d9cc",
+      "width": 3,
+      "stroke": "#20212b"
+    },
+    {
+      "id": "bars",
+      "kind": "path",
+      "d": "M 80,232 V 454 M 133,249 V 464 M 185,266 V 474 M 235,284 V 482 M 30,275 L 282,350 M 30,395 L 282,450",
+      "fill": "none",
+      "width": 5,
+      "stroke": "#55515a"
+    },
+    {
+      "id": "latch",
+      "kind": "path",
+      "d": "M 268,315 H 293 V 343 H 268 Z",
+      "fill": "#525461",
+      "width": 2,
+      "stroke": "#20212b"
+    },
+    {
+      "id": "keeper",
+      "kind": "interaction_figure",
+      "position": [
+        440,
+        255
+      ],
+      "scale": 1.05,
+      "view": "threequarter",
+      "expression": "smile",
+      "gaze": [
+        -0.7,
+        0
+      ],
+      "head_angle": -6,
+      "identity": {
+        "age": "adult",
+        "hair": "short",
+        "outfit": "coat",
+        "build": "slim"
+      },
+      "left_hand": "grip",
+      "right_hand": "open",
+      "joints": {
+        "right_elbow": [
+          76,
+          80
+        ],
+        "right_wrist": [
+          60,
+          163
+        ],
+        "left_elbow": [
+          -105,
+          47
+        ],
+        "left_wrist": [
+          -138.71180739337643,
+          64.04607286659956
+        ]
+      },
+      "hand_angles": {
+        "left": 243.17696711377263
+      }
+    },
+    {
+      "id": "hinges",
+      "kind": "path",
+      "d": "M 20,250 H 50 V 265 H 20 Z M 20,405 H 50 V 420 H 20 Z",
+      "fill": "#333541",
+      "width": 1,
+      "stroke": "#20212b"
+    },
+    {
+      "id": "motion",
+      "kind": "path",
+      "d": "M 89,178 Q 178,177 240,227 M 93,166 Q 181,165 256,220",
+      "fill": "none",
+      "width": 2,
+      "stroke": "#20212b"
+    },
+    {
+      "id": "sfx",
+      "kind": "text",
+      "position": [
+        118,
+        160
+      ],
+      "text": "KRRK",
+      "size": 29
+    },
+    {
+      "id": "border",
+      "kind": "path",
+      "d": "M 3,3 H 697 V 597 H 3 Z",
+      "fill": "none",
+      "width": 5,
+      "stroke": "#20212b"
+    }
+  ]
+}

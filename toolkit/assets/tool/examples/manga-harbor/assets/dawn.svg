@@ -1,0 +1,190 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="700" height="600" viewBox="0 0 700 600">
+<defs><pattern id="tone" width="5" height="5" patternUnits="userSpaceOnUse"><rect width="5" height="5" fill="#eeeef2"/><circle cx="1" cy="1" r=".65" fill="#888893"/></pattern></defs>
+<rect id="page-paper" x="0" y="0" width="700" height="600" rx="0" fill="white" stroke="#202029" stroke-width="0"/>
+<g id="paper" data-kind="path">
+<path id="paper-stroke" d="M 0,0 H 700 V 600 H 0 Z" fill="#faf9f5" stroke="none" stroke-width="0.1" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<g id="sea" data-kind="path">
+<path id="sea-stroke" d="M 0,270 Q 320,260 700,275 V 470 H 0 Z" fill="#d5d8e0" stroke="none" stroke-width="0.1" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<g id="wave300" data-kind="path">
+<path id="wave300-stroke" d="M 0,300 q 90,-10 150,0 m 35,5 q 90,-10 180,0 m 45,-7 q 90,-8 160,0" fill="none" stroke="#737583" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<g id="wave323" data-kind="path">
+<path id="wave323-stroke" d="M 0,323 q 90,-10 150,0 m 35,5 q 90,-10 180,0 m 45,-7 q 90,-8 160,0" fill="none" stroke="#737583" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<g id="wave346" data-kind="path">
+<path id="wave346-stroke" d="M 0,346 q 90,-10 150,0 m 35,5 q 90,-10 180,0 m 45,-7 q 90,-8 160,0" fill="none" stroke="#737583" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<g id="wave369" data-kind="path">
+<path id="wave369-stroke" d="M 0,369 q 90,-10 150,0 m 35,5 q 90,-10 180,0 m 45,-7 q 90,-8 160,0" fill="none" stroke="#737583" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<g id="wave392" data-kind="path">
+<path id="wave392-stroke" d="M 0,392 q 90,-10 150,0 m 35,5 q 90,-10 180,0 m 45,-7 q 90,-8 160,0" fill="none" stroke="#737583" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<g id="wave415" data-kind="path">
+<path id="wave415-stroke" d="M 0,415 q 90,-10 150,0 m 35,5 q 90,-10 180,0 m 45,-7 q 90,-8 160,0" fill="none" stroke="#737583" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<g id="wave438" data-kind="path">
+<path id="wave438-stroke" d="M 0,438 q 90,-10 150,0 m 35,5 q 90,-10 180,0 m 45,-7 q 90,-8 160,0" fill="none" stroke="#737583" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<g id="headland" data-kind="path">
+<path id="headland-stroke" d="M 0,290 L 70,265 110,235 190,250 210,289 Z" fill="#bbbcc5" stroke="#20212b" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<g id="lighthouse" data-kind="path">
+<path id="lighthouse-stroke" d="M 80,260 L 96,128 H 128 L 145,260 Z" fill="white" stroke="#20212b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<g id="lantern" data-kind="path">
+<path id="lantern-stroke" d="M 90,128 V 104 H 134 V 128 Z" fill="#eeeef2" stroke="#20212b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<g id="roof" data-kind="path">
+<path id="roof-stroke" d="M 84,105 L 112,83 140,105 Z" fill="#343744" stroke="#20212b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<g id="lamp" data-kind="path">
+<path id="lamp-stroke" d="M 100,106 V 128 M 123,106 V 128" fill="none" stroke="#20212b" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<g id="tower-lines" data-kind="path">
+<path id="tower-lines-stroke" d="M 89,195 H 137 M 94,156 H 131 M 107,233 V 260 H 122 V 233 Z" fill="#343744" stroke="#20212b" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<g id="pier" data-kind="path">
+<path id="pier-stroke" d="M 0,490 L 360,350 700,405 V 600 H 0 Z" fill="#eeedf1" stroke="#20212b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<g id="plank-400" data-kind="path">
+<path id="plank-400-stroke" d="M 360,350 L -400,600" fill="none" stroke="#aaaab5" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<g id="plank-280" data-kind="path">
+<path id="plank-280-stroke" d="M 360,350 L -280,600" fill="none" stroke="#aaaab5" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<g id="plank-160" data-kind="path">
+<path id="plank-160-stroke" d="M 360,350 L -160,600" fill="none" stroke="#aaaab5" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<g id="plank-40" data-kind="path">
+<path id="plank-40-stroke" d="M 360,350 L -40,600" fill="none" stroke="#aaaab5" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<g id="plank80" data-kind="path">
+<path id="plank80-stroke" d="M 360,350 L 80,600" fill="none" stroke="#aaaab5" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<g id="plank200" data-kind="path">
+<path id="plank200-stroke" d="M 360,350 L 200,600" fill="none" stroke="#aaaab5" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<g id="plank320" data-kind="path">
+<path id="plank320-stroke" d="M 360,350 L 320,600" fill="none" stroke="#aaaab5" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<g id="plank440" data-kind="path">
+<path id="plank440-stroke" d="M 360,350 L 440,600" fill="none" stroke="#aaaab5" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<g id="plank560" data-kind="path">
+<path id="plank560-stroke" d="M 360,350 L 560,600" fill="none" stroke="#aaaab5" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<g id="plank680" data-kind="path">
+<path id="plank680-stroke" d="M 360,350 L 680,600" fill="none" stroke="#aaaab5" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<g id="plank800" data-kind="path">
+<path id="plank800-stroke" d="M 360,350 L 800,600" fill="none" stroke="#aaaab5" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<g id="plank920" data-kind="path">
+<path id="plank920-stroke" d="M 360,350 L 920,600" fill="none" stroke="#aaaab5" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<g id="cross460" data-kind="path">
+<path id="cross460-stroke" d="M 0,460 L 700,504" fill="none" stroke="#aaaab5" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<g id="cross500" data-kind="path">
+<path id="cross500-stroke" d="M 0,500 L 700,544" fill="none" stroke="#aaaab5" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<g id="cross550" data-kind="path">
+<path id="cross550-stroke" d="M 0,550 L 700,594" fill="none" stroke="#aaaab5" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<g id="hinge-post" data-kind="path">
+<path id="hinge-post-stroke" d="M 220,324 H 238 V 535 H 220 Z" fill="#525461" stroke="#20212b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<g id="end-post" data-kind="path">
+<path id="end-post-stroke" d="M 424,324 H 442 V 535 H 424 Z" fill="#525461" stroke="#20212b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<g id="rail" data-kind="path">
+<path id="rail-stroke" d="M 0,354 H 230 M 0,398 H 230 M 433,354 L 700,404 M 433,398 L 700,448" fill="none" stroke="#686976" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<g id="gate" data-kind="path">
+<path id="gate-stroke" d="M 230,340 H 430 V 520 H 230 Z" fill="#e2d9cc" stroke="#20212b" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<g id="bars" data-kind="path">
+<path id="bars-stroke" d="M 270,340 V 520 M 310,340 V 520 M 350,340 V 520 M 390,340 V 520 M 230,385 H 430 M 230,470 H 430" fill="none" stroke="#55515a" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<g id="hinges" data-kind="path">
+<path id="hinges-stroke" d="M 220,370 H 247 V 383 H 220 Z M 220,478 H 247 V 491 H 220 Z" fill="#333541" stroke="#20212b" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<g id="keeper" data-kind="interaction_figure">
+<g transform="translate(495 322) scale(0.48 0.48) rotate(0)">
+<path id="keeper-left-leg" d="M -49.949058630702005,163.4700627579532 C -61.98766325559684,198.82748911629355 -49.16411955727706,253.92239202951487 -52.96494762152405,283.8772101906869 C -60.399677876289076,312.41635212388314 -50.56235058558107,373.1943628825078 -54.977938231976346,404.2429536031347 L -29.022061768023654,405.7570463968653 C -29.91720817905845,371.9904961895549 -20.747797827709807,321.95387846005025 -17.03505237847595,286.1227898093131 C -16.835880442722935,256.07760797048513 -1.9096014020786605,193.19002657319476 -4.050941369297995,166.5299372420468 Z" fill="url(#tone)" stroke="#202029" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="keeper-left-shoe" d="M -56,397 L -29,397 Q -13,409 -15,420 L -61,420 Z" fill="white" stroke="#202029" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="keeper-left-laces" d="M -51,406 H -32 M -51,410 H -30" fill="none" stroke="#202029" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="keeper-right-leg" d="M 4.050941369297995,166.5299372420468 C -3.1876632555968456,203.17251088370645 16.835880442722935,256.07760797048513 17.03505237847595,286.1227898093131 C 12.960322123710924,315.1836478761169 29.797649414418924,374.40563711749223 29.022061768023654,405.7570463968653 L 54.977938231976346,404.2429536031347 C 50.16279182094155,370.80950381044505 53.4522021722902,320.04612153994975 52.96494762152405,283.8772101906869 C 49.16411955727706,253.92239202951487 55.610398597921346,189.60997342680525 49.949058630702005,163.4700627579532 Z" fill="#92939f" stroke="#202029" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="keeper-right-shoe" d="M 28,397 L 55,397 Q 71,409 69,420 L 23,420 Z" fill="white" stroke="#202029" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="keeper-right-laces" d="M 33,406 H 52 M 33,410 H 54" fill="none" stroke="#202029" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="keeper-left-sleeve" d="M -58.729365488010856,-8.193333645390108 C -87.74809646403257,-14.680000936170325 -75.84844467328608,24.011733158581542 -98.1281498357941,47.88851771802247L -81.8718501642059,62.11148228197753 C -72.57489502233027,43.92608016476598 -39.3118510890464,30.1442228047282 -37.270634511989144,8.193333645390108Q -42.54,-7.15 -58.729365488010856,-8.193333645390108 Z" fill="white" stroke="#202029" stroke-width="0" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="keeper-left-forearm" d="M -98.1281498357941,47.88851771802247 C -105.91136881944136,52.88863118055864 -115.9784051891071,72.2215948108929 -125.47300648638388,79.52699351361612L -114.52699351361612,90.47300648638388 C -105.1215948108929,78.8784051891071 -94.69059741054822,71.90940258945177 -81.8718501642059,62.11148228197753 Z" fill="#f7f7fa" stroke="#202029" stroke-width="0" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="keeper-left-arm-contour" d="M -58.729365488010856,-8.193333645390108 C -87.74809646403257,-14.680000936170325 -75.84844467328608,24.011733158581542 -98.1281498357941,47.88851771802247C -105.91136881944136,52.88863118055864 -115.9784051891071,72.2215948108929 -125.47300648638388,79.52699351361612L -114.52699351361612,90.47300648638388 C -105.1215948108929,78.8784051891071 -94.69059741054822,71.90940258945177 -81.8718501642059,62.11148228197753 C -72.57489502233027,43.92608016476598 -39.3118510890464,30.1442228047282 -37.270634511989144,8.193333645390108Q -42.54,-7.15 -58.729365488010856,-8.193333645390108 Z" fill="none" stroke="#202029" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="keeper-left-compression-fold" d="M -84.71670260673383,59.622463483285394 Q -91.1246220197047,57.953377873837304 -96.06357094417,55.882096024127634" fill="none" stroke="#202029" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+<g transform="translate(-120 85) rotate(225.0) scale(0.57)">
+<path id="keeper-left-hand-silhouette" d="M -13,0 Q -18,-12 -18,-29 Q -23,-37 -30,-40 Q -36,-46 -31,-49 Q -27,-51 -17,-41 L -16,-63 Q -16,-71 -11,-68 L -6,-42 L -5,-73 Q -5,-81 1,-76 L 5,-43 L 9,-69 Q 11,-76 15,-69 L 16,-41 L 21,-59 Q 25,-65 28,-59 Q 28,-42 20,-27 Q 17,-12 12,0 Z" fill="white" stroke="#202029" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="keeper-left-hand-palm-creases" d="M -13,-29 Q -3,-18 11,-28 M -8,-4 L 8,-5 M -13,-52 l 5,-1 M -3,-59 l 5,0 M 10,-54 l 5,1 M 20,-48 l 4,1" fill="none" stroke="#202029" stroke-width="0.75" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<path id="keeper-torso" d="M -48,6 Q -30.0,-6.0 -14.0,-14.0 L -12.0,-26.0 L 13.0,-26.0 L 15.0,-14.0 Q 32.0,-7.0 48,6 C 39,47 28.0,111.0 34,159 Q 41,197.5 44,230 Q 8.0,245.0 -44,230 Q -39,194.25 -34,159 C -28.0,111.0 -40,43 -48,6 Z" fill="white" stroke="#202029" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="keeper-neck-hollow" d="M -11.0,-10.0 Q 0.0,2.0 12.0,-10.0" fill="none" stroke="#202029" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="keeper-coat-lapels" d="M -17.0,0.0 L -2.0,32.0 L -21.0,51.0 L 0.0,230.0 M 17.0,0.0 L 2.0,32.0 L 21.0,51.0" fill="none" stroke="#202029" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+<rect id="keeper-coat-pocket" x="-33" y="143" width="20" height="29" rx="0" fill="white" stroke="#202029" stroke-width="1"/>
+<path id="keeper-torso-shadow" d="M 45,13 Q 29.0,115.0 37,230 L 27,232 Q 13.0,111.0 33,22 Z" fill="#202029" stroke="#202029" stroke-width="0" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="keeper-cloth-fold0" d="M -22.0,125.0 q 11,6 21,1" fill="none" stroke="#202029" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="keeper-cloth-fold1" d="M -22.0,139.0 q 11,6 21,1" fill="none" stroke="#202029" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="keeper-cloth-fold2" d="M -22.0,153.0 q 11,6 21,1" fill="none" stroke="#202029" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<g transform="translate(0.0 -104.0) rotate(0) scale(0.78)">
+<g transform="rotate(0 0 85)">
+<path id="keeper-head-neck" d="M -17,111 L -18,145 Q 0,157 21,141 L 17,107 Z" fill="white" stroke="#202029" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="keeper-head-neck-shadow" d="M -17,114 Q 0,134 18,112 L 18,129 Q 0,142 -17,126 Z" fill="url(#tone)" stroke="#202029" stroke-width="0" stroke-linecap="round" stroke-linejoin="round"/>
+<ellipse id="keeper-head-ear-l" cx="-42" cy="84" rx="8" ry="15" fill="white" stroke="#202029" stroke-width="1.7"/>
+<path id="keeper-head-face" d="M -43,68 C -48,40 -20,17 9,19 C 34,20 48,38 43,63 L 46,81 L 52,88 L 42,94 Q 35,117 16,130 Q -19,121 -37,100 Z" fill="white" stroke="#202029" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/>
+<g transform="translate(-11 78) scale(1.05 1)">
+<path id="keeper-head-eye-near-white" d="M -16,1 Q -3,-10 15,0 Q 12,12 0,13 Q -12,12 -16,1 Z" fill="white" stroke="#202029" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+<defs><clipPath id="keeper-head-eye-near-eye-clip"><path d="M -16,1 Q -3,-10 15,0 Q 12,12 0,13 Q -12,12 -16,1 Z"/></clipPath></defs><g clip-path="url(#keeper-head-eye-near-eye-clip)">
+<ellipse id="keeper-head-eye-near-iris" cx="-3" cy="5" rx="6" ry="8" fill="#202029" stroke="#202029" stroke-width="0"/>
+<ellipse id="keeper-head-eye-near-iris-light" cx="-2" cy="8" rx="2.88" ry="3.2" fill="#747787" stroke="#202029" stroke-width="0"/>
+<ellipse id="keeper-head-eye-near-shine" cx="-5" cy="1" rx="2.2" ry="2.6" fill="white" stroke="#202029" stroke-width="0"/>
+</g>
+<path id="keeper-head-eye-near-lid" d="M -16,1 Q -3,-10 15,0" fill="none" stroke="#202029" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="keeper-head-eye-near-lower-lid" d="M -10,13 Q 0,16 10,12" fill="none" stroke="#202029" stroke-width="0.65" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="keeper-head-eye-near-brow" d="M -14,-15 Q 0,-22 13,-16" fill="none" stroke="#202029" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<g transform="translate(29 76) scale(0.62 1)">
+<path id="keeper-head-eye-far-white" d="M -16,1 Q -3,-10 15,0 Q 12,12 0,13 Q -12,12 -16,1 Z" fill="white" stroke="#202029" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+<defs><clipPath id="keeper-head-eye-far-eye-clip"><path d="M -16,1 Q -3,-10 15,0 Q 12,12 0,13 Q -12,12 -16,1 Z"/></clipPath></defs><g clip-path="url(#keeper-head-eye-far-eye-clip)">
+<ellipse id="keeper-head-eye-far-iris" cx="-3" cy="5" rx="6" ry="8" fill="#202029" stroke="#202029" stroke-width="0"/>
+<ellipse id="keeper-head-eye-far-iris-light" cx="-2" cy="8" rx="2.88" ry="3.2" fill="#747787" stroke="#202029" stroke-width="0"/>
+<ellipse id="keeper-head-eye-far-shine" cx="-5" cy="1" rx="2.2" ry="2.6" fill="white" stroke="#202029" stroke-width="0"/>
+</g>
+<path id="keeper-head-eye-far-lid" d="M -16,1 Q -3,-10 15,0" fill="none" stroke="#202029" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="keeper-head-eye-far-lower-lid" d="M -10,13 Q 0,16 10,12" fill="none" stroke="#202029" stroke-width="0.65" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="keeper-head-eye-far-brow" d="M -14,-15 Q 0,-22 13,-16" fill="none" stroke="#202029" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<path id="keeper-head-nose" d="M 27,85 Q 29,94 34,98 L 27,101" fill="none" stroke="#202029" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="keeper-head-cheek-plane" d="M 42,95 Q 35,116 16,130 Q 33,113 33,104 Z" fill="#e7e7ee" stroke="#202029" stroke-width="0" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="keeper-head-mouth" d="M 11,111 q 9,4 18,-1" fill="none" stroke="#202029" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="keeper-head-hair-front" d="M -44,94 L -56,67 L -49,43 L -61,47 L -41,27 L -48,18 L -21,20 Q -3,0 21,12 L 14,22 Q 42,17 53,37 L 47,69 L 39,87 L 35,55 L 21,67 L 18,36 Q 2,64 -19,78 L -10,42 Q -27,65 -42,66 Z" fill="#202029" stroke="#202029" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="keeper-head-hair-highlight-0" d="M -39,40 Q -26,28 -13,29" fill="none" stroke="#aaaab9" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="keeper-head-hair-highlight-1" d="M -28,55 Q -16,37 -7,29" fill="none" stroke="#aaaab9" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="keeper-head-hair-highlight-2" d="M 1,26 Q 11,18 21,21" fill="none" stroke="#aaaab9" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="keeper-head-hair-highlight-3" d="M 31,31 Q 41,36 43,46" fill="none" stroke="#aaaab9" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+</g>
+<path id="keeper-right-sleeve" d="M 34.72957750538699,2.479089916576056 C 11.248732516160985,23.81726974972817 49.40856340301672,48.70829035328259 54.23413238286603,91.85795946894135L 75.76586761713398,90.14204053105865 C 67.24678307715567,64.21104052404783 77.36145532327762,19.94236548905803 61.27042249461301,-2.479089916576056Q 45.79,-11.83 34.72957750538699,2.479089916576056 Z" fill="white" stroke="#202029" stroke-width="0" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="keeper-right-forearm" d="M 54.23413238286603,91.85795946894135 C 51.80018728448958,108.61333813549973 57.3700344998085,147.00128293589253 55.26254312476061,168.80160366986567L 70.73745687523939,169.19839633013433 C 69.88996550019151,141.85871706410745 72.91716116305791,119.30146567084763 75.76586761713398,90.14204053105865 Z" fill="#f7f7fa" stroke="#202029" stroke-width="0" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="keeper-right-arm-contour" d="M 34.72957750538699,2.479089916576056 C 11.248732516160985,23.81726974972817 49.40856340301672,48.70829035328259 54.23413238286603,91.85795946894135C 51.80018728448958,108.61333813549973 57.3700344998085,147.00128293589253 55.26254312476061,168.80160366986567L 70.73745687523939,169.19839633013433 C 69.88996550019151,141.85871706410745 72.91716116305791,119.30146567084763 75.76586761713398,90.14204053105865 C 67.24678307715567,64.21104052404783 77.36145532327762,19.94236548905803 61.27042249461301,-2.479089916576056Q 45.79,-11.83 34.72957750538699,2.479089916576056 Z" fill="none" stroke="#202029" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="keeper-right-compression-fold" d="M 71.99781395113708,90.44232634518812 Q 66.15190411405608,96.35704486372704 61.11960501017445,99.87170621944006" fill="none" stroke="#202029" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+<g transform="translate(63 169) rotate(181.46880071438582) scale(0.57)">
+<path id="keeper-right-hand-silhouette" d="M -13,0 Q -18,-12 -18,-29 Q -23,-37 -30,-40 Q -36,-46 -31,-49 Q -27,-51 -17,-41 L -16,-63 Q -16,-71 -11,-68 L -6,-42 L -5,-73 Q -5,-81 1,-76 L 5,-43 L 9,-69 Q 11,-76 15,-69 L 16,-41 L 21,-59 Q 25,-65 28,-59 Q 28,-42 20,-27 Q 17,-12 12,0 Z" fill="white" stroke="#202029" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="keeper-right-hand-palm-creases" d="M -13,-29 Q -3,-18 11,-28 M -8,-4 L 8,-5 M -13,-52 l 5,-1 M -3,-59 l 5,0 M 10,-54 l 5,1 M 20,-48 l 4,1" fill="none" stroke="#202029" stroke-width="0.75" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+</g>
+</g>
+<g id="border" data-kind="path">
+<path id="border-stroke" d="M 3,3 H 697 V 597 H 3 Z" fill="none" stroke="#20212b" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+</svg>

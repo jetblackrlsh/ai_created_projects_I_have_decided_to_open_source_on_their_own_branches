@@ -1,0 +1,30 @@
+{
+  "id": "narrator",
+  "file": "assets/narrator.wav",
+  "text": "At dawn, the lighthouse keeper opened the gate.",
+  "speaker": "Narrator",
+  "voice": "af_heart",
+  "start": 0.5,
+  "sampleRate": 24000,
+  "channels": 1,
+  "samples": 56832,
+  "duration": 2.368,
+  "peakPCM": 0.476318359375,
+  "sha256": "f763b26dbc337b8e9944fe7af8e64868828f9088917a54a7b8d53d88695a4f9c",
+  "provider": "kokoro-onnx",
+  "synthetic": true,
+  "modelSha256": "7d5df8ecf7d4b1878015a32686053fd0eebe2bc377234608764cc0ef3636a6c5",
+  "voicesSha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+  "versions": {
+    "kokoro-onnx": "0.6.1",
+    "onnxruntime": "1.31.1",
+    "numpy": "2.2.6"
+  },
+  "projectSha256": "8c55807480196fef595ecf21250971ca965cbe18795fb0ac89d54b776b7b6ac9",
+  "speed": 1.0,
+  "lang": "en-us",
+  "originalFloatPeak": 0.47634008526802063,
+  "linearGainBeforePCM": 1.0,
+  "elapsedSeconds": 1.1816223180003362,
+  "listeningPerformed": false
+}

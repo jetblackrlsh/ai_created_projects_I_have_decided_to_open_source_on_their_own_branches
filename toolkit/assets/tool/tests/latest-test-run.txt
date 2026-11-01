@@ -1,0 +1,35 @@
+test_changed_evidence (test_art_contract.ArtContractTests.test_changed_evidence) ... ok
+test_generic_must_be_explicit_fixture (test_art_contract.ArtContractTests.test_generic_must_be_explicit_fixture) ... ok
+test_missing_contract (test_art_contract.ArtContractTests.test_missing_contract) ... ok
+test_missing_observations (test_art_contract.ArtContractTests.test_missing_observations) ... ok
+test_missing_tool_receipt (test_art_contract.ArtContractTests.test_missing_tool_receipt) ... ok
+test_rejected_panel (test_art_contract.ArtContractTests.test_rejected_panel) ... ok
+test_schema_complete (test_art_contract.ArtContractTests.test_schema_complete) ... ok
+test_source_change_without_crop_change (test_art_contract.ArtContractTests.test_source_change_without_crop_change) ... ok
+test_stale_review (test_art_contract.ArtContractTests.test_stale_review) ... ok
+test_supplied_missing_actual_source (test_art_contract.ArtContractTests.test_supplied_missing_actual_source) ... ok
+test_supplied_requires_permission (test_art_contract.ArtContractTests.test_supplied_requires_permission) ... ok
+test_changed_scene_receipt_fails (test_manga_example.RealMangaExampleTests.test_changed_scene_receipt_fails) ... ok
+test_real_source_pipeline_passes (test_manga_example.RealMangaExampleTests.test_real_source_pipeline_passes) ... ok
+test_missing_qa_never_exports (test_package.PackageTests.test_missing_qa_never_exports) ... ok
+test_stale_qa_never_exports (test_package.PackageTests.test_stale_qa_never_exports) ... ok
+test_duplicate_cast (test_project.ManifestTests.test_duplicate_cast) ... ok
+test_escape_path (test_project.ManifestTests.test_escape_path) ... ok
+test_external_svg_rejected (test_project.ManifestTests.test_external_svg_rejected) ... ok
+test_missing_panel (test_project.ManifestTests.test_missing_panel) ... ok
+test_missing_voice (test_project.ManifestTests.test_missing_voice) ... ok
+test_shot_drift (test_project.ManifestTests.test_shot_drift) ... ok
+test_unreviewed_script (test_project.ManifestTests.test_unreviewed_script) ... ok
+test_clipping_nonfinite_fail (test_verify.VerificationTests.test_clipping_nonfinite_fail) ... ok
+test_drift_fails_closed (test_verify.VerificationTests.test_drift_fails_closed) ... ok
+test_good_audio_and_negative_controls (test_verify.VerificationTests.test_good_audio_and_negative_controls) ... ok
+test_masking_fails_despite_perfect_full_mix (test_verify.VerificationTests.test_masking_fails_despite_perfect_full_mix) ... ok
+test_missing_cast_voice_fails (test_verify.VerificationTests.test_missing_cast_voice_fails) ... ok
+test_missing_voice_fails (test_verify.VerificationTests.test_missing_voice_fails) ... ok
+test_silent_voice_fails (test_verify.VerificationTests.test_silent_voice_fails) ... ok
+test_wrong_output_sample_rate (test_verify.VerificationTests.test_wrong_output_sample_rate) ... ok
+
+----------------------------------------------------------------------
+Ran 30 tests in 0.056s
+
+OK

@@ -1,0 +1,5 @@
+# Assembly/QA only; model generation uses separate verified environments.
+# Tested versions are recorded in tests/environment.json.
+numpy>=2.0,<3
+scipy>=1.13,<2
+Pillow>=10,<13

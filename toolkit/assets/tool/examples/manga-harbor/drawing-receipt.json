@@ -1,0 +1,68 @@
+{
+  "tool": "draw-headless-manga",
+  "commands": [
+    {
+      "command": [
+        "python",
+        "drawing-tool/manga.py",
+        "render",
+        "assets/dawn.json",
+        "--out",
+        "assets/dawn",
+        "--png"
+      ],
+      "returncode": 0,
+      "stdout": "{\n  \"svg_seconds\": 0.0015918190001684707,\n  \"total_seconds\": 0.5144559309992474,\n  \"svg_sha256\": \"82086cd2a49618cf892390a93b44f3440da93e919eea554dbf129f123577f7a1\"\n}\n"
+    },
+    {
+      "command": [
+        "python",
+        "drawing-tool/manga.py",
+        "render",
+        "assets/gate.json",
+        "--out",
+        "assets/gate",
+        "--png"
+      ],
+      "returncode": 0,
+      "stdout": "{\n  \"svg_seconds\": 0.0018691819968807977,\n  \"total_seconds\": 0.5221480979998887,\n  \"svg_sha256\": \"6eee253919e0144f540d013cf6f71f987a11b70a852bfd0588f57c30996b41eb\"\n}\n"
+    }
+  ],
+  "inputs": {
+    "assets/dawn.json": "58fdd75ba0552c740a8e165fa1af22a926e37dcc66fcb13f48efe160b452c32b",
+    "assets/gate.json": "398dacea6526cef0c7a7d3da8ecffefbcc3789591e4c13ac39810ff225ce0755"
+  },
+  "outputs": {
+    "assets/dawn.svg": "82086cd2a49618cf892390a93b44f3440da93e919eea554dbf129f123577f7a1",
+    "assets/dawn.png": "68a448d556924a4560796152543b2ff6dcb00c1a7eff920d49597cd252d0ef52",
+    "assets/gate.svg": "6eee253919e0144f540d013cf6f71f987a11b70a852bfd0588f57c30996b41eb",
+    "assets/gate.png": "0ce0edf97e7bb1b45c0b566bd1631ee11055fd2385f34fd9c2f7ef6a774c8c77"
+  },
+  "rendererFiles": {
+    "drawing-tool/choreography.py": "75320e4555a1ddbd2e51a3abbbd08d2e8ff76928062e1cd1a53aba1d7a2e7734",
+    "drawing-tool/manga.py": "e104d9180aa957ac453fac25d274b4c3c77c7803636307dabf3daf3835645393",
+    "drawing-tool/modules/superheroes.py": "cecbde5866413cd17b1ed814da773e102161dd6e1a89e731dd2a9c1887cab9d8",
+    "drawing-tool/modules/fantasy_world.py": "b07dddfb1b6d83af77f82bf276961e31e6f2aa0068018dec6162b1719a586742",
+    "drawing-tool/modules/transformation_props.py": "2a66778436935139d95604f0fdd8c128d246f043df83e13730099ff43e710071",
+    "drawing-tool/modules/perspective.py": "dbdd52232f00587405efb51615096f1795e41dc64517fa97a2af1bec9346e9b2",
+    "drawing-tool/modules/action_characters.py": "e16bb7797c8e61db406fc55ce6bc8dd7b051f584093a9090c45302a67012e95e",
+    "drawing-tool/modules/cinematic_stage.py": "664b84476e939ab3daef1ed4bf17125992179e29f53cc4412bb57e68e28ead7e",
+    "drawing-tool/modules/interaction_figures.py": "b84b4298505f7b990eeb526f5245fc4766dfc38e32a9c5b10c1663f87458e759",
+    "drawing-tool/modules/transformation_heroes.py": "0b0674c8029861961e30650ac184d096ca297a0b8290d7ce75af462ff918da33",
+    "drawing-tool/modules/creatures.py": "1ad584ed7086aaf130cd8d97031afb47f23161653ea4f7300c407b9847d247df",
+    "drawing-tool/modules/action_effects.py": "e3e7dd3ed1ea79a7dfd5fccce63fb55d5ad2db289fd0bf424e058d4716ae4a83",
+    "drawing-tool/modules/fantasy_props.py": "dbba7e5efc9c8c3f41ab14808760303ad9b9ea3c58e4153d184d3e5c6e964749",
+    "drawing-tool/modules/scifi.py": "5d57dacd3a256898349d24d0b39f45886e95f8c1c5322370f163295636bbd2e8",
+    "drawing-tool/modules/organic_world.py": "62d77db58a9c39312e7a0a7ba8a470a533b348a1dfefd465ff1a37467f87b1e6",
+    "drawing-tool/modules/characters.py": "6652a0edd6e756d1ded7bf73a67d9845dde8962fcba58bc5034ea2365c2b1a6f",
+    "drawing-tool/modules/transform_effects.py": "5b30f5e13a604376a9dd496b79bde2b121f502a66fd3cbb7453bf65877c2cd94",
+    "drawing-tool/modules/sentai_design.py": "c955dd4c737e34adb0d2dedce94de1cfd8e0c4e58843a13635688b73690ed4db",
+    "drawing-tool/modules/action_camera.py": "d7b67ea8d2ec3841ee2b8086a4ef7a84265ded1028c96dd6f536678fc415565b",
+    "drawing-tool/modules/grips.py": "049be84bb2b571f4001b6547b205d940e1c06df09b2a6196c94f710c03c9127d",
+    "drawing-tool/modules/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "drawing-tool/modules/cinematic_composition.py": "4d92ab5f48c8b1de6b7dfb84fc59c9a914ff5527187d8d490c9731f6b912bf5f",
+    "drawing-tool/modules/ink_props.py": "8106dfb358e7aa02226ff05ea9c85eeccea241c49aa246e47316b51aa73c8a53",
+    "drawing-tool/modules/cinematic_action.py": "299466fc09063797f9bb3ab71012a66e99b92188c0da318568b17b867d32cf2c",
+    "drawing-tool/modules/cloth.py": "ce2a0228a0e0338339dfe5ad177cbb18a055693dad05c9764394255e09fc05b9"
+  }
+}
