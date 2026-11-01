@@ -7,7 +7,7 @@ Read SKILL.md, then assets/tool/README.md and assets/tool/docs/heroic.md. From a
 ```sh
 python -m pip install -r requirements.txt
 python -m unittest discover -s tests -v
-python heroic_motion.py validate-exact examples/heroic-harbor/project.json
+python heroic_motion.py validate-exact examples/heroic-showcase/project.json
 ```
 
 Install FFmpeg/ffprobe separately. Exact-master mode preserves AAC packets and their timing; the included neutral 12-second harbor fixture includes a complete soundtrack and paired outputs. New-audio mode supports separately configured local Kokoro and Stable Audio installations; no models, credentials, auto-download or paid API are bundled. Review third-party model/runtime/output terms before use.
@@ -20,3 +20,7 @@ Drawing companion: https://github.com/jetblackrlsh/ai_created_projects_I_have_de
 
 ## Current visual limits
 This is an editable stylized vector toolkit, not a publisher-style model. Rendering and audio tests do not establish drawing quality. Heroic production requires actual drawing provenance and hash-bound visual review; generic panel compatibility is explicit and unbranded. Existing harbor fixtures test mechanics only. A stronger example is pending visual preview and review.
+
+## Reviewed original artwork
+
+Start with `assets/tool/examples/heroic-showcase`: the visually reviewed neutral keeper drawings, construction views, editable sources, actual drawing receipts, hash-bound visual observations and paired 12-second outputs. Older harbor fixtures remain explicitly generic engineering regressions, not style benchmarks.

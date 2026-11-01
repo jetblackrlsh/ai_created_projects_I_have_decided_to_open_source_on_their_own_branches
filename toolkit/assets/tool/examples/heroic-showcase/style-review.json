@@ -1,0 +1,105 @@
+{
+  "schemaVersion": 1,
+  "status": "accepted",
+  "reviewer": "Independent publisher visual inspection and requester preview approval",
+  "reviewedAt": "2026-11-01T16:08:28Z",
+  "brief": "Original neutral American heroic-comic construction example: elderly harbor keeper opens hinged gate at dawn.",
+  "referenceObservations": "Requester approved these neutral keeper panels as the stronger public example. Retained first panel is the accepted target for identity, coat value planes and projected harbor setting.",
+  "limitations": "Simplified vector/cel illustration, two keyed poses and one camera; not naturalistic brush-ink mastery or articulated animation. Fingers and subtle acting remain stylized.",
+  "reference": {
+    "file": "01-latch.png",
+    "sha256": "bf08b9687e204e4a2838f2521888b252e23d364c063c4e6a781b72f7b4c5f14b"
+  },
+  "representative": {
+    "status": "accepted",
+    "image": {
+      "file": "02-open.png",
+      "sha256": "fb4a2b8fbbc044c5c11cf2c262008e5c99032d6d21fb56d3ec0ee9ac508739b6"
+    },
+    "construction": {
+      "file": "02-open-construction.png",
+      "sha256": "c2ecb444d9ae6dead3e59106b544afc4bf99c58f6e63f34683587daadbe0353e"
+    },
+    "source": {
+      "file": "build.py",
+      "sha256": "6326a736dbff183a7260b1f5a72bfb4ce6f0ec9ac610181857fba55859019c81"
+    },
+    "observations": {
+      "proportionsIdentity": "Consistent elderly human keeper, long coat and cap; adult head/body proportion, not a mascot substitution.",
+      "connectedFormsContacts": "Extended sleeve follows changed elbow/wrist chain; fingers move to projected latch while gate pivots about fixed right post.",
+      "gestureExpression": "Smile and extended forearm communicate completed opening; identity and cap remain consistent.",
+      "inkFormShadows": "Dark coat-side planes and narrower fold/hatch strokes distinguish volumes; face has limited cheek/jaw shadow, still cel-like.",
+      "perspectiveDepth": "Projected paving, curbs, bollards and gate share one camera; foreground keeper overlaps gate, with lighthouse and sea behind.",
+      "speciesDesign": "Ordinary elderly human harbor keeper; beard, cap and raincoat are readable, no fantasy species or private character.",
+      "storyTone": "Calm dawn harbor routine: closed gate then opened passage and reassurance. Passing rain is visible with sunrise."
+    },
+    "drawingProvenance": {
+      "method": "mixed",
+      "visibleGeometry": "Shared world projection creates gate and pier solids; shared heads create elderly face and hands; shared limb contours create sleeves; authored coat, cap and lighthouse paths complete neutral scene.",
+      "functionsAndParametersOrPaths": "world.Camera/box/cylinder/render_faces/line3, heads.render_head/render_hand, figures.limb and inks.feather; exact scene camera, gate hinge/angle and identity in scene.json, SHA-bound construction receipt."
+    },
+    "unresolvedIssues": []
+  },
+  "panels": [
+    {
+      "status": "accepted",
+      "image": {
+        "file": "01-latch.png",
+        "sha256": "bf08b9687e204e4a2838f2521888b252e23d364c063c4e6a781b72f7b4c5f14b"
+      },
+      "construction": {
+        "file": "01-latch-construction.png",
+        "sha256": "9d3dd8f98461836a11168c6628600d83b18b45e6bb54d09dbbee896c7c447fd7"
+      },
+      "source": {
+        "file": "build.py",
+        "sha256": "6326a736dbff183a7260b1f5a72bfb4ce6f0ec9ac610181857fba55859019c81"
+      },
+      "observations": {
+        "proportionsIdentity": "Consistent elderly human keeper, long coat and cap; adult head/body proportion, not a mascot substitution.",
+        "connectedFormsContacts": "Bent coat sleeve joins shoulder and wrist; fingers meet the free-end latch of a closed projected gate.",
+        "gestureExpression": "Three-quarter elderly face looks toward viewer with quiet neutral expression; near hand holds latch.",
+        "inkFormShadows": "Dark coat-side planes and narrower fold/hatch strokes distinguish volumes; face has limited cheek/jaw shadow, still cel-like.",
+        "perspectiveDepth": "Projected paving, curbs, bollards and gate share one camera; foreground keeper overlaps gate, with lighthouse and sea behind.",
+        "speciesDesign": "Ordinary elderly human harbor keeper; beard, cap and raincoat are readable, no fantasy species or private character.",
+        "storyTone": "Calm dawn harbor routine: closed gate then opened passage and reassurance. Passing rain is visible with sunrise."
+      },
+      "drawingProvenance": {
+        "method": "mixed",
+        "visibleGeometry": "Shared world projection creates gate and pier solids; shared heads create elderly face and hands; shared limb contours create sleeves; authored coat, cap and lighthouse paths complete neutral scene.",
+        "functionsAndParametersOrPaths": "world.Camera/box/cylinder/render_faces/line3, heads.render_head/render_hand, figures.limb and inks.feather; exact scene camera, gate hinge/angle and identity in scene.json, SHA-bound construction receipt."
+      },
+      "unresolvedIssues": []
+    },
+    {
+      "status": "accepted",
+      "image": {
+        "file": "02-open.png",
+        "sha256": "fb4a2b8fbbc044c5c11cf2c262008e5c99032d6d21fb56d3ec0ee9ac508739b6"
+      },
+      "construction": {
+        "file": "02-open-construction.png",
+        "sha256": "c2ecb444d9ae6dead3e59106b544afc4bf99c58f6e63f34683587daadbe0353e"
+      },
+      "source": {
+        "file": "build.py",
+        "sha256": "6326a736dbff183a7260b1f5a72bfb4ce6f0ec9ac610181857fba55859019c81"
+      },
+      "observations": {
+        "proportionsIdentity": "Consistent elderly human keeper, long coat and cap; adult head/body proportion, not a mascot substitution.",
+        "connectedFormsContacts": "Extended sleeve follows changed elbow/wrist chain; fingers move to projected latch while gate pivots about fixed right post.",
+        "gestureExpression": "Smile and extended forearm communicate completed opening; identity and cap remain consistent.",
+        "inkFormShadows": "Dark coat-side planes and narrower fold/hatch strokes distinguish volumes; face has limited cheek/jaw shadow, still cel-like.",
+        "perspectiveDepth": "Projected paving, curbs, bollards and gate share one camera; foreground keeper overlaps gate, with lighthouse and sea behind.",
+        "speciesDesign": "Ordinary elderly human harbor keeper; beard, cap and raincoat are readable, no fantasy species or private character.",
+        "storyTone": "Calm dawn harbor routine: closed gate then opened passage and reassurance. Passing rain is visible with sunrise."
+      },
+      "drawingProvenance": {
+        "method": "mixed",
+        "visibleGeometry": "Shared world projection creates gate and pier solids; shared heads create elderly face and hands; shared limb contours create sleeves; authored coat, cap and lighthouse paths complete neutral scene.",
+        "functionsAndParametersOrPaths": "world.Camera/box/cylinder/render_faces/line3, heads.render_head/render_hand, figures.limb and inks.feather; exact scene camera, gate hinge/angle and identity in scene.json, SHA-bound construction receipt."
+      },
+      "unresolvedIssues": []
+    }
+  ]
+}

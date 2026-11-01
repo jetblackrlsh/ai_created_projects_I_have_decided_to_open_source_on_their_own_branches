@@ -19,6 +19,6 @@ Bind the review into the project with `styleReview` (relative JSON path) and `st
 
 ## Explicit generic compatibility
 
-Only when generic panel assembly is actually requested/appropriate, set `visualTreatment:"generic-panel"` with a truthful `genericPanelReason` of at least20characters. This labels the output **PANEL MOTION COMIC**, never automatically HEROIC. It is not an implicit fallback for a failed heroic brief. Existing harbor examples are engineering fixtures for sound/timing/crop behavior, not approved style benchmarks. A stronger example will be added only after actual art preview/review, not manufactured review records.
+Only when generic panel assembly is actually requested/appropriate, set `visualTreatment:"generic-panel"` with a truthful `genericPanelReason` of at least20characters. This labels the output **PANEL MOTION COMIC**, never automatically HEROIC. It is not an implicit fallback for a failed heroic brief. Existing harbor examples are engineering fixtures for sound/timing/crop behavior, not approved style benchmarks. `examples/heroic-showcase` is the separately reviewed original neutral art example; it includes actual observations and construction evidence, not manufactured style certificates.
 
 Mechanical text-length checks discourage empty records but do not measure descriptive quality. Hashes bind evidence, not artistic truth. Story readability, style, caption readability, audio listening and codec/timing QA remain distinct judgments.

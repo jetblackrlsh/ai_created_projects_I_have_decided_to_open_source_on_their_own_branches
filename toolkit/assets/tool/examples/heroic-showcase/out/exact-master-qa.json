@@ -1,0 +1,21 @@
+{
+  "duration": 12,
+  "fps": 24,
+  "size": 720,
+  "mode": "both",
+  "listeningVerified": false,
+  "filmAudio": {
+    "identicalAACPacketsAndTiming": true,
+    "packets": 564,
+    "sourceSha256": "97e80177142f99415a2e538e4c8f9d5ea780425af2bcb9e50871ea78af404ee5",
+    "targetSha256": "43a5fff1035f65bcda1d1fc5db81fdadaaf8145b82da0f827d9806a259c805b1",
+    "sampleRate": "48000"
+  },
+  "dramaAudio": {
+    "identicalAACPacketsAndTiming": true,
+    "packets": 564,
+    "sourceSha256": "97e80177142f99415a2e538e4c8f9d5ea780425af2bcb9e50871ea78af404ee5",
+    "targetSha256": "99cb28f28c389f84bbc9ace12dbfc7b4bb72857b0795d5755cbfca7f293e30f2",
+    "sampleRate": "48000"
+  }
+}

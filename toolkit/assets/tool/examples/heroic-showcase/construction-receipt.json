@@ -1,0 +1,56 @@
+{
+  "construction": "Original hand-authored vector geometry, module-rendered anatomical landmarks and perspective solids. No image generation, tracing, private assets, or imported raster art.",
+  "modules": {
+    "heads": "c4fc98585e25b6256a3ece42475d1de915c1b142885f03a58e56a99735ade057",
+    "figures": "3ef5cac289f8126adb95b085461f950858033f79e1690327461dc97659bf2bd5",
+    "world": "d9c8fdfb62daf4f4a57f88aa859772fa27bd4b20276e85da143e4514d9ed75bf",
+    "inks": "c41d6e941b8ec625ab6c4dfdaf041be575841a50479389188fd31127d41947a8"
+  },
+  "inputs": {
+    "scene.json": "5ae38204f3029f4bcced3b3d615c8dc6a8d725e60810ec9b0f3a72c8d1abb0eb",
+    "build.py": "6326a736dbff183a7260b1f5a72bfb4ce6f0ec9ac610181857fba55859019c81"
+  },
+  "outputs": {
+    "01-latch-construction.png": "9d3dd8f98461836a11168c6628600d83b18b45e6bb54d09dbbee896c7c447fd7",
+    "02-open-construction.svg": "6b15cb2092709e47cd0c7c31e7e3fbac2ffed19b37ec3660e353ae991ab65c86",
+    "02-open.png": "fb4a2b8fbbc044c5c11cf2c262008e5c99032d6d21fb56d3ec0ee9ac508739b6",
+    "02-open.svg": "281182897decb99de659b4d16f1bc992a1501b69135458dd0ca1cd58afa1448d",
+    "01-latch.png": "bf08b9687e204e4a2838f2521888b252e23d364c063c4e6a781b72f7b4c5f14b",
+    "02-open-construction.png": "c2ecb444d9ae6dead3e59106b544afc4bf99c58f6e63f34683587daadbe0353e",
+    "01-latch-construction.svg": "f862f3ebc76334dc61d4727adc2f85a09490270724be00d021d59ee8d7102708",
+    "01-latch.svg": "67cb4a797a71c75a0f22567aab66683e06c2a580a1987bfe3d53161ca71aa77c"
+  },
+  "panels": [
+    {
+      "panel": "01-latch",
+      "gate_angle_degrees": 0,
+      "projected_handle": [
+        511.4847452678815,
+        390.87465853018307
+      ],
+      "hand_center": [
+        511.4847452678815,
+        390.87465853018307
+      ],
+      "contact": "same projected latch point; pin at fixed right post; full gate rotates rigidly about that pin"
+    },
+    {
+      "panel": "02-open",
+      "gate_angle_degrees": -35,
+      "projected_handle": [
+        735.6242602784341,
+        356.33992579482117
+      ],
+      "hand_center": [
+        735.6242602784341,
+        356.33992579482117
+      ],
+      "contact": "same projected latch point; pin at fixed right post; full gate rotates rigidly about that pin"
+    }
+  ],
+  "limits": [
+    "Stylized vector/cel illustration, not naturalistic hand-inked comic mastery.",
+    "Two poses, not continuous anatomical animation.",
+    "Gate movement is rigid projection between two keyframes."
+  ]
+}

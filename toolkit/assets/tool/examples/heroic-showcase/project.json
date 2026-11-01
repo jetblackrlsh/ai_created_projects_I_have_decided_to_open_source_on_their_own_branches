@@ -1,0 +1,68 @@
+{
+  "title": "Harbor at Dawn",
+  "duration": 12,
+  "fps": 24,
+  "size": 720,
+  "cast": {
+    "Narrator": "af_heart",
+    "Keeper": "bm_george"
+  },
+  "subtitle": "Original stylized heroic drawing \u2014 two-panel showcase",
+  "credits": [
+    "Original neutral art: Heroic Comics Drawing toolkit",
+    "Motion-comic tool: AI-assisted original development"
+  ],
+  "audioReviewNotes": "Narration names the keeper and describes opening the gate; the second voice belongs to the introduced keeper. No visual information is required to understand the event.",
+  "master": "master.m4a",
+  "captions": [
+    {
+      "id": "narrator",
+      "shot": "latch",
+      "file": "assets/narrator.wav",
+      "text": "At dawn, the lighthouse keeper opened the gate.",
+      "speaker": "Narrator",
+      "voice": "af_heart",
+      "start": 1.3,
+      "end": 3.668,
+      "samples": 113664,
+      "gain": 0.86,
+      "sha256": "f763b26dbc337b8e9944fe7af8e64868828f9088917a54a7b8d53d88695a4f9c"
+    },
+    {
+      "id": "keeper",
+      "shot": "open",
+      "file": "assets/keeper.wav",
+      "text": "The harbor is safe.",
+      "speaker": "Keeper",
+      "voice": "bm_george",
+      "start": 6.5,
+      "end": 8.1,
+      "samples": 76800,
+      "gain": 0.86,
+      "sha256": "83e98321e384ebb08ef08a301be45f69a384f5f6a703d83c4290b163f9c47618"
+    }
+  ],
+  "shots": [
+    {
+      "id": "latch",
+      "image": "01-latch.png",
+      "sha256": "bf08b9687e204e4a2838f2521888b252e23d364c063c4e6a781b72f7b4c5f14b",
+      "start": 1,
+      "end": 3
+    },
+    {
+      "id": "open",
+      "image": "02-open.png",
+      "sha256": "fb4a2b8fbbc044c5c11cf2c262008e5c99032d6d21fb56d3ec0ee9ac508739b6",
+      "start": 3,
+      "end": 10
+    }
+  ],
+  "expectedPanels": [
+    "latch",
+    "open"
+  ],
+  "visualTreatment": "heroic",
+  "styleReview": "style-review.json",
+  "styleReviewSha256": "fbfcc052b5324ae113138be8fa038fa3ce12f0659bcfc4c49d9628dfd31d971e"
+}
