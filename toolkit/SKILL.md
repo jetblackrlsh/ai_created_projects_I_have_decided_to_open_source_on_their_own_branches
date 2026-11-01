@@ -7,6 +7,10 @@ description: Draw and edit original heroic American superhero-style comics with 
 
 Create original authored vector geometry, render it without a browser, inspect actual pixels and revise the drawing. Keep this tool distinct from the manga tool. Do not substitute generated raster art, tracing, ASCII conversion, or a renamed old preset for drawing with this skill.
 
+## Visual acceptance before production
+
+Read `references/visual-style-review.md` before authoring a finished comic. Inspect a suitable visual reference and a representative finished panel with its construction view. Require concrete visual review of proportion/form, gesture/contact, depth and ink/value hierarchy; module use or explicit SVG paths alone do not establish style. Resolve rejected previews before scaling up. Keep style acceptance separate from file validity and story readability.
+
 ## Plan and draw
 
 1. Read `references/tool-contract.md` for supported scene objects and commands. Read `references/drawing-principles.md` before a new composition. Check `references/coverage-and-limits.md` before discussing what the book study established.

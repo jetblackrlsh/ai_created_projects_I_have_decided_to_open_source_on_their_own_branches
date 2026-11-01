@@ -1,6 +1,6 @@
 # Heroic Comics Drawing
 
-A headless, editable SVG/JSON drawing toolkit and agent skill for original heroic American-comic-style compositions. This is authored vector construction, not an image-generation model, tracing tool, or promise of master-level anatomy.
+A headless, editable SVG/JSON construction toolkit and agent skill for working toward original stylized American heroic-comic compositions. This is authored vector construction, not an image-generation model, tracing tool, or promise of master-level anatomy.
 
 ## Quick start
 
@@ -27,3 +27,7 @@ Copy this directory to the skill location supported by your agent and retain SKI
 ## License and provenance
 
 MIT for this toolkit's original content; see LICENSE and references/SOURCES-AND-LICENSES.md. Inspired by studying general principles in *How to Draw Comics the Marvel Way*, not a Marvel product or affiliation. No book content is redistributed.
+
+## Visual acceptance is not automatic
+
+The renderer can also draw unrelated flat shapes; it does not enforce a publisher's art style. Follow [the required visual review](references/visual-style-review.md), retain construction evidence and inspect a representative finished panel before a full production. The bundled studies are engineering/construction examples, not a claim that all output meets the requested aesthetic. A stronger finished-story example is pending visual review; no new quality claim is made here.

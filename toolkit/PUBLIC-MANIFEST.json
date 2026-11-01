@@ -1,6 +1,6 @@
 {
   "project": "Heroic Comics Drawing",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "files": [
     {
       "path": ".gitignore",
@@ -14,13 +14,13 @@
     },
     {
       "path": "README.md",
-      "sha256": "cca55e943033bfb68b51ba6bb025628c83c2653c82fa1a3400352ed21384c5cf",
-      "bytes": 2306
+      "sha256": "b0c8e859f7569f04e7bdde9a397272455c3ee8b8d7146baa849531ec8e059ea1",
+      "bytes": 2848
     },
     {
       "path": "SKILL.md",
-      "sha256": "47a561afa4394af2e7d735fd1e02d783c39af9b81119e2a11015dfe55b7f3bb3",
-      "bytes": 4689
+      "sha256": "13266449306a7b714161094e817c6e1801356f8ba2d8ed797ddfa60b3cffb568",
+      "bytes": 5186
     },
     {
       "path": "agents/openai.yaml",
@@ -166,6 +166,11 @@
       "path": "references/tool-contract.md",
       "sha256": "5ff0754f7284c40b4fd46bab5ad238b1d2d34bd1859023ac12ceede2c4ead64e",
       "bytes": 2901
+    },
+    {
+      "path": "references/visual-style-review.md",
+      "sha256": "109b92e1d78905e4041c4adee7afa142640d125b9b79182cf448ac0ad916ad61",
+      "bytes": 2928
     },
     {
       "path": "requirements-dev.txt",
