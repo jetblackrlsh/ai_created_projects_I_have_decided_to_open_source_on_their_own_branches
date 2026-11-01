@@ -1,0 +1,199 @@
+{
+  "version": 1,
+  "width": 1600,
+  "height": 1320,
+  "objects": [
+    {
+      "id": "title",
+      "kind": "text",
+      "x": 40,
+      "y": 48,
+      "text": "BUILD, THEN INK | Same landmarks across four stages",
+      "size": 29
+    },
+    {
+      "id": "sub",
+      "kind": "text",
+      "x": 40,
+      "y": 80,
+      "text": "Crouch and leap: action line -> volumes/draw-through -> selected contour -> ink and form accents.",
+      "size": 16
+    },
+    {
+      "id": "figure00",
+      "kind": "construction",
+      "pose": "crouch",
+      "x": 200,
+      "y": 250,
+      "scale": 0.69,
+      "stage": "stick",
+      "identity": {
+        "build": "athletic"
+      },
+      "guides": false,
+      "suit": "#a9becb"
+    },
+    {
+      "id": "label00",
+      "kind": "text",
+      "x": 80,
+      "y": 720,
+      "text": "STICK",
+      "size": 18
+    },
+    {
+      "id": "figure01",
+      "kind": "construction",
+      "pose": "crouch",
+      "x": 590,
+      "y": 250,
+      "scale": 0.69,
+      "stage": "volumes",
+      "identity": {
+        "build": "athletic"
+      },
+      "guides": false,
+      "suit": "#a9becb"
+    },
+    {
+      "id": "label01",
+      "kind": "text",
+      "x": 470,
+      "y": 720,
+      "text": "VOLUMES",
+      "size": 18
+    },
+    {
+      "id": "figure02",
+      "kind": "figure",
+      "pose": "crouch",
+      "x": 980,
+      "y": 250,
+      "scale": 0.69,
+      "stage": "contour",
+      "identity": {
+        "build": "athletic"
+      },
+      "guides": true,
+      "suit": "#d9e3e6"
+    },
+    {
+      "id": "label02",
+      "kind": "text",
+      "x": 860,
+      "y": 720,
+      "text": "CONTOUR",
+      "size": 18
+    },
+    {
+      "id": "figure03",
+      "kind": "figure",
+      "pose": "crouch",
+      "x": 1370,
+      "y": 250,
+      "scale": 0.69,
+      "stage": "ink",
+      "identity": {
+        "build": "athletic"
+      },
+      "guides": false,
+      "suit": "#a9becb"
+    },
+    {
+      "id": "label03",
+      "kind": "text",
+      "x": 1250,
+      "y": 720,
+      "text": "INK",
+      "size": 18
+    },
+    {
+      "id": "figure10",
+      "kind": "construction",
+      "pose": "leap",
+      "x": 200,
+      "y": 830,
+      "scale": 0.69,
+      "stage": "stick",
+      "identity": {
+        "build": "athletic"
+      },
+      "guides": false,
+      "suit": "#a9becb"
+    },
+    {
+      "id": "label10",
+      "kind": "text",
+      "x": 80,
+      "y": 1300,
+      "text": "STICK",
+      "size": 18
+    },
+    {
+      "id": "figure11",
+      "kind": "construction",
+      "pose": "leap",
+      "x": 590,
+      "y": 830,
+      "scale": 0.69,
+      "stage": "volumes",
+      "identity": {
+        "build": "athletic"
+      },
+      "guides": false,
+      "suit": "#a9becb"
+    },
+    {
+      "id": "label11",
+      "kind": "text",
+      "x": 470,
+      "y": 1300,
+      "text": "VOLUMES",
+      "size": 18
+    },
+    {
+      "id": "figure12",
+      "kind": "figure",
+      "pose": "leap",
+      "x": 980,
+      "y": 830,
+      "scale": 0.69,
+      "stage": "contour",
+      "identity": {
+        "build": "athletic"
+      },
+      "guides": true,
+      "suit": "#d9e3e6"
+    },
+    {
+      "id": "label12",
+      "kind": "text",
+      "x": 860,
+      "y": 1300,
+      "text": "CONTOUR",
+      "size": 18
+    },
+    {
+      "id": "figure13",
+      "kind": "figure",
+      "pose": "leap",
+      "x": 1370,
+      "y": 830,
+      "scale": 0.69,
+      "stage": "ink",
+      "identity": {
+        "build": "athletic"
+      },
+      "guides": false,
+      "suit": "#a9becb"
+    },
+    {
+      "id": "label13",
+      "kind": "text",
+      "x": 1250,
+      "y": 1300,
+      "text": "INK",
+      "size": 18
+    }
+  ]
+}

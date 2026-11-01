@@ -1,0 +1,202 @@
+[
+  {
+    "id": "head-0-0",
+    "x": 150,
+    "y": 225,
+    "scale": 1.8,
+    "view": "front",
+    "expression": "neutral",
+    "identity": {
+      "hair": "short"
+    },
+    "guides": true
+  },
+  {
+    "id": "head-0-1",
+    "x": 450,
+    "y": 225,
+    "scale": 1.8,
+    "view": "threequarter",
+    "expression": "neutral",
+    "identity": {
+      "hair": "short"
+    },
+    "guides": true
+  },
+  {
+    "id": "head-0-2",
+    "x": 750,
+    "y": 225,
+    "scale": 1.8,
+    "view": "profile",
+    "expression": "neutral",
+    "identity": {
+      "hair": "short"
+    },
+    "guides": true
+  },
+  {
+    "id": "head-0-3",
+    "x": 1050,
+    "y": 225,
+    "scale": 1.8,
+    "view": "up",
+    "expression": "neutral",
+    "identity": {
+      "hair": "short"
+    },
+    "guides": true
+  },
+  {
+    "id": "head-0-4",
+    "x": 1350,
+    "y": 225,
+    "scale": 1.8,
+    "view": "down",
+    "expression": "neutral",
+    "identity": {
+      "hair": "short"
+    },
+    "guides": true
+  },
+  {
+    "id": "head-1-0",
+    "x": 150,
+    "y": 515,
+    "scale": 1.8,
+    "view": "front",
+    "expression": "neutral",
+    "identity": {
+      "hair": "forelock",
+      "age": "child",
+      "jaw": "narrow"
+    },
+    "guides": false
+  },
+  {
+    "id": "head-1-1",
+    "x": 450,
+    "y": 515,
+    "scale": 1.8,
+    "view": "threequarter",
+    "expression": "angry",
+    "identity": {
+      "hair": "forelock",
+      "age": "child",
+      "jaw": "narrow"
+    },
+    "guides": false
+  },
+  {
+    "id": "head-1-2",
+    "x": 750,
+    "y": 515,
+    "scale": 1.8,
+    "view": "profile",
+    "expression": "fear",
+    "identity": {
+      "hair": "forelock",
+      "age": "child",
+      "jaw": "narrow"
+    },
+    "guides": false
+  },
+  {
+    "id": "head-1-3",
+    "x": 1050,
+    "y": 515,
+    "scale": 1.8,
+    "view": "up",
+    "expression": "smile",
+    "identity": {
+      "hair": "forelock",
+      "age": "child",
+      "jaw": "narrow"
+    },
+    "guides": false
+  },
+  {
+    "id": "head-1-4",
+    "x": 1350,
+    "y": 515,
+    "scale": 1.8,
+    "view": "down",
+    "expression": "shout",
+    "identity": {
+      "hair": "forelock",
+      "age": "child",
+      "jaw": "narrow"
+    },
+    "guides": false
+  },
+  {
+    "id": "head-2-0",
+    "x": 150,
+    "y": 805,
+    "scale": 1.8,
+    "view": "front",
+    "expression": "neutral",
+    "identity": {
+      "hair": "long",
+      "age": "elder",
+      "jaw": "narrow"
+    },
+    "guides": false
+  },
+  {
+    "id": "head-2-1",
+    "x": 450,
+    "y": 805,
+    "scale": 1.8,
+    "view": "threequarter",
+    "expression": "neutral",
+    "identity": {
+      "hair": "long",
+      "age": "elder",
+      "jaw": "narrow"
+    },
+    "guides": false
+  },
+  {
+    "id": "head-2-2",
+    "x": 750,
+    "y": 805,
+    "scale": 1.8,
+    "view": "profile",
+    "expression": "neutral",
+    "identity": {
+      "hair": "long",
+      "age": "elder",
+      "jaw": "narrow"
+    },
+    "guides": false
+  },
+  {
+    "id": "head-2-3",
+    "x": 1050,
+    "y": 805,
+    "scale": 1.8,
+    "view": "up",
+    "expression": "neutral",
+    "identity": {
+      "hair": "long",
+      "age": "elder",
+      "jaw": "narrow"
+    },
+    "guides": false
+  },
+  {
+    "id": "head-2-4",
+    "x": 1350,
+    "y": 805,
+    "scale": 1.8,
+    "view": "down",
+    "expression": "neutral",
+    "identity": {
+      "hair": "long",
+      "age": "elder",
+      "jaw": "narrow"
+    },
+    "guides": false
+  }
+]

@@ -1,0 +1,22 @@
+{
+  "coverage": [
+    "C12-04",
+    "C12-05",
+    "C12-06"
+  ],
+  "scan": [
+    129,
+    130,
+    131,
+    132,
+    133
+  ],
+  "original_scenes": [
+    "harbor watcher",
+    "quiet colonnade",
+    "shattered vortex",
+    "dark threshold",
+    "leaping messenger"
+  ],
+  "note": "Graphical value design, not simulated illumination"
+}

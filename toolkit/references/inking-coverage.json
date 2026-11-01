@@ -1,0 +1,57 @@
+{
+  "rows": [
+    {
+      "id": "C12-01",
+      "status": "original_digital_adaptation_completed",
+      "outputs": [
+        "outputs/inking/01-stroke-laboratory"
+      ],
+      "visual_review": "PNG inspected by author; no independent review yet"
+    },
+    {
+      "id": "C12-02",
+      "status": "original_digital_adaptation_completed",
+      "outputs": [
+        "outputs/inking/01-stroke-laboratory"
+      ],
+      "visual_review": "PNG inspected by author; no independent review yet"
+    },
+    {
+      "id": "C12-03",
+      "status": "original_digital_adaptation_completed",
+      "outputs": [
+        "outputs/inking/02-ink-balance"
+      ],
+      "visual_review": "PNG inspected by author; no independent review yet"
+    },
+    {
+      "id": "C12-04",
+      "status": "original_digital_adaptation_completed",
+      "outputs": [
+        "outputs/inking/03-mood-and-masses",
+        "outputs/inking/04-light-and-group"
+      ],
+      "visual_review": "PNG inspected by author; no independent review yet"
+    },
+    {
+      "id": "C12-05",
+      "status": "original_digital_adaptation_completed",
+      "outputs": [
+        "outputs/inking/03-mood-and-masses",
+        "outputs/inking/patch-proof"
+      ],
+      "visual_review": "PNG inspected by author; no independent review yet"
+    },
+    {
+      "id": "C12-06",
+      "status": "original_digital_adaptation_completed",
+      "outputs": [
+        "outputs/inking/03-mood-and-masses"
+      ],
+      "visual_review": "PNG inspected by author; no independent review yet"
+    }
+  ],
+  "tests": 5,
+  "physical_media_practice": false,
+  "literal_source_copy": false
+}

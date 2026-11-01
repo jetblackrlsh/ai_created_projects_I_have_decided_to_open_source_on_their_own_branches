@@ -1,0 +1,42 @@
+[
+  {
+    "id": "front-stage0",
+    "pose": "run",
+    "x": 160,
+    "y": 190,
+    "scale": 0.94,
+    "stage": 0
+  },
+  {
+    "id": "front-stage1",
+    "pose": "run",
+    "x": 495,
+    "y": 190,
+    "scale": 0.94,
+    "stage": 1
+  },
+  {
+    "id": "front-stage2",
+    "pose": "run",
+    "x": 830,
+    "y": 190,
+    "scale": 0.94,
+    "stage": 2
+  },
+  {
+    "id": "front-stage3",
+    "pose": "run",
+    "x": 1165,
+    "y": 190,
+    "scale": 0.94,
+    "stage": 3
+  },
+  {
+    "id": "front-stage4",
+    "pose": "run",
+    "x": 1500,
+    "y": 190,
+    "scale": 0.94,
+    "stage": 4
+  }
+]

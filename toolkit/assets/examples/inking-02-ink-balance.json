@@ -1,0 +1,17 @@
+{
+  "coverage": [
+    "C12-03"
+  ],
+  "scan": [
+    126,
+    127,
+    128
+  ],
+  "scene": "Original harbor lookout",
+  "variants": [
+    "uniform",
+    "balanced",
+    "overworked"
+  ],
+  "thumbnail_scale": 0.48
+}

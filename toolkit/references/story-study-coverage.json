@@ -1,0 +1,75 @@
+{
+  "rows": [
+    {
+      "id": "C09-01",
+      "status": "original_analytical_adaptation_completed",
+      "outputs": [
+        "06-three-mass-compositions"
+      ],
+      "not_literal_source_copy": true
+    },
+    {
+      "id": "C09-02",
+      "status": "original_analytical_adaptation_completed",
+      "outputs": [
+        "07-camera-pairs"
+      ],
+      "not_literal_source_copy": true
+    },
+    {
+      "id": "C09-03",
+      "status": "original_analytical_adaptation_completed",
+      "outputs": [
+        "01-rooftop-plain",
+        "02-rooftop-dramatic"
+      ],
+      "not_literal_source_copy": true
+    },
+    {
+      "id": "C09-04",
+      "status": "original_analytical_adaptation_completed",
+      "outputs": [
+        "04-conversation-restrained",
+        "05-conversation-urgent"
+      ],
+      "not_literal_source_copy": true
+    },
+    {
+      "id": "C10-01",
+      "status": "original_analytical_adaptation_completed",
+      "outputs": [
+        "10-rescue-page-stages",
+        "03-whole-page-stages"
+      ],
+      "not_literal_source_copy": true
+    },
+    {
+      "id": "C10-02",
+      "status": "original_analytical_adaptation_completed",
+      "outputs": [
+        "02-rooftop-dramatic"
+      ],
+      "not_literal_source_copy": true
+    },
+    {
+      "id": "C11-01",
+      "status": "original_analytical_adaptation_completed",
+      "outputs": [
+        "08-cover-thumbnails"
+      ],
+      "not_literal_source_copy": true
+    },
+    {
+      "id": "C11-02",
+      "status": "original_analytical_adaptation_completed",
+      "outputs": [
+        "09-cover-development"
+      ],
+      "not_literal_source_copy": true
+    }
+  ],
+  "tests": 6,
+  "blind_assignment": false,
+  "independent_visual_review": false,
+  "limitations": "Simplified2D silhouettes on projected sets; not mature anatomical comic rendering"
+}

@@ -1,0 +1,15 @@
+{
+  "coverage": [
+    "C12-04"
+  ],
+  "scan": [
+    129,
+    130
+  ],
+  "subjects": [
+    "side-lit figure",
+    "menace silhouette",
+    "three-person face group"
+  ],
+  "limits": "Authored graphical illumination; stylized faces and anatomy remain bounded"
+}

@@ -1,0 +1,46 @@
+[
+  {
+    "id": "contrast-ordinary",
+    "body": "ordinary",
+    "view": "front",
+    "x": 200,
+    "y": 145,
+    "scale": 1.05
+  },
+  {
+    "id": "contrast-guard",
+    "body": "guard",
+    "view": "front",
+    "x": 565,
+    "y": 145,
+    "scale": 1.05
+  },
+  {
+    "id": "theatrical-0",
+    "pose": "stand",
+    "x": 965,
+    "y": 180,
+    "scale": 1.06,
+    "identity": {
+      "build": "slim",
+      "hair": "long",
+      "age": "adult"
+    },
+    "suit": "#624f6d",
+    "shadow": "#3e344d"
+  },
+  {
+    "id": "theatrical-1",
+    "pose": "stand",
+    "x": 1355,
+    "y": 180,
+    "scale": 1.06,
+    "identity": {
+      "build": "broad",
+      "hair": "long",
+      "age": "adult"
+    },
+    "suit": "#624f6d",
+    "shadow": "#3e344d"
+  }
+]

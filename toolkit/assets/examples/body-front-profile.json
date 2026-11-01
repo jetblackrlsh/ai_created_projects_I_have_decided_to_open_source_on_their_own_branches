@@ -1,0 +1,38 @@
+[
+  {
+    "id": "proportion-0",
+    "body": "guard",
+    "view": "front",
+    "x": 205,
+    "y": 150,
+    "scale": 1.04,
+    "guides": true
+  },
+  {
+    "id": "proportion-1",
+    "body": "guard",
+    "view": "profile",
+    "x": 595,
+    "y": 150,
+    "scale": 1.04,
+    "guides": true
+  },
+  {
+    "id": "proportion-2",
+    "body": "heroine",
+    "view": "front",
+    "x": 985,
+    "y": 150,
+    "scale": 1.04,
+    "guides": true
+  },
+  {
+    "id": "proportion-3",
+    "body": "heroine",
+    "view": "profile",
+    "x": 1375,
+    "y": 150,
+    "scale": 1.04,
+    "guides": true
+  }
+]

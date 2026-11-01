@@ -1,0 +1,273 @@
+[
+  {
+    "id": "progress-front-0",
+    "x": 135,
+    "y": 215,
+    "scale": 1.65,
+    "view": "front",
+    "identity": {
+      "jaw": "narrow",
+      "hair": "long"
+    },
+    "stage": 0,
+    "guides": true
+  },
+  {
+    "id": "progress-front-1",
+    "x": 395,
+    "y": 215,
+    "scale": 1.65,
+    "view": "front",
+    "identity": {
+      "jaw": "narrow",
+      "hair": "long"
+    },
+    "stage": 1,
+    "guides": true
+  },
+  {
+    "id": "progress-front-2",
+    "x": 655,
+    "y": 215,
+    "scale": 1.65,
+    "view": "front",
+    "identity": {
+      "jaw": "narrow",
+      "hair": "long"
+    },
+    "stage": 2,
+    "guides": true
+  },
+  {
+    "id": "progress-front-3",
+    "x": 915,
+    "y": 215,
+    "scale": 1.65,
+    "view": "front",
+    "identity": {
+      "jaw": "narrow",
+      "hair": "long"
+    },
+    "stage": 3,
+    "guides": true
+  },
+  {
+    "id": "progress-front-4",
+    "x": 1175,
+    "y": 215,
+    "scale": 1.65,
+    "view": "front",
+    "identity": {
+      "jaw": "narrow",
+      "hair": "long"
+    },
+    "stage": 4,
+    "guides": true
+  },
+  {
+    "id": "progress-front-5",
+    "x": 1435,
+    "y": 215,
+    "scale": 1.65,
+    "view": "front",
+    "identity": {
+      "jaw": "narrow",
+      "hair": "long"
+    },
+    "stage": 5,
+    "guides": false
+  },
+  {
+    "id": "progress-profile-0",
+    "x": 135,
+    "y": 495,
+    "scale": 1.65,
+    "view": "profile",
+    "identity": {
+      "jaw": "narrow",
+      "hair": "long"
+    },
+    "stage": 0,
+    "guides": true
+  },
+  {
+    "id": "progress-profile-1",
+    "x": 395,
+    "y": 495,
+    "scale": 1.65,
+    "view": "profile",
+    "identity": {
+      "jaw": "narrow",
+      "hair": "long"
+    },
+    "stage": 1,
+    "guides": true
+  },
+  {
+    "id": "progress-profile-2",
+    "x": 655,
+    "y": 495,
+    "scale": 1.65,
+    "view": "profile",
+    "identity": {
+      "jaw": "narrow",
+      "hair": "long"
+    },
+    "stage": 2,
+    "guides": true
+  },
+  {
+    "id": "progress-profile-3",
+    "x": 915,
+    "y": 495,
+    "scale": 1.65,
+    "view": "profile",
+    "identity": {
+      "jaw": "narrow",
+      "hair": "long"
+    },
+    "stage": 3,
+    "guides": true
+  },
+  {
+    "id": "progress-profile-4",
+    "x": 1175,
+    "y": 495,
+    "scale": 1.65,
+    "view": "profile",
+    "identity": {
+      "jaw": "narrow",
+      "hair": "long"
+    },
+    "stage": 5,
+    "guides": false
+  },
+  {
+    "id": "acting-neutral",
+    "x": 135,
+    "y": 805,
+    "scale": 1.6,
+    "expression": "neutral",
+    "identity": {
+      "jaw": "narrow",
+      "hair": "long"
+    }
+  },
+  {
+    "id": "acting-angry",
+    "x": 395,
+    "y": 805,
+    "scale": 1.6,
+    "expression": "angry",
+    "identity": {
+      "jaw": "narrow",
+      "hair": "long"
+    }
+  },
+  {
+    "id": "acting-fear",
+    "x": 655,
+    "y": 805,
+    "scale": 1.6,
+    "expression": "fear",
+    "identity": {
+      "jaw": "narrow",
+      "hair": "long"
+    }
+  },
+  {
+    "id": "acting-smile",
+    "x": 915,
+    "y": 805,
+    "scale": 1.6,
+    "expression": "smile",
+    "identity": {
+      "jaw": "narrow",
+      "hair": "long"
+    }
+  },
+  {
+    "id": "acting-shout",
+    "x": 1175,
+    "y": 805,
+    "scale": 1.6,
+    "expression": "shout",
+    "identity": {
+      "jaw": "narrow",
+      "hair": "long"
+    }
+  },
+  {
+    "id": "acting-sad",
+    "x": 1435,
+    "y": 805,
+    "scale": 1.6,
+    "expression": "sad",
+    "identity": {
+      "jaw": "narrow",
+      "hair": "long"
+    }
+  },
+  {
+    "id": "identity-0",
+    "x": 135,
+    "y": 1090,
+    "scale": 1.6,
+    "identity": {
+      "shape": "square",
+      "hair": "bald"
+    }
+  },
+  {
+    "id": "identity-1",
+    "x": 395,
+    "y": 1090,
+    "scale": 1.6,
+    "identity": {
+      "shape": "pear",
+      "hair": "short"
+    }
+  },
+  {
+    "id": "identity-2",
+    "x": 655,
+    "y": 1090,
+    "scale": 1.6,
+    "identity": {
+      "jaw": "narrow",
+      "hair": "forelock",
+      "age": "child"
+    }
+  },
+  {
+    "id": "identity-3",
+    "x": 915,
+    "y": 1090,
+    "scale": 1.6,
+    "identity": {
+      "hair": "long",
+      "age": "elder"
+    }
+  },
+  {
+    "id": "identity-4",
+    "x": 1175,
+    "y": 1090,
+    "scale": 1.6,
+    "identity": {
+      "hair": "short",
+      "beard": "short"
+    }
+  },
+  {
+    "id": "identity-5",
+    "x": 1435,
+    "y": 1090,
+    "scale": 1.6,
+    "identity": {
+      "hair": "long",
+      "beard": "long",
+      "crown": true
+    }
+  }
+]

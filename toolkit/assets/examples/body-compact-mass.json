@@ -1,0 +1,16 @@
+[
+  {
+    "id": "mass-rock",
+    "body": "rock",
+    "x": 390,
+    "y": 155,
+    "scale": 1.3
+  },
+  {
+    "id": "mass-heavy",
+    "body": "heavy",
+    "x": 1110,
+    "y": 155,
+    "scale": 1.3
+  }
+]

@@ -1,0 +1,27 @@
+{
+  "coverage": [
+    "C12-01",
+    "C12-02"
+  ],
+  "scan": [
+    124,
+    125
+  ],
+  "adaptation": "Original analog stroke families, not traced copies",
+  "swatches": [
+    "fine feather",
+    "thick-to-thin",
+    "shadow feather",
+    "curved feather",
+    "broad sweep",
+    "reversed sweep",
+    "stacked side marks",
+    "curved side marks",
+    "ruled taper",
+    "broken texture",
+    "cross-hatching",
+    "white scratch",
+    "pressure variant",
+    "white correction"
+  ]
+}

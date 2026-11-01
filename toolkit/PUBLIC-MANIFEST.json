@@ -1,0 +1,326 @@
+{
+  "project": "Heroic Comics Drawing",
+  "version": "1.0.0",
+  "files": [
+    {
+      "path": ".gitignore",
+      "sha256": "a2b45fe56c038a5244ddc3b52c1b143c045d63e217021124b3e53d3be29a6ae3",
+      "bytes": 35
+    },
+    {
+      "path": "LICENSE",
+      "sha256": "527537eb88ab4e3410285b026ce88ba6c9fcb96a49e8a8316056bfa94912c079",
+      "bytes": 1083
+    },
+    {
+      "path": "README.md",
+      "sha256": "cca55e943033bfb68b51ba6bb025628c83c2653c82fa1a3400352ed21384c5cf",
+      "bytes": 2306
+    },
+    {
+      "path": "SKILL.md",
+      "sha256": "47a561afa4394af2e7d735fd1e02d783c39af9b81119e2a11015dfe55b7f3bb3",
+      "bytes": 4689
+    },
+    {
+      "path": "agents/openai.yaml",
+      "sha256": "67abb6c9a296d2e209718f958e89ad7f4754eec881378f5301ab0fc792b15035",
+      "bytes": 404
+    },
+    {
+      "path": "assets/examples/action-phases.json",
+      "sha256": "55da256b00f9d4b17e3af077a59355837c2961829ac679d927b4d341dfcedd60",
+      "bytes": 18485
+    },
+    {
+      "path": "assets/examples/body-compact-mass.json",
+      "sha256": "53c359d329c8a6a196ba06d8237e38fcbadf9b5597c1186999a641f3f05e7316",
+      "bytes": 199
+    },
+    {
+      "path": "assets/examples/body-exaggeration.json",
+      "sha256": "cadd10fa68cbe1ecdcbd5e70d741724301e7d01eccb62563b34b4f01d17e7ecc",
+      "bytes": 742
+    },
+    {
+      "path": "assets/examples/body-front-profile.json",
+      "sha256": "d477085cddab342df80c8cac30b546ba1284b5da017e8ece7aad5bcb54e4de77",
+      "bytes": 583
+    },
+    {
+      "path": "assets/examples/figure-four-stage.json",
+      "sha256": "1aec37cec6dac6527cd8d3e54b4f020d3e0e11dfd8b5ead3d54b30a13f3a336d",
+      "bytes": 3656
+    },
+    {
+      "path": "assets/examples/figure-gesture-library.json",
+      "sha256": "2da4ddb34a708e2574ba7b83175225addf12f11879cd218cce628f42d3834fb6",
+      "bytes": 3998
+    },
+    {
+      "path": "assets/examples/front-five-stage.json",
+      "sha256": "fa87c1e01027043a14a5a6613f450f2b464edb457a7e02b2678534adda4ca8d6",
+      "bytes": 584
+    },
+    {
+      "path": "assets/examples/head-exercises.json",
+      "sha256": "aef808cea43e30a51c6245e2397481e15ff956a1429d522d59c86d9da3125cc9",
+      "bytes": 4345
+    },
+    {
+      "path": "assets/examples/head-study.json",
+      "sha256": "a4abf78a8e11ff0ae99cec81ac71dc81b91775312c5eb574df1aa98c788dc50f",
+      "bytes": 3379
+    },
+    {
+      "path": "assets/examples/inking-01-stroke-laboratory.json",
+      "sha256": "0e41410a83d24f1b7316362a2019819e81a864babd4a5b0c3de6004df8f14587",
+      "bytes": 483
+    },
+    {
+      "path": "assets/examples/inking-02-ink-balance.json",
+      "sha256": "fbe5d612cc52e4f9a2e0f5fdece6349aaedc7a3e46c90e623fb67a827b3dfa8d",
+      "bytes": 213
+    },
+    {
+      "path": "assets/examples/inking-03-mood-and-masses.json",
+      "sha256": "bec809224a0dfdbef61867f332484690f4bf5f7fadaca2267f5469f39616d83f",
+      "bytes": 332
+    },
+    {
+      "path": "assets/examples/inking-04-light-and-group.json",
+      "sha256": "4543d2ed1fdf0f03d79ac41dff7ad6252e148bee9acd354d22fd2fb4f3b7f591",
+      "bytes": 259
+    },
+    {
+      "path": "assets/examples/paired-support-impact.json",
+      "sha256": "52e5b3419815f0bef3eda2bd5d42d05a1085467682d15b7585fc0bdcb8855526",
+      "bytes": 527
+    },
+    {
+      "path": "assets/examples/rear-five-stage.json",
+      "sha256": "ef65c8eae2312bf2d9246f5c8a2ccebf55a57a8e9359cc37852759d6b536e915",
+      "bytes": 484
+    },
+    {
+      "path": "assets/examples/rear-wall-climb.json",
+      "sha256": "1e47956bac6033a72bc751f1895f992338b30e6e02adc756975787affccd04dd",
+      "bytes": 1500
+    },
+    {
+      "path": "assets/icon.svg",
+      "sha256": "8936b24f674a1250d999e2c2b5901374fb4240426f32bd1ae340c352a90d617d",
+      "bytes": 1738
+    },
+    {
+      "path": "references/SOURCES-AND-LICENSES.md",
+      "sha256": "1aef3aec4a7fbff1c70156a41404a1fd3f741051525526e602a4b7866f4546e8",
+      "bytes": 1273
+    },
+    {
+      "path": "references/action-gap-study.md",
+      "sha256": "4ba961ecf8cc94c0b25bb9c98660a673157ecd023e74fad73cb4ecbe4e868251",
+      "bytes": 2022
+    },
+    {
+      "path": "references/body-type-study.md",
+      "sha256": "7e6f53294c1f52af8642f60df649757cd7bfce18f06068dc2d78688b28692233",
+      "bytes": 1691
+    },
+    {
+      "path": "references/coverage-and-limits.md",
+      "sha256": "eb27eaa21185a3fff69799b7e7d771f77268a067019b284a2e4ecc970727f1f4",
+      "bytes": 1474
+    },
+    {
+      "path": "references/drawing-principles.md",
+      "sha256": "12500da2295a8bbaec3b5965ba5b40533678ea7b10c25d41f6be25a3a8297b55",
+      "bytes": 2045
+    },
+    {
+      "path": "references/head-study-report.md",
+      "sha256": "30310e74b673c89657283f83b93b6308e99027ed63bb4543bd3ba4957f0b7bb6",
+      "bytes": 4964
+    },
+    {
+      "path": "references/inking-coverage.json",
+      "sha256": "55c262674925b9f1fd874439cadc4a86aa08b188b654bbeee0f33d3b786e6823",
+      "bytes": 1623
+    },
+    {
+      "path": "references/inking-lessons.md",
+      "sha256": "cca707082811c6a977d7d45854b8fc20297a46d2fa0bed37079bb19b2b9252ac",
+      "bytes": 3686
+    },
+    {
+      "path": "references/story-study-coverage.json",
+      "sha256": "847cb34973010c91fe901c64b3a846a57003d3aae5ecc391ff3c980265a72b0d",
+      "bytes": 1836
+    },
+    {
+      "path": "references/story-study-lessons.md",
+      "sha256": "779c1090e5ed08a2d80a61aeed437645a0c673a66b2263894c74e63ddfa8e6d8",
+      "bytes": 4204
+    },
+    {
+      "path": "references/tool-contract.md",
+      "sha256": "5ff0754f7284c40b4fd46bab5ad238b1d2d34bd1859023ac12ceede2c4ead64e",
+      "bytes": 2901
+    },
+    {
+      "path": "requirements-dev.txt",
+      "sha256": "1954ca940740c612a12e7abf0a307b7394715964d66dc8037d503fdd5c1b6424",
+      "bytes": 15
+    },
+    {
+      "path": "scripts/action_gap_studies.py",
+      "sha256": "fb6b906bfd009413939a5537b3a1d7de47cc7d8e9091be60ae13de7cf805c00c",
+      "bytes": 9035
+    },
+    {
+      "path": "scripts/alternate_body_study.py",
+      "sha256": "92c93337ab307d700f6b3dd3cdbc3fc79eb4e0706e114349562ec675e8f03ed4",
+      "bytes": 2186
+    },
+    {
+      "path": "scripts/anatomy_revision_demo.py",
+      "sha256": "f8f6e66c5e235e0419c9863d71b38bf4550e0dc5402c8d7e4fc6612bba020184",
+      "bytes": 1167
+    },
+    {
+      "path": "scripts/body_types.py",
+      "sha256": "01b1955cca4a180ab640c78db6b94e209b44847139fd0fb9d28a7c674bebef36",
+      "bytes": 5590
+    },
+    {
+      "path": "scripts/build_action_studies.py",
+      "sha256": "76c77555984e05753adcbaf78078ff6738dc16108ee90c558c96127356c5c7f5",
+      "bytes": 4860
+    },
+    {
+      "path": "scripts/build_additional_actions.py",
+      "sha256": "f6402aea0f222d44544a86480e078e06fc52ce638f160a51b20730fafd49f463",
+      "bytes": 4685
+    },
+    {
+      "path": "scripts/build_body_types.py",
+      "sha256": "83ae130ff0b19c9e537fe9b56dfe7e76fa0530a30b4443ca818696d5077c544d",
+      "bytes": 3494
+    },
+    {
+      "path": "scripts/build_feature_economy.py",
+      "sha256": "c953669ef8789efd64cb53b77d34422ec3f68e50079e311f6909e8630dc5737c",
+      "bytes": 4563
+    },
+    {
+      "path": "scripts/build_figure_demos.py",
+      "sha256": "d79dc49b43a7d1b9d3644aa96f5961237a33523aeca158377e1e52de9ad2e207",
+      "bytes": 915
+    },
+    {
+      "path": "scripts/build_inking.py",
+      "sha256": "f24241d9daa499afc80c0116e4e41629e26c8bf7ac4e1721aff69da1ad7bdff3",
+      "bytes": 5564
+    },
+    {
+      "path": "scripts/build_pose_studies.py",
+      "sha256": "aeb057adb69cdd1935417cf40d5123373d2f06b13231eac19c1b7feeb2acb299",
+      "bytes": 2063
+    },
+    {
+      "path": "scripts/check_action_contacts.py",
+      "sha256": "898ed38a02dee407bd4d71a7119dae41d28c7cb78444bd06c5617d1a0589c7cd",
+      "bytes": 2972
+    },
+    {
+      "path": "scripts/demo_head_exercises.py",
+      "sha256": "b5ab052d887049b82bfe723760efa4ba6d50d5fb071e64131620f096abf7c088",
+      "bytes": 2400
+    },
+    {
+      "path": "scripts/demo_heads.py",
+      "sha256": "be8f0b32adc91d6102b31e6237901cd12d43ceece3cc554769f0d57b3fd8561a",
+      "bytes": 1678
+    },
+    {
+      "path": "scripts/effects.py",
+      "sha256": "aa5e73532de7b2e435bdb05a4e6c6abf35da1d95d1686744d95adcda6234271b",
+      "bytes": 1760
+    },
+    {
+      "path": "scripts/figures.py",
+      "sha256": "3ef5cac289f8126adb95b085461f950858033f79e1690327461dc97659bf2bd5",
+      "bytes": 12122
+    },
+    {
+      "path": "scripts/foreshortening.py",
+      "sha256": "70e2d371ef9a6daf0b037d97d2b4d85cfc306a919573efa08b91f8f143162ffc",
+      "bytes": 3212
+    },
+    {
+      "path": "scripts/heads.py",
+      "sha256": "c4fc98585e25b6256a3ece42475d1de915c1b142885f03a58e56a99735ade057",
+      "bytes": 12034
+    },
+    {
+      "path": "scripts/heroic.py",
+      "sha256": "506742b97637225973a795865e62e30e57e299f6a2a35a26b1864c248fe2d0c9",
+      "bytes": 4132
+    },
+    {
+      "path": "scripts/inks.py",
+      "sha256": "c41d6e941b8ec625ab6c4dfdaf041be575841a50479389188fd31127d41947a8",
+      "bytes": 5706
+    },
+    {
+      "path": "scripts/story_studies.py",
+      "sha256": "5b86cf8c990d9094feeac518d6adb2a8a4dafe13b440c815aa3bf0ade0ee9b05",
+      "bytes": 18095
+    },
+    {
+      "path": "scripts/world.py",
+      "sha256": "d9c8fdfb62daf4f4a57f88aa859772fa27bd4b20276e85da143e4514d9ed75bf",
+      "bytes": 12753
+    },
+    {
+      "path": "tests/test_action_gaps.py",
+      "sha256": "e71b0a0d1f7154e0202babf17947a30b8f48670f1f16e5b2a374eafae2a35c68",
+      "bytes": 1665
+    },
+    {
+      "path": "tests/test_body_types.py",
+      "sha256": "8611fa29cfd9aa30ae547987d569165e62b7499e36c0aaa6d079a52ae8b77c2a",
+      "bytes": 804
+    },
+    {
+      "path": "tests/test_foreshortening.py",
+      "sha256": "21df7919320e9929265ed1159b52bac17dfaf46b77f28686228debd4a746ee2b",
+      "bytes": 1497
+    },
+    {
+      "path": "tests/test_heads.py",
+      "sha256": "93fcc9cb4f43e0155f11fefce45df447c83e20e7348ce7c9407f05e026c7a244",
+      "bytes": 2120
+    },
+    {
+      "path": "tests/test_inks.py",
+      "sha256": "0eba41f31f6f419fd7e1ffecacf38d2711e6e940b683f220d1a44b0076ea5c11",
+      "bytes": 1123
+    },
+    {
+      "path": "tests/test_scene.py",
+      "sha256": "612cdec94f6be858a1e2fd11d3db3e63040e982a3444bcda93989753cd5ac87e",
+      "bytes": 1923
+    },
+    {
+      "path": "tests/test_story_studies.py",
+      "sha256": "eff351bceab3a6f904233e2575463403d4fbf13504d7e1967706803a18bcb942",
+      "bytes": 1031
+    },
+    {
+      "path": "tests/test_world.py",
+      "sha256": "8e5db2dc2851782288c32a9079ee8caae79e5f5e3879f34e573c9a534d502faa",
+      "bytes": 2369
+    }
+  ]
+}

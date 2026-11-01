@@ -1,0 +1,14 @@
+interface:
+  display_name: Draw Heroic Comics
+  short_description: Draw original editable superhero-style comics
+  default_prompt: Draw an original heroic comic using editable vector construction,
+    inspect the result, and refine its storytelling.
+  icon_small: assets/icon.svg
+  icon_large: assets/icon.svg
+policy:
+  products:
+  - chatgpt
+  - codex
+  - api
+  - atlas
+  allow_implicit_invocation: true
