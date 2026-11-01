@@ -7,7 +7,7 @@
     "Narrator": "af_heart",
     "Keeper": "bm_george"
   },
-  "subtitle": "Heroic motion-comics demo",
+  "subtitle": "Engineering fixture \u2014 not a style benchmark",
   "credits": [
     "Original neutral art: heroic drawing tool",
     "Motion-comics tool: AI-assisted development"
@@ -61,5 +61,7 @@
   "expectedPanels": [
     "dawn",
     "gate"
-  ]
+  ],
+  "visualTreatment": "generic-panel",
+  "genericPanelReason": "Engineering fixture for crop, audio and timing behavior; not an approved heroic-style art benchmark."
 }

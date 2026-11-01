@@ -5,7 +5,7 @@ from PIL import Image,ImageDraw,ImageFont,ImageEnhance
 from project import validate,need
 
 def render(path,mode='both'):
- path=Path(path).resolve();base=path.parent;c=validate(path);out=base/'out';mix=json.loads((out/'mix.json').read_text());W=c.get('size',1080);fps=c['fps'];D=c['duration'];fontroot=Path(c.get('fontDir','/usr/share/fonts/truetype/dejavu'))
+ path=Path(path).resolve();base=path.parent;c=validate(path);from style_review import require_style_review; style_result=require_style_review(base,c);c['editionLabel']=style_result['label'];out=base/'out';mix=json.loads((out/'mix.json').read_text());W=c.get('size',1080);fps=c['fps'];D=c['duration'];fontroot=Path(c.get('fontDir','/usr/share/fonts/truetype/dejavu'))
  def font(px,bold=False):return ImageFont.truetype(str(fontroot/('DejaVuSans-Bold.ttf' if bold else 'DejaVuSans.ttf')),max(10,round(px*W/1080)))
  f=font(29);sm=font(23);head=font(40,True)
  def wrap(s,width,ft):
@@ -33,7 +33,7 @@ def render(path,mode='both'):
   dest=out/'audio-drama.mp4';need(not dest.exists(),'Refuse video overwrite');im=card('AUDIO DRAMA');im.save(out/'audio-drama-title-card.png')
   subprocess.run(['ffmpeg','-v','error','-n','-loop','1','-framerate',str(fps),'-i',str(out/'audio-drama-title-card.png'),'-i',str(out/'master.m4a'),'-c:v','libx264','-preset','fast','-crf','19','-tune','stillimage','-pix_fmt','yuv420p','-c:a','copy','-t',str(D),'-movflags','+faststart',str(dest)],check=True)
  if mode in ['both','film']:
-  dest=out/'film.mp4';need(not dest.exists(),'Refuse video overwrite');intro=card(c.get('editionLabel','HEROIC MOTION COMIC'));end=card('THE END');proc=subprocess.Popen(command(dest),stdin=subprocess.PIPE);cache={};last=None
+  dest=out/'film.mp4';need(not dest.exists(),'Refuse video overwrite');intro=card(c.get('editionLabel','PANEL MOTION COMIC'));end=card('THE END');proc=subprocess.Popen(command(dest),stdin=subprocess.PIPE);cache={};last=None
   try:
    for frame in range(round(D*fps)):
     t=frame/fps;shot=next((x for x in c['shots'] if x['start']<=t<x['end']),None)

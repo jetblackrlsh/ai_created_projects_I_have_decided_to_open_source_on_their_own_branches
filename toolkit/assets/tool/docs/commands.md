@@ -1,6 +1,10 @@
-# Exact command recipes
+# Local-audio backend command recipes
 
 Commands below run from the tool root. `PROJECT` is a film manifest; `AUDIO_PLAN` is a **different jobs-plan JSON**, not a film manifest. The CLI's positional argument is generically called `project` in help but interpreted according to its subcommand.
+
+## Engineering fixture, not a style showcase
+
+The `examples/harbor` walkthrough below retains flat pictogram artwork solely to test local Kokoro/Stable Audio generation, mixing and packaging. It is explicitly generic-panel mode, not a heroic drawing example. Do not use it as the visual template for a heroic story. For a new heroic project, complete the drawing and [visual review](style-review.md), then use that project with these same audio commands. The renderer enforces the review evidence before final heroic output; audio generation and planning alone do not certify style.
 
 ## Intake, planning, assembly
 

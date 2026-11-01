@@ -2,6 +2,8 @@
 
 This frontend adapts editable heroic American-comics pages without converting them to ASCII or redrawing them. It supports a **locked soundtrack mode** as well as the inherited local Kokoro / Stable Audio production pipeline. Camera moves are restrained full-panel fits; this is a motion comic, not articulated character animation.
 
+Read [the required style-review evidence contract](style-review.md) before production. Heroic is the default and fails closed without reviewed drawing evidence. Existing examples explicitly use generic compatibility as engineering fixtures, not style demonstrations.
+
 ## Import existing pages
 
 Render final page JSON with the separately installed `draw-heroic-comics` skill/tool. Copy JSON and same-size PNGs into your project. Import plan:
@@ -33,6 +35,6 @@ Use `motion_manga.py` and `docs/commands.md`, `docs/schema.md`, `references/mode
 
 ## Rebuild demo and test
 
-`examples/heroic-harbor` contains original heroic-tool art and a preserved licensed neutral demo soundtrack. Source art can be regenerated using `python examples/build_heroic_demo.py --drawing-scripts /path/to/drawing-tool/scripts`. That command is optional; rendered source art is bundled. To rerender, copy the demo into a fresh directory and move its existing `out` aside, then run `render-exact` there. Importing again requires moving `panels` aside first. Run `python -m unittest discover -s tests -v` in the tool root; the fixture outputs are intentional test dependencies. Tests include a50ms audio-shift negative control.
+`examples/heroic-harbor` contains simplistic original tool art and a preserved neutral demo soundtrack. It is an engineering fixture, not evidence that the art satisfies a heroic-style brief. Source art can be regenerated using `python examples/build_heroic_demo.py --drawing-scripts /path/to/drawing-tool/scripts`. That command is optional; rendered source art is bundled. To rerender, copy the demo into a fresh directory and move its existing `out` aside, then run `render-exact` there. Importing again requires moving `panels` aside first. Run `python -m unittest discover -s tests -v` in the tool root; the fixture outputs are intentional test dependencies. Tests include a50ms audio-shift negative control.
 
 Inspect output frames at start/end and each shot and caption. Run full FFmpeg decode. Packet identity is strong evidence of unchanged sound and timing, not independent listening, source legality, story fidelity or caption correctness. If unable to audition audio, say so. Keep public tool/demo packages separate from private films and conversation provenance.

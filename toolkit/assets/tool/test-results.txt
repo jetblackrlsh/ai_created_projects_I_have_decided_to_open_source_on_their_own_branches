@@ -15,6 +15,19 @@ test_missing_panel (test_project.ManifestTests.test_missing_panel) ... ok
 test_missing_voice (test_project.ManifestTests.test_missing_voice) ... ok
 test_shot_drift (test_project.ManifestTests.test_shot_drift) ... ok
 test_unreviewed_script (test_project.ManifestTests.test_unreviewed_script) ... ok
+test_exact_render_rejects_missing_style_before_output (test_style_review.RenderGateTests.test_exact_render_rejects_missing_style_before_output) ... ok
+test_new_audio_render_rejects_missing_style_before_output (test_style_review.RenderGateTests.test_new_audio_render_rejects_missing_style_before_output) ... ok
+test_default_requires_review (test_style_review.StyleReviewTests.test_default_requires_review) ... ok
+test_generic_not_heroic_label (test_style_review.StyleReviewTests.test_generic_not_heroic_label) ... ok
+test_missing_construction (test_style_review.StyleReviewTests.test_missing_construction) ... ok
+test_missing_final_panel (test_style_review.StyleReviewTests.test_missing_final_panel) ... ok
+test_no_bool_only_observation (test_style_review.StyleReviewTests.test_no_bool_only_observation) ... ok
+test_record_not_style_certificate (test_style_review.StyleReviewTests.test_record_not_style_certificate) ... ok
+test_rejected (test_style_review.StyleReviewTests.test_rejected) ... ok
+test_stale_image (test_style_review.StyleReviewTests.test_stale_image) ... ok
+test_stale_review (test_style_review.StyleReviewTests.test_stale_review) ... ok
+test_unresolved_issues (test_style_review.StyleReviewTests.test_unresolved_issues) ... ok
+test_user_rejection_requires_resolution (test_style_review.StyleReviewTests.test_user_rejection_requires_resolution) ... ok
 test_clipping_nonfinite_fail (test_verify.VerificationTests.test_clipping_nonfinite_fail) ... ok
 test_drift_fails_closed (test_verify.VerificationTests.test_drift_fails_closed) ... ok
 test_good_audio_and_negative_controls (test_verify.VerificationTests.test_good_audio_and_negative_controls) ... ok
@@ -25,6 +38,6 @@ test_silent_voice_fails (test_verify.VerificationTests.test_silent_voice_fails) 
 test_wrong_output_sample_rate (test_verify.VerificationTests.test_wrong_output_sample_rate) ... ok
 
 ----------------------------------------------------------------------
-Ran 25 tests in 1.290s
+Ran 38 tests in 1.366s
 
 OK

@@ -17,3 +17,6 @@ The 25-test suite was rerun from this sanitized publication copy, including a 50
 Original tool/skill code is MIT-licensed, with inherited Motion Manga engine notices preserved. Generated media and third-party models/dependencies are not relicensed by MIT; see assets/tool/NOTICE.md. No private user stories, book scans, copied instructional art, distinctive private cast or artifact are included. No comics-publisher affiliation or endorsement.
 
 Drawing companion: https://github.com/jetblackrlsh/ai_created_projects_I_have_decided_to_open_source_on_their_own_branches/tree/project/heroic-comics-drawing
+
+## Current visual limits
+This is an editable stylized vector toolkit, not a publisher-style model. Rendering and audio tests do not establish drawing quality. Heroic production requires actual drawing provenance and hash-bound visual review; generic panel compatibility is explicit and unbranded. Existing harbor fixtures test mechanics only. A stronger example is pending visual preview and review.

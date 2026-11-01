@@ -5,7 +5,11 @@ description: Create headless heroic American-style motion comics from editable o
 
 # Heroic Motion Comic
 
-Use original heroic comic artwork, not ASCII conversion or a manga-style substitution. For new art, resolve the installed `draw-heroic-comics` skill by name; for supplied art, inspect the actual page files and reading order. Do not claim articulated animation: this workflow uses panel editing and restrained camera moves.
+This is a bounded original-comics drawing and assembly workflow, not a trained style model or proof of publisher-equivalent art. Use original heroic comic artwork, not ASCII conversion, mascot/chibi substitution, or generic panels mislabeled as heroic.
+
+Before full production, read [visual review evidence](assets/tool/docs/style-review.md). Inspect an appropriate reference and draw a demanding representative panel with retained construction/source. Record the shared module functions/parameters or bespoke paths that actually produced visible geometry. Inspect proportions, connected anatomy/contacts, acting, ink/form shadows, perspective/depth, species and tone at intended size; use an image-only independent reader when available. Resolve any rejected user preview before scaling up. Review every final panel, with observations and current image/source/construction hashes. Do not fill accepted flags or update hashes merely to bypass a failed review.
+
+The default heroic mode requires these records on both audio routes. The code only checks evidence presence/freshness and recorded status; it does not recognize or guarantee style. Generic compatibility must be explicit and appropriate to the request, and is labeled PANEL MOTION COMIC. It is not a fallback when heroic art fails. The bundled harbor fixtures demonstrate engineering only and are not approved style benchmarks. For new art, resolve the installed `draw-heroic-comics` skill by name; for supplied art, inspect the actual page files and reading order. Do not claim articulated animation: this workflow uses panel editing and restrained camera moves.
 
 Read [the tool workflow](assets/tool/docs/heroic.md). Keep work outputs outside this installed skill. Use the bundled `assets/tool/heroic_motion.py` to import page JSON/PNG crops, validate a shot/caption timeline, preserve AAC and render paired videos. Record every source panel's crop, hash, story beat and output time. Review power/action cause-and-effect, identities, locations and dialogue assignments rather than trusting equal panel counts as evidence of alignment.
 

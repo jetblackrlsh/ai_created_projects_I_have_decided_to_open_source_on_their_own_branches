@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "title": "Harbor at Dawn",
-  "subtitle": "Neutral workflow demonstration",
+  "subtitle": "Engineering fixture \u2014 not a style benchmark",
   "credits": [
     "Original demonstration art and script: AI-assisted",
     "Motion Manga Tool \u2014 local CPU rendering"
@@ -98,5 +98,7 @@
     "file": "assets/score.wav",
     "peak": 0.15
   },
-  "background": "assets/dawn.png"
+  "background": "assets/dawn.png",
+  "visualTreatment": "generic-panel",
+  "genericPanelReason": "Engineering fixture for crop, audio and timing behavior; not an approved heroic-style art benchmark."
 }

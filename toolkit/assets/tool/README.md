@@ -11,3 +11,5 @@ python heroic_motion.py validate-exact examples/heroic-harbor/project.json
 ```
 
 Requires Python, Pillow/NumPy/SciPy and local FFmpeg/ffprobe. Inkscape is needed to rerender vector pages. No browser, online API, credentials or model weights are bundled. No affiliation with any comics publisher. Styles are implemented as original stylized vector art, not a claim of naturalistic drawing mastery.
+
+The default heroic mode now requires [drawing and visual-review evidence](docs/style-review.md). This is a human/agent observation record, not algorithmic style certification. Existing examples explicitly use generic-panel engineering mode; do not cite them as accepted heroic-art benchmarks.

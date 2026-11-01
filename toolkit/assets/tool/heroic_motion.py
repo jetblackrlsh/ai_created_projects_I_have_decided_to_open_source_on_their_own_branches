@@ -47,6 +47,8 @@ def validate_exact(path):
  for cap in c.get('captions',[]):
   need(all(math.isfinite(cap[k]) for k in ['start','end']) and last_caption<=cap['start']<cap['end']<=D,'Caption outside timeline or overlapping');need(cap.get('text') and cap.get('speaker'),'Missing caption attribution');last_caption=cap['end']
  need(c['shots'],'No shots');need(c.get('credits'),'Credits required')
+ from style_review import require_style_review
+ require_style_review(base,c)
  if c.get('background'):Image.open(local(base,c['background'])).verify()
  if c.get('expectedPanels'):need(set(c['expectedPanels'])=={s.get('panel',s['id']) for s in c['shots']},'Declared panel coverage mismatch')
  return c
@@ -59,7 +61,7 @@ def render_exact(path):
  shutil.copyfile(local(base,c['master']),out/'master.m4a')
  (out/'mix.json').write_text(json.dumps({'speech':c.get('captions',[])}))
  # The backend's rendering function uses only this validated layout/timeline contract.
- render_config=dict(c);render_config.setdefault('cast',{});render_config['visualMode']='comic-panels';render_config['editionLabel']='HEROIC MOTION COMIC';render_config['audioCredit']=c.get('audioCredit','Supplied complete soundtrack — preserved without re-encoding')
+ render_config=dict(c);render_config.setdefault('cast',{});render_config['visualMode']='comic-panels';render_config['editionLabel']=__import__('style_review').require_style_review(base,c)['label'];render_config['audioCredit']=c.get('audioCredit','Supplied complete soundtrack — preserved without re-encoding')
  prior=backend.validate
  try:
   backend.validate=lambda _:render_config
