@@ -1,6 +1,6 @@
 {
   "project": "Heroic Comics Drawing",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "files": [
     {
       "path": ".gitignore",
@@ -14,13 +14,13 @@
     },
     {
       "path": "README.md",
-      "sha256": "b0c8e859f7569f04e7bdde9a397272455c3ee8b8d7146baa849531ec8e059ea1",
-      "bytes": 2848
+      "sha256": "d2ae01ceb4e719a3b15ae99577104db52b3cd996b3ed359cc63d9be19c39dc06",
+      "bytes": 3006
     },
     {
       "path": "SKILL.md",
-      "sha256": "13266449306a7b714161094e817c6e1801356f8ba2d8ed797ddfa60b3cffb568",
-      "bytes": 5186
+      "sha256": "1247ebad7b85910470712b62fee8bd78ba785e0437c71447cda8067b3a445fa4",
+      "bytes": 5598
     },
     {
       "path": "agents/openai.yaml",
@@ -61,6 +61,71 @@
       "path": "assets/examples/front-five-stage.json",
       "sha256": "fa87c1e01027043a14a5a6613f450f2b464edb457a7e02b2678534adda4ca8d6",
       "bytes": 584
+    },
+    {
+      "path": "assets/examples/harbor-showcase/01-latch-construction.png",
+      "sha256": "9d3dd8f98461836a11168c6628600d83b18b45e6bb54d09dbbee896c7c447fd7",
+      "bytes": 264258
+    },
+    {
+      "path": "assets/examples/harbor-showcase/01-latch-construction.svg",
+      "sha256": "f862f3ebc76334dc61d4727adc2f85a09490270724be00d021d59ee8d7102708",
+      "bytes": 48426
+    },
+    {
+      "path": "assets/examples/harbor-showcase/01-latch.png",
+      "sha256": "bf08b9687e204e4a2838f2521888b252e23d364c063c4e6a781b72f7b4c5f14b",
+      "bytes": 382739
+    },
+    {
+      "path": "assets/examples/harbor-showcase/01-latch.svg",
+      "sha256": "67cb4a797a71c75a0f22567aab66683e06c2a580a1987bfe3d53161ca71aa77c",
+      "bytes": 46038
+    },
+    {
+      "path": "assets/examples/harbor-showcase/02-open-construction.png",
+      "sha256": "c2ecb444d9ae6dead3e59106b544afc4bf99c58f6e63f34683587daadbe0353e",
+      "bytes": 262454
+    },
+    {
+      "path": "assets/examples/harbor-showcase/02-open-construction.svg",
+      "sha256": "6b15cb2092709e47cd0c7c31e7e3fbac2ffed19b37ec3660e353ae991ab65c86",
+      "bytes": 48408
+    },
+    {
+      "path": "assets/examples/harbor-showcase/02-open.png",
+      "sha256": "fb4a2b8fbbc044c5c11cf2c262008e5c99032d6d21fb56d3ec0ee9ac508739b6",
+      "bytes": 374347
+    },
+    {
+      "path": "assets/examples/harbor-showcase/02-open.svg",
+      "sha256": "281182897decb99de659b4d16f1bc992a1501b69135458dd0ca1cd58afa1448d",
+      "bytes": 46020
+    },
+    {
+      "path": "assets/examples/harbor-showcase/README.md",
+      "sha256": "5365dec911f279b73b89043f1c8494228446c928e197ce1bd7615ea1d328a5fe",
+      "bytes": 2511
+    },
+    {
+      "path": "assets/examples/harbor-showcase/build.py",
+      "sha256": "6326a736dbff183a7260b1f5a72bfb4ce6f0ec9ac610181857fba55859019c81",
+      "bytes": 10505
+    },
+    {
+      "path": "assets/examples/harbor-showcase/construction-receipt.json",
+      "sha256": "7dd549ef0e369bf467dec568ef74585700dea5c14ca91466419071fb2a2cd775",
+      "bytes": 2459
+    },
+    {
+      "path": "assets/examples/harbor-showcase/scene.json",
+      "sha256": "5ae38204f3029f4bcced3b3d615c8dc6a8d725e60810ec9b0f3a72c8d1abb0eb",
+      "bytes": 808
+    },
+    {
+      "path": "assets/examples/harbor-showcase/visual-inspection-notes.json",
+      "sha256": "d39a6c6e05008b007851519872782b8fbc6eef68527c3982f0f52cadcba44d10",
+      "bytes": 1796
     },
     {
       "path": "assets/examples/head-exercises.json",

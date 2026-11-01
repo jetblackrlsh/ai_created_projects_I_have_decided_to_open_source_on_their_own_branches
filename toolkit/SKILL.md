@@ -33,3 +33,7 @@ For new lesson requests, inspect the actual supplied source before claiming it w
 Run `python -m unittest discover -s "$SKILL_ROOT/tests" -v`, then render a fresh request and inspect its actual output. Separate rendering time from planning, authoring and revision time. When giving confidence, distinguish deterministic export/editability, understandable staging, and still-limited anatomical or stylistic execution.
 
 Use authorized cloud execution. Do not infer personal-computer, paid API or publication permission from a rendering problem. Public release and external sharing are separate from creating a private drawing or skill.
+
+## Inspected neutral example
+
+For a concrete bounded visual target, inspect `assets/examples/harbor-showcase/01-latch.png`, `02-open.png` and their construction overlays. Read the adjacent README and receipt for actual module/path provenance. Use the construction principles, not the keeper identity or composition, for unrelated requests. This example was visually accepted; that does not pre-approve new art.

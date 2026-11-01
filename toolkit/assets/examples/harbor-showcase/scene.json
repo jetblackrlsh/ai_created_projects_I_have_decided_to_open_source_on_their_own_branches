@@ -1,0 +1,9 @@
+{
+ "title":"Harbor at Dawn", "width":1400,"height":900,
+ "camera":{"eye":[6,4,9],"target":[0,1,0],"fov":50},
+ "keeper":{"name":"Keeper","identity":{"age":"elder","jaw":"broad","skin":"#c99570","hair":"short","hair_color":"#c8c5b5","beard":"short","nose":"long","brow":"heavy"}},
+ "gate":{"hinge":[4,0,1],"length":6,"height":3,"handle_height":1.7},
+ "panels":[{"id":"01-latch","angle":0,"caption":"FIRST LIGHT. THE NIGHT WATCH ENDS.","expression":"neutral"},{"id":"02-open","angle":-35,"caption":"THE HARBOR IS SAFE.","expression":"smile"}],
+ "timeline":{"narration_start":1.3,"narration_end":3.668,"dialogue_start":6.5,"dialogue_end":8.1,"duration":12},
+ "notes":"Original neutral public demonstration. No private story assets or book artwork. Hand-authored vector construction; not generated raster art."
+}

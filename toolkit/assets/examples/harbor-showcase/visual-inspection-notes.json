@@ -1,0 +1,14 @@
+{
+ "status":"preview-inspected-awaiting-user-review",
+ "reviewer":"draw_public_heroic_example agent",
+ "reviewedAt":"2026-11-01T16:08:00Z",
+ "inspection":"Both finished PNGs viewed at original 1400x900 size; open construction image viewed at original size. Not a claim of user approval.",
+ "proportionsIdentity":"Consistent weathered adult keeper: three-quarter face, beard, cap, long coat, leg separation. Face is angular cel geometry, not naturalistic drawing.",
+ "connectedFormsContacts":"Near sleeve connects shoulder to adjusted elbow and wrist. Grip is placed at projected gate latch and the lever remains visible above and below fingers. Gate hinge straps/pins stay on the right post in both panels. Gate rotates 35 degrees, exposing the passage.",
+ "gestureExpression":"Bent working arm in closed panel becomes extended in open panel. Neutral face changes to smile. Torso remains intentionally stable across this two-keyframe action.",
+ "inkFormShadows":"Thicker outer coat and cap contours, narrower facial and fold lines, dark sleeve/side planes, tapered coat hatching, lighter lapels and pocket flaps.",
+ "perspectiveDepth":"Paving, curbs, gate posts, bars, rail and hinges use one perspective camera. Receding pier and smaller lighthouse establish depth. Foreground keeper is separately authored 2D geometry.",
+ "speciesDesign":"Human adult only; no creature-design claim.",
+ "storyTone":"Rainy dawn harbor becomes safely accessible; calm work gesture and smile match the short neutral narration and dialogue.",
+ "limitations":["Stylized vector/cel look rather than naturalistic ink mastery.","Only two poses and one camera; not continuous animation or varied cinematic coverage.","Author-authored 2D keeper is staged against projected 3D solids, not a complete 3D character rig."]
+}
