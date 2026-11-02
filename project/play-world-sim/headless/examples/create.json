@@ -1,0 +1,67 @@
+{
+  "op": "create",
+  "turn_budget": 6,
+  "state": {
+    "format": "chat-world-sim",
+    "version": 1,
+    "world": {
+      "title": "Glass Ferry"
+    },
+    "branch": {
+      "name": "main"
+    },
+    "turn": 0,
+    "time": {
+      "elapsed_minutes": 0
+    },
+    "player": {
+      "id": "p",
+      "location": "dock"
+    },
+    "places": [
+      {
+        "id": "dock",
+        "name": "Dock",
+        "public_description": "A glass boat waits.",
+        "description": "SECRET chart",
+        "connections": []
+      }
+    ],
+    "items": [
+      {
+        "id": "coin",
+        "name": "Coin",
+        "holder": "p",
+        "quantity": 1
+      }
+    ],
+    "npcs": [
+      {
+        "id": "n",
+        "name": "Keeper",
+        "location": "dock",
+        "visible": true,
+        "knowledge": [
+          "SECRET password"
+        ]
+      }
+    ],
+    "facts": [
+      "SECRET"
+    ],
+    "claims": [],
+    "clocks": [
+      {
+        "id": "tide",
+        "progress": 0,
+        "target": 10
+      }
+    ],
+    "recent_events": [],
+    "pending": [],
+    "preferences": {},
+    "extensions": {
+      "secret": "SECRET"
+    }
+  }
+}

@@ -29,3 +29,10 @@ Read-only research on November 2, 2026:
 - A [marketplace listing](https://skillhub.360.com/skills/worldsim) also advertises a local-persistence WorldSim skill by worldsimlife. This is listing-level evidence, not an audited or tested recommendation.
 
 MIT license applies to this original package; third-party projects retain their own licenses. Research links are for context, not required downloads.
+
+## Optional headless agent self-play
+
+[World Sim Headless](play-world-sim/headless/README.md) adds a Python-standard-library JSON CLI for agent-supplied turns, durable saves, bounded self-play, checkpoints, branches and replay. The agent supplies its own model responses; no separate API, browser or model download is required. See its [agent recipe](play-world-sim/headless/AGENT_RECIPE.md), [protocol](play-world-sim/headless/PROTOCOL.md) and [tested example](play-world-sim/headless/examples/selfplay/readable.md). Same-context roleplay cannot guarantee hidden-knowledge separation.
+
+
+Worlds can be [exported and imported](play-world-sim/headless/SHARING.md) as versioned JSON packages for opt-in sharing. Full packages may contain spoilers; importing starts a fresh explicitly bounded run and never overwrites an existing session.
