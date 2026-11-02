@@ -1,0 +1,101 @@
+{
+  "format": "world-sim-share",
+  "version": 3,
+  "state": {
+    "branch": {
+      "name": "main"
+    },
+    "claims": [],
+    "clocks": [
+      {
+        "id": "tide",
+        "progress": 0,
+        "target": 10
+      }
+    ],
+    "extensions": {
+      "secret": "SECRET"
+    },
+    "facts": [
+      "The blue moon nourishes the floating garden."
+    ],
+    "format": "chat-world-sim",
+    "items": [
+      {
+        "holder": "p",
+        "id": "coin",
+        "name": "Coin",
+        "quantity": 1
+      }
+    ],
+    "npcs": [
+      {
+        "id": "n",
+        "knowledge": [
+          "SECRET password"
+        ],
+        "location": "dock",
+        "name": "Orrin",
+        "visible": true
+      }
+    ],
+    "pending": [],
+    "places": [
+      {
+        "connections": [],
+        "description": "SECRET chart",
+        "id": "dock",
+        "name": "Dock",
+        "public_description": "A glass boat waits."
+      }
+    ],
+    "player": {
+      "id": "p",
+      "location": "dock"
+    },
+    "preferences": {},
+    "recent_events": [
+      "Orrin planted the floating garden."
+    ],
+    "time": {
+      "elapsed_minutes": 0
+    },
+    "turn": 0,
+    "version": 1,
+    "world": {
+      "premise": "A gardener rows a bark ferry under a blue moon.",
+      "title": "Forest Canal"
+    }
+  },
+  "state_sha256": "bd3e521b6c1d52832148527b6140b9aedef6c74b76d6c2f96f60a8442c4d1826",
+  "lineage": {
+    "ancestors": [],
+    "branch_id": "94ceda10-f9c9-47e5-b1e4-9082b47925e1",
+    "instance_created_at": "2026-11-02T11:22:09.328748+00:00",
+    "instance_id": "7f8b8957-3ae6-4a79-a05d-3ae9ccbd2f12",
+    "origins": [],
+    "parent_export": null,
+    "timeline_history": [],
+    "world_created_at": "2026-11-02T11:22:09.328748+00:00",
+    "world_id": "87c5e0a5-683f-4093-9133-a4ad9cc8ff97",
+    "export_id": "b4ee7ad0-62f5-4b67-b1ba-1992c9de5794",
+    "exported_at": "2026-11-02T11:22:09.406932+00:00",
+    "point": {
+      "revision": 0,
+      "event_index": 0,
+      "turn": 0,
+      "elapsed_minutes": 0,
+      "branch_name": "main"
+    }
+  },
+  "contains_spoilers": true,
+  "chronicle": {
+    "initial": {
+      "turn": 0,
+      "elapsed_minutes": 0,
+      "branch_name": "main"
+    },
+    "events": [],
+    "prior": []
+  }
+}

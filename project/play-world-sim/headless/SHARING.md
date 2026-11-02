@@ -17,7 +17,7 @@ Path('shared-world.json').write_text(json.dumps(response['result'], indent=2))
 PY
 ```
 
-Only **shared-world.json** is needed. It contains `format:world-sim-share`, version2, complete portable state, state SHA-256, mandatory world lineage and `contains_spoilers:true`. It does not contain local paths, credentials, runtime receipts or entire prior event logs. SHA-256 detects accidental corruption, not authenticity; a sender can recompute it.
+Only **shared-world.json** is needed. It contains `format:world-sim-share`, version3, complete portable state, state SHA-256, mandatory world lineage and `contains_spoilers:true`. It does not contain local paths, credentials, runtime receipts or entire prior event logs. SHA-256 detects accidental corruption, not authenticity; a sender can recompute it.
 
 ## Preview and import for user B
 
@@ -44,7 +44,7 @@ For independent player secrecy, give only `observe` to the player context, not t
 
 ## World lineage and exact timeline points
 
-Every full world export, including the `export` alias, now emits the same **v2 lineage envelope**. Bare `export` output was intentionally deprecated; read the envelope's `state` for compatibility with the chat skill. `context` and `replay` are local engine/debugging responses, not share packages.
+Every full world export, including the `export` alias, now emits the same **v3 lineage envelope**. Bare `export` output was intentionally deprecated; read the envelope's `state` for compatibility with the chat skill. `context` and `replay` are local engine/debugging responses, not share packages.
 
 - `world_id`: stable randomly generated UUID for the source world's identity; survives imports.
 - `instance_id`: unique run UUID. Import creates a different continuation instance without resetting an existing run.
@@ -57,6 +57,7 @@ Every full world export, including the `export` alias, now emits the same **v2 l
 
 Together instance ID + branch ID + revision/event index + state SHA-256 distinguish two exports at the same fictional turn, including rewinds and alternate outcomes. The JSON is portable claimed provenance, **not authenticated authorship**: IDs/hashes do not prove a sender's identity, and no personal identifiers are required. Maximum ancestry depth is64; do not silently truncate a chain.
 
-Old local session files acquire a new identity once on first current-tool use, marked `legacy_identity_assigned`. This does not reconstruct missing pre-lineage provenance. Old checkpoints without timeline metadata cannot be loaded/branched by the new protocol: create a fresh checkpoint first. V1 share packages are rejected rather than silently inventing ancestry; use the original world session with the current tool and re-export. The sample seven-turn transcript is historical pre-lineage test evidence, not a v2 sharing package.
+Old local session files acquire a new identity once on first current-tool use, marked `legacy_identity_assigned`. This does not reconstruct missing pre-lineage provenance. Old checkpoints without timeline metadata cannot be loaded/branched by the new protocol: create a fresh checkpoint first. V2 share packages remain accepted; v3 adds narrated chronicles and multi-parent origins. V1 share packages are rejected rather than silently inventing ancestry; use the original world session with the current tool and re-export. The sample seven-turn transcript is historical pre-lineage test evidence, not a v2 sharing package.
 
 Sharing restores recorded canon, not exact future generated prose. The receiver can continue creatively while preserving where its continuation originated.
+

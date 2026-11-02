@@ -13,6 +13,8 @@ import re
 import sys
 import tempfile
 
+sys.modules.setdefault('worldsim', sys.modules[__name__])
+
 MAX_BYTES = 4_000_000
 ID = re.compile(r'^[A-Za-z0-9_-]{1,80}$')
 
@@ -99,7 +101,7 @@ def new_lineage():
     created = utcnow()
     return {'world_id': uid(), 'instance_id': uid(), 'branch_id': uid(),
             'world_created_at': created, 'instance_created_at': created, 'parent_export': None,
-            'ancestors': [], 'timeline_history': []}
+            'ancestors': [], 'timeline_history': [], 'origins': []}
 
 def ensure_lineage(doc):
     # Old local v1 sessions acquire identity once, without claiming lost provenance.
@@ -107,15 +109,46 @@ def ensure_lineage(doc):
         doc['lineage'] = new_lineage()
         doc['lineage']['timeline_history'].append({'kind': 'legacy_identity_assigned', 'point': point(doc)})
     doc.setdefault('checkpoint_metadata', {})
+    doc['lineage'].setdefault('origins', [])
+
+def make_chronicle(doc):
+    initial=doc['initial']
+    result={'initial':{'turn':initial['turn'],'elapsed_minutes':initial['time']['elapsed_minutes'],'branch_name':initial['branch']['name']},'events':[], 'prior':copy.deepcopy(doc.get('prior_chronicles',[]))}
+    restores={e['point']['event_index']+1:e['target_point']['event_index'] for e in doc['lineage']['timeline_history'] if e['kind'] in ('load','branch')}
+    for index,event in enumerate(doc['events'],1):
+        state=event['state']
+        row={'event_index':index,'op':event['op'],'turn':state['turn'],'elapsed_minutes':state['time']['elapsed_minutes'],'branch_name':state['branch']['name']}
+        for k in ('action','narrative'):
+            if k in event:row[k]=event[k]
+        if event['op'] in ('load','branch'):row['restore_event_index']=restores.get(index)
+        result['events'].append(row)
+    validate_chronicle(result)
+    return result
+
+def validate_chronicle(c,depth=0):
+    require(depth<=8 and isinstance(c,dict) and set(c)=={'initial','events','prior'},'invalid chronicle')
+    def position(p):
+        require(isinstance(p,dict) and type(p.get('turn')) is int and p['turn']>=0 and number(p.get('elapsed_minutes')) and p['elapsed_minutes']>=0 and isinstance(p.get('branch_name'),str),'invalid chronicle position')
+    position(c['initial'])
+    require(isinstance(c['events'],list) and len(c['events'])<=1000 and isinstance(c['prior'],list) and len(c['prior'])<=8,'chronicle limit')
+    for i,e in enumerate(c['events'],1):
+        position(e)
+        require(e.get('event_index')==i and e.get('op') in ('action','resolve','checkpoint','load','branch','pause','resume','stop'),'invalid chronicle event')
+        for k in ('action','narrative'):
+            if k in e:require(isinstance(e[k],str),'invalid chronicle prose')
+        if e['op'] in ('load','branch'):
+            target=e.get('restore_event_index')
+            require(target is None or (type(target) is int and 0<=target<i),'invalid chronicle restore')
+    for prior in c['prior']:validate_chronicle(prior,depth+1)
 
 def export_world(doc):
     state = validate(doc['state'])
     ensure_lineage(doc)
     lineage = copy.deepcopy(doc['lineage'])
     lineage.update(export_id=uid(), exported_at=utcnow(), point=point(doc))
-    return {'format': 'world-sim-share', 'version': 2,
+    return {'format': 'world-sim-share', 'version': 3,
             'state': copy.deepcopy(state), 'state_sha256': digest(state),
-            'lineage': lineage, 'contains_spoilers': True}
+            'lineage': lineage, 'contains_spoilers': True, 'chronicle': make_chronicle(doc)}
 
 def valid_uuid(value):
     try:
@@ -144,15 +177,33 @@ def validate_history(history):
             require(valid_uuid(event.get('checkpoint_id')) and valid_uuid(event.get('from_branch_id')) and valid_uuid(event.get('branch_id')), 'invalid checkpoint ancestry')
             validate_point(event['target_point'])
 
-def import_world(package):
+def import_world(package, depth=0):
+    require(depth <= 8, 'crossover ancestry depth exceeds eight')
     require(isinstance(package, dict), 'share package must be object')
-    require(set(package) == {'format','version','state','state_sha256','lineage','contains_spoilers'}, 'unknown or missing share package fields')
-    require(package['format'] == 'world-sim-share' and type(package['version']) is int and package['version'] == 2, 'unsupported share version; re-export old worlds with current tool')
+    expected = {'format','version','state','state_sha256','lineage','contains_spoilers'}
+    if package.get('version') == 3: expected.add('chronicle')
+    require(set(package) == expected, 'unknown or missing share package fields')
+    require(package['format'] == 'world-sim-share' and type(package['version']) is int and package['version'] in (2,3), 'unsupported share version; re-export old worlds with current tool')
     state = validate(package['state'])
     require(package['state_sha256'] == digest(state), 'share checksum mismatch')
     require(package['contains_spoilers'] is True, 'full share must declare spoilers')
     l = package['lineage']
-    require(isinstance(l, dict) and set(l) == {'world_id','instance_id','branch_id','world_created_at','instance_created_at','parent_export','ancestors','timeline_history','export_id','exported_at','point'}, 'invalid lineage fields')
+    expected_lineage = {'world_id','instance_id','branch_id','world_created_at','instance_created_at','parent_export','ancestors','timeline_history','export_id','exported_at','point'}
+    if package['version'] == 3: expected_lineage.add('origins')
+    require(isinstance(l, dict) and set(l) == expected_lineage, 'invalid lineage fields')
+    origins=l.get('origins',[])
+    require(isinstance(origins,list) and (not origins or 2<=len(origins)<=8), 'invalid crossover origins')
+    origin_ids=set()
+    for origin in origins:
+        import_world(origin,depth+1)
+        oid=origin['lineage']['export_id']
+        require(oid not in origin_ids and origin['lineage']['world_id'] != l['world_id'], 'duplicate/self crossover origin')
+        origin_ids.add(oid)
+    if package['version'] == 3:
+        validate_chronicle(package['chronicle'])
+        end=package['chronicle']['events'][-1] if package['chronicle']['events'] else package['chronicle']['initial']
+        require(l['point']['event_index']==len(package['chronicle']['events']), 'chronicle event count/lineage mismatch')
+        require(end['turn']==state['turn'] and end['elapsed_minutes']==state['time']['elapsed_minutes'] and end['branch_name']==state['branch']['name'], 'chronicle endpoint/state mismatch')
     for k in ('world_id','instance_id','branch_id','export_id'):
         require(valid_uuid(l[k]), 'invalid lineage UUID')
     require(valid_stamp(l['world_created_at']) and valid_stamp(l['instance_created_at']) and valid_stamp(l['exported_at']), 'invalid lineage timestamp')
@@ -178,7 +229,7 @@ def continuation_lineage(package):
     ref['state_sha256'] = package['state_sha256']
     ref['timeline_history'] = copy.deepcopy(old['timeline_history'])
     new = new_lineage()
-    new.update(world_id=old['world_id'], world_created_at=old['world_created_at'], parent_export=ref, ancestors=copy.deepcopy(old['ancestors'])+[ref])
+    new.update(world_id=old['world_id'], world_created_at=old['world_created_at'], parent_export=ref, ancestors=copy.deepcopy(old['ancestors'])+[ref], origins=copy.deepcopy(old.get('origins',[])))
     return new
 
 def fresh(state, budget):
@@ -205,12 +256,15 @@ def apply(doc, request):
     d = copy.deepcopy(doc)
     ensure_lineage(d)
     op = request.get('op')
-    if op in ('status', 'observe', 'context', 'export', 'export_world', 'replay'):
+    if op in ('status', 'observe', 'context', 'export', 'export_world', 'export_narrative', 'replay'):
         if op == 'status':
             out = {k: d[k] for k in ('revision', 'budget', 'used', 'mode', 'pending_action')}
             out['turn'] = d['state']['turn']
         elif op == 'observe': out = observation(d['state'])
         elif op == 'context': out = {'state': d['state'], 'action': d['pending_action'], 'revision': d['revision']}
+        elif op == 'export_narrative':
+            from narrative import render_report
+            out=render_report(d)
         elif op in ('export', 'export_world'):
             require(d['pending_action'] is None, 'resolve pending action before sharing')
             out = export_world(d)
@@ -237,6 +291,9 @@ def apply(doc, request):
         require(new['time']['elapsed_minutes'] >= old['time']['elapsed_minutes'], 'time cannot rewind')
         require(new['branch'] == old['branch'], 'use branch operation to change branch')
         require(new['player']['id'] == old['player']['id'], 'player ID cannot change')
+        for provenance_key in ('crossover_plan','source_initialization'):
+            if provenance_key in old['extensions']:
+                require(new['extensions'].get(provenance_key)==old['extensions'][provenance_key], 'initialization provenance cannot be silently changed')
         oldclocks = {x['id']: x for x in old['clocks']}
         for c in new['clocks']:
             if c['id'] in oldclocks:
@@ -295,9 +352,12 @@ def parse(raw):
 def transact(directory, request):
     """Single-writer lock plus optimistic revision. Directory is caller-selected, never story-controlled."""
     require(isinstance(request, dict), 'request must be object')
+    if request.get('op') == 'narrative_world':
+        from narrative import render_report
+        return render_report(request.get('package'))
     if request.get('op') == 'preview_world':
         state = import_world(request.get('package'))
-        return {'format': 'world-sim-share', 'version': 2, 'title': state['world']['title'], 'branch': state['branch']['name'], 'turn': state['turn'], 'contains_spoilers': True, 'state_sha256': digest(state)}
+        return {'format': 'world-sim-share', 'version': 3, 'title': state['world']['title'], 'branch': state['branch']['name'], 'turn': state['turn'], 'contains_spoilers': True, 'state_sha256': digest(state)}
     root = Path(directory)
     root.mkdir(parents=True, exist_ok=True, mode=0o700)
     require(not root.is_symlink(), 'store cannot be symlink')
@@ -308,13 +368,23 @@ def transact(directory, request):
     except FileExistsError: raise Invalid('store busy; if writer crashed, inspect before removing session.lock')
     try:
         os.close(fd)
-        if request.get('op') in ('create', 'import_world'):
+        if request.get('op') in ('create', 'import_world', 'crossover', 'create_from_sources'):
             require(not file.exists(), 'store exists; import never overwrites a run')
-            if request['op'] == 'import_world':
+            if request['op'] == 'create_from_sources':
+                from sources import validate_initialization
+                provenance=validate_initialization(request.get('source_package'), require_ready=True)
+                d=fresh(request.get('state'), request.get('turn_budget'))
+                d['state']['extensions']['source_initialization']=provenance
+                d['initial']=copy.deepcopy(d['state'])
+            elif request['op'] == 'crossover':
+                from crossover import build
+                d=build(request)
+            elif request['op'] == 'import_world':
                 require('turn_budget' in request, 'import requires an explicit new turn_budget')
                 state = import_world(request.get('package'))
                 d = fresh(state, request['turn_budget'])
                 d['lineage'] = continuation_lineage(request['package'])
+                d['prior_chronicles'] = [copy.deepcopy(request['package']['chronicle'])] if 'chronicle' in request['package'] else []
             else:
                 d = fresh(request.get('state'), request.get('turn_budget', 10))
             out = {'revision': 0, 'mode': 'active', 'used': 0}
@@ -354,3 +424,4 @@ def main():
 
 if __name__ == '__main__':
     sys.exit(main())
+

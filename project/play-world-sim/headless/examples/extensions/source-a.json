@@ -1,0 +1,101 @@
+{
+  "format": "world-sim-share",
+  "version": 3,
+  "state": {
+    "branch": {
+      "name": "main"
+    },
+    "claims": [],
+    "clocks": [
+      {
+        "id": "tide",
+        "progress": 0,
+        "target": 10
+      }
+    ],
+    "extensions": {
+      "secret": "SECRET"
+    },
+    "facts": [
+      "The red moon guides the glass ferry."
+    ],
+    "format": "chat-world-sim",
+    "items": [
+      {
+        "holder": "p",
+        "id": "coin",
+        "name": "Coin",
+        "quantity": 1
+      }
+    ],
+    "npcs": [
+      {
+        "id": "n",
+        "knowledge": [
+          "SECRET password"
+        ],
+        "location": "dock",
+        "name": "Mara",
+        "visible": true
+      }
+    ],
+    "pending": [],
+    "places": [
+      {
+        "connections": [],
+        "description": "SECRET chart",
+        "id": "dock",
+        "name": "Dock",
+        "public_description": "A glass boat waits."
+      }
+    ],
+    "player": {
+      "id": "p",
+      "location": "dock"
+    },
+    "preferences": {},
+    "recent_events": [
+      "Mara built a glass ferry."
+    ],
+    "time": {
+      "elapsed_minutes": 0
+    },
+    "turn": 0,
+    "version": 1,
+    "world": {
+      "premise": "A ferrymaster guides travelers under a red moon.",
+      "title": "Glass Harbor"
+    }
+  },
+  "state_sha256": "c49a2a8a75bdbf99ba18dd64bc5163a98ce5132c3c375fa27a4f2c3e9854f163",
+  "lineage": {
+    "ancestors": [],
+    "branch_id": "255471cc-9f24-4ae4-9e59-fd6fbfd96d57",
+    "instance_created_at": "2026-11-02T11:22:09.285703+00:00",
+    "instance_id": "f6d71999-9b85-4c8a-a01a-5fa8ab84bb71",
+    "origins": [],
+    "parent_export": null,
+    "timeline_history": [],
+    "world_created_at": "2026-11-02T11:22:09.285703+00:00",
+    "world_id": "87323215-34ed-4c5a-b65e-ffcf2585026d",
+    "export_id": "496f9050-e96a-4437-96ef-489f3150cf32",
+    "exported_at": "2026-11-02T11:22:09.367173+00:00",
+    "point": {
+      "revision": 0,
+      "event_index": 0,
+      "turn": 0,
+      "elapsed_minutes": 0,
+      "branch_name": "main"
+    }
+  },
+  "contains_spoilers": true,
+  "chronicle": {
+    "initial": {
+      "turn": 0,
+      "elapsed_minutes": 0,
+      "branch_name": "main"
+    },
+    "events": [],
+    "prior": []
+  }
+}

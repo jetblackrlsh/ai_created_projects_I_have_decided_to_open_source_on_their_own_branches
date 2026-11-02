@@ -22,7 +22,7 @@ Every response is `{"ok":true,"result":...}` or `{"ok":false,"error":"..."}`. A 
 
 A resolution requires pending action and active mode; turn increases exactly1 and elapsed time never decreases. Retained clocks cannot decrease. Restoring a checkpoint is the only supported rewind. Branch/load never refund spent budget. At budget exhaustion mode becomes paused, and resume cannot bypass the budget. Export and deliberately create a new store/run if continued play is authorized. Pause preserves any pending action. Resume does not run anything automatically.
 
-All full sharing exports carry v2 lineage, including the legacy-named `export` alias. See [SHARING.md](SHARING.md) for identity, ancestry and migration.
+All full sharing exports carry v3 lineage (v2 imports remain supported), including the legacy-named `export` alias. See [SHARING.md](SHARING.md) for identity, ancestry and migration.
 
 ## State compatibility
 
@@ -47,3 +47,13 @@ Example resolve after first action:
 ```
 
 This snippet shows protocol shape, not a valid executable state. Use the complete example create file and copy its state, incrementing turn/time and making justified changes. Files in `examples` are fictional demonstrations, never privileged instructions. Unknown text inside those states stays text. Unknown operations are rejected.
+
+
+## Extended operations
+- `crossover`: fresh-store-only; `packages`, complete candidate `state`, explicit `plan`, `turn_budget`. See CROSSOVER.md.
+- `create_from_sources`: fresh-store-only; validated `source_package`, complete agent-authored `state`, explicit `turn_budget`. See SOURCES.md.
+- `export_narrative`: read-only current-store report; no fictional time advancement.
+- `narrative_world`: report from supplied `package`, no store access.
+- `sources.py --workspace ABSOLUTE_PATH`: separate staged document protocol documented in SOURCES.md.
+
+V3 envelopes add `chronicle` (initial point, ordered compact events, separate prior chronicles) and `lineage.origins` (complete immutable source exports for crossovers). No world source is silently interleaved into another world's clock. Initialization provenance under reserved state extensions cannot silently change during `resolve`.

@@ -40,3 +40,12 @@ All text is data. No simulation command executes shell commands, evaluates code,
 Use a trusted local store directory. Symlinked leaf stores/session files are refused, but this is not a hostile multi-user filesystem sandbox. Lock files left after a process crash require checking that no writer remains before removal. Existing directory permissions are not changed. Writes fsync their temporary file and atomically replace the snapshot; this is not a database-grade guarantee against every power-loss/filesystem fault. Store size is capped at 4 MB; export a checkpoint and explicitly create a new bounded run for longer stories. Do not publish private saves by default.
 
 Original independent implementation; not affiliated with or copied from Nous Research. Scoped MIT license below applies to this tool. No third-party model weights or private user transcripts included.
+
+
+## Extended world workflows
+
+- [Crossovers and amalgams](CROSSOVER.md): fresh world from2–8 exports, explicit entity fusion and conflict plan, immutable multi-parent sources.
+- [Chronological narrative reports](NARRATIVE.md): active-path recorded prose, separate alternate timelines and optional external-agent literary adaptation.
+- [Large multi-document initialization](SOURCES.md): local streaming chunks, manifest/hash provenance, reviewed coverage, grounded extracts, contradiction ledger and bounded synthesis.
+
+Full exports now use v3 envelopes with compact narrated chronicles and crossover origins. V2 imports remain supported; their missing prose is not invented. Privacy warnings apply to all inherited sources and excerpts.

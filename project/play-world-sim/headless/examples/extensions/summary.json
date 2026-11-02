@@ -1,0 +1,16 @@
+{
+  "worlds_fused": 2,
+  "source_documents_bytes": [
+    1196038,
+    1196039
+  ],
+  "chunks": 586,
+  "initial_reviewed": 2,
+  "initial_fraction": 0.0034129692832764505,
+  "final_ready": true,
+  "active_chronology_verified": true,
+  "lineage_preserved": true,
+  "originals_unchanged": true,
+  "fixture_review_limitation": "Remaining source chunks were validated as exact known synthetic filler by a deterministic recognizer, not an AI comprehension benchmark.",
+  "cli_calls": 1798
+}
