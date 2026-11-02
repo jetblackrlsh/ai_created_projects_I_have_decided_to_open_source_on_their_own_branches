@@ -20,7 +20,7 @@ def validate(path,assets=True):
  need(c.get('audioOnlyReview',{}).get('approved') is True and c['audioOnlyReview'].get('notes'),'Audio-only script review required before generation')
  need(c.get('visualMode','comic-panels')=='comic-panels','This tool preserves comic panels; ASCII is not implicit')
  fps=c.get('fps',24);duration=c.get('duration',0)
- need(isinstance(fps,int) and 1<=fps<=60 and 0<duration<=300 and abs(duration*fps-round(duration*fps))<1e-6,'Frame-aligned duration <=300s and fps1..60 required')
+ need(isinstance(fps,int) and 1<=fps<=60 and 0<duration<=3600 and abs(duration*fps-round(duration*fps))<1e-6,'Frame-aligned duration <=3600s and fps1..60 required')
  need(256<=c.get('size',1080)<=1920,'Output square size must be256..1920')
  cast=c.get('cast',{});need(cast and len(set(cast.values()))==len(cast),'Distinct narrator and character stock voices required')
  panels=c.get('panels',[]);shots=c.get('shots',[]);speech=c.get('speech',[])

@@ -10,6 +10,11 @@ class ManifestTests(unittest.TestCase):
   with tempfile.TemporaryDirectory() as td:
    p=pathlib.Path(td)/'project.json';p.write_text(json.dumps(self.c))
    with self.assertRaises((ValueError,KeyError)):validate(p,assets=False)
+ def test_long_form_manifest(self):
+  self.c['duration']=1000
+  with tempfile.TemporaryDirectory() as td:
+   p=pathlib.Path(td)/'project.json';p.write_text(json.dumps(self.c));self.assertEqual(validate(p,assets=False)['duration'],1000)
+ def test_over_one_hour_rejected(self):self.bad(lambda c:c.update(duration=3601))
  def test_missing_voice(self):self.bad(lambda c:c['speech'][0].pop('voice'))
  def test_duplicate_cast(self):self.bad(lambda c:c['cast'].update(Keeper='af_heart'))
  def test_missing_panel(self):self.bad(lambda c:c['panels'].append(dict(id='missing',image='x',source='x',sha256='x')))

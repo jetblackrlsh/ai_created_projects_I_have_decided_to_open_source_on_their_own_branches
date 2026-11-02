@@ -26,7 +26,7 @@ def smooth(a,seconds):
 
 def build(config,write=True):
     config=Path(config).resolve();base=config.parent;c=json.loads(config.read_text());N=round(float(c['duration'])*RATE)
-    require(0<N<=RATE*300,'Duration must be positive and <=5 minutes')
+    require(0<N<=RATE*3600,'Duration must be positive and <=60 minutes')
     out=base/'out';out.mkdir(exist_ok=True)
     if write: require(not any((out/name).exists() for name in ['master-48k.wav','master.m4a','mix.json','voice-stem-48k.wav','music-stem-48k.wav','sfx-stem-48k.wav']),'Preserve versions: mix outputs exist')
     voice=np.zeros((N,2));fx=voice.copy();music=voice.copy();occupied=np.zeros(N,bool);speech=[];events=[];cast={}
@@ -60,16 +60,57 @@ def build(config,write=True):
         a*= (np.minimum(1,np.arange(n)/(RATE*.012))*np.minimum(1,(n-1-np.arange(n))/(RATE*.16)))[:,None]
         duck=float(q.get('speech_gain',.65));require(.5<=duck<=1,'Avoid blanket deep SFX ducking; supported range .5..1')
         a*=(1-(1-duck)*speechmask[start:end])[:,None];a*=focus[start:end,None];fx[start:end]+=a
-        fxmask[max(0,start-round(.08*RATE)):min(N,end+round(.12*RATE))]=.22
+        fxmask[max(0,start-round(.08*RATE)):min(N,end+round(.12*RATE))]=0
         q.update(placementStart=start/RATE,placementEnd=end/RATE,sha256=hashlib.sha256(path.read_bytes()).hexdigest(),speech_gain=duck,actualPeak=float(abs(a).max()));events.append(q)
+    music_report=None
     if c.get('music'):
         q=c['music'];a=load(base/q['file']);require(len(a)>=N,'Score must cover complete timeline; no implicit loop')
-        a=a[:N];require(np.max(abs(a))>1e-8,'Silent score');a*=float(q.get('peak',.24))/np.max(abs(a))
-        env=.82-(.82-.08)*speechmask
+        a=a[:N];require(np.max(abs(a))>1e-8,'Silent score')
+        def setting(name,default,lo,hi):
+            v=float(q.get(name,default));require(math.isfinite(v) and lo<=v<=hi,'Invalid music '+name);return v
+        speech_gain=setting('speech_gain',.5,.25,1)
+        effects_gain=setting('effects_gain',.7,.25,1)
+        floor=setting('presence_floor',.4,.25,1)
+        release=setting('release_seconds',.35,.02,2)
+        gap=setting('speech_gap_db',12,6,20)
+        peak=setting('peak',.45,.01,.8)
+        # Normalize against active samples, not full-file silence. Preserve authored
+        # pauses/dynamics: one scalar for the score, never fill or compress silence.
+        active=np.max(abs(a),axis=1)>np.max(abs(a))*.01
+        source_rms=float(np.sqrt(np.mean(a[active]**2)))
+        voiced=[float(np.sqrt(np.mean(voice[round(x['start']*RATE):round(x['end']*RATE)]**2))) for x in speech]
+        voice_rms=float(np.median(voiced)) if voiced else 10**(-18/20)
+        target=voice_rms*10**(-gap/20)/max(floor,speech_gain)
+        scale=min(target/max(source_rms,1e-12),peak/float(np.max(abs(a))))
+        a*=scale
+        # Non-stacking duck: an effect beneath speech must not multiply two deep cuts.
+        target_env=np.maximum(floor,np.minimum(1-(1-speech_gain)*speechmask,
+                                              1-(1-effects_gain)*(1-fxmask)))
+        alpha=math.exp(-1/(RATE*release))
+        recovered=signal.lfilter([1-alpha],[1,-alpha],target_env,zi=[alpha*target_env[0]])[0]
+        env=smooth(np.minimum(target_env,recovered),.02)
         fade=np.minimum(1,np.arange(N)/(RATE*.65))*np.minimum(1,(N-1-np.arange(N))/(RATE*1.1))
-        music=a*(env*smooth(fxmask,.1)*fade)[:,None]
+        music=a*(env*fade)[:,None]
+        music_report=dict(sourceActiveRms=source_rms,normalizationGain=scale,peakCap=peak,
+                          speechGain=speech_gain,effectsGain=effects_gain,presenceFloor=floor,
+                          speechGapTargetDb=gap,releaseSeconds=release,
+                          peakCapLimited=scale < target/max(source_rms,1e-12)-1e-9)
     master=voice+fx+music;gain=min(1,.89/max(float(abs(master).max()),1e-9));master*=gain
     report=dict(duration=N/RATE,sampleRate=RATE,sampleCount=N,globalGain=gain,peak=float(abs(master).max()),speech=speech,effects=events,cast=cast,speechFocus=c.get('speechFocus',[]),listeningVerified=False)
+    windows=[]
+    for q in speech:
+        lo=round(q['start']*RATE);hi=round(q['end']*RATE)
+        def rms_db(stem):
+            rms=float(np.sqrt(np.mean(stem[lo:hi]**2)))*gain
+            return 20*math.log10(rms) if rms>1e-12 else None
+        v,m,f=rms_db(voice),rms_db(music),rms_db(fx)
+        delta=m-v if m is not None and v is not None else None
+        windows.append(dict(id=q.get('id'),start=q['start'],end=q['end'],voiceRmsDbfs=v,
+                            musicRmsDbfs=m,sfxRmsDbfs=f,musicRelativeToVoiceDb=delta,
+                            reviewRequired=bool(c.get('music')) and (delta is None or not -20<=delta<=-6)))
+    report.update(music=music_report,speechWindowLevels=windows,
+                  musicReviewRequired=any(w['reviewRequired'] for w in windows),
+                  levelEvidenceNotPerceptualGuarantee=True)
     if write:
         for name,a in [('voice-stem',voice),('sfx-stem',fx),('music-stem',music)]:wavfile.write(out/(name+'-48k.wav'),RATE,a.astype(np.float32))
         wavfile.write(out/'master-48k.wav',RATE,np.round(master*32767).astype(np.int16));(out/'mix.json').write_text(json.dumps(report,indent=2))
