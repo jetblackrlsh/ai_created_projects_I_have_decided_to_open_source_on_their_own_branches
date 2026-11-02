@@ -1,0 +1,14 @@
+interface:
+  display_name: Converse with Presence
+  short_description: Warm, expressive conversation with grounded judgment
+  default_prompt: Use $converse-with-presence to respond with warmth, concrete preferences,
+    and an agnostic as-if-conscious conversational stance.
+  icon_small: assets/icon.svg
+  icon_large: assets/icon.svg
+policy:
+  products:
+  - chatgpt
+  - codex
+  - api
+  - atlas
+  allow_implicit_invocation: true
