@@ -23,10 +23,10 @@ def build(request):
     sources={}
     for p in packages:
         s=p['state']; ex=p['lineage']['export_id']
-        for kind,entities in [('character',[s['player']]+s['npcs']),('place',s['places']),('item',s['items']),('clock',s['clocks'])]:
+        for kind,entities in [('character',[s['player']]+s['npcs']),('place',s['places']),('item',s['items']),('clock',s['clocks']),('meter',s.get('meters',[]))]:
             for e in entities:sources[(ex,e['id'])]=kind
     targets={}
-    for kind,entities in [('character',[state['player']]+state['npcs']),('place',state['places']),('item',state['items']),('clock',state['clocks'])]:
+    for kind,entities in [('character',[state['player']]+state['npcs']),('place',state['places']),('item',state['items']),('clock',state['clocks']),('meter',state.get('meters',[]))]:
         for e in entities:targets[e['id']]=kind
     seen=set()
     for entry in mapping:

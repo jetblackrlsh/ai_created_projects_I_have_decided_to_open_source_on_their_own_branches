@@ -16,3 +16,5 @@ Suggested role prompts (instructions to the calling agent, not executable code):
 **World:** “Resolve the pending action from canon, not to guarantee success. Each NPC knows only its knowledge and what it can perceive. Return a complete valid next state and concise player-facing narrative. Preserve stable identity and existing possessions unless the action causes a change. Do not invent actual tool use, random draws or real-world consequences.”
 
 Use separate contexts for a meaningful secrecy test. A single agent role-switching is useful for creative exploration and consistency debugging but is not a blind player experiment. No separate-context calls, API spend, or real external actions are automatically authorized by this recipe.
+
+For reversible conditions use `meters`, not cumulative `clocks` (METERS.md). For a small resolution, `resolve_patch` can replace full-state submission; consult PATCHES.md, use stable entity IDs and current revision, and preserve the player's actual decisions. This saves authoring payload, not snapshot storage.

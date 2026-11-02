@@ -49,3 +49,6 @@ Original independent implementation; not affiliated with or copied from Nous Res
 - [Large multi-document initialization](SOURCES.md): local streaming chunks, manifest/hash provenance, reviewed coverage, grounded extracts, contradiction ledger and bounded synthesis.
 
 Full exports now use v3 envelopes with compact narrated chronicles and crossover origins. V2 imports remain supported; their missing prose is not invented. Privacy warnings apply to all inherited sources and excerpts.
+
+## Small updates and reversible conditions
+[Bounded meters](METERS.md) can rise or fall while elapsed time and progress clocks remain monotonic. [Targeted resolution patches](PATCHES.md) reduce agent request payloads with stable-ID selectors and transactional validation. Full snapshots and the4MB store limit remain; this is not a storage-scaling rewrite. See the [moth-delivery demo](examples/meters-patches/readable.md).

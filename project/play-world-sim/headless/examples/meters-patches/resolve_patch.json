@@ -1,0 +1,43 @@
+{
+  "op": "resolve_patch",
+  "request_id": "delivery-result",
+  "revision": 1,
+  "patch": [
+    {
+      "op": "set",
+      "path": [
+        "meters",
+        "moth_restlessness",
+        "value"
+      ],
+      "value": 2
+    },
+    {
+      "op": "set",
+      "path": [
+        "items",
+        "flowers",
+        "holder"
+      ],
+      "value": "keeper"
+    },
+    {
+      "op": "set",
+      "path": [
+        "clocks",
+        "delivery_progress",
+        "progress"
+      ],
+      "value": 1
+    },
+    {
+      "op": "set",
+      "path": [
+        "time",
+        "elapsed_minutes"
+      ],
+      "value": 1
+    }
+  ],
+  "narrative": "Lio accepts the flowers. Their scent drifts beneath the lamps, and the restless moths settle on the leaves."
+}

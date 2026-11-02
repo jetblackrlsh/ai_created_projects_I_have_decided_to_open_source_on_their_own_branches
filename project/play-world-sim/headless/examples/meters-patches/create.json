@@ -1,0 +1,87 @@
+{
+  "op": "create",
+  "state": {
+    "format": "chat-world-sim",
+    "version": 1,
+    "world": {
+      "title": "The Lantern Conservatory",
+      "premise": "A courier brings calming flowers to a nocturnal garden.",
+      "laws": [
+        "Moth restlessness changes with scent and sound."
+      ]
+    },
+    "branch": {
+      "name": "main"
+    },
+    "turn": 0,
+    "time": {
+      "label": "Dusk",
+      "elapsed_minutes": 0
+    },
+    "player": {
+      "id": "courier",
+      "location": "garden",
+      "abilities": [],
+      "conditions": [],
+      "commitments": []
+    },
+    "places": [
+      {
+        "id": "garden",
+        "name": "Lantern Garden",
+        "public_description": "Moths circle the hanging lamps.",
+        "connections": []
+      }
+    ],
+    "items": [
+      {
+        "id": "flowers",
+        "name": "Calming flowers",
+        "holder": "courier",
+        "quantity": 1
+      }
+    ],
+    "npcs": [
+      {
+        "id": "keeper",
+        "name": "Lio",
+        "location": "garden",
+        "knowledge": [],
+        "visible": true
+      }
+    ],
+    "clocks": [
+      {
+        "id": "delivery_progress",
+        "purpose": "Completed delivery steps",
+        "progress": 0,
+        "target": 3,
+        "unit": "step"
+      }
+    ],
+    "meters": [
+      {
+        "id": "moth_restlessness",
+        "name": "Moth restlessness",
+        "value": 7,
+        "min": 0,
+        "max": 10,
+        "visibility": "public"
+      },
+      {
+        "id": "private_worry",
+        "name": "Hidden keeper worry",
+        "value": 3,
+        "min": 0,
+        "max": 5
+      }
+    ],
+    "facts": [],
+    "claims": [],
+    "recent_events": [],
+    "pending": [],
+    "preferences": {},
+    "extensions": {}
+  },
+  "turn_budget": 4
+}

@@ -1,0 +1,12 @@
+{
+  "initial_meter": 7,
+  "after_delivery": 2,
+  "after_bell": 9,
+  "elapsed_minutes": 2,
+  "progress_clock": 1,
+  "patch_request_bytes": 462,
+  "equivalent_full_request_bytes": 1261,
+  "retry_store_bytes_unchanged": true,
+  "private_meter_absent_from_observation": true,
+  "stored_full_snapshots_still_present": true
+}

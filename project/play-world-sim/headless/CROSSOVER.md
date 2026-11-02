@@ -10,7 +10,7 @@ Request:
 
 Placeholders are explanatory, not executable JSON inputs. Use the complete source envelopes and candidate state objects. All source states are validated before the new store commits. The new state must start at turn0, with its own explicit simulated time. Source turns/times remain intact in source provenance.
 
-`entity_map` must contain exactly one entry for **every** source player, NPC, item, place and clock:
+`entity_map` must contain exactly one entry for **every** source player, NPC, item, place, clock and meter:
 
 ```json
 {"export_id":"SOURCE_EXPORT_UUID","source_id":"keeper","target_id":"fused_keeper","decision":"Fuse the two keepers into one person with explicitly reconciled memories."}

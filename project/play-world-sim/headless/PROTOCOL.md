@@ -57,3 +57,6 @@ This snippet shows protocol shape, not a valid executable state. Use the complet
 - `sources.py --workspace ABSOLUTE_PATH`: separate staged document protocol documented in SOURCES.md.
 
 V3 envelopes add `chronicle` (initial point, ordered compact events, separate prior chronicles) and `lineage.origins` (complete immutable source exports for crossovers). No world source is silently interleaved into another world's clock. Initialization provenance under reserved state extensions cannot silently change during `resolve`.
+
+## Targeted resolutions and optional meters
+`resolve_patch` takes `patch`, `narrative`, `request_id` and current `revision` after a pending action. Turn increments automatically; fictional time does not. See PATCHES.md for the restrictive operation/path grammar and transactional guarantees. Full-state `resolve` is unchanged. `meters` is an optional portable-state list of reversible bounded values; METERS.md defines validation and public/private visibility.

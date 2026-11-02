@@ -42,3 +42,5 @@ Every world export includes stable origin identity, distinct continuation/branch
 
 ### Extended creative workflows
 The headless companion also supports [crossovers/amalgams](play-world-sim/headless/CROSSOVER.md), [branch-aware chronological reports](play-world-sim/headless/NARRATIVE.md), and [staged initialization from multiple large documents](play-world-sim/headless/SOURCES.md). All remain agent-authored, local and dependency-light; no paid model API is bundled.
+
+The companion now includes [reversible bounded meters](play-world-sim/headless/METERS.md) and [transactional targeted resolutions](play-world-sim/headless/PATCHES.md). Small requests no longer require retyping the complete state, while full-state validation/replay remain intact. Snapshot storage remains unchanged.

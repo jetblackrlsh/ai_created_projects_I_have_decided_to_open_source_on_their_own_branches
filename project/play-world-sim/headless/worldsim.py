@@ -47,7 +47,8 @@ def validate(s):
     require(number(s['time'].get('elapsed_minutes')) and s['time']['elapsed_minutes'] >= 0, 'time requires nonnegative elapsed_minutes')
     require(isinstance(s['branch'].get('name'), str), 'branch needs name')
     require(isinstance(s['world'].get('title'), str), 'world needs title')
-    entities = [s['player']] + s['places'] + s['items'] + s['npcs'] + s['clocks']
+    require(isinstance(s.get('meters', []), list), 'meters must be list')
+    entities = [s['player']] + s['places'] + s['items'] + s['npcs'] + s['clocks'] + s.get('meters', [])
     ids = []
     for x in entities:
         require(isinstance(x, dict) and isinstance(x.get('id'), str) and ID.fullmatch(x['id']), 'invalid entity ID')
@@ -68,6 +69,9 @@ def validate(s):
         require(isinstance(x.get('knowledge'), list), 'NPC knowledge must be list')
     for x in s['clocks']:
         require(number(x.get('target')) and number(x.get('progress')) and 0 <= x['progress'] <= x['target'], 'invalid clock')
+    for meter in s.get('meters', []):
+        require(all(number(meter.get(k)) for k in ('value','min','max')) and meter['min'] <= meter['value'] <= meter['max'], 'invalid meter value/bounds')
+        require(meter.get('visibility', 'private') in ('public','private'), 'invalid meter visibility')
     encode(s)
     return s
 
@@ -77,6 +81,7 @@ def observation(s):
     loc = next(x for x in s['places'] if x['id'] == p['location'])
     # Authors explicitly mark public entities. Unmarked NPCs/items stay hidden.
     return {'turn': s['turn'], 'time': s['time']['elapsed_minutes'],
+            'meters': [{'id': m['id'], 'name': m.get('name',m['id']), 'value': m['value'], 'min': m['min'], 'max': m['max']} for m in s.get('meters',[]) if m.get('visibility') == 'public'],
             'player': {'id': p['id'], 'location': p['location']},
             'place': {'id': loc['id'], 'name': loc.get('name', loc['id']),
                       'description': loc.get('public_description', ''),
@@ -283,9 +288,17 @@ def apply(doc, request):
         require(d['pending_action'] is None, 'resolve pending action first')
         require(isinstance(request.get('text'), str) and 0 < len(request['text']) <= 10000, 'action needs text <=10000 chars')
         d['pending_action'] = request['text']
-    elif op == 'resolve':
+    elif op in ('resolve', 'resolve_patch'):
         require(d['mode'] == 'active' and d['pending_action'] is not None, 'no active pending action')
-        new = validate(request.get('state'))
+        if op == 'resolve_patch':
+            require('state' not in request, 'resolve_patch takes patch, not state')
+            from patches import apply_patch
+            candidate=apply_patch(d['state'],request.get('patch'))
+            candidate['turn']=d['state']['turn']+1
+            new=validate(candidate)
+        else:
+            require('patch' not in request, 'resolve takes state, not patch')
+            new = validate(request.get('state'))
         old = d['state']
         require(new['turn'] == old['turn'] + 1, 'turn must advance exactly one')
         require(new['time']['elapsed_minutes'] >= old['time']['elapsed_minutes'], 'time cannot rewind')
@@ -332,8 +345,9 @@ def apply(doc, request):
         d['mode'] = {'pause': 'paused', 'stop': 'stopped', 'resume': 'active'}[op]
     else: raise Invalid('unknown operation')
     d['revision'] += 1
-    e = {'op': op, 'request_id': rid, 'before': before, 'after': digest(d['state']), 'state': copy.deepcopy(d['state'])}
-    if op == 'resolve': e.update(action=doc['pending_action'], narrative=request['narrative'])
+    e = {'op': 'resolve' if op == 'resolve_patch' else op, 'request_id': rid, 'before': before, 'after': digest(d['state']), 'state': copy.deepcopy(d['state'])}
+    if op in ('resolve','resolve_patch'): e.update(action=doc['pending_action'], narrative=request['narrative'])
+    if op == 'resolve_patch': e['input_mode']='patch'
     d['events'].append(e)
     response = {'revision': d['revision'], 'mode': d['mode'], 'used': d['used'], 'turn': d['state']['turn']}
     d['receipts'][rid] = {'hash': fingerprint, 'response': response}
