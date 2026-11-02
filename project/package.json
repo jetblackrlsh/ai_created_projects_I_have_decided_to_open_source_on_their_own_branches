@@ -1,0 +1,10 @@
+{
+  "name": "little-brick-adventure",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "A local turn-based fantasy toy-world adventure",
+  "license": "MIT",
+  "scripts": {"test": "node tests/game-logic.cjs", "build": "node build.mjs"},
+  "devDependencies": {"esbuild": "0.25.10"}
+}

@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Little Brick Adventure — Three.js CRPG</title>
+    <style>
+:root {
+  --bg-panel: rgba(20, 16, 32, 0.86);
+  --bg-card: rgba(34, 27, 52, 0.92);
+  --border-subtle: rgba(255, 255, 255, 0.14);
+  --accent-fairy: #e066ff;
+  --accent-sword: #00f5d4;
+  --accent-gold: #facc15;
+  --accent-ruby: #ff2a5f;
+  --text-main: #f8fafc;
+  --text-muted: #cbd5e1;
+  --font-ui: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  user-select: none;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #141020;
+  color: var(--text-main);
+  font-family: var(--font-ui);
+}
+
+#game-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  display: block;
+  cursor: pointer;
+}
+
+#floating-labels {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 15;
+  overflow: hidden;
+}
+
+.floating-label {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  font-weight: 800;
+  font-size: 0.96rem;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.95);
+  background: rgba(15, 12, 24, 0.78);
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  white-space: nowrap;
+  animation: floatUp 1.45s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes floatUp {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, 0) scale(0.85);
+  }
+  15% {
+    opacity: 1;
+    transform: translate(-50%, -14px) scale(1.05);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -58px) scale(0.95);
+  }
+}
+
+/* ============================================================================
+   TOP BAR: TITLE, TREASURE TRACKER, CAMERA PRESETS & MODALS
+   ============================================================================ */
+.hud-top-bar {
+  position: fixed;
+  top: 12px;
+  left: 14px;
+  right: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  z-index: 20;
+  pointer-events: none;
+}
+
+.hud-top-bar > * {
+  pointer-events: auto;
+}
+
+.brand-pill {
+  background: var(--bg-panel);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border-subtle);
+  border-radius: 14px;
+  padding: 8px 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+}
+
+.brand-title {
+  font-weight: 800;
+  font-size: 1.02rem;
+  letter-spacing: -0.01em;
+  background: linear-gradient(90deg, #fde047, #f472b6, #38bdf8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.round-badge {
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fde047;
+}
+
+.map-badge {
+  font-size: 0.76rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(224, 102, 255, 0.18);
+  border: 1px solid rgba(224, 102, 255, 0.4);
+  color: #f5d0fe;
+}
+
+.treasure-tracker {
+  background: var(--bg-panel);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border-subtle);
+  border-radius: 14px;
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+}
+
+.treasure-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.86rem;
+  font-weight: 700;
+}
+
+.treasure-item strong {
+  color: #fde047;
+}
+
+.top-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.hud-btn {
+  background: var(--bg-panel);
+  backdrop-filter: blur(10px);
+  color: var(--text-main);
+  border: 1px solid var(--border-subtle);
+  border-radius: 10px;
+  padding: 7px 12px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.12s ease, border-color 0.15s ease, background 0.15s ease;
+}
+
+.hud-btn:hover {
+  border-color: #fde047;
+  background: rgba(55, 45, 82, 0.95);
+  transform: translateY(-1px);
+}
+
+.hud-btn.highlight-btn {
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.4), rgba(236, 72, 153, 0.4));
+  border-color: rgba(244, 114, 182, 0.65);
+  color: #fff;
+}
+
+.setup-card {
+  background: var(--bg-panel);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  padding: 9px 11px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.setup-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-muted);
+}
+
+.hud-select {
+  flex: 1;
+  background: rgba(15, 12, 24, 0.88);
+  color: var(--text-main);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  padding: 4px 8px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.hud-select:focus {
+  outline: none;
+  border-color: #fde047;
+}
+
+.mini-btn {
+  padding: 4px 8px;
+  font-size: 0.78rem;
+}
+
+.quest-tracker-card {
+  background: rgba(34, 24, 58, 0.94);
+  backdrop-filter: blur(12px);
+  border: 1.5px solid rgba(250, 204, 21, 0.55);
+  border-radius: 12px;
+  padding: 10px 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+}
+
+.quest-title {
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: #fde047;
+  margin-bottom: 6px;
+  line-height: 1.3;
+}
+
+.quest-progress-bar {
+  height: 10px;
+  background: rgba(0, 0, 0, 0.45);
+  border-radius: 999px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  margin-bottom: 6px;
+}
+
+.quest-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #38bdf8, #4ade80, #fde047);
+  transition: width 0.25s ease;
+}
+
+.quest-progress-sub {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #e2e8f0;
+}
+
+/* ============================================================================
+   3D D20 DICE SHOWCASE BANNER (TOP-CENTER)
+   ============================================================================ */
+.dice-banner {
+  position: fixed;
+  top: 68px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(22, 17, 36, 0.92);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(250, 204, 21, 0.4);
+  border-radius: 18px;
+  padding: 8px 18px 8px 10px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  z-index: 18;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.55);
+  min-width: 440px;
+  max-width: 90vw;
+}
+
+.dice-viewport {
+  position: relative;
+  width: 78px;
+  height: 78px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#dice-canvas {
+  width: 78px !important;
+  height: 78px !important;
+}
+
+.dice-face-number {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  font-size: 1.35rem;
+  color: #ffffff;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.95);
+  pointer-events: none;
+}
+
+.dice-details {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.dice-title {
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: #f472b6;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.dice-formula {
+  font-size: 0.9rem;
+  color: var(--text-main);
+}
+
+.dice-badge {
+  align-self: flex-start;
+  font-size: 0.75rem;
+  font-weight: 800;
+  padding: 2px 9px;
+  border-radius: 999px;
+  margin-top: 2px;
+}
+
+.dice-badge.rolling {
+  background: rgba(250, 204, 21, 0.2);
+  color: #fde047;
+}
+.dice-badge.success {
+  background: rgba(74, 222, 128, 0.22);
+  color: #4ade80;
+}
+.dice-badge.crit {
+  background: linear-gradient(90deg, #facc15, #f472b6);
+  color: #141020;
+}
+.dice-badge.fail {
+  background: rgba(251, 113, 133, 0.22);
+  color: #fb7185;
+}
+
+/* ============================================================================
+   LEFT SIDEBAR: PARTY CHARACTER CARDS & CAMERA PRESETS
+   ============================================================================ */
+.hud-left-column {
+  position: fixed;
+  top: 72px;
+  left: 14px;
+  width: 288px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 18;
+}
+
+.party-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.hero-card {
+  background: var(--bg-card);
+  backdrop-filter: blur(10px);
+  border: 2px solid var(--border-subtle);
+  border-radius: 14px;
+  padding: 10px 12px;
+  cursor: pointer;
+  transition: border-color 0.16s ease, transform 0.14s ease, box-shadow 0.16s ease;
+}
+
+.hero-card:hover {
+  transform: translateX(2px);
+}
+
+.hero-card.selected {
+  border-color: #fde047;
+  box-shadow: 0 0 20px rgba(250, 204, 21, 0.3);
+}
+
+.hero-card.downed {
+  opacity: 0.5;
+  filter: grayscale(0.7);
+}
+
+.hero-card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.hero-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+}
+
+.hero-avatar.fairy_mage {
+  background: rgba(224, 102, 255, 0.25);
+  border: 1px solid #e066ff;
+}
+
+.hero-avatar.sword_knight {
+  background: rgba(0, 245, 212, 0.22);
+  border: 1px solid #00f5d4;
+}
+
+.hero-meta {
+  flex: 1;
+}
+
+.hero-name {
+  font-weight: 800;
+  font-size: 0.88rem;
+}
+
+.hero-sub {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+.hero-key-hint {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #fde047;
+  opacity: 0.85;
+}
+
+.hp-bar-track {
+  position: relative;
+  height: 18px;
+  background: rgba(0, 0, 0, 0.45);
+  border-radius: 999px;
+  overflow: hidden;
+  margin-bottom: 7px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.hp-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #ef4444, #22c55e);
+  transition: width 0.25s ease;
+}
+
+.hp-bar-text {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
+}
+
+.ap-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  margin-bottom: 6px;
+}
+
+.ap-pips {
+  display: flex;
+  gap: 5px;
+}
+
+.ap-pip {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.ap-pip.filled {
+  background: #fde047;
+  box-shadow: 0 0 8px #fde047;
+}
+
+.stat-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.stat-chip {
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.08);
+  color: #e2e8f0;
+}
+
+.camera-card {
+  background: var(--bg-panel);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  padding: 8px 10px;
+}
+
+.camera-card-title {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.camera-btn-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5px;
+}
+
+/* ============================================================================
+   RIGHT SIDEBAR: TILE INSPECTOR & CRPG COMBAT LOG
+   ============================================================================ */
+.hud-right-column {
+  position: fixed;
+  top: 72px;
+  right: 14px;
+  width: 310px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 18;
+  pointer-events: none;
+}
+
+.tile-inspector {
+  background: var(--bg-panel);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  padding: 8px 12px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #fde047;
+}
+
+.combat-log-card {
+  background: var(--bg-panel);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  padding: 10px 12px;
+  max-height: 250px;
+  overflow-y: auto;
+  pointer-events: auto;
+}
+
+.combat-log-title {
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+
+.combat-log-list {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.log-entry {
+  font-size: 0.75rem;
+  line-height: 1.35;
+  padding: 4px 7px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.log-treasure {
+  border-left: 3px solid #fde047;
+}
+.log-combat {
+  border-left: 3px solid #fb7185;
+}
+.log-roll {
+  border-left: 3px solid #c084fc;
+}
+.log-info {
+  border-left: 3px solid #38bdf8;
+}
+
+/* ============================================================================
+   BOTTOM TACTICAL ACTION BAR
+   ============================================================================ */
+.hud-bottom-bar {
+  position: fixed;
+  bottom: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--bg-panel);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--border-subtle);
+  border-radius: 18px;
+  padding: 10px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 20;
+  box-shadow: 0 12px 34px rgba(0, 0, 0, 0.6);
+  min-width: 680px;
+  max-width: 95vw;
+}
+
+.ability-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.ability-hotbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.ability-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(45, 36, 68, 0.9);
+  border: 2px solid rgba(255, 255, 255, 0.14);
+  color: var(--text-main);
+  padding: 7px 12px;
+  border-radius: 12px;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.14s ease;
+}
+
+.ability-btn:hover:not(:disabled) {
+  border-color: #cbd5e1;
+  transform: translateY(-2px);
+}
+
+.ability-btn.active {
+  border-color: #fde047;
+  background: rgba(88, 52, 135, 0.92);
+  box-shadow: 0 0 14px rgba(250, 204, 21, 0.35);
+}
+
+.ability-btn:disabled {
+  opacity: 0.42;
+  cursor: not-allowed;
+}
+
+.ability-icon {
+  font-size: 1.3rem;
+}
+
+.ability-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.ability-info strong {
+  font-size: 0.8rem;
+}
+
+.ability-info small {
+  font-size: 0.68rem;
+  color: var(--text-muted);
+}
+
+.turn-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.end-turn-btn {
+  background: linear-gradient(135deg, #facc15, #f97316);
+  color: #141020;
+  font-weight: 900;
+  font-size: 0.84rem;
+  border: none;
+  border-radius: 12px;
+  padding: 10px 16px;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(249, 115, 22, 0.4);
+  transition: transform 0.14s ease;
+}
+
+.end-turn-btn:hover {
+  transform: translateY(-2px);
+}
+
+.ability-desc-bar {
+  font-size: 0.78rem;
+  color: #e2e8f0;
+  background: rgba(0, 0, 0, 0.28);
+  padding: 5px 10px;
+  border-radius: 8px;
+}
+
+/* ============================================================================
+   MODERN WEB GUIDANCE COMPLIANT TOP-LAYER <dialog> MODALS & ANIMATIONS
+   ============================================================================ */
+dialog {
+  margin: auto;
+  background: #1e1830;
+  color: var(--text-main);
+  border: 2px solid rgba(250, 204, 21, 0.45);
+  border-radius: 20px;
+  padding: 24px;
+  max-width: 760px;
+  width: 92vw;
+  max-height: 86vh;
+  overflow-y: auto;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.75);
+
+  opacity: 0;
+  transform: scale(0.92);
+  transition:
+    opacity 0.24s ease,
+    transform 0.24s ease,
+    overlay 0.24s allow-discrete,
+    display 0.24s allow-discrete;
+  transition-behavior: allow-discrete;
+
+  &::backdrop {
+    background-color: rgb(0 0 0 / 0);
+    backdrop-filter: blur(4px);
+    transition:
+      background-color 0.24s ease,
+      overlay 0.24s allow-discrete,
+      display 0.24s allow-discrete;
+    transition-behavior: allow-discrete;
+  }
+}
+
+:is(dialog[open]):where(:not([data-closing])) {
+  opacity: 1;
+  transform: scale(1);
+
+  @starting-style {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+
+  &::backdrop {
+    background-color: rgb(10 8 18 / 0.68);
+
+    @starting-style {
+      background-color: rgb(10 8 18 / 0);
+    }
+  }
+}
+
+.dialog-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.dialog-header h2 {
+  font-size: 1.3rem;
+  color: #fde047;
+}
+
+
+
+
+
+
+
+
+
+.rules-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin: 12px 0;
+}
+
+.rule-box {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  padding: 12px;
+}
+
+.rule-box h3 {
+  font-size: 0.92rem;
+  color: #f472b6;
+  margin-bottom: 6px;
+}
+
+.rule-box p {
+  font-size: 0.82rem;
+  line-height: 1.45;
+  color: var(--text-muted);
+}
+
+@media (max-width: 980px) {
+  .hud-right-column {
+    display: none;
+  }
+  .hud-bottom-bar {
+    min-width: 94vw;
+  }
+}
+
+</style>
+  </head>
+  <body>
+    <!-- Main 3D Three.js Canvas -->
+    <canvas id="game-canvas" aria-label="3D Brick World Game Board"></canvas>
+
+    <!-- Floating Damage / Roll / Treasure Labels -->
+    <div id="floating-labels"></div>
+
+    <!-- Top HUD Bar -->
+    <header class="hud-top-bar">
+      <div class="brand-pill">
+        <span class="brand-title">🧱 Little Brick Adventure CRPG</span>
+        <span class="round-badge" id="round-indicator">Round 1 • Heroes' Turn</span>
+        <span class="map-badge" id="active-map-badge">🗺️ Starter Map</span>
+      </div>
+
+      <div class="treasure-tracker" aria-label="Treasure and Enemy Progress">
+        <div class="treasure-item" title="Glowing Rubies & Crystal Gems">
+          <span>🔴 Rubies:</span>
+          <strong id="count-rubies">0/11</strong>
+        </div>
+        <div class="treasure-item" title="Pearl Gold Sloped Bricks">
+          <span>🟨 Gold:</span>
+          <strong id="count-gold">0/3</strong>
+        </div>
+        <div class="treasure-item" title="Jewel-Encrusted Brick Flowers">
+          <span>🌸 Flowers:</span>
+          <strong id="count-flowers">0/7</strong>
+        </div>
+        <div class="treasure-item" title="Total Treasures Collected">
+          <span>💎 Total:</span>
+          <strong id="count-total">0/21</strong>
+        </div>
+        <div class="treasure-item" title="Killer Frogs Defeated">
+          <span>🐸 Frogs:</span>
+          <strong id="count-frogs">0/3</strong>
+        </div>
+        <div class="treasure-item" title="Garden Moles Defeated">
+          <span>🐾 Moles:</span>
+          <strong id="count-moles">0/3</strong>
+        </div>
+      </div>
+
+      <div class="top-actions">
+        <button class="hud-btn highlight-btn" id="btn-random-dungeon" title="Generate a random 32x32 Brick dungeon with a randomized win condition!">
+          🎲 New Random Dungeon
+        </button>
+        <button class="hud-btn" id="btn-starter-world" title="Return to the Crystal Garden starter map">
+          🗺️ Starter Map
+        </button>
+        <button class="hud-btn" id="btn-open-rules">📖 Rules</button>
+        <button class="hud-btn" id="btn-mute">🔊 Sound</button>
+      </div>
+    </header>
+
+    <!-- 3D Polyhedral d20 Dice Roll Showcase Banner -->
+    <section class="dice-banner" id="dice-roll-banner" aria-live="polite">
+      <div class="dice-viewport">
+        <canvas id="dice-canvas" width="112" height="112"></canvas>
+        <div class="dice-face-number" id="dice-face-number">20</div>
+      </div>
+      <div class="dice-details">
+        <div class="dice-title" id="dice-roll-title">Tactical d20 Difficulty Check Roller</div>
+        <div class="dice-formula" id="dice-roll-formula">
+          Select an ability or click any glowing Brick stud to move, cast spells, or swing the magic sword!
+        </div>
+        <span class="dice-badge rolling" id="dice-roll-badge">READY TO ROLL</span>
+      </div>
+    </section>
+
+    <!-- Left Column: Adventure Setup (Difficulty, Solo/Party, Win Condition), Character Cards & Camera Angles -->
+    <aside class="hud-left-column">
+      <div class="setup-card">
+        <div class="camera-card-title">⚙️ Adventure Setup &amp; Win Condition</div>
+        <div class="setup-row">
+          <label for="select-difficulty">Difficulty:</label>
+          <select id="select-difficulty" class="hud-select">
+            <option value="easy">🟢 Easy (Cozy +2 Roll / +1 AP)</option>
+            <option value="medium" selected>🟡 Medium (Standard CRPG)</option>
+            <option value="hard">🔴 Hard (Master +2 Monster DC)</option>
+          </select>
+        </div>
+        <div class="setup-row">
+          <label for="select-party">Heroes:</label>
+          <select id="select-party" class="hud-select">
+            <option value="both" selected>👫 Fairy Mage &amp; Sword Knight (Full Party)</option>
+            <option value="solo_mage">🪄 Solo: Fairy Mage Only (+1 AP &amp; +8 HP)</option>
+            <option value="solo_knight">⚔️ Solo: Sword Knight Only (+1 AP &amp; +8 HP)</option>
+          </select>
+        </div>
+        <div class="setup-row">
+          <label for="select-win-condition">Win Goal:</label>
+          <select id="select-win-condition" class="hud-select">
+            <option value="random">🎲 Randomize Goal (1–10)</option>
+            <option value="1_defeat_all_enemies">1. Defeat all enemies</option>
+            <option value="2_defeat_x_enemies">2. Defeat X enemies</option>
+            <option value="3_defeat_x_enemy_type">3. Defeat X of enemy type Y</option>
+            <option value="4_defeat_all_enemy_type">4. Defeat all of enemy type Y</option>
+            <option value="5_collect_all_treasure" selected>5. Collect all treasure</option>
+            <option value="6_collect_x_treasure">6. Collect X treasure</option>
+            <option value="7_collect_x_treasure_type">7. Collect X of treasure type Y</option>
+            <option value="8_collect_all_treasure_type">8. Collect all of treasure type Y</option>
+            <option value="9_defeat_x_and_collect_y">9. Defeat X enemies &amp; collect Y treasure</option>
+            <option value="10_defeat_x_type_and_collect_z_type">10. Defeat X of type Y &amp; collect Z of type A</option>
+          </select>
+          <button class="hud-btn mini-btn" id="btn-reroll-quest" title="Roll a new random win condition!">🎲</button>
+        </div>
+      </div>
+
+      <div class="party-cards" id="party-cards"></div>
+
+      <div class="camera-card">
+        <div class="camera-card-title">🎥 Camera View Presets (Drag to Orbit/Zoom)</div>
+        <div class="camera-btn-grid">
+          <button class="hud-btn" data-cam-preset="isometric">🧭 CRPG View</button>
+          <button class="hud-btn" data-cam-preset="top-view">📐 Top View</button>
+          <button class="hud-btn" data-cam-preset="side-view">🏞️ Side View</button>
+          <button class="hud-btn" data-cam-preset="hero-closeup">🦸 Hero Focus</button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Right Column: Active Win Condition Quest Tracker, Stud Inspector & Combat Log -->
+    <aside class="hud-right-column">
+      <div class="quest-tracker-card">
+        <div class="quest-title" id="quest-title-text">
+          🎯 Goal (#5): Collect all 21 treasures
+        </div>
+        <div class="quest-progress-bar">
+          <div class="quest-progress-fill" id="quest-progress-fill" style="width: 0%"></div>
+        </div>
+        <div class="quest-progress-sub" id="quest-progress-text">
+          💎 Treasures Collected: 0/21
+        </div>
+      </div>
+
+      <div class="tile-inspector" id="tile-inspector">
+        Hover over any stud on the 32×32 green baseplate to inspect terrain, treasures, and monster DCs!
+      </div>
+
+      <div class="combat-log-card">
+        <div class="combat-log-title">📜 Adventure &amp; Dice Log</div>
+        <div class="combat-log-list" id="combat-log-list"></div>
+      </div>
+    </aside>
+
+    <!-- Bottom Tactical Hotbar -->
+    <footer class="hud-bottom-bar">
+      <div class="ability-row">
+        <div class="ability-hotbar" id="ability-hotbar"></div>
+        <div class="turn-controls">
+          <button class="hud-btn" id="btn-switch-hero" title="Switch Active Character (Tab)">
+            🔄 Switch Hero (Tab)
+          </button>
+          <button class="end-turn-btn" id="btn-end-turn" title="End Heroes' Turn (Spacebar)">
+            ⏭️ End Turn (Space)
+          </button>
+        </div>
+      </div>
+      <div class="ability-desc-bar" id="ability-description">
+        Click any highlighted Brick stud to walk along the path and automatically collect adjacent treasures!
+      </div>
+    </footer>
+
+    <!-- Modal 2: CRPG Rules & Dice System -->
+    <dialog id="rules-dialog" closedby="any" aria-labelledby="rules-dialog-title">
+      <div class="dialog-header">
+        <h2 id="rules-dialog-title">🎲 CRPG Turn-Based Rules, Modes &amp; 10 Win Conditions</h2>
+        <button class="hud-btn" data-close-dialog>✕ Close</button>
+      </div>
+      <div class="rules-grid">
+        <div class="rule-box">
+          <h3>🪄 Full Party or Solo Hero Mode</h3>
+          <p>
+            Play with both <strong>Fairy Mage (Fairy Wand Mage)</strong> and <strong>Sword Knight (Magic Sword Paladin)</strong>, or choose <strong>Solo: Fairy Mage Only</strong> or <strong>Solo: Sword Knight Only</strong> in the top-left panel! Solo heroes receive a <strong>+1 Max AP &amp; +8 Max HP</strong> blessing.
+          </p>
+        </div>
+        <div class="rule-box">
+          <h3>🎯 10 Randomized Win Conditions</h3>
+          <p>
+            Random dungeons automatically roll one of <strong>10 Win Condition types</strong> (Defeat all or X enemies, Defeat X or all Killer Frogs / Moles, Collect all or X treasures / Rubies / Gold Bricks / Flowers, or hybrid Defeat + Collect quests!). You can also pick any goal manually or click <code>🎲</code> to reroll!
+          </p>
+        </div>
+        <div class="rule-box">
+          <h3>🧱 Random Brick Dungeon Generator</h3>
+          <p>
+            Click <strong>🎲 New Random Dungeon</strong> anytime to rearrange the exact same Brick pieces (grey bridge bricks, blue frog water, brown mole gardens, 11 rubies/gems, 3 gold bricks, and 7 jewel flowers) into new dungeon configurations!
+          </p>
+        </div>
+        <div class="rule-box">
+          <h3>🐸 Killer Frogs &amp; Garden Mole Monsters</h3>
+          <p>
+            Snipe Killer Frogs across the water with Fairy Mage's 9-stud Fairy Wand or Sword Knight's Sonic Wave, and use Sword Knight's <strong>Baseplate Tremor Slam</strong> or Fairy Mage's <strong>Crystal Starburst</strong> to unearth burrowed Garden Moles!
+          </p>
+        </div>
+      </div>
+    </dialog>
+
+    <!-- Modal 3: Victory / Defeat Screen -->
+    <dialog id="endgame-dialog" closedby="any" aria-labelledby="endgame-title">
+      <div class="dialog-header">
+        <h2 id="endgame-title">🎉 Adventure Complete!</h2>
+      </div>
+      <p id="endgame-summary" style="font-size: 0.96rem; line-height: 1.5; margin-bottom: 18px"></p>
+      <div style="display: flex; gap: 10px; justify-content: flex-end">
+        <button class="hud-btn" id="btn-restart">🔄 Replay Current Map</button>
+        <button class="end-turn-btn" id="btn-restart-random">🎲 Play New Random Dungeon</button>
+      </div>
+    </dialog>
+
+    <script src="dist/game.js"></script>
+  </body>
+</html>
