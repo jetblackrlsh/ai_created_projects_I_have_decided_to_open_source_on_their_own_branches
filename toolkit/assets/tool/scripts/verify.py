@@ -2,8 +2,8 @@
 """Fail-closed, model-independent verification of a Motion Manga export pair.
 
 Run after rendering: python scripts/verify.py project.json
-No success report is produced on failed checks. Audio anchors test alignment AND
-voice prominence; a masking failure is not automatically evidence of drift.
+No success report is produced on failed timing/integrity checks. Voice prominence
+is a separate listening-review warning, never an automatic claim of drift.
 """
 import argparse
 import gc
@@ -34,11 +34,11 @@ def read_pcm(path, require_rate=None):
     rate, a = wavfile.read(path)
     require(require_rate is None or rate == require_rate, f'{path}: incorrect sample rate {rate}')
     if a.dtype == np.uint8:
-        a = (a.astype(float)-128)/128
+        a = (a.astype(np.float32)-128)/128
     elif np.issubdtype(a.dtype, np.integer):
-        a = a.astype(float)/(2**(np.iinfo(a.dtype).bits-1))
+        a = a.astype(np.float32)/(2**(np.iinfo(a.dtype).bits-1))
     else:
-        a = a.astype(float)
+        a = a.astype(np.float32)
     require(a.size > 0 and np.isfinite(a).all(), f'{path}: empty/nonfinite audio')
     if a.ndim == 1:
         a = np.repeat(a[:, None], 2, axis=1)
@@ -69,6 +69,33 @@ def check_anchors(master, voice, decoded, speech):
                 require(abs(negative['lagMs']-good['lagMs']-50) < 1, f'{name}: 50ms negative control failed')
                 row[name] = good; row[name+'Negative50ms'] = negative
             anchors.append(row)
+    return anchors
+
+def check_timing_and_report_prominence(master, voice, decoded, speech):
+    """Timing is tested against the actual full mix. Isolated voice correlation
+    is diagnostic only: audible music legitimately reduces source correlation.
+    verify_speech separately verifies exact per-utterance placement in its stem.
+    """
+    bad = np.concatenate([np.zeros(2400, dtype=decoded.dtype), decoded]); anchors=[]
+    require(bool(speech), 'No speech anchors')
+    for q in speech:
+        duration=q['end']-q['start'];span=min(.55,duration*.4)
+        require(duration>.1, f"{q['id']}: utterance too short for boundary anchors")
+        for label,at in [('start',q['start']+.03),('end',q['end']-span-.03)]:
+            good=match(master,decoded,at,span);negative=match(master,bad,at,span)
+            require(abs(good['lagMs'])<25 and good['correlation']>.98,
+                    f"{q['id']} {label} fullMix timing failed: {good}")
+            require(abs(negative['lagMs']-good['lagMs']-50)<1,'fullMix 50ms negative control failed')
+            try:
+                prominence=match(voice,decoded,at,span)
+            except ValueError as exc:
+                # Quiet boundaries may carry no useful isolated voice anchor.
+                # Only this diagnostic is optional; full-mix timing above is strict.
+                prominence={'lagMs':None,'correlation':None,'diagnosticUnavailable':str(exc)}
+            anchors.append({'id':q['id'],'anchor':label,'fullMix':good,
+                            'fullMixNegative50ms':negative,'isolatedVoiceDiagnostic':prominence,
+                            'prominenceNeedsListeningReview':prominence['correlation'] is None or prominence['correlation']<=.94,
+                            'timingMethod':'Full expected mix plus separately verified exact source speech placement; isolated voice correlation is not a timing verdict.'})
     return anchors
 
 def verify_speech(base, cfg, stem):
@@ -131,7 +158,7 @@ def validate(project):
             require(len(packets)>1 and all(int(y['dts'])>int(x['dts']) and int(y['pts'])==int(x['pts'])+int(x['duration']) for x,y in zip(packets,packets[1:])), 'Noncontiguous audio packets')
             wav = Path(tmp)/(name+'.wav'); run(['ffmpeg','-v','error','-y','-i',str(path),'-vn','-c:a','pcm_f32le',str(wav)])
             _, stereo = read_pcm(wav, RATE); require(abs(len(stereo)-n) <= 1024, 'Decoded sample count mismatch')
-            anchors = check_anchors(ref, voice, stereo.mean(axis=1), speech)
+            anchors = check_timing_and_report_prominence(ref, voice, stereo.mean(axis=1), speech)
             encoded = run(['ffmpeg','-v','error','-i',str(path),'-map','0:a:0','-c','copy','-f','adts','-']).stdout
             results.append({'file':path.name,'aacSha256':hashlib.sha256(encoded).hexdigest(),'anchors':anchors,'frames':int(v['nb_frames']),'duration':float(v['duration']),'decodedPeak':float(np.max(np.abs(stereo))),'fullDecodePass':True})
             del stereo; gc.collect()
@@ -144,7 +171,7 @@ def validate(project):
     paths += [base/q['source'] for q in cfg.get('panels', [])]
     hashes = {str(p.relative_to(base)):sha256_file(p) for p in paths}
     manifest_hash = hashlib.sha256(json.dumps(hashes, sort_keys=True, separators=(',', ':')).encode()).hexdigest()
-    result = {'passed':True,'pass':True,'projectSha256':sha256_file(project),'hashes':hashes,'manifestHash':manifest_hash,'variants':results,'sourceSpeech':speech,'masterReconstruction':True,'sfxReconstruction':True,'listeningVerified':False,'visualReviewVerified':False}
+    result = {'passed':True,'pass':True,'projectSha256':sha256_file(project),'hashes':hashes,'manifestHash':manifest_hash,'variants':results,'sourceSpeech':speech,'masterReconstruction':True,'sfxReconstruction':True,'listeningVerified':False,'visualReviewVerified':False,'timingAndProminenceSeparated':True,'prominenceListeningReviewRequired':any(a['prominenceNeedsListeningReview'] for v in results for a in v['anchors'])}
     destination.write_text(json.dumps(result, indent=2)); return result
 
 if __name__ == '__main__':
