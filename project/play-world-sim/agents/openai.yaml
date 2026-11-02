@@ -1,0 +1,4 @@
+interface:
+  display_name: "World Sim"
+  short_description: "Explore a living fictional world directly in chat"
+  default_prompt: "Use $play-world-sim to start a surprising fictional world I can explore in chat."
