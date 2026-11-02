@@ -1,0 +1,13 @@
+{
+  "name": "lumenweave-unbound-accord",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Dependency-free browser card adventure; development-only DOM regression tests.",
+  "license": "MIT",
+  "scripts": {
+    "test": "node tests/mechanics.cjs && node tests/assets.cjs"
+  },
+  "devDependencies": {
+    "jsdom": "26.1.0"
+  }
+}

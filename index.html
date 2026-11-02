@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lumenweave: The Unbound Accord — Turn-Based Card Battle Game</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <canvas id="sparkle-canvas" aria-hidden="true"></canvas>
+
+  <div id="app">
+    <!-- Top Bar -->
+    <header class="top-bar">
+      <div class="brand-group" id="nav-home-btn" role="button" tabindex="0" aria-label="Return to Main Menu">
+        <img src="assets/cover.png" alt="Lumenweave cover art" class="brand-logo" />
+        <div>
+          <span class="brand-title">The Unbound Accord</span>
+          <span class="brand-subtitle">Waykeepers Tactical Card Battle</span>
+        </div>
+      </div>
+
+      <div class="top-actions">
+        <button type="button" class="btn btn-sm btn-gold" id="btn-open-level-code">🔑 Level Codes &amp; Save</button>
+        <button type="button" class="btn btn-sm" id="btn-open-grimoire">📖 Fairy Grimoire &amp; Decks</button>
+        <button type="button" class="btn btn-sm" id="btn-open-rules">✨ How to Play</button>
+        <button type="button" class="btn btn-sm" id="btn-toggle-audio">🔊 Sound: ON</button>
+        <button type="button" class="btn btn-sm" id="btn-main-menu">🏰 Main Menu</button>
+      </div>
+    </header>
+
+    <!-- SCREEN 1: MAIN MENU -->
+    <main id="screen-menu" class="screen active">
+      <section class="menu-hero">
+        <div class="menu-hero-bg" style="background-image: url('assets/hub.png');"></div>
+
+        <div class="menu-hero-content">
+          <div class="hero-logo-banner">
+            <img src="assets/cover.png" alt="Lumenweave cover art" />
+            <div>
+              <span class="hero-badge">Magical Dimension Card Battler</span>
+              <h1>Seven fairies. Seven worlds. No crowns.</h1>
+            </div>
+          </div>
+          <p>
+            The Loomways connect independent dimensions. Seven usurpers want to turn those connections into chains. Lead the <strong>Waykeepers</strong>, seven adult fairy custodians—<strong>Tavra, Oru, Veska, Pella, Iman, Sile, and Nemi</strong>—each with their own custom 8-card signature spell deck. Battle in <strong>Solo Mode</strong> or team up side-by-side in <strong>Cooperative Mode</strong> across a 7-Chapter <strong>Story Mode</strong> (complete with pre- and post-battle story cutscenes, permanent spell card upgrades, and shareable <strong>Level Codes</strong>) or challenge any boss in <strong>Versus Mode</strong>!
+          </p>
+
+          <div class="mode-config-grid">
+            <div class="config-box">
+              <div class="config-label">1. Select Game Mode</div>
+              <div class="toggle-pills">
+                <button type="button" class="pill-btn selected" id="mode-story-btn" data-game-mode="story">
+                  <strong>📜 Story Mode</strong>
+                  <span>7 Villain Levels, Pre/Post Cutscenes &amp; +1 Card Upgrade per Level</span>
+                </button>
+                <button type="button" class="pill-btn" id="mode-versus-btn" data-game-mode="versus">
+                  <strong>⚔️ Versus Mode</strong>
+                  <span>Challenge Any of the Seven Dimensional Usurpers</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="config-box">
+              <div class="config-label">2. Select Team Mode</div>
+              <div class="toggle-pills">
+                <button type="button" class="pill-btn selected" id="team-solo-btn" data-team-mode="solo">
+                  <strong>🧚‍♀️ Solo Mode</strong>
+                  <span>1 Waykeeper Fairy Hero vs. Major Villain Boss</span>
+                </button>
+                <button type="button" class="pill-btn" id="team-coop-btn" data-team-mode="coop">
+                  <strong>🤝 Cooperative Mode</strong>
+                  <span>2 Waykeeper Fairies Side-by-Side (2P Co-op or AI Partner)</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="config-box" style="grid-column: 1 / -1;">
+              <div class="config-label">3. Select Difficulty Level (Easy / Medium / Hard / Extreme)</div>
+              <div class="toggle-pills" style="grid-template-columns: repeat(4, 1fr);">
+                <button type="button" class="pill-btn" id="diff-easy-btn" data-difficulty="easy">
+                  <strong>🌸 Easy</strong>
+                  <span>-25% Boss HP/DMG • +10 Fairy HP &amp; +25% Start Accord</span>
+                </button>
+                <button type="button" class="pill-btn selected" id="diff-medium-btn" data-difficulty="medium">
+                  <strong>✨ Medium</strong>
+                  <span>100% Standard Boss HP &amp; Damage (Balanced)</span>
+                </button>
+                <button type="button" class="pill-btn" id="diff-hard-btn" data-difficulty="hard">
+                  <strong>🔥 Hard</strong>
+                  <span>+30% Boss HP, +25% Boss DMG &amp; +4 Boss Shield/turn</span>
+                </button>
+                <button type="button" class="pill-btn" id="diff-extreme-btn" data-difficulty="extreme">
+                  <strong>💀 Extreme</strong>
+                  <span>+65% Boss HP, +50% Boss DMG, +8 Shield &amp; +5 Regen/turn</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 14px; flex-wrap: wrap; align-items: center;">
+            <button type="button" class="btn btn-primary btn-lg" id="btn-start-setup">
+              ✨ Choose Your Waykeeper Fairy &amp; Begin
+            </button>
+            <button type="button" class="btn btn-gold" id="btn-menu-level-code">
+              🔑 Enter / Copy Level Code
+            </button>
+            <button type="button" class="btn btn-cyan" id="btn-View-all-decks">
+              🃏 Inspect All 7 Waykeepers Decks
+            </button>
+            <button type="button" class="btn btn-sm" id="btn-reset-story" title="Reset saved Story Mode campaign progress and card upgrades">
+              🔄 Reset Story Save
+            </button>
+          </div>
+
+          <!-- Active Story Mode Level Code Banner -->
+          <div class="level-code-bar">
+            <div>
+              <div style="font-size: 0.74rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.8px; font-weight: 700;">
+                🔑 Your Current Story Mode Level Code
+              </div>
+              <div style="font-size: 0.8rem; color: var(--text-light);">
+                Save or enter this code anytime to restore your unlocked chapter, fairies &amp; upgraded cards:
+              </div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+              <span class="level-code-pill" id="menu-current-level-code">LUMEN-L1-ST-00</span>
+              <button type="button" class="btn btn-sm btn-gold" id="btn-copy-menu-code">📋 Copy Code</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="menu-hero-showcase">
+          <div class="showcase-strip">
+            <div class="showcase-portrait">
+              <img src="assets/tavra.png" alt="Tavra" />
+              <div class="cap">Tavra</div>
+            </div>
+            <div class="showcase-portrait">
+              <img src="assets/oru.png" alt="Oru" />
+              <div class="cap">Oru</div>
+            </div>
+            <div class="showcase-portrait">
+              <img src="assets/veska.png" alt="Veska" />
+              <div class="cap">Veska</div>
+            </div>
+            <div class="showcase-portrait">
+              <img src="assets/pella.png" alt="Pella" />
+              <div class="cap">Pella</div>
+            </div>
+            <div class="showcase-portrait">
+              <img src="assets/iman.png" alt="Iman" />
+              <div class="cap">Iman</div>
+            </div>
+            <div class="showcase-portrait">
+              <img src="assets/sile.png" alt="Sile" />
+              <div class="cap">Sile</div>
+            </div>
+            <div class="showcase-portrait">
+              <img src="assets/nemi.png" alt="Nemi" />
+              <div class="cap">Nemi</div>
+            </div>
+            <div class="showcase-portrait">
+              <img src="assets/caldrum.png" alt="Caldrum the Still" />
+              <div class="cap">7 Bosses</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="feature-cards-row">
+        <div class="info-card">
+          <h3>🔥 7 Unique Fairy Spell Decks</h3>
+          <p>Every Waykeeper has 8 custom spells matching their magical affinity—with every mechanic explained in parentheses right on the card.</p>
+        </div>
+        <div class="info-card">
+          <h3>🔑 Story Mode Level Codes &amp; Upgrades</h3>
+          <p>Battle from the Gate of Hanging Roads to the Loomheart. Watch story cutscenes before and after every level, upgrade 1 spell card per level beat, and save your progress with portable Level Codes!</p>
+        </div>
+        <div class="info-card">
+          <h3>📜 Turn-by-Turn Battle Combat Log</h3>
+          <p>Track every spell cast, passive trigger, shield block, status tick, and boss attack in real time with the color-coded turn-by-turn Battle Log.</p>
+        </div>
+      </section>
+    </main>
+
+    <!-- SCREEN 2: CHARACTER & VILLAIN / CHAPTER SELECTION -->
+    <section id="screen-select" class="screen">
+      <div class="section-header">
+        <div>
+          <h2 id="select-screen-title">Choose Your Waykeeper Fairy</h2>
+          <p id="select-screen-subtitle" style="color: var(--text-muted); font-size: 0.92rem;">
+            Select your fairy to inspect their 8-card spell deck and embark on your mission.
+          </p>
+        </div>
+        <div style="display: flex; gap: 10px; align-items: center;">
+          <button type="button" class="btn btn-sm btn-gold" id="btn-select-level-code">🔑 Level Code</button>
+          <button type="button" class="btn btn-sm" id="btn-back-to-menu">← Back to Mode Select</button>
+        </div>
+      </div>
+
+      <!-- Selection Status Bar -->
+      <div class="selection-status-bar">
+        <div class="selected-slots" id="selected-team-slots"></div>
+
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span style="font-size: 0.82rem; color: var(--gold-light); font-weight: 700;">Difficulty:</span>
+          <select id="select-difficulty-dropdown" class="btn btn-sm" style="background: #250b47; color: #fff;">
+            <option value="easy">🌸 Easy (-25% Boss HP/DMG, +10 Fairy HP)</option>
+            <option value="medium" selected>✨ Medium (Standard 100%)</option>
+            <option value="hard">🔥 Hard (+30% Boss HP, +25% DMG, +4 Shield/t)</option>
+            <option value="extreme">💀 Extreme (+65% Boss HP, +50% DMG, +8 Shield/t)</option>
+          </select>
+        </div>
+
+        <div id="coop-control-toggle-wrap" style="display: none; align-items: center; gap: 10px;">
+          <span style="font-size: 0.82rem; color: var(--gold-light); font-weight: 700;">Co-op Partner Control:</span>
+          <button type="button" class="btn btn-sm btn-cyan" id="btn-toggle-coop-ai">
+            👥 2-Player Co-op (Control Both Fairies)
+          </button>
+        </div>
+
+        <div id="versus-deck-tier-wrap" style="display: none; align-items: center; gap: 8px;">
+          <span style="font-size: 0.82rem; color: var(--gold-light); font-weight: 700;">Versus Deck Tier:</span>
+          <select id="versus-upgrade-preset" class="btn btn-sm" style="background: #250b47; color: #fff;">
+            <option value="story">Use Saved Story Upgrades</option>
+            <option value="base">Standard Base Decks (0 Upgrades)</option>
+            <option value="attuned">Attuned Boost (First 4 Cards Upgraded)</option>
+            <option value="max">Full Accord (All 8 Cards Upgraded+)</option>
+          </select>
+        </div>
+
+        <button type="button" class="btn btn-primary btn-lg" id="btn-launch-battle">
+          🚀 Launch Battle
+        </button>
+      </div>
+
+      <!-- Waykeeper Fairies Grid -->
+      <div class="fairy-roster-grid" id="fairy-roster-grid"></div>
+
+      <!-- Story Chapter Map OR Versus Villain Picker -->
+      <div class="section-header" style="margin-top: 6px;">
+        <div>
+          <h2 id="villain-section-title">Select Chapter / Major Villain</h2>
+          <p id="villain-section-subtitle" style="color: var(--text-muted); font-size: 0.88rem;">
+            In Story Mode, defeat each villain in order to unlock the next chapter and earn +1 Card Upgrade per level!
+          </p>
+        </div>
+      </div>
+      <div class="villain-grid" id="villain-roster-grid"></div>
+    </section>
+
+    <!-- SCREEN 3: STORY CUTSCENE SCREEN (BEFORE & AFTER EACH LEVEL) -->
+    <section id="screen-cutscene" class="screen">
+      <div class="cutscene-stage">
+        <div class="cutscene-bg" id="cutscene-bg"></div>
+        <div class="cutscene-overlay"></div>
+
+        <div class="cutscene-top-bar">
+          <span class="cutscene-chapter-tag" id="cutscene-chapter-tag">Chapter 1 • Pre-Battle Story Cutscene</span>
+          <button type="button" class="btn btn-sm" id="btn-skip-cutscene">⏭️ Skip Cutscene</button>
+        </div>
+
+        <div class="cutscene-actors">
+          <div class="cutscene-actor" id="cutscene-actor-left">
+            <div class="actor-portrait-frame">
+              <img id="cutscene-img-left" src="assets/tavra.png" alt="Waykeeper Fairy" />
+            </div>
+          </div>
+
+          <div class="cutscene-actor" id="cutscene-actor-right">
+            <div class="actor-portrait-frame">
+              <img id="cutscene-img-right" src="assets/tollweaver.png" alt="Villain" />
+            </div>
+          </div>
+        </div>
+
+        <div class="cutscene-dialogue-box">
+          <div class="speaker-badge" id="cutscene-speaker">Tavra</div>
+          <p class="dialogue-text" id="cutscene-text"></p>
+          <div class="cutscene-controls">
+            <span class="cutscene-step-indicator" id="cutscene-step-indicator">Scene 1 of 4</span>
+            <button type="button" class="btn btn-gold" id="btn-next-cutscene">Next Dialogue →</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCREEN 4: TURN-BASED CARD BATTLE ARENA -->
+    <section id="screen-battle" class="screen">
+      <div class="battle-arena">
+        <div class="battle-bg" id="battle-bg"></div>
+
+        <!-- Top Battle HUD -->
+        <div class="battle-top-hud">
+          <div class="turn-banner">
+            <span class="turn-pill" id="battle-round-pill">Round 1</span>
+            <span id="battle-mode-label" style="font-weight: 700; color: var(--gold-light); font-size: 0.9rem;">
+              Story Mode • Level 1
+            </span>
+          </div>
+
+          <div class="accord-meter-wrap">
+            <span style="font-size: 0.8rem; font-weight: 800; color: var(--gold-light);">✨ Accord Gauge:</span>
+            <div class="accord-bar-outer">
+              <div class="accord-bar-fill" id="accord-bar-fill" style="width: 0%;"></div>
+            </div>
+            <span id="accord-pct-label" style="font-size: 0.8rem; font-weight: 900;">0%</span>
+            <button type="button" class="btn btn-gold btn-sm" id="btn-cast-ultimate" disabled>
+              🌟 Unleash Ultimate
+            </button>
+          </div>
+
+          <div style="display: flex; gap: 8px;">
+            <button type="button" class="btn btn-sm" id="btn-view-battle-deck">🃏 View Active Deck</button>
+            <button type="button" class="btn btn-sm" id="btn-retreat-battle">🏳️ Retreat</button>
+          </div>
+        </div>
+
+        <!-- Combatants Center Stage -->
+        <div class="combatants-stage">
+          <!-- Left: Waykeepers Hero(es) -->
+          <div class="heroes-column" id="battle-heroes-container"></div>
+
+          <!-- Right: Major Villain Boss -->
+          <div id="battle-villain-container"></div>
+        </div>
+
+        <!-- Bottom: Active Fairy's Hand, Mana Crystals, Turn Controls & Turn-by-Turn Battle Log -->
+        <div class="battle-bottom-zone">
+          <div class="hand-controls-bar">
+            <div class="mana-crystal-group">
+              <div class="mana-orb" id="battle-mana-display">💎 Mana: 3 / 3</div>
+              <div id="active-fairy-turn-indicator" style="font-weight: 800; font-size: 0.95rem; color: var(--gold-light);">
+                Tavra's Spell Hand
+              </div>
+              <div id="coop-switch-fairy-group" style="display: none; gap: 6px;"></div>
+            </div>
+
+            <div class="pile-counters">
+              <span class="pile-badge" id="draw-pile-count">📚 Draw Pile: 4</span>
+              <span class="pile-badge" id="discard-pile-count">♻️ Discard Pile: 0</span>
+            </div>
+
+            <div style="display: flex; gap: 10px; align-items: center;">
+              <button type="button" class="btn btn-primary" id="btn-end-turn">
+                🌙 End Turn
+              </button>
+            </div>
+          </div>
+
+          <!-- Hand Cards Row -->
+          <div class="hand-cards-row" id="battle-hand-row"></div>
+
+          <!-- Scrollable Turn-by-Turn Battle Combat Log -->
+          <div class="battle-log-panel">
+            <div class="battle-log-header">
+              <span>📜 Turn-by-Turn Battle Combat Log</span>
+              <span style="font-size: 0.72rem; color: var(--cyan-magic); text-transform: none;">
+                Tracks every spell, passive trigger, status effect &amp; boss attack from Round 1
+              </span>
+            </div>
+            <div class="battle-log-feed" id="battle-log-feed"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCREEN 5: POST-LEVEL DECK PROGRESSION / SPELL UPGRADE SANCTUARY -->
+    <section id="screen-upgrade" class="screen">
+      <div class="upgrade-sanctuary">
+        <div class="section-header">
+          <div>
+            <span class="hero-badge">Wayfarers' Hearth Spell Archive • Deck Progression</span>
+            <h2 id="upgrade-screen-title">Level Cleared! Upgrade 1 Spell Card</h2>
+            <p id="upgrade-screen-subtitle" style="color: var(--text-muted); font-size: 0.95rem; margin-top: 4px;">
+              Choose 1 card from your fairy's deck to permanently enchant to its <strong>+ Upgraded Form</strong> for the rest of Story Mode!
+            </p>
+          </div>
+          <button type="button" class="btn btn-sm" id="btn-skip-upgrade">Skip Upgrade →</button>
+        </div>
+
+        <div class="level-code-bar" style="margin-top: 0; margin-bottom: 16px;">
+          <div>
+            <strong style="color: var(--gold-light); font-size: 0.85rem;">🔑 Current Story Mode Level Code:</strong>
+            <span style="font-size: 0.8rem; color: var(--text-muted); margin-left: 6px;">Updates automatically as you upgrade cards!</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <span class="level-code-pill" id="upgrade-current-level-code">LUMEN-L2-ST-00</span>
+            <button type="button" class="btn btn-sm btn-gold" id="btn-copy-upgrade-code">📋 Copy Code</button>
+          </div>
+        </div>
+
+        <div class="upgrade-cards-grid" id="upgrade-cards-grid"></div>
+      </div>
+    </section>
+  </div>
+
+  <!-- MODAL 1: GRIMOIRE / DECK INSPECTOR (<dialog closedby="any">) -->
+  <dialog id="grimoire-dialog" closedby="any" aria-labelledby="grimoire-dialog-title">
+    <div class="dialog-inner">
+      <div class="dialog-header">
+        <div>
+          <h2 id="grimoire-dialog-title" style="color: var(--gold-light);">📖 Waykeeper Fairy Spell Grimoire</h2>
+          <p style="font-size: 0.85rem; color: var(--text-muted);">
+            Inspect every Waykeeper's 8 signature spell cards and compare Base vs. Upgraded (+) forms.
+          </p>
+        </div>
+        <form method="dialog">
+          <button type="submit" class="btn btn-sm">✕ Close</button>
+        </form>
+      </div>
+
+      <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px;" id="grimoire-fairy-tabs"></div>
+
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; flex-wrap: wrap; gap: 10px;">
+        <div id="grimoire-fairy-summary" style="font-size: 0.9rem; color: var(--text-light);"></div>
+        <button type="button" class="btn btn-sm btn-gold" id="btn-grimoire-toggle-preview">
+          ✨ Preview Upgraded (+) Stats: OFF
+        </button>
+      </div>
+
+      <div class="hand-cards-row" id="grimoire-cards-container" style="justify-content: flex-start;"></div>
+    </div>
+  </dialog>
+
+  <!-- MODAL 2: LEVEL CODES & STORY PROGRESS SAVE (<dialog closedby="any">) -->
+  <dialog id="level-code-dialog" closedby="any" aria-labelledby="level-code-dialog-title">
+    <div class="dialog-inner">
+      <div class="dialog-header">
+        <div>
+          <h2 id="level-code-dialog-title" style="color: var(--gold-light);">🔑 Story Mode Level Codes &amp; Progress</h2>
+          <p style="font-size: 0.85rem; color: var(--text-muted);">
+            Copy your personal Level Code to save your exact Story Mode chapter, fairies, and upgraded cards—or enter a code below!
+          </p>
+        </div>
+        <form method="dialog">
+          <button type="submit" class="btn btn-sm">✕ Close</button>
+        </form>
+      </div>
+
+      <div style="display: grid; gap: 18px;">
+        <!-- Current Code Box -->
+        <div class="config-box" style="border-color: var(--gold-main);">
+          <div class="config-label">1. Your Current Story Mode Level Code</div>
+          <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;">
+            <span class="level-code-pill" id="modal-current-level-code" style="font-size: 1.05rem;">LUMEN-L1-ST-00</span>
+            <button type="button" class="btn btn-gold btn-sm" id="btn-modal-copy-code">📋 Copy Level Code</button>
+          </div>
+          <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 8px;" id="modal-code-summary">
+            Encodes Unlocked Level, Solo/Co-op Team Selection, and all Upgraded (+) Spell Cards.
+          </p>
+        </div>
+
+        <!-- Load Code Box -->
+        <div class="config-box">
+          <div class="config-label">2. Enter a Level Code to Restore Progress</div>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <input
+              type="text"
+              id="input-level-code"
+              placeholder="e.g. LUMEN-L3-ST-03 or CALDRUM-LV3"
+              style="flex: 1; min-width: 220px; padding: 10px 14px; border-radius: 10px; border: 1.5px solid rgba(255,255,255,0.28); background: rgba(10,3,22,0.9); color: #fff; font-family: monospace; font-size: 0.95rem;"
+            />
+            <button type="button" class="btn btn-primary" id="btn-apply-level-code">✨ Load Level Code</button>
+          </div>
+          <div id="level-code-feedback" style="font-size: 0.82rem; margin-top: 8px; min-height: 1.2em;"></div>
+        </div>
+
+        <!-- Quick Chapter Passwords -->
+        <div class="config-box">
+          <div class="config-label">3. Quick Chapter Passwords (Click Any Code to Load Chapter + Upgrades)</div>
+          <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 8px;" id="quick-chapter-codes-grid"></div>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- MODAL 3: HOW TO PLAY / RULES (<dialog closedby="any">) -->
+  <dialog id="rules-dialog" closedby="any" aria-labelledby="rules-dialog-title">
+    <div class="dialog-inner">
+      <div class="dialog-header">
+        <h2 id="rules-dialog-title" style="color: var(--gold-light);">✨ How to Play Lumenweave: The Unbound Accord</h2>
+        <form method="dialog">
+          <button type="submit" class="btn btn-sm">✕ Close</button>
+        </form>
+      </div>
+
+      <div style="display: grid; gap: 14px; line-height: 1.55; font-size: 0.94rem; color: var(--text-light);">
+        <div>
+          <h3 style="color: var(--pink-glow); margin-bottom: 4px;">1. Turn-Based Spell Combat &amp; Battle Log</h3>
+          <p>Each turn, your Waykeeper Fairy restores <strong>3 Mana Crystals (💎)</strong> and draws <strong>4 Spell Cards</strong> from their 8-card personal deck. Every action is recorded in the <strong>📜 Turn-by-Turn Battle Combat Log</strong> at the bottom of the arena.</p>
+        </div>
+        <div>
+          <h3 style="color: var(--pink-glow); margin-bottom: 4px;">2. Status Effects &amp; Elemental Mechanics</h3>
+          <ul style="padding-left: 20px; color: var(--text-muted);">
+            <li><strong>🛡️ Shield:</strong> Blocks incoming villain damage this round (Iman retains up to 10 Shield between turns).</li>
+            <li><strong>🔥 Burn / Toxin / Venom:</strong> Deals damage over time to the villain at the start of their turn, then decreases by 1.</li>
+            <li><strong>💫 Inspire:</strong> Adds bonus damage to every Attack spell your fairy casts (`+1 DMG per stack`).</li>
+            <li><strong>🌿 Regen:</strong> Restores HP at the end of your turn, then decreases by 1.</li>
+            <li><strong>🌙 Weaken:</strong> Reduces attack damage by 2 per stack.</li>
+            <li><strong>🕸️ Entangle:</strong> Vines/cages reduce the villain's attack damage by 35%!</li>
+            <li><strong>🪞 Reflect:</strong> Bounces damage back at the villain when they hit you!</li>
+          </ul>
+        </div>
+        <div>
+          <h3 style="color: var(--pink-glow); margin-bottom: 4px;">3. Story Mode Level Codes &amp; Deck Progression</h3>
+          <p>After beating each villain in Story Mode, you upgrade <strong>1 card per fairy (`Spell+`)</strong> and receive an updated <strong>🔑 Level Code</strong> (e.g. `LUMEN-L3-ST-03`) that encodes your unlocked chapter, chosen Waykeeper fairy/fairies, and exact upgraded cards!</p>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- MODAL 4: BATTLE VICTORY / DEFEAT RESULT (<dialog closedby="any">) -->
+  <dialog id="result-dialog" closedby="any" aria-labelledby="result-dialog-title">
+    <div class="dialog-inner" style="text-align: center;">
+      <div class="dialog-header">
+        <h2 id="result-dialog-title" style="color: var(--gold-light);">🌟 Battle Result</h2>
+        <form method="dialog">
+          <button type="submit" class="btn btn-sm">✕</button>
+        </form>
+      </div>
+      <div id="result-dialog-body" style="display: flex; flex-direction: column; align-items: center; gap: 14px; padding: 10px 0;"></div>
+    </div>
+  </dialog>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
