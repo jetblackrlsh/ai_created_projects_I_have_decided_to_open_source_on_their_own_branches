@@ -52,3 +52,6 @@ Full exports now use v3 envelopes with compact narrated chronicles and crossover
 
 ## Small updates and reversible conditions
 [Bounded meters](METERS.md) can rise or fall while elapsed time and progress clocks remain monotonic. [Targeted resolution patches](PATCHES.md) reduce agent request payloads with stable-ID selectors and transactional validation. Full snapshots and the4MB store limit remain; this is not a storage-scaling rewrite. See the [moth-delivery demo](examples/meters-patches/readable.md).
+
+## Character/dynasty saga mode
+See [SAGA.md](SAGA.md) for story/document seeding followed by bounded time skips through selected characters and biological/adoptive descendants. The validated optional extension tracks lifespans, typed relationships, milestones, compressed gap summaries and unresolved threads, with source-canon/generated attribution. `saga_report` and `saga_world` generate readable deterministic chronology; an external agent writes any literary adaptation. World provenance and character genealogy stay distinct. No background model, exhaustive hidden simulation or new storage architecture is implied.

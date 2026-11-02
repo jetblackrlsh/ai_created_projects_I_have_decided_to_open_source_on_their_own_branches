@@ -206,6 +206,9 @@ def render_report(source):
         if not state['recent_events']: lines.append('No recap events were supplied.')
         for event in state['recent_events']:
             lines.append(quote(event))
+    if 'character_saga' in state['extensions']:
+        from saga import report as saga_report
+        lines.append(saga_report(state)['markdown'])
     ancestry(lines, source.get('lineage',{}))
     lines += ['## Endpoint notes', 'Established facts at the supplied endpoint (not automatically historical events):']
     for fact in state['facts']: lines.append(quote(fact))

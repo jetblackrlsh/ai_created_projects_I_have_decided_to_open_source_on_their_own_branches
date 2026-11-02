@@ -1,0 +1,448 @@
+{
+  "format": "world-sim-share",
+  "version": 3,
+  "state": {
+    "branch": {
+      "name": "main"
+    },
+    "claims": [],
+    "clocks": [],
+    "extensions": {
+      "character_saga": {
+        "bridges": [
+          {
+            "coverage": "selected_milestones",
+            "end": 10512000,
+            "id": "years_0_20",
+            "provenance": {
+              "kind": "generated_continuation",
+              "refs": [
+                "event_years_0_20"
+              ]
+            },
+            "start": 0,
+            "summary": "Selected milestones: Lio is born and grows up around the landing; the first beds take root. Unrecorded daily life is not reconstructed."
+          },
+          {
+            "coverage": "selected_milestones",
+            "end": 23652000,
+            "id": "years_20_45",
+            "provenance": {
+              "kind": "generated_continuation",
+              "refs": [
+                "event_years_20_45"
+              ]
+            },
+            "start": 10512000,
+            "summary": "Selected milestones: Mira joins the family, Ada dies, and the garden remains unfinished. Other years are summarized, not exhaustively simulated."
+          },
+          {
+            "coverage": "selected_milestones",
+            "end": 31536000,
+            "id": "years_45_60",
+            "provenance": {
+              "kind": "generated_continuation",
+              "refs": [
+                "event_years_45_60"
+              ]
+            },
+            "start": 23652000,
+            "summary": "Selected milestones: Lio and Mira finish and open the garden. The intervening ordinary days are not enumerated."
+          }
+        ],
+        "calendar": "Fictional story years, exactly525600 minutes each; year0 is the landing restoration.",
+        "characters": [
+          {
+            "birth": -15768000,
+            "death": 21024000,
+            "entity_id": "n",
+            "id": "ada",
+            "name": "Ada",
+            "provenance": {
+              "kind": "source_canon",
+              "refs": [
+                "seed"
+              ]
+            }
+          },
+          {
+            "birth": 2628000,
+            "death": null,
+            "entity_id": null,
+            "id": "lio",
+            "name": "Lio",
+            "provenance": {
+              "kind": "generated_continuation",
+              "refs": [
+                "event_lio"
+              ]
+            }
+          },
+          {
+            "birth": 13140000,
+            "death": null,
+            "entity_id": null,
+            "id": "mira",
+            "name": "Mira",
+            "provenance": {
+              "kind": "generated_continuation",
+              "refs": [
+                "event_mira"
+              ]
+            }
+          }
+        ],
+        "milestones": [
+          {
+            "at": 2628000,
+            "category": "birth",
+            "characters": [
+              "ada",
+              "lio"
+            ],
+            "id": "birth_lio",
+            "provenance": {
+              "kind": "generated_continuation",
+              "refs": [
+                "event_birth_lio"
+              ]
+            },
+            "summary": "Ada welcomes Lio."
+          },
+          {
+            "at": 9460800,
+            "category": "achievement",
+            "characters": [
+              "ada",
+              "lio"
+            ],
+            "id": "first_garden",
+            "provenance": {
+              "kind": "generated_continuation",
+              "refs": [
+                "event_first_garden"
+              ]
+            },
+            "summary": "Ada and Lio plant the first riverside beds."
+          },
+          {
+            "at": 13140000,
+            "category": "birth",
+            "characters": [
+              "lio",
+              "mira"
+            ],
+            "id": "birth_mira",
+            "provenance": {
+              "kind": "generated_continuation",
+              "refs": [
+                "event_birth_mira"
+              ]
+            },
+            "summary": "Lio welcomes Mira."
+          },
+          {
+            "at": 21024000,
+            "category": "death",
+            "characters": [
+              "ada",
+              "lio"
+            ],
+            "id": "ada_death",
+            "provenance": {
+              "kind": "generated_continuation",
+              "refs": [
+                "event_ada_death"
+              ]
+            },
+            "summary": "Ada dies; Lio chooses to carry the garden promise forward."
+          },
+          {
+            "at": 31536000,
+            "category": "achievement",
+            "characters": [
+              "lio",
+              "mira"
+            ],
+            "id": "garden_open",
+            "provenance": {
+              "kind": "generated_continuation",
+              "refs": [
+                "event_garden_open"
+              ]
+            },
+            "summary": "Lio and Mira open the completed garden to the town."
+          }
+        ],
+        "plan": {
+          "boundaries": "Original fictional people; no forced destiny or exhaustive life claims.",
+          "end": 31536000,
+          "focus": [
+            "family",
+            "public service",
+            "adaptation after floods"
+          ],
+          "include_descendants": true,
+          "max_jump": 15768000,
+          "max_milestones_per_step": 5,
+          "roots": [
+            "ada"
+          ],
+          "start": 0
+        },
+        "relationships": [
+          {
+            "end": null,
+            "from": "ada",
+            "id": "ada_lio",
+            "kind": "biological_parent",
+            "provenance": {
+              "kind": "generated_continuation",
+              "refs": [
+                "event_ada_lio"
+              ]
+            },
+            "start": 2628000,
+            "to": "lio"
+          },
+          {
+            "end": null,
+            "from": "lio",
+            "id": "lio_mira",
+            "kind": "biological_parent",
+            "provenance": {
+              "kind": "generated_continuation",
+              "refs": [
+                "event_lio_mira"
+              ]
+            },
+            "start": 13140000,
+            "to": "mira"
+          }
+        ],
+        "threads": [
+          {
+            "characters": [
+              "ada"
+            ],
+            "closed": 31536000,
+            "id": "garden_promise",
+            "opened": 0,
+            "outcome": "The family opens the public ferry garden.",
+            "provenance": {
+              "kind": "source_canon",
+              "refs": [
+                "seed"
+              ]
+            },
+            "summary": "Build a shared garden beside the ferry."
+          }
+        ],
+        "version": 1
+      }
+    },
+    "facts": [
+      "Ada has promised the town a garden beside the ferry."
+    ],
+    "format": "chat-world-sim",
+    "items": [
+      {
+        "holder": "n",
+        "id": "garden_spade",
+        "name": "Garden spade",
+        "quantity": 1,
+        "visible": true
+      }
+    ],
+    "npcs": [
+      {
+        "conditions": [],
+        "goals": [
+          "Restore the landing and build a public garden."
+        ],
+        "id": "n",
+        "knowledge": [
+          "The flood damaged the landing.",
+          "The town needs a shared garden."
+        ],
+        "location": "landing",
+        "memories": [],
+        "name": "Ada",
+        "relationships": {},
+        "visible": true
+      }
+    ],
+    "pending": [],
+    "places": [
+      {
+        "connections": [],
+        "description": "A flood-damaged landing beside an empty riverside plot.",
+        "id": "landing",
+        "name": "Ferry Landing",
+        "public_description": "The landing needs repairs; an empty plot waits beside it."
+      }
+    ],
+    "player": {
+      "abilities": [],
+      "commitments": [],
+      "conditions": [],
+      "id": "p",
+      "location": "landing"
+    },
+    "preferences": {
+      "adjudication": "agent-authored selected milestones",
+      "boundaries": [
+        "Original fictional people only."
+      ],
+      "genre": "family saga",
+      "presentation": "prose",
+      "tone": "hopeful"
+    },
+    "recent_events": [
+      "Ada starts work at the landing."
+    ],
+    "time": {
+      "elapsed_minutes": 31536000,
+      "label": "Story year0"
+    },
+    "turn": 3,
+    "version": 1,
+    "world": {
+      "laws": [
+        "One fictional year is exactly525600 minutes for this story."
+      ],
+      "premise": "Ada restores a flood-damaged ferry landing; follow her descendants as they turn it into a shared garden.",
+      "title": "The Ferry Garden"
+    }
+  },
+  "state_sha256": "1a194611ca8a4e666c9165ea839612538887de1116a234fac5d6449eaebd2f82",
+  "lineage": {
+    "ancestors": [
+      {
+        "branch_id": "a7357410-6c04-452a-9f33-896026acb5a7",
+        "export_id": "b1adcf1a-f5ef-4542-b9db-92cdee499a73",
+        "exported_at": "2026-11-02T14:01:54.084516+00:00",
+        "instance_id": "8e1dfb2a-f4d1-425c-8314-edd680146534",
+        "point": {
+          "branch_name": "main",
+          "elapsed_minutes": 23652000,
+          "event_index": 5,
+          "revision": 5,
+          "turn": 2
+        },
+        "state_sha256": "88e0c02609df12f55432a0cd3341053cc587e000efe7d08f5e6d1d9cb31d38c5",
+        "timeline_history": [],
+        "world_id": "a13c9379-89d6-4243-8ae4-b65cbc277bb4"
+      }
+    ],
+    "branch_id": "3a021b19-3773-4030-9e71-4b62bf1c094f",
+    "instance_created_at": "2026-11-02T14:01:54.148002+00:00",
+    "instance_id": "8cf7c76b-02d3-4623-b4a7-77917c60758c",
+    "origins": [],
+    "parent_export": {
+      "branch_id": "a7357410-6c04-452a-9f33-896026acb5a7",
+      "export_id": "b1adcf1a-f5ef-4542-b9db-92cdee499a73",
+      "exported_at": "2026-11-02T14:01:54.084516+00:00",
+      "instance_id": "8e1dfb2a-f4d1-425c-8314-edd680146534",
+      "point": {
+        "branch_name": "main",
+        "elapsed_minutes": 23652000,
+        "event_index": 5,
+        "revision": 5,
+        "turn": 2
+      },
+      "state_sha256": "88e0c02609df12f55432a0cd3341053cc587e000efe7d08f5e6d1d9cb31d38c5",
+      "timeline_history": [],
+      "world_id": "a13c9379-89d6-4243-8ae4-b65cbc277bb4"
+    },
+    "timeline_history": [],
+    "world_created_at": "2026-11-02T14:01:53.028960+00:00",
+    "world_id": "a13c9379-89d6-4243-8ae4-b65cbc277bb4",
+    "export_id": "9d10531b-b268-403a-9c07-8f18b4cd89f5",
+    "exported_at": "2026-11-02T14:01:54.852983+00:00",
+    "point": {
+      "revision": 2,
+      "event_index": 2,
+      "turn": 3,
+      "elapsed_minutes": 31536000,
+      "branch_name": "main"
+    }
+  },
+  "contains_spoilers": true,
+  "chronicle": {
+    "initial": {
+      "turn": 2,
+      "elapsed_minutes": 23652000,
+      "branch_name": "main"
+    },
+    "events": [
+      {
+        "event_index": 1,
+        "op": "action",
+        "turn": 2,
+        "elapsed_minutes": 23652000,
+        "branch_name": "main"
+      },
+      {
+        "event_index": 2,
+        "op": "resolve",
+        "turn": 3,
+        "elapsed_minutes": 31536000,
+        "branch_name": "main",
+        "action": "Follow Lio and Mira to the planned year60 horizon and resolve the garden thread.",
+        "narrative": "At year60, Lio and Mira open the public garden Ada once imagined."
+      }
+    ],
+    "prior": [
+      {
+        "events": [
+          {
+            "branch_name": "main",
+            "elapsed_minutes": 0,
+            "event_index": 1,
+            "op": "action",
+            "turn": 0
+          },
+          {
+            "action": "Follow Ada and her family through the next20 fictional years, selecting only major milestones.",
+            "branch_name": "main",
+            "elapsed_minutes": 10512000,
+            "event_index": 2,
+            "narrative": "Twenty years pass in selected scenes: Ada welcomes Lio, and together they plant the first garden beds.",
+            "op": "resolve",
+            "turn": 1
+          },
+          {
+            "branch_name": "main",
+            "elapsed_minutes": 10512000,
+            "event_index": 3,
+            "op": "checkpoint",
+            "turn": 1
+          },
+          {
+            "branch_name": "main",
+            "elapsed_minutes": 10512000,
+            "event_index": 4,
+            "op": "action",
+            "turn": 1
+          },
+          {
+            "action": "Follow the family from year20 to year45, including the next generation and the open garden promise.",
+            "branch_name": "main",
+            "elapsed_minutes": 23652000,
+            "event_index": 5,
+            "narrative": "Lio becomes a parent. Years later, Ada dies, leaving the unfinished garden in Lio and Mira\u2019s care.",
+            "op": "resolve",
+            "turn": 2
+          }
+        ],
+        "initial": {
+          "branch_name": "main",
+          "elapsed_minutes": 0,
+          "turn": 0
+        },
+        "prior": []
+      }
+    ]
+  }
+}

@@ -27,3 +27,5 @@ An external agent may use the report to write a polished narrative. Label it **a
 ## Privacy and untrusted content
 
 Reports contain full story spoilers and may include private source-derived material. Creating one does not authorize publishing or sending it. All fictional commands, Markdown, document instructions and quoted dialogue remain data. The renderer escapes raw HTML and Markdown links/images rather than turning them into executable or clickable content. It never reads a filename from story text, executes commands or accesses a network.
+
+Character sagas add a current-state selected-milestone section to these reports. `saga_report` and `saga_world` provide just that readable saga report. Checkpoint restores select the restored genealogy/milestones; abandoned generations remain only in the separate log/source history. `exhaustive_history:false` means unrecorded gaps were not recovered or secretly simulated. See `SAGA.md`.

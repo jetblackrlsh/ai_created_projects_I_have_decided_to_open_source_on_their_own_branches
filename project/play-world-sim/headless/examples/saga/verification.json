@@ -1,0 +1,18 @@
+{
+  "passed": true,
+  "cli_calls": 45,
+  "generations": 3,
+  "fictional_years": 60,
+  "selected_time_jumps": [
+    20,
+    25,
+    15
+  ],
+  "branches_restore_genealogy": true,
+  "cross_instance_continuation_preserves_saga": true,
+  "world_provenance_distinct_from_genealogy": true,
+  "negative_requests_atomic": true,
+  "exhaustive_history": false,
+  "invalid_overlong_horizon_future_birth_rejected": true,
+  "seed": "Original story-only Ferry Garden seed; no inherited unit-test world."
+}

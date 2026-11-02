@@ -60,3 +60,6 @@ V3 envelopes add `chronicle` (initial point, ordered compact events, separate pr
 
 ## Targeted resolutions and optional meters
 `resolve_patch` takes `patch`, `narrative`, `request_id` and current `revision` after a pending action. Turn increments automatically; fictional time does not. See PATCHES.md for the restrictive operation/path grammar and transactional guarantees. Full-state `resolve` is unchanged. `meters` is an optional portable-state list of reversible bounded values; METERS.md defines validation and public/private visibility.
+
+### Saga reports and validation
+Optional `extensions.character_saga` version1 is validated on create, full/patch resolve, replay, import and crossover. See `SAGA.md` for exact fields. `saga_report` reads the current store; `saga_world` takes a full share `package` without creating a store. Reports contain spoilers and explicit non-exhaustive coverage. Existing resolve request/revision/budget semantics apply; no independent autonomous execution loop is added.

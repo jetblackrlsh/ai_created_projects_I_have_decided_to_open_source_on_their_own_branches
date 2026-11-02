@@ -12,7 +12,7 @@ def build(request):
     state=w.validate(request.get('state'))
     w.require(state['turn']==0,'new crossover starts at turn zero; map source time explicitly')
     plan=request.get('plan')
-    w.require(isinstance(plan,dict) and set(plan)=={'entity_map','laws_decision','time_decision','history_decision','conflicts'},'crossover needs explicit mapping and decisions')
+    w.require(isinstance(plan,dict) and set(plan) in ({'entity_map','laws_decision','time_decision','history_decision','conflicts'},{'entity_map','laws_decision','time_decision','history_decision','conflicts','saga_decision'}),'crossover needs explicit mapping and decisions')
     for k in ('laws_decision','time_decision','history_decision'):
         w.require(isinstance(plan[k],str) and 0<len(plan[k])<=10000,'missing '+k)
     w.require(isinstance(plan['conflicts'],list),'conflicts must be a reviewed list (empty if none)')
@@ -38,6 +38,24 @@ def build(request):
         w.require(target is None or (isinstance(target,str) and targets.get(target)==sources[key]),'target missing or entity kind mismatch')
         w.require(isinstance(entry['decision'],str) and entry['decision'],'each mapping requires explanation, including omissions/fusions')
     w.require(seen==set(sources),'every source entity must be mapped or explicitly omitted')
+    saga_sources={(p['lineage']['export_id'],c['id']) for p in packages for c in p['state']['extensions'].get('character_saga',{}).get('characters',[])}
+    if saga_sources:
+        decision=plan.get('saga_decision')
+        w.require(isinstance(decision,dict) and set(decision)=={'mapping','history_decision'},'crossover of sagas needs explicit genealogy mapping and history decision')
+        w.require(isinstance(decision['history_decision'],str) and decision['history_decision'],'genealogy history decision required')
+        w.require(isinstance(decision['mapping'],list),'genealogy mapping must be list')
+        target_ids={c['id'] for c in state['extensions'].get('character_saga',{}).get('characters',[])}
+        mapped=set()
+        for m in decision['mapping']:
+            w.require(isinstance(m,dict) and set(m)=={'export_id','character_id','target_id','decision'},'invalid genealogy mapping')
+            key=(m['export_id'],m['character_id'])
+            w.require(key in saga_sources and key not in mapped,'unknown/duplicate genealogy source')
+            mapped.add(key)
+            w.require(m['target_id'] is None or (isinstance(m['target_id'],str) and m['target_id'] in target_ids),'unknown genealogy target')
+            w.require(isinstance(m['decision'],str) and m['decision'],'explain character fusion or omission')
+        w.require(mapped==saga_sources,'map or explicitly omit every source saga character')
+    elif 'saga_decision' in plan:
+        w.require(False,'saga_decision supplied without source genealogy')
     # Multiple character sources may map to one character: an explicit amalgam.
     # Result ownership, IDs and references are validated by core, never guessed.
     d=w.fresh(state,request.get('turn_budget'))

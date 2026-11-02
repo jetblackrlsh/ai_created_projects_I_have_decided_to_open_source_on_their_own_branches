@@ -26,3 +26,6 @@ Minimal valid illustrative save (not a real user's session):
 ```
 
 Optional additive field: `meters`, a list of globally ID-unique bounded values `{id,name,value,min,max,visibility}`. Visibility defaults to private; public meters appear in headless player observations. Unlike monotonic progress clocks, meters may rise or fall within finite bounds. Older saves may omit the list. See `headless/METERS.md` in the paired tool package.
+
+## Optional character saga extension
+`extensions.character_saga` is a versioned optional structured ledger for bounded character/dynasty stories. See `../headless/SAGA.md` for exact character life dates, biological/adoptive/mentoring relationships, follow plan, milestones, gap bridges, threads and provenance. This is distinct from the full-export world ancestry. Older states without it remain valid. Full/patch resolutions both validate its chronology; branches restore it with the rest of state.

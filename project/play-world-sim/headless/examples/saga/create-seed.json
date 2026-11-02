@@ -1,0 +1,142 @@
+{
+  "op": "create",
+  "state": {
+    "format": "chat-world-sim",
+    "version": 1,
+    "world": {
+      "title": "The Ferry Garden",
+      "premise": "Ada restores a flood-damaged ferry landing; follow her descendants as they turn it into a shared garden.",
+      "laws": [
+        "One fictional year is exactly525600 minutes for this story."
+      ]
+    },
+    "branch": {
+      "name": "main"
+    },
+    "turn": 0,
+    "time": {
+      "label": "Story year0",
+      "elapsed_minutes": 0
+    },
+    "player": {
+      "id": "p",
+      "location": "landing",
+      "abilities": [],
+      "conditions": [],
+      "commitments": []
+    },
+    "places": [
+      {
+        "id": "landing",
+        "name": "Ferry Landing",
+        "description": "A flood-damaged landing beside an empty riverside plot.",
+        "public_description": "The landing needs repairs; an empty plot waits beside it.",
+        "connections": []
+      }
+    ],
+    "items": [
+      {
+        "id": "garden_spade",
+        "name": "Garden spade",
+        "holder": "n",
+        "quantity": 1,
+        "visible": true
+      }
+    ],
+    "npcs": [
+      {
+        "id": "n",
+        "name": "Ada",
+        "location": "landing",
+        "visible": true,
+        "goals": [
+          "Restore the landing and build a public garden."
+        ],
+        "knowledge": [
+          "The flood damaged the landing.",
+          "The town needs a shared garden."
+        ],
+        "memories": [],
+        "relationships": {},
+        "conditions": []
+      }
+    ],
+    "facts": [
+      "Ada has promised the town a garden beside the ferry."
+    ],
+    "claims": [],
+    "clocks": [],
+    "recent_events": [
+      "Ada starts work at the landing."
+    ],
+    "pending": [],
+    "preferences": {
+      "genre": "family saga",
+      "tone": "hopeful",
+      "presentation": "prose",
+      "boundaries": [
+        "Original fictional people only."
+      ],
+      "adjudication": "agent-authored selected milestones"
+    },
+    "extensions": {
+      "character_saga": {
+        "version": 1,
+        "calendar": "Fictional story years, exactly525600 minutes each; year0 is the landing restoration.",
+        "plan": {
+          "roots": [
+            "ada"
+          ],
+          "include_descendants": true,
+          "start": 0,
+          "end": 31536000,
+          "max_jump": 15768000,
+          "max_milestones_per_step": 5,
+          "focus": [
+            "family",
+            "public service",
+            "adaptation after floods"
+          ],
+          "boundaries": "Original fictional people; no forced destiny or exhaustive life claims."
+        },
+        "characters": [
+          {
+            "id": "ada",
+            "name": "Ada",
+            "entity_id": "n",
+            "birth": -15768000,
+            "death": null,
+            "provenance": {
+              "kind": "source_canon",
+              "refs": [
+                "seed"
+              ]
+            }
+          }
+        ],
+        "relationships": [],
+        "milestones": [],
+        "bridges": [],
+        "threads": [
+          {
+            "id": "garden_promise",
+            "characters": [
+              "ada"
+            ],
+            "opened": 0,
+            "closed": null,
+            "summary": "Build a shared garden beside the ferry.",
+            "outcome": null,
+            "provenance": {
+              "kind": "source_canon",
+              "refs": [
+                "seed"
+              ]
+            }
+          }
+        ]
+      }
+    }
+  },
+  "turn_budget": 6
+}

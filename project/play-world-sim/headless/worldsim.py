@@ -72,6 +72,8 @@ def validate(s):
     for meter in s.get('meters', []):
         require(all(number(meter.get(k)) for k in ('value','min','max')) and meter['min'] <= meter['value'] <= meter['max'], 'invalid meter value/bounds')
         require(meter.get('visibility', 'private') in ('public','private'), 'invalid meter visibility')
+    from saga import validate as validate_saga
+    validate_saga(s)
     encode(s)
     return s
 
@@ -261,12 +263,15 @@ def apply(doc, request):
     d = copy.deepcopy(doc)
     ensure_lineage(d)
     op = request.get('op')
-    if op in ('status', 'observe', 'context', 'export', 'export_world', 'export_narrative', 'replay'):
+    if op in ('status', 'observe', 'context', 'export', 'export_world', 'export_narrative', 'saga_report', 'replay'):
         if op == 'status':
             out = {k: d[k] for k in ('revision', 'budget', 'used', 'mode', 'pending_action')}
             out['turn'] = d['state']['turn']
         elif op == 'observe': out = observation(d['state'])
         elif op == 'context': out = {'state': d['state'], 'action': d['pending_action'], 'revision': d['revision']}
+        elif op == 'saga_report':
+            from saga import report
+            out=report(d['state'])
         elif op == 'export_narrative':
             from narrative import render_report
             out=render_report(d)
@@ -300,6 +305,8 @@ def apply(doc, request):
             require('patch' not in request, 'resolve takes state, not patch')
             new = validate(request.get('state'))
         old = d['state']
+        from saga import transition
+        transition(old,new)
         require(new['turn'] == old['turn'] + 1, 'turn must advance exactly one')
         require(new['time']['elapsed_minutes'] >= old['time']['elapsed_minutes'], 'time cannot rewind')
         require(new['branch'] == old['branch'], 'use branch operation to change branch')
@@ -366,6 +373,9 @@ def parse(raw):
 def transact(directory, request):
     """Single-writer lock plus optimistic revision. Directory is caller-selected, never story-controlled."""
     require(isinstance(request, dict), 'request must be object')
+    if request.get('op') == 'saga_world':
+        from saga import report
+        return report(import_world(request.get('package')))
     if request.get('op') == 'narrative_world':
         from narrative import render_report
         return render_report(request.get('package'))

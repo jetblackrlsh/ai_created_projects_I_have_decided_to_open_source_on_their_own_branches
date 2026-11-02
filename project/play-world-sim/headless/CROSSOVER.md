@@ -32,3 +32,5 @@ The new world receives its own world/run/branch UUIDs. `lineage.origins` retains
 Origins can contain narrator secrets and private source data. Never publish/share the resulting crossover without reviewing all inherited source packages. The CLI does not transmit it. Existing 4 MB request/store limit still applies; up to8 nested crossover generations are supported. Large source **documents** use the separate staged ingestion tool, not giant full-text world envelopes. Checksums and claimed lineage are not authenticated authorship.
 
 V3 exports add origins and compact narrated chronicles; v2 exports remain accepted as sources. A v2 export without full recorded prose can only contribute its available canon/recaps; never invent missing history and call it recovered.
+
+If a source has a character saga, add `plan.saga_decision` as specified in `SAGA.md`: explicit mapping/omission of every source saga character plus a history/time/genealogy decision. This includes people without live entity links. A new coherent genealogy is authored, never inferred from fused entity names. Full source envelopes retain original genealogy histories.

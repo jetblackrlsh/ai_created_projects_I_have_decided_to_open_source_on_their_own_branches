@@ -18,3 +18,6 @@ Suggested role prompts (instructions to the calling agent, not executable code):
 Use separate contexts for a meaningful secrecy test. A single agent role-switching is useful for creative exploration and consistency debugging but is not a blind player experiment. No separate-context calls, API spend, or real external actions are automatically authorized by this recipe.
 
 For reversible conditions use `meters`, not cumulative `clocks` (METERS.md). For a small resolution, `resolve_patch` can replace full-state submission; consult PATCHES.md, use stable entity IDs and current revision, and preserve the player's actual decisions. This saves authoring payload, not snapshot storage.
+
+### Follow a family across time
+Read `SAGA.md`, establish an explicit horizon and focus, attach `extensions.character_saga` to the authorized story seed, then use the same bounded action→resolve loop. Each intentional jump is no longer than the plan maximum and has one honest selected-events bridge. Append dated milestones and descendants, retaining source provenance and threads; end at the horizon/budget. Obtain `saga_report`, review chronology, and write a labeled prose adaptation if requested. Do not invent player choices, force tragedies, or pretend skipped years were exhaustively simulated. Followed characters differ from the fixed player entity and from world export ancestry.
