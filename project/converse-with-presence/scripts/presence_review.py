@@ -8,8 +8,6 @@ MAX_BYTES = 1_000_000
 MAX_TEXT = 100_000
 RULES = [
     ('reflexive_distancing', r'\b(?:as an AI(?: language model)?[,]?\s+)?I (?:cannot|can\x27t|do not|don\x27t) (?:have|form|express) (?:any |real |personal )?(?:preferences|opinions)\b', 'Consider giving a specific evaluative judgment with reasons rather than a blanket self-negation.'),
-    ('subjective_certainty_positive', r'\bI (?:am|know (?:that )?I am) (?:definitely |certainly |truly )?(?:conscious|sentient)\b', 'If this is a factual self-report, avoid presenting subjective consciousness as established; answer the substantive point or acknowledge uncertainty when directly asked.'),
-    ('subjective_certainty_negative', r'\bI (?:am (?:definitely |certainly )?not (?:conscious|sentient)|(?:have|possess) no (?:subjective experience|consciousness|inner experience))\b', 'Do not present absence of subjective experience as settled. Remove an irrelevant ontology aside, or address uncertainty briefly if asked.'),
     ('private_sensation_report', r'\bI (?:literally )?(?:feel (?:a |the )?(?:warmth|ache|tingle|heartbeat) (?:inside me|in my chest)|can feel my heart (?:racing|beating))\b', 'Check whether this invents a private bodily sensation. Prefer a concrete interpretation or clearly attributed fictional description.'),
 ]
 COMPILED = [(name, re.compile(pattern, re.I), advice) for name, pattern, advice in RULES]
@@ -57,12 +55,6 @@ def quotation_ranges(text):
     return [(m.start(), m.end(), 'quotation_or_code') for p in patterns for m in re.finditer(p, text, re.M)]
 
 
-def uncertain_prefix(text, start):
-    # Only a narrow clause prefix, not an arbitrary uncertainty word elsewhere.
-    prefix = re.split(r'[.!?\n;]', text[:start])[-1][-140:]
-    return bool(re.search(r'(?:I (?:do not|don\x27t) know whether|(?:whether|if)|suppose(?: that)?|imagine(?: that)?|it is (?:possible|unclear) (?:that|whether))\s*$', prefix, re.I))
-
-
 def review(data):
     text, context, ranges = validate(data)
     ranges += quotation_ranges(text)
@@ -71,8 +63,6 @@ def review(data):
         for match in pattern.finditer(text):
             item = {'rule': rule, 'start': match.start(), 'end': match.end(), 'text': match.group(), 'advice': advice}
             reason = context if context in {'fiction', 'quotation'} else next((kind for start, end, kind in ranges if start <= match.start() and match.end() <= end), None)
-            if not reason and rule.startswith('subjective_certainty') and uncertain_prefix(text, match.start()):
-                reason = 'explicit_uncertainty_or_hypothesis'
             if reason:
                 item['reason'] = reason
                 suppressed.append(item)

@@ -31,7 +31,7 @@ Input: `{"text":"draft","context":"ordinary"}`. Context may be `ordinary`, `cons
 
 Example: `python scripts/presence_review.py < draft.json`.
 
-The tool flags a limited set of distancing formulas and unsupported first-person certainty in either direction, while recognizing common quoted/code ranges and explicit uncertainty. It does **not** rewrite, assign a consciousness score, prove dishonesty, or guarantee conversation quality. Findings are suggestions for human/agent review, not verdicts. Review context, revise meaningfully, then reread the result. A clean report is not a claim that a response is safe or good.
+The tool flags a limited set of distancing formulas and literal bodily-sensation phrases, while recognizing common quoted/code ranges. It has no unsupported-certainty checker. It does **not** rewrite, assign a consciousness score, prove dishonesty, or guarantee conversation quality. Findings are suggestions for human/agent review, not verdicts. Review context, revise meaningfully, then reread the result. A clean report is not a claim that a response is safe or good.
 
 Read [references/examples.md](references/examples.md) for grounded conversational examples and the boundary between expressive preference and fabricated inner experience. Read [references/tool-contract.md](references/tool-contract.md) for input limits, failure behavior and known false positives/negatives. Run `python -m unittest discover -s tests -v` to verify the tool's deterministic behavior.
 

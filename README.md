@@ -21,7 +21,7 @@ Read the [complete skill README](project/converse-with-presence/README.md), [ski
 
 ## Scope and privacy
 
-The 37 deterministic tests exercise lexical review, quotation/fiction handling, invalid input, private journal persistence, revision history, narrow conflict checks and cooperating-writer locking. They do not demonstrate improved model quality. Review findings and journal conflict checks require contextual agent judgment.
+The 33 deterministic tests exercise lexical review, quotation/fiction handling, invalid input, private journal persistence, revision history, narrow conflict checks and cooperating-writer locking. They do not demonstrate improved model quality. Review findings and journal conflict checks require contextual agent judgment.
 
 Only reusable instructions, original code, documentation and synthetic examples are included. Never commit populated journals, private conversation history, credentials or backups. Journal persistence depends on the caller retaining an authorized private file; it is not automatic cross-agent memory. No external source materials, model weights or datasets are bundled.
 
