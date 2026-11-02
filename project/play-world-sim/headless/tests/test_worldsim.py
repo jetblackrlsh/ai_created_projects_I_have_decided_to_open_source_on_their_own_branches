@@ -88,7 +88,7 @@ class Tests(unittest.TestCase):
             code,preview=call('unused',{'op':'preview_world','package':package})
             self.assertEqual(code,0);self.assertNotIn('SECRET',json.dumps(preview));self.assertFalse((root/'unused').exists())
             self.assertEqual(call('B',{'op':'import_world','package':package,'turn_budget':3})[0],0)
-            self.assertEqual(call('B',{'op':'export'})[1]['result'],state)
+            self.assertEqual(call('B',{'op':'export'})[1]['result']['state'],state)
             self.assertEqual(call('B',{'op':'replay'})[1]['result'],state)
             before=(root/'B/session.json').read_bytes()
             self.assertNotEqual(call('B',{'op':'import_world','package':package,'turn_budget':100})[0],0)
@@ -98,6 +98,48 @@ class Tests(unittest.TestCase):
                 self.assertNotEqual(call('bad'+str(i),{'op':'import_world','package':bad,'turn_budget':2})[0],0)
                 self.assertFalse((root/('bad'+str(i))/'session.json').exists())
             self.assertNotEqual(call('no_budget',{'op':'import_world','package':package})[0],0)
+
+    def test_lineage_multiple_hops_and_rewind(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root=pathlib.Path(folder)
+            a=root/'a';b=root/'b';c=root/'c'
+            w.transact(a,{'op':'create','state':seed(),'turn_budget':8})
+            first=w.transact(a,{'op':'export'})
+            w.transact(b,{'op':'import_world','package':first,'turn_budget':8})
+            w.transact(b,{'op':'checkpoint','revision':0,'request_id':'cp','label':'start'})
+            w.transact(b,{'op':'action','revision':1,'request_id':'act','text':'wait'})
+            state=copy.deepcopy(first['state']);state['turn']=1;state['time']['elapsed_minutes']=2
+            w.transact(b,{'op':'resolve','revision':2,'request_id':'res','state':state,'narrative':'Time passes.'})
+            second=w.transact(b,{'op':'export_world'})
+            self.assertEqual(second['lineage']['point'],{'revision':3,'event_index':3,'turn':1,'elapsed_minutes':2,'branch_name':'main'})
+            self.assertEqual(second['lineage']['world_id'],first['lineage']['world_id'])
+            self.assertNotEqual(second['lineage']['instance_id'],first['lineage']['instance_id'])
+            self.assertEqual(second['lineage']['parent_export']['export_id'],first['lineage']['export_id'])
+            w.transact(c,{'op':'import_world','package':second,'turn_budget':4})
+            third=w.transact(c,{'op':'export'})
+            self.assertEqual(third['state'],state)
+            self.assertEqual([x['export_id'] for x in third['lineage']['ancestors']],[first['lineage']['export_id'],second['lineage']['export_id']])
+            self.assertEqual(third['lineage']['world_id'],first['lineage']['world_id'])
+            self.assertEqual(len({first['lineage']['instance_id'],second['lineage']['instance_id'],third['lineage']['instance_id']}),3)
+            w.transact(b,{'op':'branch','revision':3,'request_id':'branch','label':'start','name':'other'})
+            rewound=w.transact(b,{'op':'export_world'})
+            self.assertEqual(rewound['state']['turn'],0)
+            self.assertNotEqual(rewound['lineage']['branch_id'],second['lineage']['branch_id'])
+            self.assertEqual(rewound['lineage']['point']['revision'],4)
+            self.assertEqual(rewound['lineage']['timeline_history'][-1]['target_point']['revision'],1)
+            self.assertNotEqual(rewound['state_sha256'],first['state_sha256'])
+            self.assertEqual(w.import_world(rewound),rewound['state'])
+            for key in ['world_id','export_id']:
+                bad=copy.deepcopy(third);bad['lineage'][key]='bad'
+                with self.assertRaises(w.Invalid):w.import_world(bad)
+            bad=copy.deepcopy(third);bad['lineage']['point']['turn']=999
+            with self.assertRaises(w.Invalid):w.import_world(bad)
+            # Legacy session gains one persistent identity, not a new origin on every export.
+            data=w.parse((a/'session.json').read_bytes());data.pop('lineage');data.pop('checkpoint_metadata')
+            (a/'session.json').write_bytes(w.encode(data))
+            legacy1=w.transact(a,{'op':'export'});legacy2=w.transact(a,{'op':'export'})
+            self.assertEqual(legacy1['lineage']['world_id'],legacy2['lineage']['world_id'])
+            self.assertNotEqual(legacy1['lineage']['export_id'],legacy2['lineage']['export_id'])
 
     def test_stop_terminal(self):
         self.mutation('stop')

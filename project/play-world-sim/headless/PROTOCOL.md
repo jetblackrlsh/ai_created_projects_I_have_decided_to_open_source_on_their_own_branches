@@ -11,7 +11,7 @@ Every response is `{"ok":true,"result":...}` or `{"ok":false,"error":"..."}`. A 
 | export_world | none | Versioned full sharing package, only between turns |
 | import_world | package, explicit turn_budget | Import into fresh store only; zero used/new run |
 | preview_world | package | Validate and show minimal metadata; no store mutation |
-| export | none | Portable state (spoilers); host can save stdout |
+| export | none | Alias of export_world; lineage envelope (not bare state) |
 | action | text | Queue player choice; no time change |
 | resolve | state, narrative | Commit one next state and consume one turn budget |
 | checkpoint | label | Snapshot between turns; label cannot overwrite |
@@ -21,6 +21,8 @@ Every response is `{"ok":true,"result":...}` or `{"ok":false,"error":"..."}`. A 
 | replay | none | Verify hash chain and reproduce current state |
 
 A resolution requires pending action and active mode; turn increases exactly1 and elapsed time never decreases. Retained clocks cannot decrease. Restoring a checkpoint is the only supported rewind. Branch/load never refund spent budget. At budget exhaustion mode becomes paused, and resume cannot bypass the budget. Export and deliberately create a new store/run if continued play is authorized. Pause preserves any pending action. Resume does not run anything automatically.
+
+All full sharing exports carry v2 lineage, including the legacy-named `export` alias. See [SHARING.md](SHARING.md) for identity, ancestry and migration.
 
 ## State compatibility
 

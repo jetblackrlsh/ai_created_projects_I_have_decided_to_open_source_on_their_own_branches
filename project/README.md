@@ -36,3 +36,5 @@ MIT license applies to this original package; third-party projects retain their 
 
 
 Worlds can be [exported and imported](play-world-sim/headless/SHARING.md) as versioned JSON packages for opt-in sharing. Full packages may contain spoilers; importing starts a fresh explicitly bounded run and never overwrites an existing session.
+
+Every world export includes stable origin identity, distinct continuation/branch/export IDs, parent-export ancestry and exact revision/event/turn/time/hash, with wall-clock timestamps separate from fictional time.

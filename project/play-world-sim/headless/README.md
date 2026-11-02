@@ -20,6 +20,7 @@ Library: `import worldsim; worldsim.transact(directory, request)` for durable tr
 ## Included
 
 - Portable `chat-world-sim` v1 state with stricter machine-readable time/connections.
+- Versioned world export/import with origin/run/branch/export IDs and precise timeline ancestry.
 - Two-phase action/resolution, revisions, request-ID idempotency, checkpoints, restore/branch.
 - Explicit 1–100-resolution budget, pause/resume/stop; no background clock.
 - Conservative player observation that excludes narrator secrets/NPC knowledge.

@@ -1,0 +1,84 @@
+{
+  "passed": true,
+  "A_point": {
+    "revision": 2,
+    "event_index": 2,
+    "turn": 0,
+    "elapsed_minutes": 0,
+    "branch_name": "first_fork"
+  },
+  "B_point": {
+    "revision": 4,
+    "event_index": 4,
+    "turn": 1,
+    "elapsed_minutes": 1,
+    "branch_name": "first_fork"
+  },
+  "C_import_point": {
+    "revision": 0,
+    "event_index": 0,
+    "turn": 1,
+    "elapsed_minutes": 1,
+    "branch_name": "first_fork"
+  },
+  "C_checkpoints": [
+    {
+      "revision": 1,
+      "event_index": 1,
+      "turn": 1,
+      "elapsed_minutes": 1,
+      "branch_name": "first_fork"
+    },
+    {
+      "revision": 2,
+      "event_index": 2,
+      "turn": 1,
+      "elapsed_minutes": 1,
+      "branch_name": "first_fork"
+    }
+  ],
+  "C_timeline": [
+    {
+      "branch_id": "106d560b-3871-4224-981c-e95ad245cba2",
+      "checkpoint_id": "b4a4c4f8-d6ce-4a7b-8538-e96fdb293e0c",
+      "from_branch_id": "67729d84-6d01-4a77-a694-8d272745c307",
+      "kind": "branch",
+      "label": "one",
+      "point": {
+        "branch_name": "first_fork",
+        "elapsed_minutes": 1,
+        "event_index": 2,
+        "revision": 2,
+        "turn": 1
+      },
+      "target_point": {
+        "branch_name": "first_fork",
+        "elapsed_minutes": 1,
+        "event_index": 1,
+        "revision": 1,
+        "turn": 1
+      }
+    },
+    {
+      "branch_id": "382ac176-18ef-4e30-9d96-364e7deef586",
+      "checkpoint_id": "558fd92e-c4e5-4e30-865d-9e4b799418d6",
+      "from_branch_id": "106d560b-3871-4224-981c-e95ad245cba2",
+      "kind": "load",
+      "label": "two",
+      "point": {
+        "branch_name": "alternate",
+        "elapsed_minutes": 1,
+        "event_index": 3,
+        "revision": 3,
+        "turn": 1
+      },
+      "target_point": {
+        "branch_name": "first_fork",
+        "elapsed_minutes": 1,
+        "event_index": 2,
+        "revision": 2,
+        "turn": 1
+      }
+    }
+  ]
+}
