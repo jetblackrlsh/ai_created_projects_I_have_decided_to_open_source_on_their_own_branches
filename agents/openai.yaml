@@ -1,0 +1,14 @@
+interface:
+  display_name: Create Canvas GLSL Art
+  short_description: Layered artwork, cinematic stories and model audio
+  default_prompt: Use $create-canvas-glsl-art to create an original layered Canvas
+    scene with genuine GLSL lighting and deterministic animation.
+  icon_small: assets/icon.svg
+  icon_large: assets/icon.svg
+policy:
+  products:
+  - chatgpt
+  - codex
+  - api
+  - atlas
+  allow_implicit_invocation: true
