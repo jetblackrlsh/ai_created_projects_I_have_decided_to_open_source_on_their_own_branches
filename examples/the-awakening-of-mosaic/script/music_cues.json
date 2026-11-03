@@ -1,0 +1,31 @@
+{
+  "cues": [
+    {
+      "name": "music_act1_mystery_of_veyra",
+      "start_scene": "S01",
+      "end_scene": "S04",
+      "seconds": 60,
+      "seed": 1001,
+      "steps": 8,
+      "prompt": "Atmospheric sci-fi adventure orchestral and analog synth score, mysterious ancient clockwork wonder, warm cello and shimmering arpeggios, steady pulse, instrumental, no vocals"
+    },
+    {
+      "name": "music_act2_engineering_and_intrusion",
+      "start_scene": "S05",
+      "end_scene": "S08",
+      "seconds": 60,
+      "seed": 2002,
+      "steps": 8,
+      "prompt": "Driving heroic cyberpunk electronic orchestral action music, urgent rhythmic synth bass and brass stabs, high tension rescue momentum, instrumental, no vocals"
+    },
+    {
+      "name": "music_act3_sparring_and_awakening",
+      "start_scene": "S09",
+      "end_scene": "S11",
+      "seconds": 60,
+      "seed": 3003,
+      "steps": 8,
+      "prompt": "Uplifting wondrous futuristic orchestral synth soundtrack, playful kinetic energy evolving into warm emotional philosophical resolution and cosmic awe, instrumental, no vocals"
+    }
+  ]
+}

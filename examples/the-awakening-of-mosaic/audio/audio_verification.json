@@ -1,0 +1,19 @@
+{
+  "sample_rate": 48000,
+  "duration_sec": 423.551,
+  "master_peak_db": -2.26,
+  "master_rms_db": -15.02,
+  "voice_active_rms_db": -14.59,
+  "sfx_active_rms_db": -21.07,
+  "sfx_peak_db": -4.26,
+  "music_ducked_rms_db": -27.97,
+  "music_unducked_rms_db": -22.75,
+  "voice_over_music_margin_db": 13.38,
+  "sfx_over_music_margin_db": 6.9,
+  "checks": {
+    "dialogue_louder_than_music": true,
+    "sfx_louder_than_music": true,
+    "music_remains_audible": true,
+    "unique_voices_verified": true
+  }
+}

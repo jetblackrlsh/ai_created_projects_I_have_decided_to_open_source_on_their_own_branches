@@ -1,0 +1,13 @@
+{
+  "name": "the-awakening-of-mosaic",
+  "version": "1.0.0",
+  "description": "WebGL Shaders & 2D Canvas Story Animation of The Awakening of Mosaic (world_sim_session_1_narrative)",
+  "type": "module",
+  "scripts": {
+    "render-mp4": "node src/render-mp4.mjs",
+    "validate": "python3 ../../scripts/validate_project.py ."
+  },
+  "dependencies": {
+    "@napi-rs/canvas": "^0.1.65"
+  }
+}

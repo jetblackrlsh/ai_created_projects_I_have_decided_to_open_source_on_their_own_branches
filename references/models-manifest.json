@@ -1,0 +1,62 @@
+{
+  "kokoro_tts": {
+    "provider": "kokoro-onnx",
+    "release_base_url": "https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.0",
+    "files": [
+      {
+        "name": "kokoro-v1.0.onnx",
+        "bytes": 325532387,
+        "sha256": "7d5df8ecf7d4b1878015a32686053fd0eebe2bc377234608764cc0ef3636a6c5"
+      },
+      {
+        "name": "voices-v1.0.bin",
+        "bytes": 28214398,
+        "sha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d"
+      }
+    ],
+    "recommended_voices": {
+      "Narrator": {"voice": "af_heart", "speed": 1.0, "description": "Warm, expressive US female narrator"},
+      "Traveler": {"voice": "am_adam", "speed": 1.0, "description": "Earnest, determined US male aspiring hero"},
+      "Velocity": {"voice": "af_sky", "speed": 1.06, "description": "Fast, energetic US female speedster"},
+      "Aegis Prime": {"voice": "bf_emma", "speed": 0.97, "description": "Poised, authoritative UK female veteran engineer"},
+      "Astral Warden": {"voice": "af_nicole", "speed": 0.95, "description": "Mystical, resonant cosmic sorcerer"},
+      "ARCHITECT": {"voice": "bm_george", "speed": 0.96, "description": "Measured, analytical UK male laboratory AI"},
+      "ARCHITECT-S1": {"voice": "am_michael", "speed": 1.02, "description": "Crisp, tactical US male wrist AI companion"},
+      "Mosaic": {"voice": "bm_lewis", "speed": 0.91, "description": "Deep, contemplative UK male awakened modular giant"},
+      "ARCHITECT-S2": {"voice": "af_bella", "speed": 1.08, "description": "Bright, curious US female 15cm shapeshifting robot"}
+    }
+  },
+  "stable_audio_3_litert": {
+    "runtime_repo": "https://github.com/Stability-AI/stable-audio-3",
+    "runtime_commit": "5f5e6ac21ae9ff78a6e8847eb7a1dcbe969ffb84",
+    "weights_repo": "https://huggingface.co/stabilityai/stable-audio-3-optimized",
+    "weights_revision": "30cb2644da54bfa63275d1bc7f1fa67fc718680f",
+    "files": [
+      {
+        "relative_path": "tflite/sa3-sm-music/dit_w8a8.tflite",
+        "bytes": 539350360,
+        "sha256": "1d8ef99bf10f51cc52b68f7b527d3773828e700758b253edd8a8e088a906e241",
+        "role": "Stable Audio 3 Small-Music DiT (w8a8 LiteRT)"
+      },
+      {
+        "relative_path": "tflite/sa3-sm-sfx/dit_w8a8.tflite",
+        "bytes": 539350360,
+        "sha256": "d3f99409f446eff9a625768ba2ee09a2347ea90c4897c1662fbcd8837fae3045",
+        "role": "Stable Audio 3 Small-SFX DiT (w8a8 LiteRT)"
+      },
+      {
+        "relative_path": "tflite/same-s/dec_w8a8.tflite",
+        "bytes": 94092016,
+        "sha256": "2fc31cdc42a54342233fb8c6da636565b1191d97002665e21812e9814906e241",
+        "verified_sha256": "2fc31cdc42a54342233fb8c6da636565b1191d97002665e21812e981490434a6",
+        "role": "SAME-S Stereo Audio Decoder (w8a8 LiteRT)"
+      },
+      {
+        "relative_path": "tflite/t5gemma/encoder_fp16.tflite",
+        "bytes": 563818608,
+        "sha256": "8530d0b3e6b9b9dcf1239145c2a853fb749708eaddbb472ff8f0802b50059372",
+        "role": "T5Gemma Text Conditioning Encoder (fp16 LiteRT)"
+      }
+    ]
+  }
+}

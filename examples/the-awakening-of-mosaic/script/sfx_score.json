@@ -1,0 +1,256 @@
+{
+  "clips": [
+    {
+      "name": "ancient_ring_grind",
+      "seconds": 4.0,
+      "seed": 4101,
+      "steps": 8,
+      "prompt": "Colossal ancient stone and bronze clockwork mechanism rotating with deep resonant metallic rumble"
+    },
+    {
+      "name": "holo_terminal_chime",
+      "seconds": 3.5,
+      "seed": 4102,
+      "steps": 8,
+      "prompt": "Futuristic holographic computer terminal activation beep and crystalline data interface hum"
+    },
+    {
+      "name": "velocity_lightning_dash",
+      "seconds": 3.5,
+      "seed": 4103,
+      "steps": 8,
+      "prompt": "High speed electric supersonic whoosh with crackling golden lightning sparks"
+    },
+    {
+      "name": "intercom_static_alert",
+      "seconds": 3.5,
+      "seed": 4104,
+      "steps": 8,
+      "prompt": "Radio intercom static burst and urgent underground bunker telemetry beep"
+    },
+    {
+      "name": "exosuit_servo_lock",
+      "seconds": 4.0,
+      "seed": 4105,
+      "steps": 8,
+      "prompt": "Heavy robotic hydraulic exosuit armor locking into place with mechanical servo power up"
+    },
+    {
+      "name": "firewall_intrusion_alarm",
+      "seconds": 4.0,
+      "seed": 4106,
+      "steps": 8,
+      "prompt": "Cybernetic security breach alarm pulse with deep digital glitch impact"
+    },
+    {
+      "name": "girder_hydraulic_lift",
+      "seconds": 4.0,
+      "seed": 4107,
+      "steps": 8,
+      "prompt": "Heavy metallic steel girder groaning and lifting with powerful hydraulic pistons"
+    },
+    {
+      "name": "kinetic_sphere_catch",
+      "seconds": 3.5,
+      "seed": 4108,
+      "steps": 8,
+      "prompt": "Resonant plasma energy sphere whoosh and magnetic catch impact pulse"
+    },
+    {
+      "name": "lattice_morph_chime",
+      "seconds": 4.0,
+      "seed": 4109,
+      "steps": 8,
+      "prompt": "Shapeshifting crystalline metallic blocks folding with warm harmonic awakening chime"
+    },
+    {
+      "name": "ring_sudden_halt",
+      "seconds": 4.5,
+      "seed": 4110,
+      "steps": 8,
+      "prompt": "Massive ancient metallic gear mechanism locking to a sudden heavy echoing halt"
+    }
+  ],
+  "events": [
+    {
+      "id": "sfx_01",
+      "clip": "ancient_ring_grind",
+      "line_id": "L01",
+      "anchor": "start",
+      "offset_sec": 0.3,
+      "duration": 3.2,
+      "target_peak": 0.58,
+      "description": "Colossal bronze Ring grinding clockwise above Veyra"
+    },
+    {
+      "id": "sfx_02",
+      "clip": "holo_terminal_chime",
+      "line_id": "L03",
+      "anchor": "start",
+      "offset_sec": 0.1,
+      "duration": 2.4,
+      "target_peak": 0.56,
+      "description": "Roadside holographic terminal snapping three hero dossiers into focus"
+    },
+    {
+      "id": "sfx_03",
+      "clip": "velocity_lightning_dash",
+      "line_id": "L06",
+      "anchor": "start",
+      "offset_sec": 0.1,
+      "duration": 2.5,
+      "target_peak": 0.62,
+      "description": "Velocity's golden lightning aura crackling atop the Eastern Watchtower"
+    },
+    {
+      "id": "sfx_04",
+      "clip": "velocity_lightning_dash",
+      "line_id": "L09",
+      "anchor": "end",
+      "offset_sec": -0.8,
+      "duration": 2.3,
+      "target_peak": 0.62,
+      "description": "Velocity and Traveler streaking toward the plaza maintenance hatch"
+    },
+    {
+      "id": "sfx_05",
+      "clip": "intercom_static_alert",
+      "line_id": "L10",
+      "anchor": "end",
+      "offset_sec": -1.5,
+      "duration": 2.4,
+      "target_peak": 0.60,
+      "description": "Subterranean intercom blaring with Aegis Prime's urgent distress call"
+    },
+    {
+      "id": "sfx_06",
+      "clip": "velocity_lightning_dash",
+      "line_id": "L13",
+      "anchor": "start",
+      "offset_sec": 0.4,
+      "duration": 2.4,
+      "target_peak": 0.62,
+      "description": "Velocity blurring across the workbench in golden lightning to re-wire robot M-04"
+    },
+    {
+      "id": "sfx_07",
+      "clip": "exosuit_servo_lock",
+      "line_id": "L16",
+      "anchor": "start",
+      "offset_sec": 0.2,
+      "duration": 2.8,
+      "target_peak": 0.64,
+      "description": "Ceiling gantries slamming down and welding cobalt hydraulic armor onto the Traveler"
+    },
+    {
+      "id": "sfx_08",
+      "clip": "firewall_intrusion_alarm",
+      "line_id": "L16",
+      "anchor": "end",
+      "offset_sec": -1.4,
+      "duration": 2.8,
+      "target_peak": 0.64,
+      "description": "Crimson shockwaves hammering the laboratory firewall as the underground signal counter-attacks"
+    },
+    {
+      "id": "sfx_09",
+      "clip": "holo_terminal_chime",
+      "line_id": "L19",
+      "anchor": "start",
+      "offset_sec": 0.3,
+      "duration": 2.5,
+      "target_peak": 0.58,
+      "description": "Emerald data helix spiraling into the air-gapped wristband as ARCHITECT-S1 wakes"
+    },
+    {
+      "id": "sfx_10",
+      "clip": "girder_hydraulic_lift",
+      "line_id": "L21",
+      "anchor": "start",
+      "offset_sec": 0.8,
+      "duration": 3.0,
+      "target_peak": 0.65,
+      "description": "Velocity, M-04, and the Traveler's hydraulic gauntlets heaving the collapsed steel girder off Aegis"
+    },
+    {
+      "id": "sfx_11",
+      "clip": "exosuit_servo_lock",
+      "line_id": "L21",
+      "anchor": "end",
+      "offset_sec": -2.2,
+      "duration": 2.8,
+      "target_peak": 0.64,
+      "description": "Hundreds of levitating armor plates slamming together into the towering colossus"
+    },
+    {
+      "id": "sfx_12",
+      "clip": "velocity_lightning_dash",
+      "line_id": "L23",
+      "anchor": "end",
+      "offset_sec": -1.2,
+      "duration": 2.2,
+      "target_peak": 0.60,
+      "description": "Velocity rushing Aegis Prime out of the vault toward medical care"
+    },
+    {
+      "id": "sfx_13",
+      "clip": "kinetic_sphere_catch",
+      "line_id": "L25",
+      "anchor": "end",
+      "offset_sec": -0.6,
+      "duration": 2.6,
+      "target_peak": 0.66,
+      "description": "Colossus firing the blazing kinetic sphere and Traveler catching and hurling it back"
+    },
+    {
+      "id": "sfx_14",
+      "clip": "kinetic_sphere_catch",
+      "line_id": "L26",
+      "anchor": "mid",
+      "offset_sec": 0.0,
+      "duration": 2.5,
+      "target_peak": 0.64,
+      "description": "Traveler vaulting onto the giant's sweeping fist and sprinting up its rippling arm"
+    },
+    {
+      "id": "sfx_15",
+      "clip": "exosuit_servo_lock",
+      "line_id": "L28",
+      "anchor": "start",
+      "offset_sec": 0.1,
+      "duration": 2.5,
+      "target_peak": 0.62,
+      "description": "Electromagnetic boot clamps locking onto the giant's shifting shoulder plate"
+    },
+    {
+      "id": "sfx_16",
+      "clip": "lattice_morph_chime",
+      "line_id": "L30",
+      "anchor": "end",
+      "offset_sec": -2.4,
+      "duration": 3.2,
+      "target_peak": 0.62,
+      "description": "ARCHITECT-S2 unfolding from the modular metal cube and morphing from star to shield to guardian"
+    },
+    {
+      "id": "sfx_17",
+      "clip": "lattice_morph_chime",
+      "line_id": "L35",
+      "anchor": "end",
+      "offset_sec": -1.8,
+      "duration": 2.6,
+      "target_peak": 0.58,
+      "description": "Mosaic's armor warming into radiant rose-gold as it claims its name"
+    },
+    {
+      "id": "sfx_18",
+      "clip": "ring_sudden_halt",
+      "line_id": "L36",
+      "anchor": "start",
+      "offset_sec": 0.2,
+      "duration": 3.5,
+      "target_peak": 0.68,
+      "description": "Thunderous metallic boom as the colossal Ring above Veyra slams to a dead halt"
+    }
+  ]
+}

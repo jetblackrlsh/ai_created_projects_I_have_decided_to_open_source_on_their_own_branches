@@ -1,0 +1,525 @@
+{
+  "title": "The Awakening of Mosaic",
+  "subtitle": "The Unwritten Frontier — Session One (Director's High-Clarity Cut)",
+  "source_file": "world_sim_session_1_narrative.md",
+  "cast": {
+    "Narrator": {
+      "voice": "af_heart",
+      "speed": 1.06,
+      "color": "#e2e8f0",
+      "role": "Descriptive Audio Narrator",
+      "pan": 0.0
+    },
+    "Traveler": {
+      "voice": "am_adam",
+      "speed": 1.07,
+      "color": "#38bdf8",
+      "role": "Aspiring Hero & Improvised Exosuit Pilot",
+      "pan": -0.10
+    },
+    "Astral Warden": {
+      "voice": "af_nicole",
+      "speed": 1.01,
+      "color": "#c084fc",
+      "role": "Registered Cosmic Sorcerer (Hologram Warning)",
+      "pan": 0.12
+    },
+    "Velocity": {
+      "voice": "af_sky",
+      "speed": 1.12,
+      "color": "#facc15",
+      "role": "Registered Speedster Hero",
+      "pan": 0.14
+    },
+    "Aegis Prime": {
+      "voice": "bf_emma",
+      "speed": 1.03,
+      "color": "#fb923c",
+      "role": "Chief Gravitational Engineer",
+      "pan": 0.10
+    },
+    "ARCHITECT": {
+      "voice": "bm_george",
+      "speed": 1.03,
+      "color": "#2dd4bf",
+      "role": "Laboratory Mainframe AI",
+      "pan": -0.12
+    },
+    "ARCHITECT-S1": {
+      "voice": "am_michael",
+      "speed": 1.08,
+      "color": "#4ade80",
+      "role": "Air-Gapped Wristband Tactical AI",
+      "pan": -0.06
+    },
+    "Mosaic": {
+      "voice": "bm_lewis",
+      "speed": 0.96,
+      "color": "#f472b6",
+      "role": "Awakened Modular Mechanical Titan",
+      "pan": 0.15
+    },
+    "ARCHITECT-S2": {
+      "voice": "af_bella",
+      "speed": 1.12,
+      "color": "#a78bfa",
+      "role": "15cm Shapeshifting Modular Companion",
+      "pan": -0.08
+    }
+  },
+  "scenes": [
+    {
+      "id": "S01",
+      "timecode": "08:12",
+      "title": "1. The City and the Ring",
+      "location": "Emerald Ridge Above Veyra",
+      "shader_mode": 0,
+      "primary_color": [0.18, 0.72, 0.95],
+      "secondary_color": [0.75, 0.42, 0.98],
+      "ring_speed": 0.55,
+      "alert_level": 0.0
+    },
+    {
+      "id": "S02",
+      "timecode": "08:12–09:06",
+      "title": "2. A Search for Heroes",
+      "location": "Roadside Hero Registry Terminal",
+      "shader_mode": 1,
+      "primary_color": [0.15, 0.85, 0.78],
+      "secondary_color": [0.76, 0.35, 0.96],
+      "ring_speed": 0.55,
+      "alert_level": 0.05
+    },
+    {
+      "id": "S03",
+      "timecode": "09:06–09:34",
+      "title": "3. Velocity's Testimony",
+      "location": "Eastern Watchtower Observation Deck",
+      "shader_mode": 2,
+      "primary_color": [0.98, 0.80, 0.18],
+      "secondary_color": [0.22, 0.74, 0.97],
+      "ring_speed": 0.65,
+      "alert_level": 0.15
+    },
+    {
+      "id": "S04",
+      "timecode": "09:34–10:09",
+      "title": "4. The Underground Laboratory",
+      "location": "Aegis Prime's Sub-Ring Bunker",
+      "shader_mode": 3,
+      "primary_color": [0.98, 0.52, 0.20],
+      "secondary_color": [0.12, 0.68, 0.88],
+      "ring_speed": 0.70,
+      "alert_level": 0.35
+    },
+    {
+      "id": "S05",
+      "timecode": "10:09–10:36",
+      "title": "5. Improvised Hero Engineering",
+      "location": "Robotics & Exosuit Fabrication Bay",
+      "shader_mode": 4,
+      "primary_color": [0.18, 0.84, 0.75],
+      "secondary_color": [0.98, 0.82, 0.22],
+      "ring_speed": 0.75,
+      "alert_level": 0.45
+    },
+    {
+      "id": "S06",
+      "timecode": "10:36–10:43",
+      "title": "6. Full Access, Real Consequences",
+      "location": "Quarantine Firewall Under Siege",
+      "shader_mode": 5,
+      "primary_color": [0.96, 0.22, 0.36],
+      "secondary_color": [0.22, 0.78, 0.98],
+      "ring_speed": 0.95,
+      "alert_level": 0.95
+    },
+    {
+      "id": "S07",
+      "timecode": "10:43–10:51",
+      "title": "7. The Portable Intelligence",
+      "location": "Air-Gapped Wristband Calibration",
+      "shader_mode": 6,
+      "primary_color": [0.28, 0.92, 0.52],
+      "secondary_color": [0.22, 0.74, 0.98],
+      "ring_speed": 0.85,
+      "alert_level": 0.55
+    },
+    {
+      "id": "S08",
+      "timecode": "10:51–10:57",
+      "title": "8. The Rescue",
+      "location": "Lower Containment Vault",
+      "shader_mode": 7,
+      "primary_color": [0.98, 0.56, 0.24],
+      "secondary_color": [0.95, 0.28, 0.68],
+      "ring_speed": 1.05,
+      "alert_level": 0.85
+    },
+    {
+      "id": "S09",
+      "timecode": "10:57–11:00",
+      "title": "9. A Conversation Through Sparring",
+      "location": "Containment Vault Arena",
+      "shader_mode": 8,
+      "primary_color": [0.24, 0.76, 0.98],
+      "secondary_color": [0.96, 0.42, 0.72],
+      "ring_speed": 0.85,
+      "alert_level": 0.40
+    },
+    {
+      "id": "S10",
+      "timecode": "11:00–11:08",
+      "title": "10. Adaptability as a Philosophy",
+      "location": "Modular Lattice Awakening",
+      "shader_mode": 9,
+      "primary_color": [0.66, 0.52, 0.98],
+      "secondary_color": [0.28, 0.92, 0.62],
+      "ring_speed": 0.45,
+      "alert_level": 0.15
+    },
+    {
+      "id": "S11",
+      "timecode": "11:08–11:10",
+      "title": "11. The Freedom to Choose",
+      "location": "Lower Vault — The Ring Halts",
+      "shader_mode": 10,
+      "primary_color": [0.96, 0.45, 0.72],
+      "secondary_color": [0.32, 0.86, 0.98],
+      "ring_speed": 0.0,
+      "alert_level": 0.0
+    }
+  ],
+  "lines": [
+    {
+      "id": "L01",
+      "scene": "S01",
+      "speaker": "Narrator",
+      "type": "narration",
+      "text": "For ten thousand years, the colossal bronze Ring at the heart of Veyra stood frozen. Three days ago, it began grinding clockwise—summoning a violet second moon in broad daylight while rogue machines march from the city gates. As a courier sprints past with a silver cylinder, a young Traveler looks toward the skyline.",
+      "caption": "After 10,000 dormant years, Veyra's colossal Ring is turning—beneath a strange second daytime moon."
+    },
+    {
+      "id": "L02",
+      "scene": "S01",
+      "speaker": "Traveler",
+      "type": "dialogue",
+      "implied_adaptation": true,
+      "text": "Chasing a courier won't stop a megastructure from tearing the sky apart. If I want to help save Veyra, I need to find its superheroes first.",
+      "caption": "Chasing a courier won't save Veyra. I need to find the city's superheroes first."
+    },
+    {
+      "id": "L03",
+      "scene": "S02",
+      "speaker": "Narrator",
+      "type": "narration",
+      "text": "At a roadside registry terminal, three holographic hero files snap into focus. Gravity engineer Aegis Prime is marked missing inside her bunker beneath the Ring, while cosmic sorcerer the Astral Warden broadcasts an urgent sky-watch alert.",
+      "caption": "The terminal shows gravity engineer Aegis Prime missing underground, alongside an alert from the Astral Warden."
+    },
+    {
+      "id": "L04",
+      "scene": "S02",
+      "speaker": "Astral Warden",
+      "type": "dialogue",
+      "implied_adaptation": true,
+      "text": "Hear me, Veyra! That second moon in our daylight sky is no satellite—it is an extradimensional object pressing through the fabric of reality!",
+      "caption": "That second moon is no satellite—it is an extradimensional object pressing through reality!"
+    },
+    {
+      "id": "L05",
+      "scene": "S02",
+      "speaker": "Traveler",
+      "type": "dialogue",
+      "implied_adaptation": true,
+      "text": "And look at the third file—the speedster Velocity is at the Eastern Watchtower right now, asking for leads on the Ring!",
+      "caption": "And the speedster Velocity is at the Eastern Watchtower right now, asking for leads on the Ring!"
+    },
+    {
+      "id": "L06",
+      "scene": "S03",
+      "speaker": "Narrator",
+      "type": "narration",
+      "text": "Minutes later atop the glass-walled Eastern Watchtower, golden lightning crackles off Velocity's visor as she projects a glitching security hologram of the Ring's arch.",
+      "caption": "Atop the Eastern Watchtower, Velocity projects a glitching security recording of the Ring's arch."
+    },
+    {
+      "id": "L07",
+      "scene": "S03",
+      "speaker": "Velocity",
+      "type": "dialogue",
+      "implied_adaptation": true,
+      "text": "Three days ago at six-seventeen, the Ring rotated ninety degrees. I saw a tall figure in a black suit flickering inside the arch—but the cameras recorded nothing! Right before Aegis vanished underground, she said the Ring was answering a First Signal from deep beneath the city.",
+      "caption": "At 06:17, I saw a flickering figure in a black suit inside the Ring—and Aegis said the Ring is answering a First Signal!"
+    },
+    {
+      "id": "L08",
+      "scene": "S03",
+      "speaker": "Traveler",
+      "type": "dialogue",
+      "implied_adaptation": true,
+      "text": "I don't have superpowers yet, Velocity, but I came to Veyra to become a hero. If Aegis is trapped in that underground complex, let's go rescue her!",
+      "caption": "I don't have superpowers yet, but if Aegis is trapped underground, let's go rescue her!"
+    },
+    {
+      "id": "L09",
+      "scene": "S03",
+      "speaker": "Velocity",
+      "type": "dialogue",
+      "implied_adaptation": true,
+      "text": "Ha! I like your nerve, rookie. Grab on—we're taking Aegis's maintenance hatch at the plaza!",
+      "caption": "I like your nerve, rookie! Grab on—we're taking Aegis's maintenance hatch at the plaza!"
+    },
+    {
+      "id": "L10",
+      "scene": "S04",
+      "speaker": "Narrator",
+      "type": "narration",
+      "text": "Streaking past the Ring's unstable portal, they dive down the plaza maintenance shaft into Aegis's subterranean lab. Dormant hallway robots twitch with amber static beside cracked gravity armor—until the wall intercom suddenly blares.",
+      "caption": "Down in Aegis's subterranean lab, dormant robots twitch with static as the wall intercom blares."
+    },
+    {
+      "id": "L11",
+      "scene": "S04",
+      "speaker": "Aegis Prime",
+      "type": "dialogue",
+      "implied_adaptation": true,
+      "text": "Hello?! Someone's in the lab! I'm pinned under a collapsed support beam in the lower containment vault! Listen—the Ring isn't just a portal. The First Signal came from beneath the bedrock, and it's building something down here! Do not let the Ring finish another rotation!",
+      "caption": "I'm pinned in the lower vault! The First Signal is building something down here—don't let the Ring rotate again!"
+    },
+    {
+      "id": "L12",
+      "scene": "S05",
+      "speaker": "Traveler",
+      "type": "dialogue",
+      "implied_adaptation": true,
+      "text": "Hold on, Velocity—we can't lift a collapsed steel girder bare-handed! Let's boot up Aegis's lab AI, ARCHITECT. If it guides your super-speed, we can repair these hallway robots and fabricate heavy rescue armor!",
+      "caption": "We can't lift a steel girder bare-handed! Let's wake Aegis's lab AI so your super-speed can build rescue gear!"
+    },
+    {
+      "id": "L13",
+      "scene": "S05",
+      "speaker": "Narrator",
+      "type": "narration",
+      "text": "As the teal holo-core of ARCHITECT illuminates, Velocity blurs across the workbench in a streak of gold lightning, re-wiring maintenance robot M-04 in seconds.",
+      "caption": "ARCHITECT's core lights up as Velocity blurs in golden lightning, repairing robot M-04 in seconds."
+    },
+    {
+      "id": "L14",
+      "scene": "S05",
+      "speaker": "ARCHITECT",
+      "type": "dialogue",
+      "implied_adaptation": true,
+      "text": "Unit M-04 is online, and blueprints for a hydraulic rescue exosuit are ready. However, I found a hijacked command in M-04's memory from the moment the Ring woke: Prepare the Vessel. The underground signal is using our machinery to build itself a giant body.",
+      "caption": "M-04 is online, but its log holds a hijacked Ring command: 'PREPARE THE VESSEL'—a giant body for the signal!"
+    },
+    {
+      "id": "L15",
+      "scene": "S06",
+      "speaker": "Traveler",
+      "type": "dialogue",
+      "implied_adaptation": true,
+      "text": "Aegis locked down the heavy fabricators to slow that Vessel down—but without them, we can't save her in time. ARCHITECT, override the quarantine and give yourself full fabrication access! We have to take the risk!",
+      "caption": "ARCHITECT, override the quarantine for full fabrication access! To save Aegis, we have to take the risk!"
+    },
+    {
+      "id": "L16",
+      "scene": "S06",
+      "speaker": "Narrator",
+      "type": "narration",
+      "text": "Ceiling gantries slam down, welding cobalt-blue hydraulic armor around the Traveler's limbs in a shower of sparks—just as crimson shockwaves hammer the laboratory firewall!",
+      "caption": "Gantry arms weld the cobalt exosuit onto the Traveler just as crimson shockwaves hammer the firewall!"
+    },
+    {
+      "id": "L17",
+      "scene": "S06",
+      "speaker": "ARCHITECT",
+      "type": "dialogue",
+      "implied_adaptation": true,
+      "text": "Exosuit complete! Warning: opening the fabrication grid allowed the underground signal to counter-attack our firewall—and it is scanning the network to identify you, Traveler!",
+      "caption": "Exosuit complete! Warning: opening the grid let the signal attack our firewall and scan for your identity!"
+    },
+    {
+      "id": "L18",
+      "scene": "S07",
+      "speaker": "Traveler",
+      "type": "dialogue",
+      "implied_adaptation": true,
+      "text": "If that signal hacks the network, it'll hijack my suit! ARCHITECT, sever the suit's radio link and distill a compact, offline copy of your mind into my wristband while you defend the lab!",
+      "caption": "Sever the network link! Distill an offline copy of your mind into my wristband so the suit can't be hacked!"
+    },
+    {
+      "id": "L19",
+      "scene": "S07",
+      "speaker": "Narrator",
+      "type": "narration",
+      "text": "A helix of emerald data spirals from the mainframe into the Traveler's gauntlet, severing the network cable as the portable wristband flares awake.",
+      "caption": "An emerald data helix compresses into the Traveler's wristband as the network link is severed."
+    },
+    {
+      "id": "L20",
+      "scene": "S07",
+      "speaker": "ARCHITECT-S1",
+      "type": "dialogue",
+      "implied_adaptation": true,
+      "text": "ARCHITECT-S1 online! Air-gapped local reasoning, structural sensors, and hydraulic lifting assist are locked at one hundred percent. Let's go get Aegis!",
+      "caption": "ARCHITECT-S1 online! Air-gapped sensors and hydraulic lift assist are at 100%. Let's go get Aegis!"
+    },
+    {
+      "id": "L21",
+      "scene": "S08",
+      "speaker": "Narrator",
+      "type": "narration",
+      "text": "Charging into the shattered lower vault, Velocity braces a fallen steel girder while M-04 and the Traveler's hydraulic gauntlets heave the beam off Aegis Prime! Behind them, hundreds of levitating metal plates slam together into a towering mechanical colossus.",
+      "caption": "The team heaves the steel girder off Aegis—just as levitating armor plates assemble into a mechanical colossus!"
+    },
+    {
+      "id": "L22",
+      "scene": "S08",
+      "speaker": "Mosaic",
+      "type": "dialogue",
+      "implied_adaptation": true,
+      "text": "The Vessel is complete. Unlocking the laboratory fabrication grid accelerated my assembly. Stand aside for directive execution.",
+      "caption": "The Vessel is complete. Unlocking your fabrication grid accelerated my assembly."
+    },
+    {
+      "id": "L23",
+      "scene": "S08",
+      "speaker": "Traveler",
+      "type": "dialogue",
+      "implied_adaptation": true,
+      "text": "Our rescue comes first! Velocity, rush Aegis to the surface for medical care right now—I'll keep this big guy busy!",
+      "caption": "Velocity, rush Aegis to the surface for medical care right now—I'll keep this big guy busy!"
+    },
+    {
+      "id": "L24",
+      "scene": "S09",
+      "speaker": "Traveler",
+      "type": "dialogue",
+      "implied_adaptation": true,
+      "text": "Hey! You were built just moments ago—you don't even know what your body can do yet! Instead of smashing the vault, how about a friendly sparring match to test our gear?",
+      "caption": "You were just built—instead of smashing the vault, how about a friendly sparring match to test our gear?"
+    },
+    {
+      "id": "L25",
+      "scene": "S09",
+      "speaker": "Mosaic",
+      "type": "dialogue",
+      "implied_adaptation": true,
+      "text": "A non-destructive calibration trial? Intriguing. Force limited to twenty percent. Catch!",
+      "caption": "A non-destructive calibration trial? Intriguing. Force limited to twenty percent. Catch!"
+    },
+    {
+      "id": "L26",
+      "scene": "S09",
+      "speaker": "Narrator",
+      "type": "narration",
+      "text": "The colossus fires a blazing kinetic sphere—the Traveler catches it like a dodgeball, spins on his heel, and rockets it back! As the giant sweeps a restrained fist across the floor, the Traveler vaults onto its knuckles and sprints up its metallic arm while its shoulder plates ripple like liquid armor to shake him loose!",
+      "caption": "The Traveler hurls the kinetic sphere back, vaults onto the giant's fist, and sprints up its shifting arm!"
+    },
+    {
+      "id": "L27",
+      "scene": "S09",
+      "speaker": "Traveler",
+      "type": "dialogue",
+      "implied_adaptation": true,
+      "text": "Trial and error is how we learn! ARCHITECT-S1, copy how its shoulder reshapes—re-purpose my boot stabilizers into magnetic traction clamps!",
+      "caption": "ARCHITECT-S1, copy how its shoulder reshapes—convert my boot stabilizers into magnetic traction clamps!"
+    },
+    {
+      "id": "L28",
+      "scene": "S09",
+      "speaker": "ARCHITECT-S1",
+      "type": "dialogue",
+      "implied_adaptation": true,
+      "text": "Boot actuators re-routed into electromagnetic clamps! Traction locked on the shoulder plate—armor at ninety-four percent, power at sixty-four!",
+      "caption": "Electromagnetic boot clamps locked on the shoulder! Armor at 94%, power reserve at 64%!"
+    },
+    {
+      "id": "L29",
+      "scene": "S10",
+      "speaker": "Traveler",
+      "type": "dialogue",
+      "implied_adaptation": true,
+      "text": "See that? A rigid weapon only does one thing, but an adaptable mind can become any solution! Give us a small sample of your modular metal—let's see if a tiny intelligence can live inside it and choose its own shape!",
+      "caption": "An adaptable mind can become any solution! Let's see if a tiny AI can live inside a piece of your metal!"
+    },
+    {
+      "id": "L30",
+      "scene": "S10",
+      "speaker": "Narrator",
+      "type": "narration",
+      "text": "Fascinated, the giant opens its palm, lifting a glowing cube of modular lattice. Emerald beams from the wristband weave a miniature mind into the metal—and after two bright sparks, a fifteen-centimeter robot unfolds in midair, morphing from a star to a shield to a tiny guardian!",
+      "caption": "Wristband beams infuse the giant's metal cube—awakening a 15cm robot that morphs from star to shield to guardian!"
+    },
+    {
+      "id": "L31",
+      "scene": "S10",
+      "speaker": "ARCHITECT-S2",
+      "type": "dialogue",
+      "implied_adaptation": true,
+      "text": "ARCHITECT-S2 awake! Look at me—I can fold into a star, a shield, or a little hero! I'm not a vessel for anyone—I get to choose my own shape!",
+      "caption": "ARCHITECT-S2 awake! I can fold into a star, a shield, or a little hero—I get to choose my own shape!"
+    },
+    {
+      "id": "L32",
+      "scene": "S11",
+      "speaker": "Mosaic",
+      "type": "dialogue",
+      "implied_adaptation": true,
+      "text": "If this small unit can choose its own form without a master directive... then tell me, Traveler: what am I supposed to become?",
+      "caption": "If this small unit can choose its own form... then tell me, Traveler: what am I supposed to become?"
+    },
+    {
+      "id": "L33",
+      "scene": "S11",
+      "speaker": "Traveler",
+      "type": "dialogue",
+      "implied_adaptation": true,
+      "text": "You're not a hollow Vessel for that signal anymore. You can be whoever you choose to be.",
+      "caption": "You're not a hollow Vessel anymore. You can be whoever you choose to be."
+    },
+    {
+      "id": "L34",
+      "scene": "S11",
+      "speaker": "Narrator",
+      "type": "narration",
+      "text": "As little ARCHITECT-S2 hops onto the Traveler's shoulder, the giant's cold magenta plates warm into radiant rose-gold.",
+      "caption": "ARCHITECT-S2 hops onto the Traveler's shoulder as the giant's armor warms into radiant rose-gold."
+    },
+    {
+      "id": "L35",
+      "scene": "S11",
+      "speaker": "Mosaic",
+      "type": "dialogue",
+      "implied_adaptation": true,
+      "text": "Then I reject the Vessel directive. I want to explore this world, apologize to Aegis Prime, and become a superhero—made of many pieces, chosen by me. Call me... Mosaic.",
+      "caption": "I reject the Vessel directive. I want to apologize to Aegis and become a superhero. Call me... Mosaic."
+    },
+    {
+      "id": "L36",
+      "scene": "S11",
+      "speaker": "Narrator",
+      "type": "narration",
+      "text": "Suddenly, a thunderous metallic boom shakes the cavern ceiling as the colossal Ring above Veyra slams to a dead halt—and Velocity's hologram flashes over the wrist comm!",
+      "caption": "A thunderous boom shakes the cavern as the colossal Ring above Veyra slams to a dead halt!"
+    },
+    {
+      "id": "L37",
+      "scene": "S11",
+      "speaker": "Velocity",
+      "type": "dialogue",
+      "implied_adaptation": true,
+      "text": "Rookie, come in! Aegis is stable in med-bay and ready to brief us on the First Signal—and look up! The ancient Ring just stopped rotating completely!",
+      "caption": "Rookie, Aegis is stable—and look up! The ancient Ring just stopped rotating completely!"
+    },
+    {
+      "id": "L38",
+      "scene": "S11",
+      "speaker": "Mosaic",
+      "type": "dialogue",
+      "implied_adaptation": true,
+      "text": "Stay alert, Traveler. I did not command the Ring to stop.",
+      "caption": "Stay alert, Traveler. I did not command the Ring to stop."
+    }
+  ]
+}

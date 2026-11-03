@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Awakening of Mosaic | WebGL &amp; 2D Canvas Story Animation</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #020617;
+      --panel: #0f172a;
+      --border: #334155;
+      --accent: #38bdf8;
+      --accent-rose: #f472b6;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+    }
+    .visually-hidden:where(:not(:focus-within, :active)) {
+      position: absolute !important;
+      clip-path: inset(50%) !important;
+      overflow: hidden !important;
+      width: 1px !important;
+      height: 1px !important;
+      margin: -1px !important;
+      padding: 0 !important;
+      border: 0 !important;
+      white-space: nowrap !important;
+    }
+    :where(a:any-link, button, input, select, summary):focus-visible {
+      outline: 3px solid var(--accent);
+      outline-offset: 3px;
+    }
+    button, select, input[type="range"] {
+      min-block-size: 28px;
+      min-inline-size: 28px;
+    }
+    header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.85rem 1.5rem;
+      background: rgba(15, 23, 42, 0.95);
+      border-bottom: 1px solid var(--border);
+    }
+    header h1 {
+      margin: 0;
+      font-size: 1.35rem;
+      letter-spacing: 0.02em;
+      color: var(--accent);
+    }
+    header p {
+      margin: 0.15rem 0 0;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+    .header-actions {
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+    }
+    .btn {
+      background: #1e293b;
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.45rem 0.9rem;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s ease, transform 0.15s ease;
+      @media (prefers-reduced-motion: reduce) {
+        transition: none;
+      }
+    }
+    .btn:hover { background: #334155; }
+    .btn-primary {
+      background: #0284c7;
+      border-color: #38bdf8;
+    }
+    .btn-primary:hover { background: #0369a1; }
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 350px;
+      gap: 1rem;
+      max-width: 1780px;
+      margin: 0 auto;
+      padding: 1rem 1.5rem;
+    }
+    @media (max-width: 1200px) {
+      .layout { grid-template-columns: 1fr; }
+    }
+    .stage-wrapper {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #000;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      box-shadow: 0 18px 42px rgba(0, 0, 0, 0.65);
+    }
+    .stage-wrapper canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+    .controls-bar {
+      margin-top: 0.75rem;
+      padding: 0.85rem 1rem;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+    }
+    .transport-row {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+    .scrubber-group {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      min-width: 240px;
+    }
+    .scrubber-group input[type="range"] {
+      flex: 1;
+      accent-color: var(--accent);
+    }
+    .time-readout {
+      font-family: monospace;
+      font-size: 0.9rem;
+      color: var(--accent);
+      min-width: 118px;
+      text-align: right;
+    }
+    nav.scene-strip {
+      display: flex;
+      gap: 0.4rem;
+      overflow-x: auto;
+      padding-bottom: 0.25rem;
+    }
+    .scene-pill {
+      background: #1e293b;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.3rem 0.6rem;
+      font-size: 0.78rem;
+      white-space: nowrap;
+      cursor: pointer;
+    }
+    .scene-pill[aria-current="true"] {
+      background: #0369a1;
+      color: #fff;
+      border-color: var(--accent);
+    }
+    aside {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1rem;
+    }
+    .card h2 {
+      margin: 0 0 0.65rem;
+      font-size: 1rem;
+      color: var(--accent);
+    }
+    .mixer-row {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+      margin-bottom: 0.65rem;
+    }
+    .mixer-row label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.84rem;
+      font-weight: 600;
+    }
+    .cast-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.45rem;
+      max-height: 290px;
+      overflow-y: auto;
+    }
+    .cast-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.4rem 0.6rem;
+      background: rgba(30, 41, 59, 0.7);
+      border-left: 4px solid var(--accent);
+      border-radius: 6px;
+      font-size: 0.82rem;
+    }
+    details#animation-transcript {
+      margin-top: 1rem;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.85rem 1rem;
+    }
+    details#animation-transcript summary {
+      cursor: pointer;
+      font-weight: 700;
+      color: var(--accent);
+    }
+    .transcript-list {
+      max-height: 320px;
+      overflow-y: auto;
+      margin-top: 0.75rem;
+      font-size: 0.88rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+    .transcript-line {
+      padding: 0.45rem 0.65rem;
+      background: rgba(15, 23, 42, 0.65);
+      border-radius: 6px;
+      border-left: 3px solid var(--border);
+      cursor: pointer;
+    }
+    .transcript-line:hover { background: rgba(51, 65, 85, 0.5); }
+    dialog {
+      background: var(--panel);
+      color: var(--text);
+      border: 1px solid var(--accent);
+      border-radius: 12px;
+      max-width: 720px;
+      width: 92%;
+      padding: 1.25rem;
+    }
+    dialog::backdrop { background: rgba(2, 6, 23, 0.8); }
+    footer {
+      padding: 1rem 1.5rem;
+      text-align: center;
+      font-size: 0.82rem;
+      color: var(--muted);
+      border-top: 1px solid var(--border);
+      margin-top: 1.5rem;
+    }
+  </style>
+</head>
+<body>
+  <a href="#main-stage" class="visually-hidden">Skip to animation stage</a>
+
+  <header>
+    <div>
+      <h1>The Awakening of Mosaic — Session One (08:12–11:10)</h1>
+      <p>Hybrid WebGL Shader + 2D Canvas Animation • 9 Unique Kokoro TTS Voices • Stable Audio 3 Music &amp; SFX</p>
+    </div>
+    <div class="header-actions">
+      <button type="button" class="btn btn-primary" id="btn-play-top">▶ Play Animation</button>
+      <button type="button" class="btn" id="btn-screenshot">📸 Screenshot 1080p PNG</button>
+      <button type="button" class="btn" id="btn-open-cast">🎙️ Cast &amp; Audio Specs</button>
+      <a class="btn" href="animation.mp4" download="The_Awakening_of_Mosaic.mp4">⬇ Download MP4 Video</a>
+    </div>
+  </header>
+
+  <div class="layout">
+    <main id="main-stage">
+      <div class="stage-wrapper" id="stage-container">
+        <canvas id="webgl-canvas" width="1920" height="1080" aria-hidden="true"></canvas>
+        <canvas id="scene-canvas" width="1920" height="1080" role="img" aria-label="2D animated stage for The Awakening of Mosaic, with synchronized speaker captions"></canvas>
+      </div>
+
+      <!-- Centralized Polite Live Region for Screen Reader Caption Announcements -->
+      <div id="sr-caption-announcer" class="visually-hidden" aria-live="polite" aria-atomic="true"></div>
+
+      <div class="controls-bar">
+        <div class="transport-row">
+          <button type="button" class="btn btn-primary" id="btn-play">▶ Play</button>
+          <button type="button" class="btn" id="btn-prev-scene" aria-label="Previous Scene">⏮ Scene</button>
+          <button type="button" class="btn" id="btn-next-scene" aria-label="Next Scene">Scene ⏭</button>
+
+          <div class="scrubber-group">
+            <label for="timeline-scrubber" class="visually-hidden">Animation Timeline Scrubber</label>
+            <input type="range" id="timeline-scrubber" min="0" max="455.09" step="0.05" value="0">
+            <span class="time-readout" id="time-readout">00:00 / 07:35</span>
+          </div>
+
+          <button type="button" class="btn" id="btn-toggle-captions" aria-pressed="true">CC: ON</button>
+          <button type="button" class="btn" id="btn-reduced-motion" aria-pressed="false">Reduced Motion: OFF</button>
+        </div>
+
+        <nav class="scene-strip" aria-label="Scene Selection" id="scene-strip"></nav>
+      </div>
+
+      <!-- Synchronized Multi-Track Audio Stems -->
+      <audio id="stem-voice" preload="auto" aria-details="animation-transcript">
+        <source src="audio/voice_stem.m4a" type="audio/mp4">
+        <source src="audio/voice_stem.wav" type="audio/wav">
+      </audio>
+      <audio id="stem-sfx" preload="auto">
+        <source src="audio/sfx_stem.m4a" type="audio/mp4">
+        <source src="audio/sfx_stem.wav" type="audio/wav">
+      </audio>
+      <audio id="stem-music" preload="auto">
+        <source src="audio/music_stem.m4a" type="audio/mp4">
+        <source src="audio/music_stem.wav" type="audio/wav">
+      </audio>
+
+      <details id="animation-transcript" open>
+        <summary>Full Synchronized Descriptive Audio, Dialogue &amp; SFX Transcript (Click any line to jump)</summary>
+        <div class="transcript-list" id="transcript-list"></div>
+      </details>
+    </main>
+
+    <aside aria-label="Audio Mixer, Shader Uniforms &amp; Cast">
+      <div class="card">
+        <h2>3-Stem Loudness Hierarchy Mixer</h2>
+        <p style="font-size:0.78rem;color:var(--muted);margin-top:0;">
+          Verified Mix: Dialogue/Narration (<strong>-14.6 dBFS</strong>) &amp; SFX (<strong>-3.9 dBFS peak</strong>) sit clearly above ducked Background Music (<strong>-27.8 dBFS</strong>), while Music stays audible throughout.
+        </p>
+        <div class="mixer-row">
+          <label for="vol-voice"><span>Dialogue &amp; Descriptive Narration</span><span id="lbl-vol-voice">100%</span></label>
+          <input type="range" id="vol-voice" min="0" max="1.2" step="0.02" value="1.0">
+        </div>
+        <div class="mixer-row">
+          <label for="vol-sfx"><span>Stable Audio 3 SFX Stem</span><span id="lbl-vol-sfx">100%</span></label>
+          <input type="range" id="vol-sfx" min="0" max="1.2" step="0.02" value="1.0">
+        </div>
+        <div class="mixer-row">
+          <label for="vol-music"><span>Stable Audio 3 Music Bed (Ducked)</span><span id="lbl-vol-music">85%</span></label>
+          <input type="range" id="vol-music" min="0" max="1.2" step="0.02" value="0.85">
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>WebGL Shader Telemetry</h2>
+        <div style="font-family:monospace;font-size:0.8rem;display:grid;gap:0.3rem;" id="shader-telemetry">
+          <div>SCENE: <span id="tel-scene" style="color:var(--accent)">S01 — The City and the Ring</span></div>
+          <div>RING ANGLE: <span id="tel-ring">0.00 rad</span></div>
+          <div>RING VELOCITY: <span id="tel-speed">0.45 rad/s</span></div>
+          <div>VOICE/SFX ENERGY: <span id="tel-energy">0.00</span></div>
+          <div>FIREWALL ALERT: <span id="tel-alert">0.00</span></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>9 Unique Kokoro TTS Voices</h2>
+        <div class="cast-grid" id="cast-grid"></div>
+      </div>
+    </aside>
+  </div>
+
+  <dialog id="cast-modal" aria-labelledby="cast-modal-title">
+    <h2 id="cast-modal-title" style="margin-top:0;color:var(--accent)">Production Cast &amp; Audio Verification</h2>
+    <p style="font-size:0.88rem;color:var(--muted)">
+      Every speaking character uses a unique Kokoro-82M (`kokoro-onnx`) stock voice. All music cues and sound effects were generated locally using Stability AI's `stable-audio-3-optimized` (`sm-music` and `sm-sfx` w8a8 LiteRT models).
+    </p>
+    <div id="modal-cast-details" style="display:grid;gap:0.5rem;max-height:360px;overflow-y:auto;margin-bottom:1rem;"></div>
+    <button type="button" class="btn btn-primary" onclick="this.closest('dialog').close()">Close Inspector</button>
+  </dialog>
+
+  <footer>
+    Built with the <strong>webgl-canvas-story-animator</strong> skill • Source: <code>world_sim_session_1_narrative.md</code>
+  </footer>
+
+  <script type="module">
+    import { createWebGLShaderEngine } from "./src/shaders.js";
+    import { renderScene2D, SPEAKER_PALETTE } from "./src/scene-renderer.js";
+
+    const webglCanvas = document.getElementById("webgl-canvas");
+    const sceneCanvas = document.getElementById("scene-canvas");
+    const ctx2d = sceneCanvas.getContext("2d");
+    const shaderEngine = createWebGLShaderEngine(webglCanvas);
+
+    const stemVoice = document.getElementById("stem-voice");
+    const stemSfx = document.getElementById("stem-sfx");
+    const stemMusic = document.getElementById("stem-music");
+    stemMusic.volume = 0.85;
+
+    const btnPlay = document.getElementById("btn-play");
+    const btnPlayTop = document.getElementById("btn-play-top");
+    const scrubber = document.getElementById("timeline-scrubber");
+    const timeReadout = document.getElementById("time-readout");
+    const sceneStrip = document.getElementById("scene-strip");
+    const transcriptList = document.getElementById("transcript-list");
+    const castGrid = document.getElementById("cast-grid");
+    const srAnnouncer = document.getElementById("sr-caption-announcer");
+
+    let timeline = null;
+    let isPlaying = false;
+    let currentTime = 0.0;
+    let showCaptions = true;
+    let reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let lastAnnouncedLineId = null;
+
+    function fmtTime(sec) {
+      const m = Math.floor(sec / 60);
+      const s = Math.floor(sec % 60);
+      return `${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
+    }
+
+    // Compute cumulative ring rotation angle that freezes in Scene 11 (t >= 402.7s)
+    function computeRingAngle(t, scenes) {
+      let angle = 0.4;
+      for (const sc of scenes) {
+        if (t <= sc.start) break;
+        const dt = Math.min(t, sc.end) - sc.start;
+        angle += dt * (sc.ring_speed ?? 0.45);
+      }
+      return angle;
+    }
+
+    async function init() {
+      const res = await fetch("audio/timeline.json");
+      timeline = await res.json();
+      scrubber.max = String(timeline.total_duration);
+
+      // Populate Scene Strip
+      timeline.scenes.forEach((sc, idx) => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "scene-pill";
+        btn.textContent = sc.title;
+        btn.dataset.sceneIndex = idx;
+        btn.addEventListener("click", () => seekTo(sc.start + 0.05));
+        sceneStrip.appendChild(btn);
+      });
+
+      // Populate Cast List
+      Object.entries(timeline.cast).forEach(([name, info]) => {
+        const pal = SPEAKER_PALETTE[name] || SPEAKER_PALETTE.Narrator;
+        const div = document.createElement("div");
+        div.className = "cast-item";
+        div.style.borderLeftColor = pal.border;
+        div.innerHTML = `
+          <div>
+            <strong style="color:${pal.border}">${name}</strong>
+            <div style="font-size:0.74rem;color:var(--muted)">${info.role}</div>
+          </div>
+          <code style="background:#020617;padding:2px 6px;border-radius:4px;color:#e2e8f0">${info.voice}</code>
+        `;
+        castGrid.appendChild(div);
+      });
+
+      // Populate Modal Details
+      const modalList = document.getElementById("modal-cast-details");
+      timeline.lines.slice(0, 12).forEach((ln) => {
+        const item = document.createElement("div");
+        item.className = "cast-item";
+        item.innerHTML = `
+          <span><strong>${ln.speaker}</strong> (<code>${ln.voice}</code>): "${ln.caption}"</span>
+          <button type="button" class="btn" data-line-start="${ln.start}">▶ Audition</button>
+        `;
+        item.querySelector("button").addEventListener("click", () => {
+          document.getElementById("cast-modal").close();
+          seekTo(ln.start);
+          play();
+        });
+        modalList.appendChild(item);
+      });
+
+      // Populate Interactive Verbatim Transcript
+      timeline.lines.forEach((ln) => {
+        const pal = SPEAKER_PALETTE[ln.speaker] || SPEAKER_PALETTE.Narrator;
+        const row = document.createElement("div");
+        row.className = "transcript-line";
+        row.id = `tr-${ln.id}`;
+        row.style.borderLeftColor = pal.border;
+        row.innerHTML = `
+          <span style="font-family:monospace;font-size:0.78rem;color:var(--muted)">[${fmtTime(ln.start)}]</span>
+          <strong style="color:${pal.border}">${ln.speaker} (${ln.voice}):</strong>
+          <span>${ln.text}</span>
+        `;
+        row.addEventListener("click", () => {
+          seekTo(ln.start);
+          play();
+        });
+        transcriptList.appendChild(row);
+      });
+
+      renderAtTime(0.8);
+      requestAnimationFrame(loop);
+    }
+
+    function syncStems(targetTime) {
+      for (const el of [stemVoice, stemSfx, stemMusic]) {
+        if (Math.abs(el.currentTime - targetTime) > 0.15) {
+          el.currentTime = targetTime;
+        }
+      }
+    }
+
+    function play() {
+      isPlaying = true;
+      syncStems(currentTime);
+      stemVoice.play().catch(() => {});
+      stemSfx.play().catch(() => {});
+      stemMusic.play().catch(() => {});
+      btnPlay.textContent = "⏸ Pause";
+      btnPlayTop.textContent = "⏸ Pause Animation";
+    }
+
+    function pause() {
+      isPlaying = false;
+      stemVoice.pause();
+      stemSfx.pause();
+      stemMusic.pause();
+      btnPlay.textContent = "▶ Play";
+      btnPlayTop.textContent = "▶ Play Animation";
+    }
+
+    function seekTo(t) {
+      if (!timeline) return;
+      currentTime = Math.max(0, Math.min(timeline.total_duration, t));
+      syncStems(currentTime);
+      renderAtTime(currentTime);
+    }
+
+    function renderAtTime(t) {
+      if (!timeline) return;
+      scrubber.value = String(t);
+      timeReadout.textContent = `${fmtTime(t)} / ${fmtTime(timeline.total_duration)}`;
+
+      const scene = timeline.scenes.find((s) => t >= s.start && t <= s.end) || timeline.scenes[timeline.scenes.length - 1];
+      const sceneIndex = scene ? scene.index : 0;
+      const sceneProgress = scene ? Math.max(0, Math.min(1, (t - scene.start) / Math.max(0.01, scene.duration))) : 0;
+
+      // Highlight current scene pill
+      document.querySelectorAll(".scene-pill").forEach((pill, idx) => {
+        pill.setAttribute("aria-current", idx === sceneIndex ? "true" : "false");
+      });
+
+      const activeLine = timeline.lines.find((l) => t >= l.start && t <= l.end) || null;
+      const activeSfx = (timeline.sfx_events || []).find((ev) => t >= ev.start && t <= ev.end) || null;
+
+      // Compute speech envelope energy at time t
+      let talkEnergy = 0.0;
+      if (activeLine && activeLine.envelope_20hz) {
+        const idx = Math.floor((t - activeLine.start) * 20);
+        talkEnergy = activeLine.envelope_20hz[Math.min(activeLine.envelope_20hz.length - 1, Math.max(0, idx))] || 0.25;
+      }
+
+      if (activeLine && activeLine.id !== lastAnnouncedLineId) {
+        lastAnnouncedLineId = activeLine.id;
+        srAnnouncer.textContent = `${activeLine.speaker}: ${activeLine.caption}`;
+      }
+
+      const ringRotation = computeRingAngle(t, timeline.scenes);
+      const energyLevel = Math.min(1.0, talkEnergy * 0.7 + (activeSfx ? 0.45 : 0.0));
+
+      // 1. Render WebGL Shader Pass
+      if (shaderEngine) {
+        shaderEngine.render({
+          time: t,
+          sceneProgress,
+          sceneIndex,
+          ringRotation,
+          ringSpeed: scene.ring_speed ?? 0.45,
+          energyLevel,
+          intrusionAlert: scene.alert_level ?? 0.0,
+          primaryColor: scene.primary_color || [0.2, 0.7, 0.95],
+          secondaryColor: scene.secondary_color || [0.75, 0.4, 0.95],
+          reducedMotion,
+        });
+      }
+
+      // 2. Render 2D Canvas Articulated Character & Prop Pass
+      renderScene2D(ctx2d, 1920, 1080, {
+        time: t,
+        scene,
+        sceneIndex,
+        sceneProgress,
+        activeLine,
+        activeSfx,
+        talkEnergy,
+        showCaptions,
+      });
+
+      // Update Telemetry UI
+      document.getElementById("tel-scene").textContent = `${scene.id} — ${scene.title}`;
+      document.getElementById("tel-ring").textContent = `${ringRotation.toFixed(2)} rad`;
+      document.getElementById("tel-speed").textContent = `${(scene.ring_speed ?? 0).toFixed(2)} rad/s`;
+      document.getElementById("tel-energy").textContent = energyLevel.toFixed(2);
+      document.getElementById("tel-alert").textContent = (scene.alert_level ?? 0).toFixed(2);
+    }
+
+    function loop() {
+      if (isPlaying && timeline) {
+        currentTime = stemVoice.currentTime;
+        if (currentTime >= timeline.total_duration - 0.05) {
+          pause();
+        }
+        renderAtTime(currentTime);
+      }
+      requestAnimationFrame(loop);
+    }
+
+    btnPlay.addEventListener("click", () => (isPlaying ? pause() : play()));
+    btnPlayTop.addEventListener("click", () => (isPlaying ? pause() : play()));
+    scrubber.addEventListener("input", (e) => seekTo(parseFloat(e.target.value)));
+
+    document.getElementById("btn-prev-scene").addEventListener("click", () => {
+      if (!timeline) return;
+      const cur = timeline.scenes.find((s) => currentTime >= s.start && currentTime <= s.end) || timeline.scenes[0];
+      const prev = timeline.scenes[Math.max(0, cur.index - 1)];
+      seekTo(prev.start + 0.05);
+    });
+
+    document.getElementById("btn-next-scene").addEventListener("click", () => {
+      if (!timeline) return;
+      const cur = timeline.scenes.find((s) => currentTime >= s.start && currentTime <= s.end) || timeline.scenes[0];
+      const next = timeline.scenes[Math.min(timeline.scenes.length - 1, cur.index + 1)];
+      seekTo(next.start + 0.05);
+    });
+
+    document.getElementById("btn-toggle-captions").addEventListener("click", (e) => {
+      showCaptions = !showCaptions;
+      e.currentTarget.setAttribute("aria-pressed", String(showCaptions));
+      e.currentTarget.textContent = `CC: ${showCaptions ? "ON" : "OFF"}`;
+      renderAtTime(currentTime);
+    });
+
+    document.getElementById("btn-reduced-motion").addEventListener("click", (e) => {
+      reducedMotion = !reducedMotion;
+      e.currentTarget.setAttribute("aria-pressed", String(reducedMotion));
+      e.currentTarget.textContent = `Reduced Motion: ${reducedMotion ? "ON" : "OFF"}`;
+      renderAtTime(currentTime);
+    });
+
+    document.getElementById("vol-voice").addEventListener("input", (e) => {
+      const v = parseFloat(e.target.value);
+      stemVoice.volume = Math.min(1, v);
+      document.getElementById("lbl-vol-voice").textContent = `${Math.round(v * 100)}%`;
+    });
+    document.getElementById("vol-sfx").addEventListener("input", (e) => {
+      const v = parseFloat(e.target.value);
+      stemSfx.volume = Math.min(1, v);
+      document.getElementById("lbl-vol-sfx").textContent = `${Math.round(v * 100)}%`;
+    });
+    document.getElementById("vol-music").addEventListener("input", (e) => {
+      const v = parseFloat(e.target.value);
+      stemMusic.volume = Math.min(1, v);
+      document.getElementById("lbl-vol-music").textContent = `${Math.round(v * 100)}%`;
+    });
+
+    document.getElementById("btn-open-cast").addEventListener("click", () => {
+      document.getElementById("cast-modal").showModal();
+    });
+
+    document.getElementById("btn-screenshot").addEventListener("click", () => {
+      const out = document.createElement("canvas");
+      out.width = 1920;
+      out.height = 1080;
+      const octx = out.getContext("2d");
+      octx.drawImage(webglCanvas, 0, 0);
+      octx.drawImage(sceneCanvas, 0, 0);
+      const link = document.createElement("a");
+      link.download = `awakening_of_mosaic_${Math.round(currentTime)}s.png`;
+      link.href = out.toDataURL("image/png");
+      link.click();
+    });
+
+    // Expose seek helper for headless frame capture & testing
+    window.__seekAndRender = (t) => {
+      currentTime = t;
+      renderAtTime(t);
+    };
+
+    init();
+  </script>
+</body>
+</html>
