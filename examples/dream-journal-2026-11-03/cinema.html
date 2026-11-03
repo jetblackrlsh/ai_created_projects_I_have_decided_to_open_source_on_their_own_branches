@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Echoes in the Static — Cinema Theater MP4 Player</title>
+  <style>
+    :root {
+      --bg-deep: #070510;
+      --gold: #fde047;
+      --accent: #c084fc;
+      --spring-ease: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: radial-gradient(circle at 50% 10%, #1d0e38, var(--bg-deep) 75%);
+      color: #f8fafc;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 1.5rem;
+    }
+    header {
+      width: 100%;
+      max-width: 1280px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+    }
+    h1 { color: var(--gold); font-size: 1.35rem; }
+    .btn {
+      background: linear-gradient(135deg, #7e22ce, #4f46e5);
+      color: #fff;
+      text-decoration: none;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.88rem;
+      transition: transform 0.25s var(--spring-ease);
+    }
+    .btn:hover { transform: translateY(-2px); }
+    video {
+      width: 100%;
+      max-width: 1280px;
+      aspect-ratio: 16 / 9;
+      border-radius: 14px;
+      background: #000;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.75), 0 0 0 1px rgba(192, 132, 252, 0.25);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <h1>Echoes in the Static — Dream Journal (11/03/2026) — Cinema MP4</h1>
+      <p style="color:#94a3b8; font-size:0.88rem;">1080p 24fps H.264/AAC Master Render with WebVTT Closed Captions</p>
+    </div>
+    <div style="display:flex; gap:0.6rem;">
+      <a class="btn" href="index.html">🎨 Live WebGL2 Player</a>
+      <a class="btn" href="animation.mp4" download="Dream_Journal_2026_11_03_Echoes_in_the_Static.mp4">⬇ Download MP4</a>
+    </div>
+  </header>
+
+  <video controls preload="metadata" poster="poster_glade.jpg">
+    <source src="animation.mp4" type="video/mp4" />
+    <track kind="captions" src="audio/captions.vtt" srclang="en" label="English" default />
+  </video>
+</body>
+</html>

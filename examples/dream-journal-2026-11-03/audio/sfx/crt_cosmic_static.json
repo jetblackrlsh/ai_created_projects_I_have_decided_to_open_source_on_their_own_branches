@@ -1,0 +1,19 @@
+{
+  "name": "crt_cosmic_static",
+  "model": "stabilityai/stable-audio-3-optimized (sm-sfx w8a8 LiteRT)",
+  "dit": "sm-sfx",
+  "prompt": "Warm vintage CRT television analog static hiss with subtle cosmic harmonic hum",
+  "seconds": 3.5,
+  "seed": 5103,
+  "steps": 8,
+  "elapsed_sec": 1.65,
+  "file": "crt_cosmic_static.wav",
+  "sample_rate": 44100,
+  "duration": 3.5,
+  "peak": 0.68,
+  "peak_db": -3.35,
+  "rms": 0.1618,
+  "rms_db": -15.82,
+  "transient_offset": 0.0,
+  "sha256": "b45ab5fc46cd9125215612871445e123919b39851a9aa41d6e342c5878dd7048"
+}

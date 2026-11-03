@@ -1,0 +1,166 @@
+{
+  "clips": [
+    {
+      "name": "lucid_void_shimmer",
+      "seconds": 3.5,
+      "seed": 5101,
+      "steps": 8,
+      "prompt": "Gentle harmonic celesta starlight wind-chime shimmer in the Storyverse Void"
+    },
+    {
+      "name": "glass_bottle_shatter",
+      "seconds": 3.0,
+      "seed": 5102,
+      "steps": 8,
+      "prompt": "Crisp glass bottle clink and crystalline glass shards scattering on bathroom tile floor"
+    },
+    {
+      "name": "crt_cosmic_static",
+      "seconds": 3.5,
+      "seed": 5103,
+      "steps": 8,
+      "prompt": "Warm vintage CRT television analog static hiss with subtle cosmic harmonic hum"
+    },
+    {
+      "name": "bilingual_desk_bell",
+      "seconds": 3.0,
+      "seed": 5104,
+      "steps": 8,
+      "prompt": "Clear brass hotel reception desk bell ring with warm European cafe acoustics"
+    },
+    {
+      "name": "grimoire_popup_snap",
+      "seconds": 3.5,
+      "seed": 5105,
+      "steps": 8,
+      "prompt": "Crisp parchment book page turn followed by brass clockwork click and harmonic crystal chime"
+    },
+    {
+      "name": "dream_cloud_morph",
+      "seconds": 3.5,
+      "seed": 5106,
+      "steps": 8,
+      "prompt": "Soft magical breeze swell and gentle sparkling chime dissipation"
+    },
+    {
+      "name": "banquet_ranch_drizzle",
+      "seconds": 3.0,
+      "seed": 5107,
+      "steps": 8,
+      "prompt": "Fine dining silver fork and porcelain plate chime with soft condiment squeeze"
+    },
+    {
+      "name": "morning_alarm_wakeup",
+      "seconds": 3.8,
+      "seed": 5108,
+      "steps": 8,
+      "prompt": "Melodic bedside digital alarm clock chime pulsing into waking resonance"
+    }
+  ],
+  "events": [
+    {
+      "id": "sfx_01",
+      "clip": "lucid_void_shimmer",
+      "line_id": "L01",
+      "anchor": "end",
+      "offset_sec": -0.3,
+      "src_offset": 0.0,
+      "duration": 3.2,
+      "fade_in_sec": 0.35,
+      "fade_out_sec": 0.65,
+      "target_peak": 0.50,
+      "description": "Gentle purple Lucid Light wind-chime shimmer across the Storyverse Void"
+    },
+    {
+      "id": "sfx_02",
+      "clip": "glass_bottle_shatter",
+      "line_id": "L04",
+      "anchor": "end",
+      "offset_sec": -0.4,
+      "src_offset": 0.0,
+      "duration": 2.6,
+      "fade_in_sec": 0.04,
+      "fade_out_sec": 0.45,
+      "target_peak": 0.58,
+      "description": "Glass bottle shattering on the bathroom tile floor"
+    },
+    {
+      "id": "sfx_03",
+      "clip": "crt_cosmic_static",
+      "line_id": "L09",
+      "anchor": "start",
+      "offset_sec": 0.5,
+      "src_offset": 0.0,
+      "duration": 3.2,
+      "fade_in_sec": 0.35,
+      "fade_out_sec": 0.65,
+      "target_peak": 0.52,
+      "description": "CRT television hissing with cosmic microwave background static"
+    },
+    {
+      "id": "sfx_04",
+      "clip": "bilingual_desk_bell",
+      "line_id": "L11",
+      "anchor": "start",
+      "offset_sec": -0.2,
+      "src_offset": 0.0,
+      "duration": 2.6,
+      "fade_in_sec": 0.03,
+      "fade_out_sec": 0.50,
+      "target_peak": 0.56,
+      "description": "Hourly Sleep-Debt Hotel brass reception bell chime"
+    },
+    {
+      "id": "sfx_05",
+      "clip": "grimoire_popup_snap",
+      "line_id": "L17",
+      "anchor": "end",
+      "offset_sec": -0.3,
+      "src_offset": 0.0,
+      "duration": 3.2,
+      "fade_in_sec": 0.08,
+      "fade_out_sec": 0.45,
+      "target_peak": 0.58,
+      "description": "3D pop-up grimoire pages unfolding and brass relic pieces snapping together"
+    },
+    {
+      "id": "sfx_06",
+      "clip": "dream_cloud_morph",
+      "line_id": "L21",
+      "anchor": "end",
+      "offset_sec": -0.4,
+      "src_offset": 0.0,
+      "duration": 3.2,
+      "fade_in_sec": 0.25,
+      "fade_out_sec": 0.55,
+      "target_peak": 0.54,
+      "description": "Partial-lucidity cloud rolling across the ice cream shop and fizzling out"
+    },
+    {
+      "id": "sfx_07",
+      "clip": "banquet_ranch_drizzle",
+      "line_id": "L27",
+      "anchor": "end",
+      "offset_sec": -0.3,
+      "src_offset": 0.0,
+      "duration": 2.6,
+      "fade_in_sec": 0.06,
+      "fade_out_sec": 0.40,
+      "target_peak": 0.55,
+      "description": "Banquet silverware clink and ranch dressing bottle squeeze"
+    },
+    {
+      "id": "sfx_08",
+      "clip": "morning_alarm_wakeup",
+      "line_id": "L29",
+      "anchor": "end",
+      "offset_sec": -1.8,
+      "src_offset": 0.0,
+      "duration": 3.5,
+      "fade_in_sec": 0.08,
+      "fade_out_sec": 0.50,
+      "target_peak": 0.60,
+      "description": "Morning bedside alarm chime ringing out just before the first bite lands"
+    }
+  ]
+}

@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Echoes in the Static — Dream Journal 11/03/2026 (Interactive WebGL2 + 2D Painterly Player)</title>
+  <style>
+    :root {
+      --bg-deep: #090614;
+      --panel-bg: rgba(17, 14, 34, 0.85);
+      --accent: #c084fc;
+      --gold: #fde047;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --spring-ease: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: radial-gradient(circle at 50% 15%, #1e103a, var(--bg-deep) 75%);
+      color: var(--text-main);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 1.25rem;
+    }
+    header {
+      width: 100%;
+      max-width: 1280px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.9rem;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    h1 {
+      font-size: 1.35rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      color: var(--gold);
+    }
+    .subtitle {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+    }
+    .stage-wrap {
+      position: relative;
+      width: 100%;
+      max-width: 1280px;
+      aspect-ratio: 16 / 9;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 22px 55px rgba(0, 0, 0, 0.68), 0 0 0 1px rgba(192, 132, 252, 0.25);
+      background: #05030a;
+      content-visibility: auto;
+    }
+    canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+    #grain {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      mix-blend-mode: overlay;
+      opacity: 0.14;
+      z-index: 4;
+    }
+    #poster {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.35s var(--spring-ease);
+      z-index: 3;
+    }
+    .controls-bar {
+      width: 100%;
+      max-width: 1280px;
+      margin-top: 0.9rem;
+      padding: 0.85rem 1.1rem;
+      border-radius: 12px;
+      background: var(--panel-bg);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      flex-wrap: wrap;
+    }
+    button, .link-btn {
+      background: linear-gradient(135deg, #7e22ce, #4f46e5);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 0.5rem 0.95rem;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.88rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform 0.25s var(--spring-ease), background 0.2s ease;
+    }
+    button:hover, .link-btn:hover {
+      transform: translateY(-2px);
+    }
+    input[type="range"] {
+      flex: 1;
+      min-width: 180px;
+      accent-color: var(--accent);
+    }
+    .chapters {
+      width: 100%;
+      max-width: 1280px;
+      margin-top: 0.85rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 0.6rem;
+    }
+    .chapter-btn {
+      text-align: left;
+      background: rgba(30, 22, 54, 0.78);
+      padding: 0.6rem 0.75rem;
+      border-radius: 9px;
+      border: 1px solid rgba(192, 132, 252, 0.22);
+      font-size: 0.8rem;
+    }
+    .chapter-btn.active {
+      border-color: var(--gold);
+      box-shadow: 0 0 14px rgba(253, 224, 71, 0.28);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <h1>Echoes in the Static — Dream Journal (11/03/2026)</h1>
+      <p class="subtitle">Moss-Keeper Painterly Anime Engine • Real-Time Hybrid 2D Gouache Canvas + WebGL2 Shader Grading</p>
+    </div>
+    <div style="display:flex; gap:0.6rem;">
+      <a class="link-btn" href="cinema.html">🎬 Cinema MP4 Player</a>
+      <a class="link-btn" href="animation.mp4" download="Dream_Journal_2026_11_03_Echoes_in_the_Static.mp4">⬇ Download MP4</a>
+    </div>
+  </header>
+
+  <div class="stage-wrap" id="stage-wrap">
+    <img id="poster" src="poster_glade.jpg" alt="Storyverse Void & Nova Poster" fetchpriority="high" />
+    <canvas id="paint-canvas" width="1920" height="1080" style="opacity:0; pointer-events:none;"></canvas>
+    <canvas id="gl-canvas" width="1920" height="1080"></canvas>
+    <canvas id="grain" width="256" height="256"></canvas>
+  </div>
+
+  <div class="controls-bar">
+    <button id="play-btn">▶ Play Story</button>
+    <span id="time-readout" style="font-family:monospace; font-size:0.9rem;">00:00 / 00:00</span>
+    <input id="scrubber" type="range" min="0" max="240" step="0.05" value="0" />
+    <button id="sub-btn">CC: ON</button>
+  </div>
+
+  <div class="chapters" id="chapter-list"></div>
+
+  <audio id="master-audio" src="audio/master.m4a" preload="auto"></audio>
+
+  <script type="module">
+    import { VERTEX_SHADER_SOURCE, FRAGMENT_SHADER_SOURCE } from './src/shaders.js';
+    import { renderStoryFrame } from './src/scene-renderer.js';
+
+    const stageWrap = document.getElementById('stage-wrap');
+    const paintCanvas = document.getElementById('paint-canvas');
+    const pctx = paintCanvas.getContext('2d');
+    const glCanvas = document.getElementById('gl-canvas');
+    const gl = glCanvas.getContext('webgl2');
+    const grainCanvas = document.getElementById('grain');
+    const gctx = grainCanvas.getContext('2d');
+
+    const audio = document.getElementById('master-audio');
+    const playBtn = document.getElementById('play-btn');
+    const scrubber = document.getElementById('scrubber');
+    const timeReadout = document.getElementById('time-readout');
+    const subBtn = document.getElementById('sub-btn');
+    const chapterList = document.getElementById('chapter-list');
+
+    let showSubtitles = true;
+    let timeline = null;
+    let simTime = 0;
+    let isOffscreenPaused = false;
+    let frameCounter = 0;
+
+    // Pause rendering loop when stage is scrolled offscreen via contentvisibilityautostatechange
+    stageWrap.addEventListener('contentvisibilityautostatechange', (e) => {
+      isOffscreenPaused = Boolean(e.skipped);
+    });
+
+    function refreshFilmGrain() {
+      const img = gctx.createImageData(256, 256);
+      const data = img.data;
+      for (let i = 0; i < data.length; i += 4) {
+        const v = (Math.random() * 255) | 0;
+        data[i] = v;
+        data[i + 1] = v;
+        data[i + 2] = v;
+        data[i + 3] = 38;
+      }
+      gctx.putImageData(img, 0, 0);
+    }
+    refreshFilmGrain();
+
+    function compileShader(type, src) {
+      const sh = gl.createShader(type);
+      gl.shaderSource(sh, src);
+      gl.compileShader(sh);
+      return sh;
+    }
+
+    let glProg = null;
+    let sceneTex = null;
+    if (gl) {
+      const vs = compileShader(gl.VERTEX_SHADER, VERTEX_SHADER_SOURCE);
+      const fs = compileShader(gl.FRAGMENT_SHADER, FRAGMENT_SHADER_SOURCE);
+      glProg = gl.createProgram();
+      gl.attachShader(glProg, vs);
+      gl.attachShader(glProg, fs);
+      gl.linkProgram(glProg);
+      gl.useProgram(glProg);
+
+      const quad = new Float32Array([
+        -1, -1, 0, 1,
+         1, -1, 1, 1,
+        -1,  1, 0, 0,
+         1,  1, 1, 0,
+      ]);
+      const buf = gl.createBuffer();
+      gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+      gl.bufferData(gl.ARRAY_BUFFER, quad, gl.STATIC_DRAW);
+
+      const aPos = gl.getAttribLocation(glProg, 'a_position');
+      const aTex = gl.getAttribLocation(glProg, 'a_texCoord');
+      gl.enableVertexAttribArray(aPos);
+      gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 16, 0);
+      gl.enableVertexAttribArray(aTex);
+      gl.vertexAttribPointer(aTex, 2, gl.FLOAT, false, 16, 8);
+
+      sceneTex = gl.createTexture();
+      gl.bindTexture(gl.TEXTURE_2D, sceneTex);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+    }
+
+    function fmtTime(sec) {
+      const m = Math.floor(sec / 60);
+      const s = Math.floor(sec % 60);
+      return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+    }
+
+    const res = await fetch('audio/timeline.json');
+    timeline = await res.json();
+    const totalDur = timeline.total_duration ?? timeline.total_duration_sec ?? 240;
+    scrubber.max = String(totalDur);
+
+    // Defer non-urgent chapter button construction using requestIdleCallback
+    const scheduleIdle = window.requestIdleCallback || ((cb) => setTimeout(cb, 16));
+    scheduleIdle(() => {
+      timeline.scenes.forEach((sc) => {
+        const sid = sc.id || sc.scene_id;
+        const sStart = sc.start ?? sc.start_sec ?? 0;
+        const btn = document.createElement('button');
+        btn.className = 'chapter-btn';
+        btn.dataset.sceneId = sid;
+        btn.innerHTML = `<strong>${sid}</strong>: ${sc.title}<br><span style="color:#94a3b8">${fmtTime(sStart)}</span>`;
+        btn.addEventListener('click', () => {
+          audio.currentTime = sStart;
+          simTime = sStart;
+        });
+        chapterList.appendChild(btn);
+      });
+    });
+
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.textContent = '⏸ Pause';
+      } else {
+        audio.pause();
+        playBtn.textContent = '▶ Play Story';
+      }
+    });
+
+    scrubber.addEventListener('input', () => {
+      const t = parseFloat(scrubber.value);
+      audio.currentTime = t;
+      simTime = t;
+    });
+
+    subBtn.addEventListener('click', () => {
+      showSubtitles = !showSubtitles;
+      subBtn.textContent = showSubtitles ? 'CC: ON' : 'CC: OFF';
+    });
+
+    function tick() {
+      if (isOffscreenPaused) {
+        requestAnimationFrame(tick);
+        return;
+      }
+      frameCounter++;
+      if (frameCounter % 6 === 0) {
+        refreshFilmGrain();
+      }
+      if (!audio.paused) {
+        simTime = audio.currentTime;
+        scrubber.value = String(simTime);
+      }
+      timeReadout.textContent = `${fmtTime(simTime)} / ${fmtTime(totalDur)}`;
+
+      const state = renderStoryFrame(pctx, 1920, 1080, simTime, timeline, {
+        showSubtitles,
+        showHud: true,
+      });
+
+      document.querySelectorAll('.chapter-btn').forEach((b) => {
+        b.classList.toggle('active', b.dataset.sceneId === state.sceneId);
+      });
+
+      if (gl && glProg) {
+        gl.viewport(0, 0, 1920, 1080);
+        gl.bindTexture(gl.TEXTURE_2D, sceneTex);
+        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, paintCanvas);
+        gl.uniform1f(gl.getUniformLocation(glProg, 'u_time'), simTime);
+        gl.uniform1f(gl.getUniformLocation(glProg, 'u_warmth'), 0.65);
+        gl.uniform1f(gl.getUniformLocation(glProg, 'u_vignette'), 0.42);
+        gl.uniform1f(gl.getUniformLocation(glProg, 'u_paperGrain'), 0.018);
+        gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+      }
+
+      requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  </script>
+</body>
+</html>

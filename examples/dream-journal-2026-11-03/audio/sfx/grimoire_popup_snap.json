@@ -1,0 +1,19 @@
+{
+  "name": "grimoire_popup_snap",
+  "model": "stabilityai/stable-audio-3-optimized (sm-sfx w8a8 LiteRT)",
+  "dit": "sm-sfx",
+  "prompt": "Crisp parchment book page turn followed by brass clockwork click and harmonic crystal chime",
+  "seconds": 3.5,
+  "seed": 5105,
+  "steps": 8,
+  "elapsed_sec": 1.65,
+  "file": "grimoire_popup_snap.wav",
+  "sample_rate": 44100,
+  "duration": 3.5,
+  "peak": 0.68,
+  "peak_db": -3.35,
+  "rms": 0.1234,
+  "rms_db": -18.17,
+  "transient_offset": 0.0,
+  "sha256": "ecb0ffae79c9dad894a4148ba26ea040158b0b562da146727bfcf2de78c15fa9"
+}

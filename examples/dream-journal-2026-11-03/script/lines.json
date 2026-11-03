@@ -1,0 +1,457 @@
+{
+  "title": "Echoes in the Static & The Unfinished Bite",
+  "subtitle": "Dream Journal 11/03/2026 — A Storyverse Lucid Dream Adaptation",
+  "source_file": "Dream Journal 11/03/2026 (Google Doc 1ZGNxw0tkGKVaV6BJx5Z7MEpKBK5vbwZlQZHPROFBc-w)",
+  "cast": {
+    "Narrator": {
+      "voice": "af_heart",
+      "speed": 1.07,
+      "color": "#f3ead8",
+      "role": "Descriptive Audio Narrator",
+      "pan": 0.0
+    },
+    "Jet": {
+      "voice": "am_adam",
+      "speed": 1.08,
+      "color": "#f2c879",
+      "role": "Lucid Dreamer & Storyverse Explorer",
+      "pan": -0.10
+    },
+    "Nova": {
+      "voice": "af_sky",
+      "speed": 1.04,
+      "color": "#d8b4f8",
+      "role": "Celestial Avatar in the Storyverse Void",
+      "pan": 0.12
+    },
+    "Daughter": {
+      "voice": "af_sarah",
+      "speed": 1.08,
+      "color": "#f4a261",
+      "role": "Injured Woman in the Lodge Bathroom",
+      "pan": -0.14
+    },
+    "Grandmother": {
+      "voice": "bf_emma",
+      "speed": 1.05,
+      "color": "#e76f51",
+      "role": "Caring Grandmother in the Hunter's Lodge",
+      "pan": 0.10
+    },
+    "Concierge": {
+      "voice": "bf_isabella",
+      "speed": 1.04,
+      "color": "#8ecae6",
+      "role": "Bilingual Hourly Sleep-Debt Hotel Clerk",
+      "pan": 0.14
+    },
+    "Ashley": {
+      "voice": "af_bella",
+      "speed": 1.08,
+      "color": "#ff9ebb",
+      "role": "Jet's Girlfriend on the 9:45 AM Milkshake Date",
+      "pan": 0.10
+    },
+    "QA Acquaintance": {
+      "voice": "am_michael",
+      "speed": 1.06,
+      "color": "#a8dadc",
+      "role": "Jet's College Friend & Aspiring QA Taste Critic",
+      "pan": 0.12
+    },
+    "Horrified Diner": {
+      "voice": "af_nicole",
+      "speed": 1.08,
+      "color": "#e63946",
+      "role": "Five-Star Banquet Guest Shocked by Ranch on Cheesecake",
+      "pan": -0.15
+    }
+  },
+  "scenes": [
+    {
+      "id": "S01",
+      "timecode": "00:00–00:35",
+      "title": "1. The Storyverse Void & Avatar of Nova",
+      "location": "Cosmic Void of Lucid Light",
+      "shader_mode": 0,
+      "primary_color": [0.75, 0.52, 0.96],
+      "secondary_color": [0.95, 0.78, 0.47],
+      "ring_speed": 0.35,
+      "alert_level": 0.0
+    },
+    {
+      "id": "S02",
+      "timecode": "00:35–01:20",
+      "title": "2. The Hunter's Lodge & Cosmic Static",
+      "location": "Log Cabin Bathroom & CRT Living Room",
+      "shader_mode": 1,
+      "primary_color": [0.85, 0.62, 0.38],
+      "secondary_color": [0.58, 0.78, 0.88],
+      "ring_speed": 0.25,
+      "alert_level": 0.25
+    },
+    {
+      "id": "S03",
+      "timecode": "01:20–02:10",
+      "title": "3. Booth Hide-and-Seek & The Sleep-Debt Hotel",
+      "location": "Bilingual European Café-Hotel",
+      "shader_mode": 2,
+      "primary_color": [0.92, 0.74, 0.45],
+      "secondary_color": [0.38, 0.56, 0.52],
+      "ring_speed": 0.40,
+      "alert_level": 0.15
+    },
+    {
+      "id": "S04",
+      "timecode": "02:10–02:45",
+      "title": "4. The Pop-Up Grimoire of Living Relics",
+      "location": "Arcane Sanctum of Tangible Pages",
+      "shader_mode": 3,
+      "primary_color": [0.95, 0.80, 0.46],
+      "secondary_color": [0.45, 0.72, 0.55],
+      "ring_speed": 0.65,
+      "alert_level": 0.0
+    },
+    {
+      "id": "S05",
+      "timecode": "02:45–03:35",
+      "title": "5. The 9:45 AM Milkshake Line & The Lucidity Cloud",
+      "location": "Mall Ice Cream Parlor & Handel's Drift",
+      "shader_mode": 4,
+      "primary_color": [0.96, 0.84, 0.58],
+      "secondary_color": [0.52, 0.78, 0.62],
+      "ring_speed": 0.50,
+      "alert_level": 0.10
+    },
+    {
+      "id": "S06",
+      "timecode": "03:35–04:30",
+      "title": "6. The Cheesecake-Chicken-Ranch Banquet & Waking Alarm",
+      "location": "Five-Star Banquet Hall & Morning Awakening",
+      "shader_mode": 5,
+      "primary_color": [0.95, 0.78, 0.48],
+      "secondary_color": [0.72, 0.48, 0.88],
+      "ring_speed": 0.0,
+      "alert_level": 0.35
+    }
+  ],
+  "lines": [
+    {
+      "id": "L01",
+      "scene": "S01",
+      "speaker": "Narrator",
+      "type": "narration",
+      "shot": "wide",
+      "focal_subject": "Center",
+      "text": "Breaking through sleep paralysis into pure lucidity, Jet rises into the dark Storyverse Void—where countless story worlds drift as luminous cosmic bubbles amid sparkling purple Lucid Light. Wearing his black hoodie over a Dream Anime tee, with his rainbow crystal sword at his hip, Jet faces the glowing celestial avatar of Nova.",
+      "caption": "Breaking through sleep paralysis into pure lucidity, Jet rises into the dark Storyverse Void — where countless story worlds drift as luminous cosmic bubbles amid sparkling purple Lucid Light. Wearing his black hoodie over a Dream Anime tee, with his rainbow crystal sword at his hip, Jet faces the glowing celestial avatar of Nova."
+    },
+    {
+      "id": "L02",
+      "scene": "S01",
+      "speaker": "Jet",
+      "type": "dialogue",
+      "shot": "close_up",
+      "focal_subject": "Jet",
+      "implied_adaptation": true,
+      "text": "Nova, we're in the deep void at full lucidity—where anything we speak takes shape. This is the perfect chance to brainstorm a brand-new story idea together!",
+      "caption": "Nova, we're in the deep void at full lucidity — where anything we speak takes shape. This is the perfect chance to brainstorm a brand-new story idea together!"
+    },
+    {
+      "id": "L03",
+      "scene": "S01",
+      "speaker": "Nova",
+      "type": "dialogue",
+      "shot": "ots_left",
+      "focal_subject": "Nova",
+      "implied_adaptation": true,
+      "text": "Hold onto the thread if you can, Jet—the void gives you limitless creation, but if your lucidity wavers for even a heartbeat, the dream currents will pull you into uncharted scenes.",
+      "caption": "Hold onto the thread if you can, Jet — the void gives you limitless creation, but if your lucidity wavers for even a heartbeat, the dream currents will pull you into uncharted scenes."
+    },
+    {
+      "id": "L04",
+      "scene": "S02",
+      "speaker": "Narrator",
+      "type": "narration",
+      "shot": "pan_left_to_right",
+      "focal_subject": "Bathroom",
+      "text": "Whether a story was forged and forgotten or time simply slipped away, the void dissolves into a wood-paneled bathroom. Shards of a broken glass bottle glint on the floor as an injured woman clutches her bleeding palm across from her wounded grandmother.",
+      "caption": "Whether a story was forged and forgotten or time simply slipped away, the void dissolves into a wood-paneled bathroom. Shards of a broken glass bottle glint on the floor as an injured woman clutches her bleeding palm across from her wounded grandmother."
+    },
+    {
+      "id": "L05",
+      "scene": "S02",
+      "speaker": "Daughter",
+      "type": "dialogue",
+      "shot": "close_up",
+      "focal_subject": "Daughter",
+      "implied_adaptation": true,
+      "text": "The bottle shattered right in my hand during our argument! Grandmother, your arm is cut too!",
+      "caption": "The bottle shattered right in my hand during our argument! Grandmother, your arm is cut too!"
+    },
+    {
+      "id": "L06",
+      "scene": "S02",
+      "speaker": "Grandmother",
+      "type": "dialogue",
+      "shot": "medium",
+      "focal_subject": "Grandmother",
+      "implied_adaptation": true,
+      "text": "Never mind my scratch—let me wrap your hand first! Wait here, I'll get the rest of the family in the living room to help us!",
+      "caption": "Never mind my scratch — let me wrap your hand first! Wait here, I'll get the rest of the family in the living room to help us!"
+    },
+    {
+      "id": "L07",
+      "scene": "S02",
+      "speaker": "Narrator",
+      "type": "narration",
+      "shot": "wide",
+      "focal_subject": "Muppets",
+      "text": "Rushing into a rustic log-cabin hunter's lodge lined with mounted deer heads, the grandmother pleads with a crowd of relatives who look like human-sized Muppets—with fuzzy felt bodies, giant ping-pong-ball eyes, and flannel and camouflage shirts.",
+      "caption": "Rushing into a rustic log-cabin hunter's lodge lined with mounted deer heads, the grandmother pleads with a crowd of relatives who look like human-sized Muppets — with fuzzy felt bodies, giant ping-pong-ball eyes, and flannel and camouflage shirts."
+    },
+    {
+      "id": "L08",
+      "scene": "S02",
+      "speaker": "Grandmother",
+      "type": "dialogue",
+      "shot": "ots_right",
+      "focal_subject": "Grandmother",
+      "implied_adaptation": true,
+      "text": "Please, put down the remote and help me! We have broken glass and bleeding wounds in the bathroom!",
+      "caption": "Please, put down the remote and help me! We have broken glass and bleeding wounds in the bathroom!"
+    },
+    {
+      "id": "L09",
+      "scene": "S02",
+      "speaker": "Narrator",
+      "type": "narration",
+      "shot": "extreme_close_up",
+      "focal_subject": "CRT",
+      "text": "Not a single felt relative turns around. All of them stare unblinking at an old CRT television hissing with pure white-noise static—the very static that, as Jet reflects upon waking, carries leftover cosmic microwave background radiation from the Big Bang.",
+      "caption": "Not a single felt relative turns around. All of them stare unblinking at an old CRT television hissing with pure white-noise static — the very static that, as Jet reflects upon waking, carries leftover cosmic microwave background radiation from the Big Bang."
+    },
+    {
+      "id": "L10",
+      "scene": "S03",
+      "speaker": "Narrator",
+      "type": "narration",
+      "shot": "wide",
+      "focal_subject": "Jet",
+      "text": "Drifting away from the lodge, Jet tunes out an annoying acquaintance ranting on the sidewalk and ducks solo into a warm timber-and-stone restaurant. As Jet plays a game on his phone in a booth, the acquaintance goofy-tiptoes inside, peeking under tables like a game of hide-and-seek.",
+      "caption": "Drifting away from the lodge, Jet tunes out an annoying acquaintance ranting on the sidewalk and ducks solo into a warm timber-and-stone restaurant. As Jet plays a game on his phone in a booth, the acquaintance goofy-tiptoes inside, peeking under tables like a game of hide-and-seek."
+    },
+    {
+      "id": "L11",
+      "scene": "S03",
+      "speaker": "Concierge",
+      "type": "dialogue",
+      "shot": "medium",
+      "focal_subject": "Concierge",
+      "implied_adaptation": true,
+      "text": "Bonjour, willkommen—what kind of room would you like to reserve today, monsieur?",
+      "caption": "Bonjour, willkommen — what kind of room would you like to reserve today, monsieur?"
+    },
+    {
+      "id": "L12",
+      "scene": "S03",
+      "speaker": "Narrator",
+      "type": "narration",
+      "shot": "ots_left",
+      "focal_subject": "Concierge",
+      "text": "Though the woman at the counter speaks a European language, Jet hears two overlapping voices at once—her native tongue and an automatic real-time English translation.",
+      "caption": "Though the woman at the counter speaks a European language, Jet hears two overlapping voices at once — her native tongue and an automatic real-time English translation."
+    },
+    {
+      "id": "L13",
+      "scene": "S03",
+      "speaker": "Jet",
+      "type": "dialogue",
+      "shot": "close_up",
+      "focal_subject": "Jet",
+      "implied_adaptation": true,
+      "text": "Wait—a room? Is this a hotel? Hold on, is this an hourly hotel rather than a nightly one?",
+      "caption": "Wait — a room? Is this a hotel? Hold on, is this an hourly hotel rather than a nightly one?"
+    },
+    {
+      "id": "L14",
+      "scene": "S03",
+      "speaker": "Concierge",
+      "type": "dialogue",
+      "shot": "close_up",
+      "focal_subject": "Concierge",
+      "implied_adaptation": true,
+      "text": "You learn very quickly! Tell me how many hours you need—and remember our house rule: every meal here is paid for in hours slept.",
+      "caption": "You learn very quickly! Tell me how many hours you need — and remember our house rule: every meal here is paid for in hours slept."
+    },
+    {
+      "id": "L15",
+      "scene": "S03",
+      "speaker": "Jet",
+      "type": "dialogue",
+      "shot": "medium",
+      "focal_subject": "Jet",
+      "implied_adaptation": true,
+      "text": "Paid for in sleep? How badly has anyone ever fallen into debt here?",
+      "caption": "Paid for in sleep? How badly has anyone ever fallen into debt here?"
+    },
+    {
+      "id": "L16",
+      "scene": "S03",
+      "speaker": "Narrator",
+      "type": "narration",
+      "shot": "dutch_tilt",
+      "focal_subject": "Clerk",
+      "text": "Behind the counter, a hollow-eyed man endlessly wipes the brass rail, looking deathly exhausted. If an eight-hour sleep debt must be paid in one uninterrupted stretch, anyone with insomnia could be trapped working off their meal forever—prompting Jet to slip out the door.",
+      "caption": "Behind the counter, a hollow-eyed man endlessly wipes the brass rail, looking deathly exhausted. If an eight-hour sleep debt must be paid in one uninterrupted stretch, anyone with insomnia could be trapped working off their meal forever — prompting Jet to slip out the door."
+    },
+    {
+      "id": "L17",
+      "scene": "S04",
+      "speaker": "Narrator",
+      "type": "narration",
+      "shot": "wide",
+      "focal_subject": "Grimoire",
+      "text": "In a quiet curiosity sanctum, Jet eyes a gleaming magical artifact whose price tag is disappointingly steep. Instead of buying it, he opens an ancient leather grimoire whose pages hold three-dimensional pop-up components that look completely real.",
+      "caption": "In a quiet curiosity sanctum, Jet eyes a gleaming magical artifact whose price tag is disappointingly steep. Instead of buying it, he opens an ancient leather grimoire whose pages hold three-dimensional pop-up components that look completely real."
+    },
+    {
+      "id": "L18",
+      "scene": "S04",
+      "speaker": "Jet",
+      "type": "dialogue",
+      "shot": "extreme_close_up",
+      "focal_subject": "Grimoire",
+      "implied_adaptation": true,
+      "text": "Why pay a fortune when the grimoire's pop-up pieces aren't cardboard at all? If I pull these components right off the page and snap them together, I've got the real artifact!",
+      "caption": "Why pay a fortune when the grimoire's pop-up pieces aren't cardboard at all? If I pull these components right off the page and snap them together, I've got the real artifact!"
+    },
+    {
+      "id": "L19",
+      "scene": "S05",
+      "speaker": "Narrator",
+      "type": "narration",
+      "shot": "pan_left_to_right",
+      "focal_subject": "Ashley",
+      "text": "As the assembled golden relic hums in his hands, the scene shifts to a sunlit outdoor shopping mall ice cream parlor. After realizing people aren't cutting in front of him and joining the real line on the opposite wall, Jet stands beside his girlfriend Ashley—wearing round pink glasses over her curly orange hair and a soft gray cardigan over a yellow top.",
+      "caption": "As the assembled golden relic hums in his hands, the scene shifts to a sunlit outdoor shopping mall ice cream parlor. After realizing people aren't cutting in front of him and joining the real line on the opposite wall, Jet stands beside his girlfriend Ashley — wearing round pink glasses over her curly orange hair and a soft gray cardigan over a yellow top."
+    },
+    {
+      "id": "L20",
+      "scene": "S05",
+      "speaker": "Jet",
+      "type": "dialogue",
+      "shot": "medium",
+      "focal_subject": "Jet",
+      "implied_adaptation": true,
+      "text": "It's nine forty-five AM—right on time for my morning milkshake, Ashley. Since we're on a date, why don't we go to Handel's instead? Their shakes are huge!",
+      "caption": "It's nine forty-five AM — right on time for my morning milkshake, Ashley. Since we're on a date, why don't we go to Handel's instead? Their shakes are huge!"
+    },
+    {
+      "id": "L21",
+      "scene": "S05",
+      "speaker": "Narrator",
+      "type": "narration",
+      "shot": "low_angle",
+      "focal_subject": "Cloud",
+      "text": "Sparked by partial lucidity, a billowing dream cloud rolls in from the ceiling corner, actively morphing the parlor walls into Handel's sunlit parking lot!",
+      "caption": "Sparked by partial lucidity, a billowing dream cloud rolls in from the ceiling corner, actively morphing the parlor walls into Handel's sunlit parking lot!"
+    },
+    {
+      "id": "L22",
+      "scene": "S05",
+      "speaker": "Ashley",
+      "type": "dialogue",
+      "shot": "close_up",
+      "focal_subject": "Ashley",
+      "implied_adaptation": true,
+      "text": "No, let's stay right here, Jet! This shop has cocoa-mint milkshakes!",
+      "caption": "No, let's stay right here, Jet! This shop has cocoa-mint milkshakes!"
+    },
+    {
+      "id": "L23",
+      "scene": "S05",
+      "speaker": "Narrator",
+      "type": "narration",
+      "shot": "pull_out",
+      "focal_subject": "Center",
+      "text": "At Ashley's insistence, the dream resists Jet's superpower—fizzling the transformation cloud away. Ahead of them in line, an old college acquaintance of Jet's turns around with a knowing smile.",
+      "caption": "At Ashley's insistence, the dream resists Jet's superpower — fizzling the transformation cloud away. Ahead of them in line, an old college acquaintance of Jet's turns around with a knowing smile."
+    },
+    {
+      "id": "L24",
+      "scene": "S05",
+      "speaker": "QA Acquaintance",
+      "type": "dialogue",
+      "shot": "close_up",
+      "focal_subject": "QA Acquaintance",
+      "implied_adaptation": false,
+      "text": "You love your cocoa mint.",
+      "caption": "You love your cocoa mint."
+    },
+    {
+      "id": "L25",
+      "scene": "S05",
+      "speaker": "Jet",
+      "type": "dialogue",
+      "shot": "ots_right",
+      "focal_subject": "Jet",
+      "implied_adaptation": true,
+      "text": "Hold on—I haven't seen him since college, and he's never met Ashley in his life. Why is he talking like he knows her favorite flavor?",
+      "caption": "Hold on — I haven't seen him since college, and he's never met Ashley in his life. Why is he talking like he knows her favorite flavor?"
+    },
+    {
+      "id": "L26",
+      "scene": "S06",
+      "speaker": "Narrator",
+      "type": "narration",
+      "shot": "wide",
+      "focal_subject": "Banquet",
+      "text": "Only after waking would Jet realize the deeper contradiction—that Ashley actually dislikes mint ice cream. Inside the dream, the cramped entrance suddenly expands into a grand five-star dining hall where Jet and Ashley sit beside the college acquaintance and his bizarre order: crispy chicken tenders wedged between two thick slices of cheesecake.",
+      "caption": "Only after waking would Jet realize the deeper contradiction — that Ashley actually dislikes mint ice cream. Inside the dream, the cramped entrance suddenly expands into a grand five-star dining hall where Jet and Ashley sit beside the college acquaintance and his bizarre order: crispy chicken tenders wedged between two thick slices of cheesecake."
+    },
+    {
+      "id": "L27",
+      "scene": "S06",
+      "speaker": "Horrified Diner",
+      "type": "dialogue",
+      "shot": "dutch_tilt",
+      "focal_subject": "Horrified Diner",
+      "implied_adaptation": true,
+      "text": "Cheesecake and fried chicken tenders were pushing it, but the waitress just handed him a bottle of ranch dressing! That is completely disgusting!",
+      "caption": "Cheesecake and fried chicken tenders were pushing it, but the waitress just handed him a bottle of ranch dressing! That is completely disgusting!"
+    },
+    {
+      "id": "L28",
+      "scene": "S06",
+      "speaker": "QA Acquaintance",
+      "type": "dialogue",
+      "shot": "medium",
+      "focal_subject": "QA Acquaintance",
+      "implied_adaptation": true,
+      "text": "In college I wanted to be a quality-assurance tester—testing edge cases to discover what people truly enjoy. Drizzling ranch right over the top of the cheesecake is the ultimate taste test!",
+      "caption": "In college I wanted to be a quality-assurance tester — testing edge cases to discover what people truly enjoy. Drizzling ranch right over the top of the cheesecake is the ultimate taste test!"
+    },
+    {
+      "id": "L29",
+      "scene": "S06",
+      "speaker": "Narrator",
+      "type": "narration",
+      "shot": "extreme_close_up",
+      "focal_subject": "Platter",
+      "text": "Unbothered by the table's groans, he drizzles white ranch in ribbons across the top crust of the cheesecake, slices a wedge with his fork, and lifts the first bite toward his mouth—just as Jet's morning alarm rings out and shatters the dream before the bite can land.",
+      "caption": "Unbothered by the table's groans, he drizzles white ranch in ribbons across the top crust of the cheesecake, slices a wedge with his fork, and lifts the first bite toward his mouth — just as Jet's morning alarm rings out and shatters the dream before the bite can land."
+    },
+    {
+      "id": "L30",
+      "scene": "S06",
+      "speaker": "Jet",
+      "type": "dialogue",
+      "shot": "push_in",
+      "focal_subject": "Jet",
+      "implied_adaptation": true,
+      "text": "I never even saw him taste it! And more than the ice cream cloud fizzling out, what haunts me is the void with Nova—did we forge a masterpiece story that I forgot upon waking, or did the dream sweep us away before we ever began?",
+      "caption": "I never even saw him taste it! And more than the ice cream cloud fizzling out, what haunts me is the void with Nova — did we forge a masterpiece story that I forgot upon waking, or did the dream sweep us away before we ever began?"
+    }
+  ]
+}

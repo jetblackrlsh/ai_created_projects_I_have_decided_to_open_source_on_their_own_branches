@@ -1,0 +1,19 @@
+{
+  "name": "glass_bottle_shatter",
+  "model": "stabilityai/stable-audio-3-optimized (sm-sfx w8a8 LiteRT)",
+  "dit": "sm-sfx",
+  "prompt": "Crisp glass bottle clink and crystalline glass shards scattering on bathroom tile floor",
+  "seconds": 3.0,
+  "seed": 5102,
+  "steps": 8,
+  "elapsed_sec": 1.65,
+  "file": "glass_bottle_shatter.wav",
+  "sample_rate": 44100,
+  "duration": 3.0,
+  "peak": 0.5547,
+  "peak_db": -5.12,
+  "rms": 0.0639,
+  "rms_db": -23.89,
+  "transient_offset": 0.0,
+  "sha256": "3f317460d451ad2ba013962fcb6d12e2bf554ce175c15d9b36d969e47847be48"
+}

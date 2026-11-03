@@ -1,0 +1,19 @@
+{
+  "name": "lucid_void_shimmer",
+  "model": "stabilityai/stable-audio-3-optimized (sm-sfx w8a8 LiteRT)",
+  "dit": "sm-sfx",
+  "prompt": "Gentle harmonic celesta starlight wind-chime shimmer in the Storyverse Void",
+  "seconds": 3.5,
+  "seed": 5101,
+  "steps": 8,
+  "elapsed_sec": 1.65,
+  "file": "lucid_void_shimmer.wav",
+  "sample_rate": 44100,
+  "duration": 3.5,
+  "peak": 0.68,
+  "peak_db": -3.35,
+  "rms": 0.1248,
+  "rms_db": -18.08,
+  "transient_offset": 0.0,
+  "sha256": "7a7842c75ef645be08ff630f7b6b34a1f504b99ee41c8d56a64b331c4051c11f"
+}

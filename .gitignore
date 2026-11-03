@@ -1,0 +1,4 @@
+__pycache__/
+node_modules/
+*.partial
+examples/dream-journal-2026-11-03/animation.mp4

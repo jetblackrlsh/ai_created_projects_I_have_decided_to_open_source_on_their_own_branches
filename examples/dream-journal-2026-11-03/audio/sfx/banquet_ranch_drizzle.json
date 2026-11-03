@@ -1,0 +1,19 @@
+{
+  "name": "banquet_ranch_drizzle",
+  "model": "stabilityai/stable-audio-3-optimized (sm-sfx w8a8 LiteRT)",
+  "dit": "sm-sfx",
+  "prompt": "Fine dining silver fork and porcelain plate chime with soft condiment squeeze",
+  "seconds": 3.0,
+  "seed": 5107,
+  "steps": 8,
+  "elapsed_sec": 1.65,
+  "file": "banquet_ranch_drizzle.wav",
+  "sample_rate": 44100,
+  "duration": 3.0,
+  "peak": 0.68,
+  "peak_db": -3.35,
+  "rms": 0.0794,
+  "rms_db": -22.0,
+  "transient_offset": 0.0,
+  "sha256": "109bf1324a6bf97f9082010d9a37d2e48ac20db88e66fefbef7bbcc3aba6cf35"
+}

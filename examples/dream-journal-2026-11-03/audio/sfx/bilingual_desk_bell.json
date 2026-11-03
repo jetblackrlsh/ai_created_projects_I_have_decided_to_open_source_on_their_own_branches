@@ -1,0 +1,19 @@
+{
+  "name": "bilingual_desk_bell",
+  "model": "stabilityai/stable-audio-3-optimized (sm-sfx w8a8 LiteRT)",
+  "dit": "sm-sfx",
+  "prompt": "Clear brass hotel reception desk bell ring with warm European cafe acoustics",
+  "seconds": 3.0,
+  "seed": 5104,
+  "steps": 8,
+  "elapsed_sec": 1.65,
+  "file": "bilingual_desk_bell.wav",
+  "sample_rate": 44100,
+  "duration": 3.0,
+  "peak": 0.68,
+  "peak_db": -3.35,
+  "rms": 0.1115,
+  "rms_db": -19.06,
+  "transient_offset": 0.0,
+  "sha256": "2d1fa7eb34a019911af60f79afbc114a213ed457e6b9b33e7373ad59c67dc93a"
+}

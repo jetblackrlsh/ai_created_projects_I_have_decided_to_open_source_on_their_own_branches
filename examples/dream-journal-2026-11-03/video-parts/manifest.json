@@ -1,0 +1,162 @@
+{
+  "output": "animation.mp4",
+  "bytes": 127473348,
+  "sha256": "e05dca70c72ae74515a10248f30a8f3bcee9c44d6b8eb46b0b3e7f26c8b43044",
+  "parts": [
+    {
+      "name": "animation.mp4.part000",
+      "bytes": 4194304,
+      "sha256": "3ef1d22401f2cf77f5399b91c66639208abd3bced472629d68d29b23a43fa051"
+    },
+    {
+      "name": "animation.mp4.part001",
+      "bytes": 4194304,
+      "sha256": "8a47f0c913aa6afc733146e97b339ac583d341848720c56a73d75ded75cc8a2c"
+    },
+    {
+      "name": "animation.mp4.part002",
+      "bytes": 4194304,
+      "sha256": "f85cd9f97da87c15d73fac5e2f4c3540564ae7124ada20cae285bc567eac7d68"
+    },
+    {
+      "name": "animation.mp4.part003",
+      "bytes": 4194304,
+      "sha256": "5217b2fadfaebca05eb431e5e5d91d4e530d21266d125b22361406546267c1d5"
+    },
+    {
+      "name": "animation.mp4.part004",
+      "bytes": 4194304,
+      "sha256": "31e730fbc5d5826c7770287d6ef7fdc242179cceac408cb66729e712ab4c7ce3"
+    },
+    {
+      "name": "animation.mp4.part005",
+      "bytes": 4194304,
+      "sha256": "60d1b4fc7c0e7c872038eb385fbc18f43d6156377fa6ab5f2fd7657ddd66749d"
+    },
+    {
+      "name": "animation.mp4.part006",
+      "bytes": 4194304,
+      "sha256": "56acbb0cc8168b52ab1f22666239322cf9459d343e40719f3020f00278b3e8b0"
+    },
+    {
+      "name": "animation.mp4.part007",
+      "bytes": 4194304,
+      "sha256": "4f5855322ad93badc923fb386d1635b13cce94b688b30a27ca9e6766fa2050bb"
+    },
+    {
+      "name": "animation.mp4.part008",
+      "bytes": 4194304,
+      "sha256": "787903ca4711a0ceb2de544c104f1644dd384f4f3ccf596972f69d3de604901d"
+    },
+    {
+      "name": "animation.mp4.part009",
+      "bytes": 4194304,
+      "sha256": "4df16a1b027257adafce967d975676ff77c3dd53c5da9e9cb3375d299c125580"
+    },
+    {
+      "name": "animation.mp4.part010",
+      "bytes": 4194304,
+      "sha256": "0f852c02bcdd7da54da2cd5db3c90fc5f2abd426979820817a3fdd259aade503"
+    },
+    {
+      "name": "animation.mp4.part011",
+      "bytes": 4194304,
+      "sha256": "aaad4368a33197c726e7043755705caed9f9859bd4ca9d2febb0ebca71a990ae"
+    },
+    {
+      "name": "animation.mp4.part012",
+      "bytes": 4194304,
+      "sha256": "32b512fba597a9e2e967f62639e94e2068b1559794d7ed02ee45398850631aed"
+    },
+    {
+      "name": "animation.mp4.part013",
+      "bytes": 4194304,
+      "sha256": "74c536a4cc5f197df619fbee9843a2b2552357f4e4f170956b15fd194e2a7016"
+    },
+    {
+      "name": "animation.mp4.part014",
+      "bytes": 4194304,
+      "sha256": "76ee2d3dd1c21e197e9cceca622c00df1583c84842bb2708316554e852e8a5f0"
+    },
+    {
+      "name": "animation.mp4.part015",
+      "bytes": 4194304,
+      "sha256": "eb29f6a840c26b558742108866f7c137f70c95b561b5ecf69ac73ebd64ba39df"
+    },
+    {
+      "name": "animation.mp4.part016",
+      "bytes": 4194304,
+      "sha256": "b34110cab3c409ed3456726e05fe6879bae7554d2ce64b5bce421e9a3c51c077"
+    },
+    {
+      "name": "animation.mp4.part017",
+      "bytes": 4194304,
+      "sha256": "7c81ec7df1809e8e3dde84b5d2cace8a2d0fda494f5032517a9b6fa409f12d18"
+    },
+    {
+      "name": "animation.mp4.part018",
+      "bytes": 4194304,
+      "sha256": "1cc211d14c35f40b832b68f2c24e2a746a90dc65aa03c5f3c6d28b9feeb93b8e"
+    },
+    {
+      "name": "animation.mp4.part019",
+      "bytes": 4194304,
+      "sha256": "a98e4d10204ebb190ad42bde8e2d0726130c430164bf12620d32fbb74e56b8ca"
+    },
+    {
+      "name": "animation.mp4.part020",
+      "bytes": 4194304,
+      "sha256": "e5cf8936ce61eaeb76efbe6167bb5dc00a4d69afdb804389c5ee334f41ccdfb0"
+    },
+    {
+      "name": "animation.mp4.part021",
+      "bytes": 4194304,
+      "sha256": "132f56ba62265c5fce1c6e3a6998581f18dc77e25a2b101ebb5c2fdfb29c9bd9"
+    },
+    {
+      "name": "animation.mp4.part022",
+      "bytes": 4194304,
+      "sha256": "2fa8a4b6a4754c63b55a1e52c6dc6a4f18ecc9f3a28d6b24ef03b32988753495"
+    },
+    {
+      "name": "animation.mp4.part023",
+      "bytes": 4194304,
+      "sha256": "abfe6641aea5cb7cd30b18513168afc7fd4acc261d688aa78fc4cf5ace938553"
+    },
+    {
+      "name": "animation.mp4.part024",
+      "bytes": 4194304,
+      "sha256": "eb9ed0df4d0d2f2ee83bcd04e75230c1175f5ab7a47c91d9c52ac60a09c37544"
+    },
+    {
+      "name": "animation.mp4.part025",
+      "bytes": 4194304,
+      "sha256": "59d9282caff56ac62c95ff72c6a248b483af6b1cf683b573ed91136897560991"
+    },
+    {
+      "name": "animation.mp4.part026",
+      "bytes": 4194304,
+      "sha256": "5b5adaa221eff743374ca8cf1fa1df9f83533615db90f2510d11a3e8b2ac0337"
+    },
+    {
+      "name": "animation.mp4.part027",
+      "bytes": 4194304,
+      "sha256": "da24d5920ce95bb96efdc74f861181fa47a55a1327f0dd22e22eae79a8e51e77"
+    },
+    {
+      "name": "animation.mp4.part028",
+      "bytes": 4194304,
+      "sha256": "1e166627716cafaa74509995596606d63f55b87bee6d259009e77704fa17b13d"
+    },
+    {
+      "name": "animation.mp4.part029",
+      "bytes": 4194304,
+      "sha256": "68fe0ee66508b25fb32bd71486b127c039185ed9b1389577db7af55c27c401eb"
+    },
+    {
+      "name": "animation.mp4.part030",
+      "bytes": 1644228,
+      "sha256": "9985a774028e9cf6c731d484e55f5354e3a84e2bd9b5d9b794ffa4dbfb2e48b9"
+    }
+  ]
+}

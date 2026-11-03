@@ -1,0 +1,19 @@
+{
+  "name": "dream_cloud_morph",
+  "model": "stabilityai/stable-audio-3-optimized (sm-sfx w8a8 LiteRT)",
+  "dit": "sm-sfx",
+  "prompt": "Soft magical breeze swell and gentle sparkling chime dissipation",
+  "seconds": 3.5,
+  "seed": 5106,
+  "steps": 8,
+  "elapsed_sec": 1.65,
+  "file": "dream_cloud_morph.wav",
+  "sample_rate": 44100,
+  "duration": 3.5,
+  "peak": 0.68,
+  "peak_db": -3.35,
+  "rms": 0.1472,
+  "rms_db": -16.64,
+  "transient_offset": 0.0,
+  "sha256": "12404869463d88fec853b81e24852a5cbb3f1365f28b34cdd9c6888fb831bdc4"
+}

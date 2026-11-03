@@ -1,0 +1,14 @@
+{
+  "name": "dream-journal-2026-11-03-echoes-in-the-static",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Echoes in the Static & The Unfinished Bite (Dream Journal 11/03/2026) — Moss-Keeper Painterly Anime WebGL + 2D Canvas Adaptation",
+  "scripts": {
+    "render-mp4": "node src/render-mp4.mjs",
+    "validate": "python ../../scripts/validate_project.py ."
+  },
+  "dependencies": {
+    "@napi-rs/canvas": "^0.1.65"
+  }
+}

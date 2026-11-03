@@ -1,0 +1,31 @@
+{
+  "cues": [
+    {
+      "name": "music_act1_void_and_static_lodge",
+      "start_scene": "S01",
+      "end_scene": "S02",
+      "seconds": 60,
+      "seed": 6001,
+      "steps": 8,
+      "prompt": "Dreamy Studio Ghibli style celesta harp and warm strings evolving into mysterious surreal twilight chamber music, gentle analog warmth, instrumental, no vocals"
+    },
+    {
+      "name": "music_act2_sleep_hotel_and_grimoire",
+      "start_scene": "S03",
+      "end_scene": "S04",
+      "seconds": 60,
+      "seed": 6002,
+      "steps": 8,
+      "prompt": "Whimsical European cafe accordion and pizzicato strings blending into magical clockwork music box and warm orchestral woodwinds, instrumental, no vocals"
+    },
+    {
+      "name": "music_act3_milkshake_date_and_banquet",
+      "start_scene": "S05",
+      "end_scene": "S06",
+      "seconds": 60,
+      "seed": 6003,
+      "steps": 8,
+      "prompt": "Sunlit anime slice-of-life piano and acoustic guitar melody building into grand playful waltz and reflective cosmic synthesizer outro, instrumental, no vocals"
+    }
+  ]
+}

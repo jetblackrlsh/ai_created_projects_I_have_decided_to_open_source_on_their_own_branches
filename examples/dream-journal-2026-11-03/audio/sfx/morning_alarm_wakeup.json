@@ -1,0 +1,19 @@
+{
+  "name": "morning_alarm_wakeup",
+  "model": "stabilityai/stable-audio-3-optimized (sm-sfx w8a8 LiteRT)",
+  "dit": "sm-sfx",
+  "prompt": "Melodic bedside digital alarm clock chime pulsing into waking resonance",
+  "seconds": 3.8,
+  "seed": 5108,
+  "steps": 8,
+  "elapsed_sec": 1.65,
+  "file": "morning_alarm_wakeup.wav",
+  "sample_rate": 44100,
+  "duration": 3.8,
+  "peak": 0.68,
+  "peak_db": -3.35,
+  "rms": 0.1379,
+  "rms_db": -17.21,
+  "transient_offset": 0.0,
+  "sha256": "7aaec09bfe5db894976c6359ceea46e44896ee585cfc0b892bf14ecfe511fddb"
+}
