@@ -40,6 +40,42 @@ Before full export, inspect a pose sheet containing neutral rest, movement, acti
 
 Use independent environmental motion appropriate to the setting, such as layered clouds, wind-driven foliage, cloth, drifting particles, moving machinery, distant activity, water or light changes. Vary depth, phase, speed and scale. Tie effects to actions where relevant, such as a shockwave disturbing dust or wind moving hair and banners together. Environmental life must support, not obscure, the character. A single particle overlay or pulsing glow is not enough evidence that a world feels alive. Use GLSL meaningfully for emissive bloom, atmosphere and lighting where appropriate, but preserve facial contrast. Bloom, vignette and grading cannot repair flat or underdeveloped base artwork.
 
+## Anime-inspired action and tactical power use
+
+Apply this section to combat, pursuits and power-driven set pieces. Preserve the source story's powers, limits, stakes and outcome. Use anime-inspired staging and timing as a visual language, not a claim of studio animation quality.
+
+### Stage a causal fight, not an effects loop
+
+Before rendering, map each exchange as **intention → tactic → opponent counter or reversal → adaptation → visible consequence**. Record the combatants' positions, immediate objectives, advantage, available cover/terrain and ability constraints. Let the opponent act with intent and force a meaningful decision. Build tension through an exposed weakness, narrowing escape route, threatened objective, resource cost or interrupted plan already supported by the story. Alternate preparation, explosive commitment, reaction and recovery instead of constant maximum intensity.
+
+Give powers distinct tactical functions where the story permits: redirect momentum, obstruct sight, bind or shield, exploit terrain, create a decoy, change reach or mobility, and combine abilities through setup and payoff. Make these choices visible through geometry, targeting and reactions, not explanatory captions alone. Do not invent new canonical powers or change the outcome to satisfy a quota. Avoid repeated identical projectiles, stationary trading of attacks, random transformations or effortless victories. For a brief clash, show a compact cause-and-effect exchange rather than artificially extending it.
+
+Write timed beat/shot records with actor, goal, action, counter, result, positions, contact point, camera/view, audio cue and effect window. Use absolute timeline seconds and seeded variation. Establish blocking in an uncluttered wide view before decorating it. Each impactful action needs a readable anticipation pose, committed movement, contact or deliberate miss, opponent reaction and follow-through. Reuse rigs, not an identical combat loop. Ensure foot plants, grip, aim, recoil, balance and damaged/displaced environment agree.
+
+### Shoot the tactics
+
+Mix geography-setting wide shots, medium exchanges, intent/reaction closeups, power/contact inserts and selectively authored low, high, over-shoulder or foreshortened views. Choose a new perspective to reveal danger, a hidden tactic, a size/height advantage or a reversal. Maintain eyelines, screen direction, distance, silhouette and prop identity through cuts; establish or motivate axis changes.
+
+Draw alternate viewpoint-specific geometry or use a real depth-aware camera. A crop, pan, roll, shear, mirror or scale change of one flat cutout is not a new perspective. Do not claim an orbit unless new surfaces and occlusion are genuinely shown. Use brief tracking or whip movement only when its target and landing pose remain legible. Hold a clear recovery frame after complex action. Camera shake cannot substitute for a hit or conceal broken contact.
+
+### Add action accents around the event
+
+Use short, selective high-contrast **impact frames** with strong silhouettes, graphic color separation or an abstract contact burst; use directional **action/speed lines**, smear shapes, foreshortened attack arcs, bounded afterimages, debris, sparks, shockwaves and environmental response when motivated. Different powers need recognizable shapes, motion and material behavior. Keep effects anchored to the solved hand, prop, collision or world position and place them behind/in front with deliberate occlusion. Preserve face, limb and tactical readability.
+
+Define effects by start, peak and end time around a real action event, not continuous random overlays. Reserve strongest accents for decisive contacts and reversals; vary intensity so major beats feel different. Use actual compiled GLSL for effects described as shaders, and accurately label Canvas geometry effects. Screen glow does not prove physical relighting or volumetrics. Keep high-contrast flashes isolated and brief; avoid rapid repeated full-screen luminance/color alternation or strobing. Prefer localized graphic silhouettes over full-white screen flashes. Do not claim photosensitivity safety from an informal visual check.
+
+### Respect audio and both render modes
+
+Map anticipation, contact, recoil and reaction to measured dialogue, narration and existing sound cues. Preserve a locked soundtrack, story order and durations during visual-only revisions unless the user authorizes changing them. If new sound design is in scope, align transient onset with contact, leave breathing room for tension, and duck effects/music under speech. Listen with the final encoded picture; do not infer synchronization from timestamps alone.
+
+Keep the default **640×360 at 6 fps** and selectable **1920×1080 at 24 fps**. Preserve one absolute-time choreography/effect definition across modes; only raster resolution and frame sampling change. Inspect the actual sampled output around each critical beat. At 6 fps a brief impact can disappear or become a long-looking held flash. Stage a readable pre-contact and recovery silhouette across nearby samples and keep the contact region legible without relying on a flash. If aligning a pose/effect with a sampled frame, make the timing choice in the common timeline and recheck audio, rather than adding a fast-only effect or stretching a full-screen flash. Disclose reduced motion smoothness; do not silently raise the frame rate or simplify effects.
+
+### Review evidence before the full export
+
+Render a short representative exchange before the whole film. Review at normal speed with sound, then inspect frames before/at/after contacts and every changed viewpoint/cut. Check an effects-disabled pass to confirm the choreography itself communicates who acts, who counters, why the advantage changes and what follows. Check feet, grips, anatomy, collisions/misses, silhouette, line direction, effect anchors, occlusion and continuous screen geography. Include transition entry/exit frames to catch resets and teleporting.
+
+For each major fight, identify the visible setup, reversal/adaptation and consequence; confirm its creative power use is shown rather than merely narrated. Check critical effects at delivery resolution and sampled fps. Compare revised scenes against the baseline and verify untouched scenes/audio/captions remain intact when requested. Technical determinism, media probes and a contact sheet do not establish that action feels exciting; watch the rendered motion. Record concrete observed defects and fixes, and disclose any unavailable playback or camera/articulation limitations. These are authoring and review requirements, not new automatic capabilities in the starter or render scripts.
+
 ## Staged quality gates
 
 1. **Design review:** inspect a close and wide representative frame. Compare concrete detail, silhouette, materials, face readability and environment depth against the reference or requested style. Correct weak design before rendering hundreds of frames. Include the explicit neutral human pose and verify lowered relaxed hands, appropriate elbow placement and clean arm contours.

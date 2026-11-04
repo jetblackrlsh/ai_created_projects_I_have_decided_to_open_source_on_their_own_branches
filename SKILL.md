@@ -33,6 +33,8 @@ Evaluate every frame from absolute time `t = frame / fps`. Seed procedural rando
 
 For animations, include motivated camera movement, pans, zooms and genuine perspective changes across a varied shot plan. Do not hold one shot type or perspective for the whole animation. A pan or zoom alone does not create a new viewpoint. Author alternate views or use depth-aware geometry when needed. Preserve detailed, polished, stylized character, prop and environment design through closeups and motion; add readable emotion, smooth staged actions and independent environmental life. Treat these as production requirements and inspect evidence, not automatic quality guarantees.
 
+For combat and power-driven action, apply the anime-inspired action workflow in `references/production-quality.md` before rendering: creative power tactics, readable reversals and consequences, event-timed anticipation/impact/follow-through, selective impact frames and action lines, and authored perspective shifts. Choreography must remain clear without effects. Preserve story rules and the selected fast/full mode; do not claim these instructions or the technical starter automatically generate finished anime animation.
+
 ## Verify and deliver
 
 Run scripts rather than describing hypothetical tests. Use `scripts/verify_video.py` on encoded video. The optional `scripts/render_frames.cjs` drives a compatible local HTML in installed Playwright/Chromium and encodes H.264. If browser startup is unavailable, use installed native Canvas and headless Mesa EGL/OpenGL ES to execute the same Canvas geometry and exact GLSL source, then disclose that browser interaction was not tested. Do not use a personal computer without explicit authorization.
