@@ -15,6 +15,8 @@ python -m pip install -r requirements.txt
 python scripts/prepare_vn_image_manifest.py --help
 python scripts/render_vn_video.py --help
 python -m unittest discover -s tests -v
+python scripts/test_priority_audio_mix.py
+python scripts/test_sfx_comfort.py
 ```
 
 Install this directory as a skill in your assistant's supported skill manager, or read `SKILL.md` and follow its production workflow. Copy the JSON example from `references/vn_spec_schema.md` into a project spec and replace it with your authorized story; the abbreviated example is a field reference, not a finished production.
@@ -28,6 +30,7 @@ Read `references/runtime-setup.md` before audio generation. Model weights, the o
 3. Inspect all five visual-QA pillars and finalize images at 1920×1080.
 4. Generate unique Kokoro voices at speed 1.0, with duration-preserving DSP and per-page captions.
 5. Generate scene music and cue-aligned SFX. Music transitions use non-overlapping fade-out/fade-in, not crossfades; SFX are clamped to scene boundaries.
+   Mixing uses measured foreground voice > summed effects > music priorities. See `references/audio-mixing.md` for activity gates, music-floor review and limitations.
 6. Render the video, browser theater and metadata. Run the validator and inspect/listen to the finished output.
 
 Only `queue` and `finalize` are image-script modes. It does not implement an offline SDXL generator. Audio pages use sample-derived timestamps; 24 fps display timing and within-page cue estimates are not a guarantee of zero drift or exact word alignment.

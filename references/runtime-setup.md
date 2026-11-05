@@ -27,7 +27,7 @@ Default runtime script location:
 ~/.cache/story-animation-models/stable-audio-3/optimized/tflite/scripts/sa3_tflite.py
 ```
 
-The audio script passes `--dit sa3-sm-music` or `sa3-sm-sfx`, `--decoder same-s`, `--dit-precision w8a8`, `--decoder-precision w8a8`, and prompt/seconds/steps/seed/cfg/threads/out arguments. Its runtime environment must have the compatible model caches, including text encoder dependencies, available offline. Check the official runtime's `--help` before a production run; upstream compatibility can change.
+The audio script passes `--dit sm-music` or `sm-sfx` (the model families are `sa3-sm-music` and `sa3-sm-sfx`), `--decoder same-s`, `--dit-precision w8a8`, `--decoder-precision w8a8`, and prompt/seconds/steps/seed/cfg/threads/out arguments. Its runtime environment must have the compatible model caches, including text encoder dependencies, available offline. Check the official runtime's `--help` before a production run; upstream compatibility can change.
 
 Pass `--sa3-python /path/to/python` and `--sa3-script /path/to/sa3_tflite.py` when installed elsewhere. The current Python interpreter is used by default. Missing models or incompatible upstream flags are setup blockers, not permission to silently substitute other audio systems.
 

@@ -21,7 +21,7 @@ Use this skill whenever the user asks to adapt a story, dream journal, RPG sessi
 2. **Authentic Kinetic Novel Cinematography & Hybrid ADV/NVL/CG Presentation** inspired by *Witch on the Holy Night* (*Mahoyo*), VisualArt's/Key, and ufotable/CoMix Wave visual direction.
 3. **Kokoro TTS (`kokoro-onnx`) + Character Vocal DSP** with a unique stock voice per character + omniscient `Narrator`, WSOLA pitch-shifting (`pitch_semitones`), subharmonic chest resonance (`subharmonic_mix`), EQ, harmonic grit (`warmth_drive`), and acoustic space (`reverb_type`), plus strict date & hyphen/dash normalization.
 4. **Stable Audio Small Music (`sa3-sm-music`) & SFX (`sa3-sm-sfx`)** generated locally via `stabilityai/stable-audio-3-optimized` LiteRT (`w8a8`), paired with procedural anime battle/magic transients triggered on exact spoken `"sfx_cue"` words.
-5. **Strict Audio Mixing Loudness Hierarchy**: `Voices (~ -13.5 dBFS RMS) > Sound Effects (~ -15.5 dBFS RMS / -4.5 dBFS peak) > Background Music (~ -27.5 dBFS ducked RMS, continuously audible > -34 dBFS)`.
+5. **Strict Audio Mixing Loudness Hierarchy**: voice-first summed-bus mixing, with measured short-time voice-over-SFX and SFX-over-music margins and a music-floor review. See [Audio mixing and QA](references/audio-mixing.md)..
 
 ---
 
@@ -107,7 +107,7 @@ Every video produced with this skill **must** obey all rules synthesized from th
       - Every SFX event is strictly clamped to its own scene boundary (`scene_end - 0.15s` with a `0.28s` cosine fade-out) so combat/explosion SFX at the end of one chapter never bleed into the opening music of the next chapter (`no_cross_scene_sfx_bleed: true`).
       - Procedural SFX transient layers (`synthesize_battle_sfx_layer`) must use strictly non-pitched percussive impacts and filtered noise whooshes—never continuous midrange sine drones (`440–3100 Hz`) that clash harmonically with the background music. Ambient/foley SFX (`type: "none"`) are high-passed at `160 Hz` and capped at `+12 dB` max gain boost so low-frequency room/wind rumble never becomes a loud drone over the music.
 13. **Strict Loudness Hierarchy, Title/Credits Cards & YouTube Metadata**:
-    - Enforces `Voices > SFX > Background Music > Audible Floor (-34 dBFS)` (`voice_over_music_margin_db >= 8.0 dB`, `sfx_over_music_margin_db >= 6.0 dB`).
+    - Keep voices clearly above active sound effects, and active effects above the music bed. Apply bounded SFX-only harsh-band control to tame grating static, electricity and similar effects without banning them or erasing their character. Then apply the bundled priority mixer to the summed buses, preserve audible music, and inspect the measured final-stem report as described in [Audio mixing and QA](references/audio-mixing.md). Do not certify perceived audibility from one whole-track RMS number.
     - Starts with an animated **Opening Title Card** (`>= 3.0s`), ends with a **Closing Credits Card** (`>= 4.0s`), and outputs `youtube_metadata.md` (`Title MM/DD/YYYY`, `Description` with `00:00` chapters, and `Comma Separated List Of Tags`).
 
 ---

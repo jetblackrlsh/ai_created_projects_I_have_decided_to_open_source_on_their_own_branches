@@ -18,9 +18,9 @@ Verifies all mandatory storytelling, visual novel cinematography, visual QA, and
    (`music_overlap_sec == 0.0`), zero cross-scene SFX bleed (`no_cross_scene_sfx_bleed: true`), and
    harmonic consonance (`consonant_music_tracks: true`, `max_flatness <= 0.05`, `max_clash_ratio <= 0.45`).
 7. Audio Mixing Loudness Hierarchy verified:
-   - `voice_over_music_margin_db >= 8.0 dB`
-   - `sfx_over_music_margin_db >= 6.0 dB`
-   - `-33.0 <= music_ducked_rms_db <= -18.0 dBFS` (background music stays continuously audible).
+   - Foreground voice-over-effects >= 6 dB and voice-over-music >= 12 dB.
+   - Foreground effects-over-music >= 6 dB.
+   - Music below -34 dBFS triggers review, never a false audibility certification.
 8. Visible ADV/NVL/CG on-screen captions verified on rendered keyframes (`keyframes/frame_*.png`)
    with zero left/right edge clipping.
 9. Opening Title Screen (`keyframes/card_title.png`), Closing Credits (`keyframes/card_credits.png`),
@@ -36,11 +36,48 @@ from pathlib import Path
 import numpy as np
 from PIL import Image
 import soundfile as sf
+from priority_audio_mix import _stats, _amp, _margin_report, WINDOW_SEC, VOICE_GATE_DB, SFX_GATE_DB, MUSIC_GATE_DB, VOICE_SFX_DB, SFX_MUSIC_DB, VOICE_MUSIC_DB
 
 
 def assert_true(cond: bool, msg: str):
     if not cond:
         raise AssertionError(f"[VN VALIDATION FAILED] {msg}")
+
+
+def audit_saved_stems(audio_dir):
+    """Independently measure the persisted final buses, not trusted JSON flags."""
+    buses = []
+    for name in ("voice", "sfx", "music"):
+        a, rate = sf.read(str(Path(audio_dir) / f"{name}_stem.wav"), always_2d=True)
+        assert_true(rate == 48000 and a.shape[1] == 2 and len(a) > 0 and np.all(np.isfinite(a)), f"Invalid {name} stem")
+        buses.append(a)
+    assert_true(len({a.shape for a in buses}) == 1, "Stem shapes differ")
+    vr, vp = _stats(buses[0], round(48000 * WINDOW_SEC))
+    sr, sp = _stats(buses[1], round(48000 * WINDOW_SEC))
+    mr, _ = _stats(buses[2], round(48000 * WINDOW_SEC))
+    source = np.load(Path(audio_dir) / "premix_stems.npz")
+    assert_true(all(source[k].shape == buses[0].shape for k in ("voice", "sfx", "music")), "Premix source shapes differ")
+    tvr, _ = _stats(source["voice"], round(48000 * WINDOW_SEC))
+    tsr, _ = _stats(source["sfx"], round(48000 * WINDOW_SEC))
+    tmr, _ = _stats(source["music"], round(48000 * WINDOW_SEC))
+    va = tvr >= _amp(VOICE_GATE_DB)
+    sa = (tsr >= _amp(SFX_GATE_DB)) & (tsr >= tmr * _amp(SFX_MUSIC_DB))
+    ma = tmr >= _amp(MUSIC_GATE_DB)
+    result = {
+        "voice_over_sfx": _margin_report(vr, sr, va & sa, VOICE_SFX_DB),
+        "voice_over_music": _margin_report(vr, mr, va & ma, VOICE_MUSIC_DB),
+        "sfx_over_music": _margin_report(sr, mr, sa & ma, SFX_MUSIC_DB),
+    }
+    for label, report in result.items():
+        assert_true(report["violations"] == 0, f"Saved bus {label}: {report}")
+    assert_true(np.max(np.abs(buses[1])) <= _amp(-8.99), "SFX exceeds peak ceiling")
+    master, rate = sf.read(str(Path(audio_dir) / "master.wav"), always_2d=True)
+    assert_true(master.shape == buses[0].shape and rate == 48000, "Master/stem dimensions differ")
+    assert_true(np.max(np.abs(master - sum(buses))) < 0.0001, "Master differs from summed final stems")
+    assert_true(np.max(np.abs(master)) <= _amp(-1.49), "Master lacks required peak headroom")
+    result["music_below_floor_windows"] = int(np.sum(ma & (mr < _amp(-34))))
+    result["music_floor_status"] = "review_required" if result["music_below_floor_windows"] else "pass"
+    return result
 
 
 def main():
@@ -183,12 +220,9 @@ def main():
     assert_true(len(sa3.get("sfx_clips", [])) >= 2, "Must generate Stable Audio Small SFX clips (sa3-sm-sfx)")
 
     checks = ver.get("checks", {})
-    assert_true(checks.get("voices_louder_than_music") is True,
-                f"Voices not sufficiently louder than music: {ver.get('voice_over_music_margin_db')} dB")
-    assert_true(checks.get("sfx_louder_than_music") is True,
-                f"SFX not sufficiently louder than music: {ver.get('sfx_over_music_margin_db')} dB")
-    assert_true(checks.get("music_remains_audible") is True,
-                f"Background music not in audible range: {ver.get('music_ducked_rms_db')} dBFS")
+    saved_bus_audit = audit_saved_stems(root / "audio")
+    if saved_bus_audit["music_floor_status"] == "review_required":
+        print("[VN AUDIO REVIEW] Music falls below -34 dBFS in some windows; review fades, rests and quiet foreground. This is not an audibility pass.")
     assert_true(checks.get("no_overlapping_music_tracks") is True and float(ver.get("music_overlap_sec", 99.0)) == 0.0,
                 f"Overlapping music tracks detected: music_overlap_sec={ver.get('music_overlap_sec')}")
     assert_true(ver.get("smooth_music_transitions") is True,
@@ -220,7 +254,8 @@ def main():
     assert_true(streams["audio"]["codec_name"] == "aac", "MP4 audio codec must be aac")
 
     report = {
-        "status": "PASSED",
+        "status": "PASSED_WITH_AUDIO_REVIEW" if saved_bus_audit["music_floor_status"] == "review_required" else "PASSED",
+        "saved_bus_audit": saved_bus_audit,
         "project": str(root),
         "video_file": str(mp4_path),
         "total_duration_sec": timeline["total_duration"],

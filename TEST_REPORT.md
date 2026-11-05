@@ -14,3 +14,22 @@ Test dependency versions: NumPy 2.5.4, Pillow 13.0.0, SciPy 1.17.0, SoundFile 0.
 Not verified: full Kokoro model inference, Stable Audio model inference/upstream runtime compatibility, final music/SFX loudness gates on a generated production, AI image generation, or interactive browser playback. These require external models/runtime/assets and production review. This release's tests do not claim a fully generated story passed the nine-gate media validator. No CI workflow is added; this report records local checks.
 
 Run regression tests from the project root with `python -m unittest discover -s tests -v` after installing `requirements.txt`. Generated smoke media and caches are not part of the release.
+
+
+## Voice-first production update, 2026-11-05
+
+Verified a 28.637-second private listening sample through the actual Kokoro, Stable Audio and updated production mixer, with a built-in AI-generated anime observatory plate and the production ADV/NVL/CG renderer. The abbreviated audio test is not a complete story and is not claimed to satisfy all full-story narrative gates.
+
+- Seven deterministic priority-mixer tests and all six portability tests passed.
+- Restored official Kokoro v1.0 and Stable Audio 3 optimized w8a8 small music/SFX weights. Stable Audio model download sizes and SHA-256 hashes verified against official repository metadata. Runtime accepts `sm-music`/`sm-sfx` CLI names.
+- Independently reloaded final floating-point stems and premix source buses. Foreground simultaneous margins: voice/effects 6.00 dB, effects/music 6.00 dB, voice/music 12.00 dB minimum; no violations. Effects peak ceiling -9 dBFS; master -1.5 dBFS.
+- Music review threshold: 20 of 114 aligned 250 ms windows below -34 dBFS, including natural opening/closing fades and quiet passages. This is explicitly review-required, not a claim of continuous perceived audibility. Quiet effects decay and breaths are excluded from foreground ordering as documented.
+- H.264 1920x1080 24 fps, AAC 48 kHz stereo, subtitle track; complete FFmpeg decode passed. Rendered title/ADV/credits frames inspected.
+- No subjective listening or interactive browser playback certification. The private sample was delivered for the user's own listening judgment. No private sample, source media or Drive identifier is included in this public release.
+
+This update supersedes the earlier report's unverified-model-inference and unverified-image-generation caveats for this specific sample only. Run `python scripts/test_priority_audio_mix.py` for deterministic mixing tests.
+
+
+## Bounded SFX harshness safeguard
+
+Five additional processor tests passed, along with the seven priority and six portability tests. Re-ran the actual production pipeline with conditioning enabled; the independent saved-stem priority audit still passed. Generated an eight-second electrical arcing/static effect with the official Stable Audio small SFX model and produced a 22-second labeled A/B comparison using the same Kokoro dialogue and music. The filter applied up to 6 dB of band attenuation over 6.181 seconds of the 11-second source-bus section, preserving duration. Both halves use the same voice-first priority settings and a shared final headroom scale. Full video decode and visual label checks passed. Subjective comfort is deliberately left for listening review; no universal hearing-safety claim is made.

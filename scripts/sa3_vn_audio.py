@@ -17,10 +17,10 @@ Enforces:
 3. Clean Opening Rule: No disruptive SFX in the first `2.5` seconds of the video.
 4. Strict Audio Loudness Hierarchy:
    - Voices (`voice_stem.wav`): `~ -13.5 dBFS` active RMS.
-   - SFX (`sfx_stem.wav`): `~ -14.5 to -16.5 dBFS` active RMS (`~ -3.0 to -5.5 dBFS` peak).
+   - Final summed SFX obey the foreground priority mixer, with a -9 dBFS peak cap.
    - Background Music (`music_stem.wav`): `-21.0 dBFS` RMS unducked, sidechain-ducked to `~ -27.5 dBFS`
-     RMS under active speech/SFX so music stays continuously audible (`> -34.0 dBFS`) while
-     `voice_over_music_margin_db >= 8.0 dB` and `sfx_over_music_margin_db >= 6.0 dB`.
+     RMS under active speech/SFX so music stays subject to audibility review (`> -34.0 dBFS`) while
+     foreground voice/SFX/music margins of 6/6/12 dB, measured on the final buses.
 """
 import argparse
 import hashlib
@@ -33,6 +33,8 @@ import time
 from pathlib import Path
 
 import numpy as np
+from priority_audio_mix import mix_priority
+from sfx_comfort import soften_sfx
 from scipy import signal
 import soundfile as sf
 
@@ -713,10 +715,17 @@ def main():
     music_stem = music_bed * music_gain_env[:, None]
     sf.write(str(audio_dir / "music_stem.wav"), music_stem.astype(np.float32), SR, subtype="PCM_16")
 
-    master = voice_stem + sfx_stem + music_stem
-    master_peak = float(np.max(np.abs(master))) + 1e-12
-    if master_peak > 0.89:
-        master = np.tanh(master / 0.89) * 0.89
+    # Preserve unconditioned bus; tame harsh SFX only, before priority mixing.
+    sf.write(str(audio_dir / "sfx_unconditioned_stem.wav"), sfx_stem, SR, subtype="FLOAT")
+    sfx_stem, sfx_comfort_report = soften_sfx(sfx_stem, SR)
+    (audio_dir / "sfx_comfort_report.json").write_text(json.dumps(sfx_comfort_report, indent=2), encoding="utf-8")
+    np.savez(audio_dir / "premix_stems.npz", voice=voice_stem, sfx=sfx_stem, music=music_stem)
+    # Apply priority to summed buses, then save the actual final stems.
+    voice_stem, sfx_stem, music_stem, master, priority_report = mix_priority(
+        voice_stem, sfx_stem, music_stem, SR)
+    for bus_name, bus in (("voice", voice_stem), ("sfx", sfx_stem), ("music", music_stem)):
+        sf.write(str(audio_dir / f"{bus_name}_stem.wav"), bus, SR, subtype="FLOAT")
+    (audio_dir / "priority_mix_report.json").write_text(json.dumps(priority_report, indent=2), encoding="utf-8")
 
     master_path = audio_dir / "master.wav"
     sf.write(str(master_path), master.astype(np.float32), SR, subtype="PCM_16")
@@ -769,6 +778,8 @@ def main():
     sfx_over_music_db = round(sfx_active_rms_db - music_ducked_rms_db, 2)
 
     verification = {
+        "sfx_comfort": sfx_comfort_report,
+        "priority_mix": priority_report,
         "sample_rate": SR,
         "duration_sec": total_dur,
         "master_peak_db": db(np.max(np.abs(master))),
@@ -786,9 +797,10 @@ def main():
         "smooth_music_transitions": bool(max_music_overlap_sec == 0.0 and all(c.get("fade_in_sec", 0.0) >= 1.0 and c.get("fade_out_sec", 0.0) >= 1.0 for c in placed_music_cues)),
         "clean_opening_no_disruptive_sfx": all(ev["start"] >= 2.5 for ev in placed_sfx_events),
         "checks": {
-            "voices_louder_than_music": bool(voice_over_music_db >= 8.0),
-            "sfx_louder_than_music": bool(sfx_over_music_db >= 6.0),
-            "music_remains_audible": bool(-33.0 <= music_ducked_rms_db <= -18.0),
+            "voices_louder_than_sfx": priority_report["voice_over_sfx"]["violations"] == 0,
+            "voices_louder_than_music": priority_report["voice_over_music"]["violations"] == 0,
+            "sfx_louder_than_music": priority_report["sfx_over_music"]["violations"] == 0,
+            "music_floor_review_required": priority_report["music_floor_status"] == "review_required",
             "unique_voices_verified": len(timeline["cast"]) == len({v["voice"] for v in timeline["cast"].values()}),
             "no_overlapping_music_tracks": bool(max_music_overlap_sec == 0.0),
             "no_cross_scene_sfx_bleed": bool(no_cross_scene_sfx),

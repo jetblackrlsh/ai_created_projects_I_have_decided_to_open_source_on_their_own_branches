@@ -8,6 +8,12 @@
       "git_blob_sha": "98dbeb43997e0d3f65ee193a2f0f895debc6a1f6"
     },
     {
+      "path": "agents/openai.yaml",
+      "size": 237,
+      "mode": "100644",
+      "git_blob_sha": "499104aa7ce906d968ae81f74499305830ee9f53"
+    },
+    {
       "path": "LICENSE",
       "size": 7048,
       "mode": "100644",
@@ -21,33 +27,15 @@
     },
     {
       "path": "README.md",
-      "size": 3449,
+      "size": 3693,
       "mode": "100644",
-      "git_blob_sha": "e41f6ad8e475704c179f568f70b3c702b2b5e976"
+      "git_blob_sha": "a3a4089f677ff538357bfa28373298ffd21601a3"
     },
     {
-      "path": "SKILL.md",
-      "size": 25053,
+      "path": "references/audio-mixing.md",
       "mode": "100644",
-      "git_blob_sha": "a5c728296e16d496c603b18068ccbd91a09d065a"
-    },
-    {
-      "path": "TEST_REPORT.md",
-      "size": 1555,
-      "mode": "100644",
-      "git_blob_sha": "9fa6d143c67bb16c56a0391e31e41bcd3927f91c"
-    },
-    {
-      "path": "THIRD_PARTY_NOTICES.md",
-      "size": 1070,
-      "mode": "100644",
-      "git_blob_sha": "f93398e20ad5fc58b7b5493fcc532866cbfd43c3"
-    },
-    {
-      "path": "agents/openai.yaml",
-      "size": 237,
-      "mode": "100644",
-      "git_blob_sha": "499104aa7ce906d968ae81f74499305830ee9f53"
+      "git_blob_sha": "6817bf15cafb936e74f7a8e01d4c592f835c8fe1",
+      "size": 4082
     },
     {
       "path": "references/cinematography_and_vn_style.md",
@@ -57,9 +45,9 @@
     },
     {
       "path": "references/runtime-setup.md",
-      "size": 2529,
+      "size": 2578,
       "mode": "100644",
-      "git_blob_sha": "cd6ff60c0f6034a6f6478db6e9b37e1fd7209d61"
+      "git_blob_sha": "dded03629bc2200fb7023af430f1eb10b8de45fe"
     },
     {
       "path": "references/vn_spec_schema.md",
@@ -86,6 +74,12 @@
       "git_blob_sha": "4252c92183552e2444e7eb5c886b4a5b8951f748"
     },
     {
+      "path": "scripts/priority_audio_mix.py",
+      "mode": "100644",
+      "git_blob_sha": "614952864cf40652553fa81b11f6f360ca611f9f",
+      "size": 5996
+    },
+    {
       "path": "scripts/render_vn_video.py",
       "size": 50309,
       "mode": "100644",
@@ -93,21 +87,57 @@
     },
     {
       "path": "scripts/sa3_vn_audio.py",
-      "size": 37292,
+      "size": 38355,
       "mode": "100644",
-      "git_blob_sha": "a9b289ae5af02fcc2d66fd014203cb4a1a9cdad9"
+      "git_blob_sha": "9e83a02ebe1e0500ba0fe56472a323bdc8430da6"
+    },
+    {
+      "path": "scripts/sfx_comfort.py",
+      "mode": "100644",
+      "git_blob_sha": "d89b35079bba6428ea9e8632bd1959846aadd2b3",
+      "size": 2268
+    },
+    {
+      "path": "scripts/test_priority_audio_mix.py",
+      "mode": "100644",
+      "git_blob_sha": "7f25a85080e051096d02e8f9a20e39a1146e3a38",
+      "size": 3187
+    },
+    {
+      "path": "scripts/test_sfx_comfort.py",
+      "mode": "100644",
+      "git_blob_sha": "f440511cef70e88bcbe10598032226dcc94f6a84",
+      "size": 1329
     },
     {
       "path": "scripts/validate_vn_video.py",
-      "size": 14847,
+      "size": 17139,
       "mode": "100644",
-      "git_blob_sha": "5128ef5eb457657e3a2cc2363221a895d2767b14"
+      "git_blob_sha": "b4f29ee60a220bdbaf095367a2ddfa3c19c2afd2"
+    },
+    {
+      "path": "SKILL.md",
+      "size": 25421,
+      "mode": "100644",
+      "git_blob_sha": "4d44be47f9aff87d040277b69e1063398df4bcff"
+    },
+    {
+      "path": "TEST_REPORT.md",
+      "size": 4218,
+      "mode": "100644",
+      "git_blob_sha": "3c1f7c9e718b9a5d9cf549afc94f3bc1b34a7b24"
     },
     {
       "path": "tests/test_portability.py",
       "size": 3273,
       "mode": "100644",
       "git_blob_sha": "366f0c43658edc10ab713835584971b2ae5ad2c4"
+    },
+    {
+      "path": "THIRD_PARTY_NOTICES.md",
+      "size": 1070,
+      "mode": "100644",
+      "git_blob_sha": "f93398e20ad5fc58b7b5493fcc532866cbfd43c3"
     }
   ]
 }
