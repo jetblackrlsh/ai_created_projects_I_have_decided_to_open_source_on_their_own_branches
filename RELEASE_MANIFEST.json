@@ -1,0 +1,113 @@
+{
+  "description": "Manifest covers release files except this self-referential manifest.",
+  "files": [
+    {
+      "path": ".gitignore",
+      "size": 30,
+      "mode": "100644",
+      "git_blob_sha": "98dbeb43997e0d3f65ee193a2f0f895debc6a1f6"
+    },
+    {
+      "path": "LICENSE",
+      "size": 7048,
+      "mode": "100644",
+      "git_blob_sha": "0e259d42c996742e9e3cba14c677129b2c1b6311"
+    },
+    {
+      "path": "PROVENANCE.md",
+      "size": 1113,
+      "mode": "100644",
+      "git_blob_sha": "25eac088ca274047b204b59b003561738e2d8b35"
+    },
+    {
+      "path": "README.md",
+      "size": 3449,
+      "mode": "100644",
+      "git_blob_sha": "e41f6ad8e475704c179f568f70b3c702b2b5e976"
+    },
+    {
+      "path": "SKILL.md",
+      "size": 25053,
+      "mode": "100644",
+      "git_blob_sha": "a5c728296e16d496c603b18068ccbd91a09d065a"
+    },
+    {
+      "path": "TEST_REPORT.md",
+      "size": 1555,
+      "mode": "100644",
+      "git_blob_sha": "9fa6d143c67bb16c56a0391e31e41bcd3927f91c"
+    },
+    {
+      "path": "THIRD_PARTY_NOTICES.md",
+      "size": 1070,
+      "mode": "100644",
+      "git_blob_sha": "f93398e20ad5fc58b7b5493fcc532866cbfd43c3"
+    },
+    {
+      "path": "agents/openai.yaml",
+      "size": 237,
+      "mode": "100644",
+      "git_blob_sha": "499104aa7ce906d968ae81f74499305830ee9f53"
+    },
+    {
+      "path": "references/cinematography_and_vn_style.md",
+      "size": 10858,
+      "mode": "100644",
+      "git_blob_sha": "e62896becb88746a39189a769c8633f2e62ac198"
+    },
+    {
+      "path": "references/runtime-setup.md",
+      "size": 2529,
+      "mode": "100644",
+      "git_blob_sha": "cd6ff60c0f6034a6f6478db6e9b37e1fd7209d61"
+    },
+    {
+      "path": "references/vn_spec_schema.md",
+      "size": 12129,
+      "mode": "100644",
+      "git_blob_sha": "6bc2d4f8646e54cf24468de2893d2c4a81222d88"
+    },
+    {
+      "path": "requirements.txt",
+      "size": 107,
+      "mode": "100644",
+      "git_blob_sha": "d5fc47bedc92708ad4f1859c33b349d744ac27c4"
+    },
+    {
+      "path": "scripts/kokoro_tts_vn.py",
+      "size": 33907,
+      "mode": "100644",
+      "git_blob_sha": "18080d7d3d58a63b45d19bcec81b90ef81f78574"
+    },
+    {
+      "path": "scripts/prepare_vn_image_manifest.py",
+      "size": 13244,
+      "mode": "100644",
+      "git_blob_sha": "4252c92183552e2444e7eb5c886b4a5b8951f748"
+    },
+    {
+      "path": "scripts/render_vn_video.py",
+      "size": 50309,
+      "mode": "100644",
+      "git_blob_sha": "f2033cf13e82d7cfbe7b24be6f1e207d1e48c654"
+    },
+    {
+      "path": "scripts/sa3_vn_audio.py",
+      "size": 37292,
+      "mode": "100644",
+      "git_blob_sha": "a9b289ae5af02fcc2d66fd014203cb4a1a9cdad9"
+    },
+    {
+      "path": "scripts/validate_vn_video.py",
+      "size": 14847,
+      "mode": "100644",
+      "git_blob_sha": "5128ef5eb457657e3a2cc2363221a895d2767b14"
+    },
+    {
+      "path": "tests/test_portability.py",
+      "size": 3273,
+      "mode": "100644",
+      "git_blob_sha": "366f0c43658edc10ab713835584971b2ae5ad2c4"
+    }
+  ]
+}

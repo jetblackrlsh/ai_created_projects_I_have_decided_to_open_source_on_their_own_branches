@@ -1,0 +1,4 @@
+interface:
+  display_name: "Anime Visual Novel Adapter"
+  short_description: "Turn stories into cinematic kinetic-novel videos"
+  default_prompt: "Use $anime-visual-novel-adapter to adapt my authorized story into a kinetic-novel video."
