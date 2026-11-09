@@ -1,0 +1,4 @@
+interface:
+  display_name: "Superpower World Sim"
+  short_description: "Simulate superpowered civilizations and steer history"
+  default_prompt: "Use $superpower-world-sim to simulate a superpowered civilization across 100 worlds and tell me the most dramatic history."

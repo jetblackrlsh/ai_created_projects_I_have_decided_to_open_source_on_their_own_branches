@@ -1,0 +1,70 @@
+{
+  "project": "superpower-world-sim",
+  "release_date": "2026-11-09",
+  "provenance": "Owner-supplied source package, repaired with approval; no private history imported.",
+  "manifest_excludes_itself": true,
+  "excluded": [
+    "Original ZIP and duplicate Google Doc exports",
+    "Private Drive URLs and account metadata",
+    "Generated simulation histories, state files and test outputs",
+    "Bytecode caches and local repository history"
+  ],
+  "files": [
+    {
+      "path": "LICENSE",
+      "size_bytes": 7048,
+      "mode": "644",
+      "git_blob_sha1": "0e259d42c996742e9e3cba14c677129b2c1b6311",
+      "sha256": "a2010f343487d3f7618affe54f789f5487602331c0a8d03f49e9a7c547cf0499"
+    },
+    {
+      "path": "README.md",
+      "size_bytes": 6061,
+      "mode": "644",
+      "git_blob_sha1": "3270f682368cc4036b43f3e3a3e8199ab50b3be3",
+      "sha256": "370ea2410cb42cb2ff78d970a41ee24eb1ee176435aae05e3f8289c6a966f396"
+    },
+    {
+      "path": "SKILL.md",
+      "size_bytes": 5273,
+      "mode": "644",
+      "git_blob_sha1": "9e23581b3f40f0c7cca2330b32b697e36b65bc6d",
+      "sha256": "78a867d0acd2740a5467d8db2653d05c4636738b350aaa8106f75e76d5a5776b"
+    },
+    {
+      "path": "THIRD_PARTY_NOTICES.md",
+      "size_bytes": 890,
+      "mode": "644",
+      "git_blob_sha1": "a8ab075bd19d85896426cecde304dd54fe9d8ea4",
+      "sha256": "3d0a0b5be03aaa137d3443cadc0f4c56909570e8d6ebe35f68739fff7a79de15"
+    },
+    {
+      "path": "agents/openai.yaml",
+      "size_bytes": 270,
+      "mode": "644",
+      "git_blob_sha1": "1b179b3ad36c119196bfde37a74817af35e9c942",
+      "sha256": "b48ff8d44f79e1df8acb76829f487acd90a40d29165a0cafd4dc0723f755c6ab"
+    },
+    {
+      "path": "references/powers_and_mechanics.md",
+      "size_bytes": 7181,
+      "mode": "644",
+      "git_blob_sha1": "b04d5d32269529cc4075587d6a60ca0cbb6cef4f",
+      "sha256": "6440248ad22292f69b8dca3a30bdb3c2e98bee56620bd4b691b201b04c0db9e5"
+    },
+    {
+      "path": "scripts/simulate_world.py",
+      "size_bytes": 77144,
+      "mode": "755",
+      "git_blob_sha1": "cf8e489dc9f36cfb117ccc6ce2649fed84eda4d6",
+      "sha256": "060a4b7118a2f5fa2c0c3cd2ae508d8a4e450e7ff948d4ea8577ec0d031560de"
+    },
+    {
+      "path": "scripts/test_simulate_world.py",
+      "size_bytes": 6349,
+      "mode": "755",
+      "git_blob_sha1": "392d1b4ad512defbbc2a292c4c2e96f728d1661d",
+      "sha256": "bc207a67a747ac1e4ea5d9d12b1a229af53d2ae005384c5cda6997932b6f59b7"
+    }
+  ]
+}
