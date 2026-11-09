@@ -5,7 +5,7 @@ description: Run seeded superpower civilization simulations, Monte Carlo world e
 
 # Superpower World Sim
 
-Run the bundled Python 3 standard-library engine. Use its measured results as creative simulation outputs, not scientific predictions. Require no paid API, external service, or graphical application.
+Run the bundled Python 3 standard-library v2 engine. Every one of the 29 defined powers has a concrete state-changing action, with energy, cooldowns, conditions and limits. Use its measured results as creative simulation outputs, not scientific predictions. Require no paid API, external service, or graphical application.
 
 ## Configure an experiment
 
@@ -30,7 +30,7 @@ python3 <skill_dir>/scripts/simulate_world.py \
 
 Customize `--pop`, `--power-rate`, `--mutation-rate`, `--wheel-interval`, `--tribe-a`, `--tribe-b`, and `--wall-year`. Set `--select-world auto` to feature the highest-drama run, or use a 1-based world index. Seeds advance by 97 across a batch. Runtime depends on population, years, runs and hardware; do not promise a fixed completion time.
 
-Verify nonempty `aggregate_stats` and `featured_world` in JSON, and a readable Markdown report. Both outputs include the featured world's full major-event chronicle. The JSON additionally includes agents and family relationships in evolution, monarch and wheel modes; versus includes aggregate food reserves. Do not invent food-reserve measurements for modes without a food-reserve model. Only the featured world's detailed history is exported, not every world in the batch.
+Verify nonempty `aggregate_stats` and `featured_world` in JSON, and a readable Markdown report. Both outputs include the featured world's full major-event chronicle. The JSON additionally includes agents and family relationships in evolution, monarch and wheel modes; all four modes include modeled food reserves (individual worlds under world_resources; versus under food_reserves). Report them as abstract stock units, not kilograms or precise nutrition. Only the featured world's detailed history is exported, not every world in the batch.
 
 ## Play at checkpoints
 
@@ -53,7 +53,7 @@ python3 <skill_dir>/scripts/simulate_world.py \
   --output-json checkpoint.json --output-report checkpoint.md
 ```
 
-Full state restores agents, RNG, year, laws, counters and history, or tribal economy in versus. Saved configuration controls mode, seed, original horizon and parameters; do not expect CLI parameter changes to alter those on resume. Resume beyond the saved year and within the original horizon. Policies take effect at the next simulated year; injected events occur then too. On fresh runs, injected events occur in year 5, so use at least five years to see one. Policies and injected events are not supported in versus mode. Missing, malformed or legacy summary-only state files must not be described as resumable. Keep state files private unless the user asks to share them.
+Full state restores agents, RNG, year, laws, counters, history, power conditions/cooldowns, resources and revival/clone state, or tribal economy in versus. Full version-1 state is migrated at the resume boundary; version-2 saves preserve the new effects exactly. Saved configuration controls mode, seed, original horizon and parameters; do not expect CLI parameter changes to alter those on resume. Resume beyond the saved year and within the original horizon. Policies take effect at the next simulated year; injected events occur then too. On fresh runs, injected events occur in year 5, so use at least five years to see one. Policies and injected events are not supported in versus mode. Missing, malformed or legacy summary-only state files must not be described as resumable. Version-1 migration preserves existing history but intentionally changes future rules to v2. Keep state files private unless the user asks to share them.
 
 ## Tell the story faithfully
 
@@ -65,4 +65,7 @@ Full state restores agents, RNG, year, laws, counters and history, or tribal eco
 - Preserve uncertainty: percentages summarize the configured toy model, not real-world odds.
 - Do not promise custom JSON scenarios, GUI gameplay, arbitrary powers, detailed economics, or autonomous ongoing simulation. Those are not bundled features.
 
-Run `python3 <skill_dir>/scripts/test_simulate_world.py` when validating or modifying this engine.
+Use `--list-powers` to inspect the implemented action catalog. Consult the mechanics reference before narrating resurrection, cloning, control, injuries or resource effects. Narrate only actions recorded by the engine, not actions a power might suggest in another fictional universe.
+
+Run both `python3 <skill_dir>/scripts/test_simulate_world.py` and `python3 <skill_dir>/scripts/test_power_effects.py` when validating or modifying this engine.
+

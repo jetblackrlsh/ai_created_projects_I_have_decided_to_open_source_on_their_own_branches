@@ -15,6 +15,7 @@ import json
 import math
 import random
 from typing import Any, Dict, List, Optional, Tuple
+from power_effects import WorldPowers, POWER_EFFECTS
 
 FIRST_NAMES = [
     "Aspen", "Jesse", "Cody", "Lennon", "Mel", "Leslie", "Darby", "Mason", "Alex",
@@ -559,6 +560,7 @@ def run_single_world_evolution_or_monarch_or_wheel(
         if policy_override.startswith("build_"):
             log_event(current_year + 1, "tech", f"By decree, the state completed {policy_override.replace('_', ' ')}.", weight=3)
 
+    powers = WorldPowers(agents, rng, resume_state.get("powers") if resume_state else None)
     injection_year = current_year + 1 if resume_state else 5
     for year in range(current_year + 1, years + 1) if not terminal else []:
         current_year = year
@@ -567,6 +569,13 @@ def run_single_world_evolution_or_monarch_or_wheel(
             log_event(year, "extinction", f"All human life in the world went extinct in Year {year}.", weight=10)
             break
 
+        powers.begin_year(year, create_agent, towns, chronicle, counter_tech)
+        for event in powers.events:
+            drama_score += 2
+            chronicle.append(event)
+        living = [a for a in agents.values() if a["alive"]]
+        if not living:
+            break
         pop_count = len(living)
         if pop_count < min_pop:
             min_pop = pop_count
@@ -691,7 +700,8 @@ def run_single_world_evolution_or_monarch_or_wheel(
 
         # Age everyone & handle natural deaths / prison releases
         for a in list(living):
-            a["age"] += 1
+            if a.get("stasis_until", 0) < year:
+                a["age"] += 1
             if a["imprisoned_until"] and year >= a["imprisoned_until"]:
                 a["imprisoned_until"] = 0
             # Prison escape attempt for unregistered speedsters/invisibles
@@ -735,8 +745,8 @@ def run_single_world_evolution_or_monarch_or_wheel(
             break
 
         # Role awakening: Heroes, Villains, Secret Societies, Mentorships
-        active_heroes = [a for a in living if a["role"] == "hero" and a["imprisoned_until"] == 0]
-        active_villains = [a for a in living if a["role"] == "villain" and a["imprisoned_until"] == 0]
+        active_heroes = [a for a in living if a["role"] == "hero" and a["imprisoned_until"] == 0 and not any(a.get(flag, 0) >= year for flag in ("stasis_until", "frozen_until", "stunned_until", "frightened_until"))]
+        active_villains = [a for a in living if a["role"] == "villain" and a["imprisoned_until"] == 0 and not any(a.get(flag, 0) >= year for flag in ("stasis_until", "frozen_until", "stunned_until", "frightened_until"))]
 
         for a in living:
             if a["age"] >= 16 and a["role"] == "citizen" and a["imprisoned_until"] == 0:
@@ -786,6 +796,10 @@ def run_single_world_evolution_or_monarch_or_wheel(
                 defender = max(avail_heroes, key=lambda h: POWER_TREE.get(h["power"], {}).get("combat", 1.0))
                 h_score = POWER_TREE.get(defender["power"], {}).get("combat", 1.2) * rng.uniform(0.8, 1.3)
                 v_score = POWER_TREE.get(challenger["power"], {}).get("combat", 1.2) * rng.uniform(0.8, 1.25)
+                h_score *= powers.combat_multiplier(defender)
+                v_score *= powers.combat_multiplier(challenger)
+                # Infrastructure and actual fortifications now affect defense, with bounded bonuses.
+                h_score *= 1 + min(.25, powers.r["fortifications"] * .01 + powers.r["guard"] * .02)
                 if counter_tech:
                     h_score += 0.18
                 if abs(h_score - v_score) < 0.12:
@@ -818,7 +832,8 @@ def run_single_world_evolution_or_monarch_or_wheel(
                                 log_event(year, "revenge", f"{child['name']} (child of slain {challenger['name']}) swore revenge on {defender['name']} ({defender['moniker']}){both_note}!", weight=5)
                     # Unlock counter-tech against challenger's power
                     ct = POWER_TREE.get(challenger["power"], {}).get("counter_tech")
-                    if ct and ct not in counter_tech:
+                    if ct and ct not in counter_tech and powers.r["materials"] >= 5:
+                        powers.r["materials"] -= 5
                         counter_tech.append(ct)
                         log_event(year, "tech", f"Studying {challenger['moniker']}'s {challenger['power']} ability, human engineers invented {ct}.", weight=3)
                 else:
@@ -943,7 +958,12 @@ def run_single_world_evolution_or_monarch_or_wheel(
             or (len(living) > carrying_capacity * 0.85 and rng.random() < 0.25)
             or (mode == "wheel" and rng.random() < 0.025 and len(living) > 60)
         )
+        if powers.r["food"] <= 0 and len(living) > 20:
+            famine_triggered = True
+        if famine_triggered and powers.rng.random() < min(.75, powers.r["harvest_bonus"]):
+            famine_triggered = False
         if famine_triggered:
+            powers.r["food"] = max(0, powers.r["food"] - len(living) * .25)
             starved_list = []
             for a in living:
                 surv_bonus = POWER_TREE.get(a["power"], {}).get("survival", 1.0) if a["power"] else 0.72
@@ -970,7 +990,7 @@ def run_single_world_evolution_or_monarch_or_wheel(
             break
 
         # Marriage and Births
-        eligible_adults = [a for a in living if 18 <= a["age"] <= 50 and a["imprisoned_until"] == 0]
+        eligible_adults = [a for a in living if 18 <= a["age"] <= 50 and a["imprisoned_until"] == 0 and a.get("clone_of") is None]
         unmarried = [a for a in eligible_adults if a["spouse"] is None]
         rng.shuffle(unmarried)
         for idx in range(0, len(unmarried) - 1, 2):
@@ -1016,6 +1036,7 @@ def run_single_world_evolution_or_monarch_or_wheel(
                                 weight=4
                             )
 
+    powers.observe_deaths()
     living_end = [a for a in agents.values() if a["alive"]]
     powered_end = [a for a in living_end if a["power"]]
     power_share = round(len(powered_end) / len(living_end), 3) if living_end else 0.0
@@ -1044,6 +1065,7 @@ def run_single_world_evolution_or_monarch_or_wheel(
 
     state = {
         "year": current_year,
+        "powers": powers.state,
         "terminal": not living_end,
         "rng_state": rng.getstate(),
         "variables": {'agents': agents, 'next_id': next_id, 'ruler_id': ruler_id, 'initial_royal_family': initial_royal_family, 'royal_family_lost_year': royal_family_lost_year, 'laws': laws, 'counter_tech': counter_tech, 'cannons_invented': cannons_invented, 'cannon_deaths': cannon_deaths, 'famine_deaths': famine_deaths, 'combat_deaths': combat_deaths, 'purge_deaths': purge_deaths, 'active_cult': active_cult, 'towns': towns, 'chronicle': chronicle, 'min_pop': min_pop, 'min_pop_year': min_pop_year, 'max_pop': max_pop, 'max_pop_year': max_pop_year, 'revenge_sworn_count': revenge_sworn_count, 'revenge_fulfilled_count': revenge_fulfilled_count, 'revenge_turned_hero_count': revenge_turned_hero_count, 'hero_turned_villain_count': hero_turned_villain_count, 'drama_score': drama_score}
@@ -1062,6 +1084,11 @@ def run_single_world_evolution_or_monarch_or_wheel(
         "mode": mode,
         "years_simulated": current_year,
         "agents": agents,
+        "world_resources": powers.r,
+        "power_usage": powers.state["usage"],
+        "resurrections": powers.state["revivals"],
+        "clones_created": powers.state["clones_created"],
+        "engine_version": 2,
         "_state": state,
         "final_population": len(living_end),
         "final_powered_count": len(powered_end),
@@ -1383,6 +1410,9 @@ def format_markdown_report(summary: Dict[str, Any]) -> str:
         lines.append(f"- **Counter-Tech Invented**: {', '.join(feat['counter_tech_invented']) or 'None'}")
         lines.append(f"- **Revenge & Legacy Arcs**: {feat['revenge_sworn_count']} swore revenge, {feat['revenge_turned_hero_count']} abandoned vengeance to inherit a hero mantle")
         lines.append(f"- **Surviving Powers at Final Year**: {json.dumps(feat['surviving_powers'])}")
+        lines.append(f"- **Actual Power Actions**: {json.dumps(feat.get('power_usage', {}))}")
+        lines.append(f"- **Resurrections / Clones**: {feat.get('resurrections', 0)} / {feat.get('clones_created', 0)}")
+        lines.append(f"- **World Resources**: {json.dumps(feat.get('world_resources', {}))}")
     lines.append("")
     lines.append(f"## 3. Chronicle of Major Events (World #{feat['world_index']})")
     lines.append("")
@@ -1403,6 +1433,7 @@ def restore_tuples(value: Any) -> Any:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Run Avangel-style superpower world simulations.")
+    parser.add_argument("--list-powers", action="store_true", help="Print each defined power and its implemented action, then exit")
     parser.add_argument("--mode", choices=["evolution", "monarch", "wheel", "versus"], default="evolution")
     parser.add_argument("--runs", type=int, default=100)
     parser.add_argument("--years", type=int, default=None)
@@ -1424,13 +1455,16 @@ def main() -> None:
     parser.add_argument("--output-report", default="sim_report.md")
     args = parser.parse_args()
 
+    if args.list_powers:
+        print(json.dumps(POWER_EFFECTS, indent=2))
+        return
     loaded = None
     if args.load_state:
         try:
             with open(args.load_state, encoding="utf-8") as f:
                 loaded = json.load(f)
-            if loaded.get("schema_version") != 1 or "config" not in loaded or "state" not in loaded:
-                raise ValueError("Expected a version-1 full world state; legacy summary snapshots cannot be resumed")
+            if loaded.get("schema_version") not in (1, 2) or "config" not in loaded or "state" not in loaded:
+                raise ValueError("Expected a version-1 or version-2 full world state; legacy summary snapshots cannot be resumed")
             required = {"mode", "years", "pop", "power_rate", "mutation_rate", "tribe_a", "tribe_b", "wall_year", "wheel_interval", "seed"}
             if set(loaded["config"]) != required:
                 raise ValueError("Invalid saved configuration fields")
@@ -1542,7 +1576,7 @@ def main() -> None:
         config = {k: getattr(args, k) for k in ("mode", "years", "pop", "power_rate", "mutation_rate", "tribe_a", "tribe_b", "wall_year", "wheel_interval")}
         config["seed"] = featured["seed"]
         config["years"] = horizon
-        save_payload = {"schema_version": 1, "world_index": featured["world_index"], "config": config, "state": featured_state}
+        save_payload = {"schema_version": 2, "world_index": featured["world_index"], "config": config, "state": featured_state}
     with open(args.output_json, "w", encoding="utf-8") as f:
         json.dump(summary_payload, f, indent=2)
 
@@ -1559,3 +1593,4 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+

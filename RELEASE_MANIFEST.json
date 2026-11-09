@@ -1,7 +1,8 @@
 {
   "project": "superpower-world-sim",
+  "version": 2,
   "release_date": "2026-11-09",
-  "provenance": "Owner-supplied source package, repaired with approval; no private history imported.",
+  "provenance": "Owner-approved update of the existing public project; 29 concrete power actions, compatibility migration and tests. No private history imported.",
   "manifest_excludes_itself": true,
   "excluded": [
     "Original ZIP and duplicate Google Doc exports",
@@ -19,17 +20,17 @@
     },
     {
       "path": "README.md",
-      "size_bytes": 6061,
+      "size_bytes": 8066,
       "mode": "644",
-      "git_blob_sha1": "3270f682368cc4036b43f3e3a3e8199ab50b3be3",
-      "sha256": "370ea2410cb42cb2ff78d970a41ee24eb1ee176435aae05e3f8289c6a966f396"
+      "git_blob_sha1": "83f5c28c983b3a0a4d204d2b6f67624748cea090",
+      "sha256": "d0ec97c83f55c615e90177bf6cde783cbcb8a3c10fd8b6e3179edc171c6e2db1"
     },
     {
       "path": "SKILL.md",
-      "size_bytes": 5273,
+      "size_bytes": 6071,
       "mode": "644",
-      "git_blob_sha1": "9e23581b3f40f0c7cca2330b32b697e36b65bc6d",
-      "sha256": "78a867d0acd2740a5467d8db2653d05c4636738b350aaa8106f75e76d5a5776b"
+      "git_blob_sha1": "d04095195afbf7129ef95749c6d7a298fad56e84",
+      "sha256": "a55d134ab09479b533694230f0f0c110ff3a2bb6374630548bf9cd9ea1c6b049"
     },
     {
       "path": "THIRD_PARTY_NOTICES.md",
@@ -40,31 +41,59 @@
     },
     {
       "path": "agents/openai.yaml",
-      "size_bytes": 270,
+      "size_bytes": 422,
       "mode": "644",
-      "git_blob_sha1": "1b179b3ad36c119196bfde37a74817af35e9c942",
-      "sha256": "b48ff8d44f79e1df8acb76829f487acd90a40d29165a0cafd4dc0723f755c6ab"
+      "git_blob_sha1": "3868641b3c95915af089dae6f667619deb489ea0",
+      "sha256": "8ded61a356d1400da02fdd9f43d9396dfa002d4e8350a1e5b522b915f477c89f"
+    },
+    {
+      "path": "assets/icon.svg",
+      "size_bytes": 420,
+      "mode": "644",
+      "git_blob_sha1": "2468028d1ed0fc8009b1fc45e7bb027adaf0d079",
+      "sha256": "e9301497fa98ef56aaca7ede0857b9a18dc06c34040f0679c609a6bf49b1d38b"
     },
     {
       "path": "references/powers_and_mechanics.md",
-      "size_bytes": 7181,
+      "size_bytes": 9824,
       "mode": "644",
-      "git_blob_sha1": "b04d5d32269529cc4075587d6a60ca0cbb6cef4f",
-      "sha256": "6440248ad22292f69b8dca3a30bdb3c2e98bee56620bd4b691b201b04c0db9e5"
+      "git_blob_sha1": "96f77d462c2d6b1810395014037e7aca2c3bd7c2",
+      "sha256": "f0d328c35930f714e646988fcd53b57d49a5575ea21a9eeb62ab304a28790e86"
+    },
+    {
+      "path": "scripts/check_stability.py",
+      "size_bytes": 2078,
+      "mode": "755",
+      "git_blob_sha1": "550f95f4c128fbd0a39dd442c41efc6e2ce44b6d",
+      "sha256": "ccc4dc3bf1565061317f793cfa636c8be6dbb6f71358a616ba9c896b0d1b3ce3"
+    },
+    {
+      "path": "scripts/power_effects.py",
+      "size_bytes": 21663,
+      "mode": "644",
+      "git_blob_sha1": "41f256b47b23f656f537e7a07b0ccb70c19fc30e",
+      "sha256": "5cfacd84ef4863d381b4027810675fe2b966945d7c5834f189f20398ef5129f7"
     },
     {
       "path": "scripts/simulate_world.py",
-      "size_bytes": 77144,
+      "size_bytes": 79428,
       "mode": "755",
-      "git_blob_sha1": "cf8e489dc9f36cfb117ccc6ce2649fed84eda4d6",
-      "sha256": "060a4b7118a2f5fa2c0c3cd2ae508d8a4e450e7ff948d4ea8577ec0d031560de"
+      "git_blob_sha1": "26399b7564e1e466ce06af9dca28fa722d2f4ea5",
+      "sha256": "18a7a0c62b0fd35a54a0f2899bd2b08429035150335c5511f941656c51201381"
+    },
+    {
+      "path": "scripts/test_power_effects.py",
+      "size_bytes": 10529,
+      "mode": "755",
+      "git_blob_sha1": "534ac11945f995cd8b68e5e24c164ce702fff2dd",
+      "sha256": "31737076354847f7742add6874c396b1f9f7e94302091585c0a63d6ca9eadcec"
     },
     {
       "path": "scripts/test_simulate_world.py",
-      "size_bytes": 6349,
+      "size_bytes": 7327,
       "mode": "755",
-      "git_blob_sha1": "392d1b4ad512defbbc2a292c4c2e96f728d1661d",
-      "sha256": "bc207a67a747ac1e4ea5d9d12b1a229af53d2ae005384c5cda6997932b6f59b7"
+      "git_blob_sha1": "bb57ad63225ae04c6b0524783a3794b490e477bc",
+      "sha256": "8737cde245131b2c97e44afa012bb8d346d435a9d7fbd83abef0995dde6330fe"
     }
   ]
 }

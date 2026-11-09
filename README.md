@@ -1,4 +1,4 @@
-# Superpower World Sim
+# Superpower World Sim v2
 
 An offline, standard-library Python engine and AI-agent skill for fictional superpowered civilizations. Run many seeded worlds, compare their outcomes, and explore one world's named heroes, villains and dynasties. Stop at checkpoints and steer future history through decrees and events.
 
@@ -9,6 +9,7 @@ Requires Python 3.9 or newer; no package installation, credentials or paid servi
 ```sh
 python3 scripts/simulate_world.py --mode monarch --runs 100 --years 100 --output-json results.json --output-report report.md
 python3 scripts/test_simulate_world.py
+python3 scripts/test_power_effects.py
 ```
 
 Open `report.md` for the complete featured-world major-event chronicle and aggregate results. `results.json` includes structured results and, outside versus mode, the featured world's agent/family records.
@@ -24,6 +25,12 @@ Open `report.md` for the complete featured-world major-event chronicle and aggre
 - Save complete world state, resume later, and branch the same checkpoint into alternative choices.
 - Inspect objective secrets versus public beliefs, family relationships, hero mantles, succession, technologies and mortality statistics.
 
+## Powers now do things
+
+All 29 powers have concrete actions, not only stat bonuses. Necromancers can resurrect recently deceased people; cloners create distinct temporary agents; healers treat injuries; mind controllers change allegiance temporarily; telepaths reveal real recorded secrets. Elemental powers inflict conditions, wards and durability counter injury, stasis pauses aging/actions, and movement/growth/construction powers change supplies, shelter, escape, infrastructure or defenses.
+
+Energy, cooldowns, resources, capped yearly actions and bounded resurrection/cloning prevent unlimited power loops. New settlement resources and power metrics are exported with the world. Run `python3 scripts/simulate_world.py --list-powers` for all 29 action descriptions.
+
 The model contains 29 defined powers. See [the mechanics reference](references/powers_and_mechanics.md) for exact behavior and important simplifications.
 
 ## Interactive saved worlds
@@ -35,7 +42,7 @@ python3 scripts/simulate_world.py --mode monarch --runs 1 --years 100 --checkpoi
 python3 scripts/simulate_world.py --load-state world.json --checkpoint-year 50 --policy-override hero_charter --inject-event meteor --save-state world-next.json --output-json next.json --output-report next.md
 ```
 
-The original saved configuration is restored, including mode, seed and final horizon. Resume advances beyond the saved year, without restarting agents or history. New decrees and injected events take effect in the next simulated year. On fresh runs injected events happen in year 5. Keep separate state files to compare alternate histories. Versus supports checkpoints but not decrees or injected events. A saved Monte Carlo batch resumes only its featured world.
+Version-2 saves preserve power conditions, cooldowns, resources and revival/clone counters. Full version-1 saves migrate at the resume boundary; old history is retained, but future behavior follows the new rules. The original saved configuration is restored, including mode, seed and final horizon. Resume advances beyond the saved year, without restarting agents or history. New decrees and injected events take effect in the next simulated year. On fresh runs injected events happen in year 5. Keep separate state files to compare alternate histories. Versus supports checkpoints but not decrees or injected events. A saved Monte Carlo batch resumes only its featured world.
 
 Use `--help` for all options. Missing or legacy summary-only save files are rejected.
 
@@ -52,15 +59,15 @@ A compatible assistant interprets the engine output as a story. The repository i
 
 ## Verification and limitations
 
-The bundled six-test regression suite covers all four mode outputs, exact uninterrupted/resumed equality in the same Python runtime, all eleven event choices, nine policy choices, actual amnesty release, intervention timing, featured-world batch saves, full chronicle reports and invalid/legacy input rejection. Tests use many subcases; no independent balance or scientific validation is implied.
+The bundled 16-test regression suites (with per-power and per-mode subcases) cover actual state changes for every power, resurrection identity/limits, clone identity/expiry, wards, armor, cleansing, mind-control expiry, suppression, version-1 migration, plus all four mode outputs, exact uninterrupted/resumed equality in the same Python runtime, all eleven event choices, nine policy choices, actual amnesty release, intervention timing, featured-world batch saves, full chronicle reports and invalid/legacy input rejection. All tests passed on Python 3.12. A 60-world, 200-year-per-world stability sweep exercised all 29 powers in each individual-agent mode and checked finite resources, action budgets, revival limits, clone reproduction and bounded population growth. Run `python3 scripts/check_stability.py` to repeat it. These checks do not establish equal power strength or scientific validity.
 
-This is a fictional, simplified simulation, not a prediction of real societies. Some famines and technologies are scheduled; event narration is templated. Powers are mostly scalar bonuses rather than full physics. Institutional flags and counter-tech are coarse. Tribal A/B economy and combat rules are asymmetric, so versus is not balanced research. There is no GUI, custom scenario-JSON loader, arbitrary-power editor, network service or background simulation. Detailed food reserves are modeled only in versus. Only one world's detailed history is exported per batch. Legacy summary snapshots cannot be upgraded into full state because the missing agents/RNG were never saved.
+This is a fictional, simplified simulation, not a prediction of real societies. Some famines and technologies are scheduled; event narration is templated. Powers combine explicit causal actions with scalar bonuses, not full physics. Effects are annual abstractions; contextual powers need eligible targets and may not activate every year. Institutional flags and counter-tech are coarse. Tribal A/B economy and combat rules are asymmetric, so versus is not balanced research. There is no GUI, custom scenario-JSON loader, arbitrary-power editor, network service or background simulation. Food/resource stocks are abstract units, not a spatial farming or nutrition model. Versus remains a separate aggregate three-tribe model; the 29 individual-agent actions apply to evolution, monarch and wheel. Only one world's detailed history is exported per batch. Legacy summary snapshots cannot be upgraded into full state because the missing agents/RNG were never saved.
 
 Keep generated snapshots and histories private when they contain your own added material. No personal sessions, private journals, credentials or generated user histories are part of this release.
 
 ## Provenance and license
 
-Adapted with the project owner's approval from their supplied `superpower-world-sim` package on November 9, 2026. Fixed actual state restoration, added missing events and amnesty control, exported family records, preserved complete report chronicles, added input checks and regression tests, and corrected overstated documentation. The original supplied files were not modified.
+Adapted with the project owner's approval from their supplied `superpower-world-sim` package on November 9, 2026. Fixed actual state restoration, added missing events and amnesty control, exported family records, preserved complete report chronicles, added input checks and regression tests, and corrected overstated documentation. The original supplied files were not modified. A subsequent approved v2 upgrade added all 29 power actions, conditions, injury/healing, settlement resources, bounded resurrection/cloning, full-state migration and dedicated power tests.
 
 Original package file SHA-256 hashes:
 
@@ -69,3 +76,4 @@ Original package file SHA-256 hashes:
 - scripts/simulate_world.py: `a593e18b78fe8f725ab415de6c29b49b605e168dfbaeea35f1a9ba20196cd6b5`
 
 The owner's contributions are released under the repository's [CC0 1.0 Universal dedication](LICENSE), only to the extent of rights they hold. Third-party trademarks and rights are not waived. See [notices](THIRD_PARTY_NOTICES.md) and [release manifest](RELEASE_MANIFEST.json).
+

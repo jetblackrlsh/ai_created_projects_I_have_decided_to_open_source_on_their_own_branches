@@ -105,6 +105,24 @@ class WorldTests(unittest.TestCase):
         self.assertEqual(resumed['featured_world']['world_index'], 3)
         self.assertEqual(resumed['featured_world']['seed'], 42 + 97 * 2)
 
+    def test_version_one_full_save_migrates(self):
+        path = self.root / 'saved.json'
+        self.cli('--mode', 'monarch', '--runs', '1', '--years', '40',
+                 '--checkpoint-year', '10', '--save-state', str(path))
+        save = json.loads(path.read_text())
+        save['schema_version'] = 1
+        save['state'].pop('powers')
+        new_fields = {'_powers_version', 'injury', 'energy', 'power_ready_year', 'location',
+                      'resurrections', 'death_history', 'clone_of', '_death_recorded'}
+        for a in save['state']['variables']['agents'].values():
+            for key in list(a):
+                if key in new_fields or key.endswith('_until') and key != 'imprisoned_until':
+                    a.pop(key)
+        path.write_text(json.dumps(save))
+        data = self.cli('--load-state', str(path))
+        self.assertEqual(data['featured_world']['engine_version'], 2)
+        self.assertIn('world_resources', data['featured_world'])
+
     def test_invalid_controls_and_legacy_state_rejected(self):
         cases = [('--runs', '0'), ('--pop', '0'), ('--wheel-interval', '0'),
                  ('--power-rate', '2'), ('--policy-override', 'invalid'),
@@ -123,3 +141,4 @@ class WorldTests(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main(verbosity=2)
+
