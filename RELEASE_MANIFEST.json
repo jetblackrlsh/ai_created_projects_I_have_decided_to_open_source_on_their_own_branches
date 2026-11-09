@@ -1,14 +1,14 @@
 {
   "project": "superpower-world-sim",
-  "version": 2,
+  "version": 3,
   "release_date": "2026-11-09",
-  "provenance": "Owner-approved update of the existing public project; 29 concrete power actions, compatibility migration and tests. No private history imported.",
+  "provenance": "Owner-approved original extension: 53 powers, mastery/decay, modern society, institutions, simulated internet and verified state continuity. No private history imported; not a reconstruction claim.",
   "manifest_excludes_itself": true,
   "excluded": [
-    "Original ZIP and duplicate Google Doc exports",
-    "Private Drive URLs and account metadata",
-    "Generated simulation histories, state files and test outputs",
-    "Bytecode caches and local repository history"
+    "Private Drive URLs/account metadata",
+    "Original ZIP and private histories/transcripts",
+    "Generated simulation outputs, snapshots and validation logs",
+    "Bytecode caches and local Git metadata"
   ],
   "files": [
     {
@@ -20,17 +20,17 @@
     },
     {
       "path": "README.md",
-      "size_bytes": 8066,
+      "size_bytes": 9919,
       "mode": "644",
-      "git_blob_sha1": "83f5c28c983b3a0a4d204d2b6f67624748cea090",
-      "sha256": "d0ec97c83f55c615e90177bf6cde783cbcb8a3c10fd8b6e3179edc171c6e2db1"
+      "git_blob_sha1": "aa0ed8f4dcc832324696c78925413aaf93a4bf8b",
+      "sha256": "638e58c706dd19940163c156ffc40bdf56cc7ebce44b751c092062d169a9b481"
     },
     {
       "path": "SKILL.md",
-      "size_bytes": 6071,
+      "size_bytes": 7758,
       "mode": "644",
-      "git_blob_sha1": "d04095195afbf7129ef95749c6d7a298fad56e84",
-      "sha256": "a55d134ab09479b533694230f0f0c110ff3a2bb6374630548bf9cd9ea1c6b049"
+      "git_blob_sha1": "7cad6f70eadcd38d23cde2742abaff0d5ce057e9",
+      "sha256": "73b25f28d4ebba147fcb536515e51621a2dc3f089466b4f9cdb6d9b0708f8b02"
     },
     {
       "path": "THIRD_PARTY_NOTICES.md",
@@ -41,10 +41,10 @@
     },
     {
       "path": "agents/openai.yaml",
-      "size_bytes": 422,
+      "size_bytes": 418,
       "mode": "644",
-      "git_blob_sha1": "3868641b3c95915af089dae6f667619deb489ea0",
-      "sha256": "8ded61a356d1400da02fdd9f43d9396dfa002d4e8350a1e5b522b915f477c89f"
+      "git_blob_sha1": "c49b150be0cf162ac60ef5d307d8ae30841b6bda",
+      "sha256": "dc05b89114c994d487a2865651190fe18edd2e0ed2c57d30b0557e5a98a96b38"
     },
     {
       "path": "assets/icon.svg",
@@ -54,11 +54,32 @@
       "sha256": "e9301497fa98ef56aaca7ede0857b9a18dc06c34040f0679c609a6bf49b1d38b"
     },
     {
-      "path": "references/powers_and_mechanics.md",
-      "size_bytes": 9824,
+      "path": "references/expanded-systems.md",
+      "size_bytes": 8946,
       "mode": "644",
-      "git_blob_sha1": "96f77d462c2d6b1810395014037e7aca2c3bd7c2",
-      "sha256": "f0d328c35930f714e646988fcd53b57d49a5575ea21a9eeb62ab304a28790e86"
+      "git_blob_sha1": "033312da4a759cefc8d40d7da59d1a0e7452b43b",
+      "sha256": "8749504169348e1488f20034c74cf49fd2f86c75d5917bf0c5bc66773fcd19c2"
+    },
+    {
+      "path": "references/modern-society.md",
+      "size_bytes": 8850,
+      "mode": "644",
+      "git_blob_sha1": "5a62b291c164ae242fd2d4ac371bf06276255240",
+      "sha256": "98f376adb4d4039a08fd91426ffd460f4a9870911ce2597a3e251efe15239933"
+    },
+    {
+      "path": "references/powers_and_mechanics.md",
+      "size_bytes": 10599,
+      "mode": "644",
+      "git_blob_sha1": "a20a42039fcbbda1d97cc03d20e54070a15517bd",
+      "sha256": "954442e7e1b1eb56d6838978b100520e2e98fa4a73e6cf1d695e503e4f852c56"
+    },
+    {
+      "path": "scripts/check_modern_stability.py",
+      "size_bytes": 2134,
+      "mode": "755",
+      "git_blob_sha1": "783402af6339637ca8fe02305b7becb40df6e528",
+      "sha256": "b1eaf90123bfc009f4f04208cd7168bda7983f2d9fb9468a7e1abaab9c79c3ea"
     },
     {
       "path": "scripts/check_stability.py",
@@ -68,32 +89,95 @@
       "sha256": "ccc4dc3bf1565061317f793cfa636c8be6dbb6f71358a616ba9c896b0d1b3ce3"
     },
     {
-      "path": "scripts/power_effects.py",
-      "size_bytes": 21663,
+      "path": "scripts/expanded_powers.py",
+      "size_bytes": 13956,
       "mode": "644",
-      "git_blob_sha1": "41f256b47b23f656f537e7a07b0ccb70c19fc30e",
-      "sha256": "5cfacd84ef4863d381b4027810675fe2b966945d7c5834f189f20398ef5129f7"
+      "git_blob_sha1": "a3f12dcaad5fba399916514cef1220045639905e",
+      "sha256": "aa6ed23d0e5fea48be3b674d4a20626366096e0e15aafda669ecae13ed82aa1c"
+    },
+    {
+      "path": "scripts/modern_institutions.py",
+      "size_bytes": 21423,
+      "mode": "644",
+      "git_blob_sha1": "69cf7751383718175fdc9ec9007ee3d3b86decb2",
+      "sha256": "5e27c8504c386d121b251c901db1346bc4cc4ac8f93c584a1efb0c80cae64221"
+    },
+    {
+      "path": "scripts/modern_media.py",
+      "size_bytes": 11010,
+      "mode": "644",
+      "git_blob_sha1": "3f7ebd6de2f4d0c8eb0f3838eb8ed0ebc2bad4d5",
+      "sha256": "9de5ab080850ba4c4788e201cdf69b1e770cd4d6ffda53761eee4b38572aeff5"
+    },
+    {
+      "path": "scripts/modern_society.py",
+      "size_bytes": 22727,
+      "mode": "644",
+      "git_blob_sha1": "6a8432960353a980bfac45fa5ee609fbf2348c50",
+      "sha256": "e8d95fc1c563b71ea851b24799f19285177f1a314e93ab2c1552129415cee38e"
+    },
+    {
+      "path": "scripts/power_effects.py",
+      "size_bytes": 24548,
+      "mode": "644",
+      "git_blob_sha1": "14538c34d5bfcc1771484c54d741f7092c095915",
+      "sha256": "64d284fa1b161cbe77fbd74fcba669480e28a1215eedfabab6fa8d7f67855ed9"
     },
     {
       "path": "scripts/simulate_world.py",
-      "size_bytes": 79428,
+      "size_bytes": 84937,
       "mode": "755",
-      "git_blob_sha1": "26399b7564e1e466ce06af9dca28fa722d2f4ea5",
-      "sha256": "18a7a0c62b0fd35a54a0f2899bd2b08429035150335c5511f941656c51201381"
+      "git_blob_sha1": "bc166e0c308e7b0767323cf8cddd8ceffbd13ce1",
+      "sha256": "c56349f78df42e041f776d45c25fc520829b672c30e0f97f6af0cbee963dde79"
+    },
+    {
+      "path": "scripts/test_catalog_integration.py",
+      "size_bytes": 2123,
+      "mode": "755",
+      "git_blob_sha1": "f61fd6f1fe931dc1cf3e122bfb5442a3a6ea54a4",
+      "sha256": "91a31105ca002647c798f20d25ebf47445fd2cbcfe182b16e85dfc7b2f44b775"
+    },
+    {
+      "path": "scripts/test_expanded_powers.py",
+      "size_bytes": 9793,
+      "mode": "755",
+      "git_blob_sha1": "62130650f745f7965bea6b0da6b1905a46b7fe91",
+      "sha256": "2d5784a6105d127824a098894eca5b35b4fdf9060d6472f0f2c26a750ea564b4"
+    },
+    {
+      "path": "scripts/test_modern_institutions.py",
+      "size_bytes": 11182,
+      "mode": "755",
+      "git_blob_sha1": "2972fb4776949e828fbb6543306c47284f4de79c",
+      "sha256": "72f6a4536256fd82b482e93904d88cef210c6cc69f98e1e367fcf6a7f05b5ab0"
+    },
+    {
+      "path": "scripts/test_modern_media.py",
+      "size_bytes": 3013,
+      "mode": "755",
+      "git_blob_sha1": "a96c65cdc653eb3d77266ed1266d5333f8428ab3",
+      "sha256": "280784752f6e01737a9345e18ddf9aeafed03f2e739de402d8b570a0e7f84c6a"
+    },
+    {
+      "path": "scripts/test_modern_society.py",
+      "size_bytes": 8019,
+      "mode": "755",
+      "git_blob_sha1": "154dcc5e5e19bac70770039ce306dff319b82d44",
+      "sha256": "42b3835c31aa221d23df33b0fa92ba16b2acd3f0816d9baa9f74ca9c4487fed0"
     },
     {
       "path": "scripts/test_power_effects.py",
-      "size_bytes": 10529,
+      "size_bytes": 10553,
       "mode": "755",
-      "git_blob_sha1": "534ac11945f995cd8b68e5e24c164ce702fff2dd",
-      "sha256": "31737076354847f7742add6874c396b1f9f7e94302091585c0a63d6ca9eadcec"
+      "git_blob_sha1": "5401c4c39f395d45ababac8072e15a9936d2e2f1",
+      "sha256": "2de21e95a950b8ec3f9c6f0710e9fc8974ec6141535008f1bcfabbf5244fc13f"
     },
     {
       "path": "scripts/test_simulate_world.py",
-      "size_bytes": 7327,
+      "size_bytes": 7401,
       "mode": "755",
-      "git_blob_sha1": "bb57ad63225ae04c6b0524783a3794b490e477bc",
-      "sha256": "8737cde245131b2c97e44afa012bb8d346d435a9d7fbd83abef0995dde6330fe"
+      "git_blob_sha1": "0f22646d53017f71ce1e71e6f3e4e14c4d7ecb5f",
+      "sha256": "ecf60256816958b16395f23d5fb7f4d049e47fecf225d0c5ba6ea4a57ba104dc"
     }
   ]
 }

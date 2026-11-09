@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
 """
-Superpower World Simulation Engine (Avangel-Style Agent-Based & Monte Carlo Simulator)
-Supports 4 simulation modes:
+Superpower World Simulation Engine (Original Agent-Based & Monte Carlo Simulator)
+Supports 5 simulation modes:
   - evolution: 1,000-year hereditary power evolution in a settlement (Ashford valley)
   - monarch: Non-powered ruler dynasty governing superhumans over 100+ years
   - wheel: Spinning a Superpower & Cataclysm Wheel on humanity every N years
   - versus: Asymmetric superpower civilizations separated by a wall (speed, strength, intelligence)
+  - modern: Employment, ranking apps, media, elections and democratic institutions
 
 Requires only the Python 3 standard library.
 """
@@ -16,6 +17,8 @@ import math
 import random
 from typing import Any, Dict, List, Optional, Tuple
 from power_effects import WorldPowers, POWER_EFFECTS
+from expanded_powers import EXPANDED_POWER_TREE, powers_of, set_powers, has_power, inherit_powers
+from modern_society import run_modern, SOCIAL_POLICIES
 
 FIRST_NAMES = [
     "Aspen", "Jesse", "Cody", "Lennon", "Mel", "Leslie", "Darby", "Mason", "Alex",
@@ -335,6 +338,8 @@ POWER_TREE: Dict[str, Dict[str, Any]] = {
     }
 }
 
+POWER_TREE.update(EXPANDED_POWER_TREE)
+
 FOUNDER_POWERS_EVOLUTION = [
     "Fire", "Ice", "Flight", "Strength", "Speed", "Invisibility", "Earth", "Lightning", "Water", "Healing"
 ]
@@ -440,10 +445,10 @@ def run_single_world_evolution_or_monarch_or_wheel(
     # Initialize founders
     actual_start_pop = 24 if mode == "wheel" and starting_pop == 300 else starting_pop
     for i in range(actual_start_pop):
-        has_power = (mode != "wheel") and (rng.random() < power_rate)
+        founder_has_power = (mode != "wheel") and (rng.random() < power_rate)
         if mode == "monarch" and i == 0:
-            has_power = False
-        p = rng.choice(founder_pool) if has_power else None
+            founder_has_power = False
+        p = rng.choice(founder_pool) if founder_has_power else None
         ag = create_agent(
             birth_year=-19,
             age=rng.randint(18, 32),
@@ -693,7 +698,7 @@ def run_single_world_evolution_or_monarch_or_wheel(
         # Power changes people on the throne over decades
         if year % 15 == 0 and ruler["alive"]:
             ruler["greed"] = min(1.0, round(ruler["greed"] + 0.12, 2))
-            if ruler["greed"] > 0.65 and any(a["power"] == "Giant Size" and a["role"] == "hero" and a["alive"] for a in living):
+            if ruler["greed"] > 0.65 and any(has_power(a, 'Giant Size') and a["role"] == "hero" and a["alive"] for a in living):
                 if "Armored Anti-Giant Mech Suits" not in counter_tech:
                     counter_tech.append("Armored Anti-Giant Mech Suits")
                     log_event(year, "tech", f"Growing wary and greedy on the throne, {ruler['name']} commissioned Armored Anti-Giant Mech Suits ('Hulkbusters') as a safeguard against the kingdom's own giant hero.", weight=5)
@@ -717,9 +722,9 @@ def run_single_world_evolution_or_monarch_or_wheel(
                 else:
                     a["imprisoned_until"] = 0
 
-            longevity_mult = POWER_TREE[a["power"]]["longevity"] if a["power"] in POWER_TREE else 1.0
+            longevity_mult = max((POWER_TREE.get(p, {}).get("longevity", 1.0) for p in powers_of(a)), default=1.0)
             max_age = int(rng.randint(64, 84) * longevity_mult)
-            if a["power"] != "Immortal" and a["age"] >= max_age:
+            if not has_power(a, 'Immortal') and a["age"] >= max_age:
                 a["alive"] = False
                 a["death_year"] = year
                 a["death_cause"] = "old age"
@@ -966,7 +971,7 @@ def run_single_world_evolution_or_monarch_or_wheel(
             powers.r["food"] = max(0, powers.r["food"] - len(living) * .25)
             starved_list = []
             for a in living:
-                surv_bonus = POWER_TREE.get(a["power"], {}).get("survival", 1.0) if a["power"] else 0.72
+                surv_bonus = max((POWER_TREE.get(p, {}).get("survival", 1.0) for p in powers_of(a)), default=.72)
                 # Kids and vitality-powered adults survive extreme famines better
                 if a["age"] <= 14:
                     surv_bonus *= 1.35
@@ -1006,11 +1011,10 @@ def run_single_world_evolution_or_monarch_or_wheel(
                 if rng.random() < birth_prob:
                     # Determine child power via inheritance & mutation
                     child_power: Optional[str] = None
-                    parent_powers = [p for p in (a["power"], spouse["power"]) if p]
+                    parent_powers = list(dict.fromkeys(powers_of(a) + powers_of(spouse)))
+                    inherited = inherit_powers(a, spouse, rng, mutation_rate, pick_power_mutation)
                     if parent_powers:
-                        if rng.random() < 0.78:
-                            base_p = rng.choice(parent_powers)
-                            child_power = pick_power_mutation(base_p, rng, mutation_rate)
+                        child_power = inherited[0] if inherited else None
                     else:
                         # Spontaneous awakening (rare, e.g. Keegan in Monarch mode)
                         if rng.random() < (power_rate * 0.18):
@@ -1026,6 +1030,7 @@ def run_single_world_evolution_or_monarch_or_wheel(
                         last_name=inherited_lname,
                         force_royal=is_royal
                     )
+                    set_powers(child, inherited if parent_powers else ([child_power] if child_power else []))
                     a["children"].append(child["id"])
                     spouse["children"].append(child["id"])
                     if child_power and child_power not in (a["power"], spouse["power"]):
@@ -1060,8 +1065,8 @@ def run_single_world_evolution_or_monarch_or_wheel(
 
     surviving_powers: Dict[str, int] = {}
     for a in powered_end:
-        p = a["power"]
-        surviving_powers[p] = surviving_powers.get(p, 0) + 1
+        for p in powers_of(a):
+            surviving_powers[p] = surviving_powers.get(p, 0) + 1
 
     state = {
         "year": current_year,
@@ -1086,12 +1091,14 @@ def run_single_world_evolution_or_monarch_or_wheel(
         "agents": agents,
         "world_resources": powers.r,
         "power_usage": powers.state["usage"],
+        "mastery_levels": {str(i): sum(a.get("mastery_level", 0) == i for a in living_end if a["power"]) for i in range(6)},
         "resurrections": powers.state["revivals"],
         "clones_created": powers.state["clones_created"],
-        "engine_version": 2,
+        "engine_version": 3,
         "_state": state,
         "final_population": len(living_end),
         "final_powered_count": len(powered_end),
+        "combined_powered_agents": sum(len(powers_of(a)) > 1 for a in living_end),
         "final_power_share": power_share,
         "outcome": outcome,
         "royal_family_name": initial_royal_family,
@@ -1399,6 +1406,20 @@ def format_markdown_report(summary: Dict[str, Any]) -> str:
         lines.append(f"- **Winner**: {feat['winner'].title()} (War lasted {feat['war_duration_years']} years)")
         lines.append(f"- **{feat['tribe_a'].title()} Losses**: {feat['losses_combat_a']} combat, {feat['losses_famine_a']} famine (Final pop: {feat['final_pop_a']})")
         lines.append(f"- **{feat['tribe_b'].title()} Losses**: {feat['losses_combat_b']} combat, {feat['losses_famine_b']} famine (Final pop: {feat['final_pop_b']})")
+    elif mode == "modern":
+        lines.append(f"- **Society Outcome**: {feat['society_outcome']}")
+        lines.append(f"- **Final Population**: {feat['final_population']} ({feat['final_powered_count']} powered)")
+        lines.append(f"- **Freedom / Election Integrity / Press Freedom**: {feat['freedom']:.1f} / {feat['election_integrity']:.1f} / {feat['press_freedom']:.1f}")
+        lines.append(f"- **Democracy Survived**: {feat['democracy_survived']}")
+        lines.append(f"- **Elections / Free Elections / Peaceful Transfers**: {feat['elections_held']} / {feat['free_elections']} / {feat['peaceful_transfers']}")
+        lines.append(f"- **Unemployment / Phone Ownership**: {feat['unemployment_rate']:.1%} / {feat['phone_ownership_rate']:.1%}")
+        lines.append(f"- **Ranking-App Opportunities / Media Reports**: {feat['app_opportunities']} / {feat['media_reports']}")
+        lines.append(f"- **Ranking Leaderboard**: {json.dumps(feat['ranking_leaderboard'])}")
+        lines.append(f"- **Mastery Levels**: {json.dumps(feat['mastery_levels'])}")
+        net=feat.get("internet", {}); inst=feat.get("institutions", {})
+        lines.append(f"- **Internet Posts / Viral / Fakes / Corrections**: {net.get('posts_created',0)} / {net.get('viral_posts',0)} / {net.get('fakes_created',0)} / {net.get('corrections',0)}")
+        lines.append(f"- **Courts / Convictions / Accidents / Hospital Admissions**: {inst.get('trials',0)} / {inst.get('convictions',0)} / {inst.get('child_accidents',0)} / {inst.get('hospital_admissions',0)}")
+        lines.append(f"- **Protests / Impeachments**: {inst.get('protests',0)} / {inst.get('impeachments',0)}")
     else:
         lines.append(f"- **Outcome Category**: `{feat['outcome']}`")
         lines.append(f"- **Final Population**: {feat['final_population']} ({feat['final_powered_count']} gifted, {round(feat['final_power_share']*100, 1)}% of humanity)")
@@ -1413,6 +1434,7 @@ def format_markdown_report(summary: Dict[str, Any]) -> str:
         lines.append(f"- **Actual Power Actions**: {json.dumps(feat.get('power_usage', {}))}")
         lines.append(f"- **Resurrections / Clones**: {feat.get('resurrections', 0)} / {feat.get('clones_created', 0)}")
         lines.append(f"- **World Resources**: {json.dumps(feat.get('world_resources', {}))}")
+        lines.append(f"- **Mastery Levels**: {json.dumps(feat.get('mastery_levels', {}))}")
     lines.append("")
     lines.append(f"## 3. Chronicle of Major Events (World #{feat['world_index']})")
     lines.append("")
@@ -1422,7 +1444,7 @@ def format_markdown_report(summary: Dict[str, Any]) -> str:
     return "\n".join(lines) + "\n"
 
 
-POLICIES = ["registration_act", "hero_charter", "gifted_draft", "power_ban", "royal_amnesty", "build_collars", "build_mechs", "build_cannons", "royal_guard"]
+POLICIES = ["registration_act", "hero_charter", "gifted_draft", "power_ban", "royal_amnesty", "build_collars", "build_mechs", "build_cannons", "royal_guard"] + SOCIAL_POLICIES
 EVENTS = ["meteor", "visitors", "demon_rift", "vampires", "famine", "golden_age", "gifted_generation", "villain_awakens", "immortal_tyrant", "prophet", "nothing"]
 
 
@@ -1432,9 +1454,9 @@ def restore_tuples(value: Any) -> Any:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Run Avangel-style superpower world simulations.")
+    parser = argparse.ArgumentParser(description="Run original superpower world simulations.")
     parser.add_argument("--list-powers", action="store_true", help="Print each defined power and its implemented action, then exit")
-    parser.add_argument("--mode", choices=["evolution", "monarch", "wheel", "versus"], default="evolution")
+    parser.add_argument("--mode", choices=["evolution", "monarch", "wheel", "versus", "modern"], default="evolution")
     parser.add_argument("--runs", type=int, default=100)
     parser.add_argument("--years", type=int, default=None)
     parser.add_argument("--pop", type=int, default=None)
@@ -1463,8 +1485,8 @@ def main() -> None:
         try:
             with open(args.load_state, encoding="utf-8") as f:
                 loaded = json.load(f)
-            if loaded.get("schema_version") not in (1, 2) or "config" not in loaded or "state" not in loaded:
-                raise ValueError("Expected a version-1 or version-2 full world state; legacy summary snapshots cannot be resumed")
+            if loaded.get("schema_version") not in (1, 2, 3) or "config" not in loaded or "state" not in loaded:
+                raise ValueError("Expected a version-1, version-2 or version-3 full world state; legacy summary snapshots cannot be resumed")
             required = {"mode", "years", "pop", "power_rate", "mutation_rate", "tribe_a", "tribe_b", "wall_year", "wheel_interval", "seed"}
             if set(loaded["config"]) != required:
                 raise ValueError("Invalid saved configuration fields")
@@ -1479,12 +1501,14 @@ def main() -> None:
         parser.error("power-rate and mutation-rate must be between 0 and 1")
     if args.wheel_interval < 1 or args.wall_year < 1:
         parser.error("wheel-interval and wall-year must be positive")
+    if args.mode != "modern" and args.policy_override in SOCIAL_POLICIES:
+        parser.error("social policies require modern mode")
     if args.mode == "versus" and (args.policy_override or args.inject_event):
         parser.error("policies and injected events apply only to evolution, monarch, and wheel modes")
     if args.mode == "versus" and args.tribe_a == args.tribe_b:
         parser.error("choose distinct tribes for versus mode")
 
-    default_years = {"evolution": 1000, "monarch": 100, "wheel": 1000, "versus": 450}[args.mode]
+    default_years = {"evolution": 1000, "monarch": 100, "wheel": 1000, "versus": 450, "modern": 100}[args.mode]
     horizon = args.years if args.years is not None else default_years
     sim_years = args.checkpoint_year if args.checkpoint_year is not None else horizon
     if sim_years < 1 or horizon < 1 or sim_years > horizon:
@@ -1502,7 +1526,11 @@ def main() -> None:
         parser.error("select-world must be auto or an integer")
     for i in range(args.runs):
         w_seed = args.seed + i * 97
-        if args.mode == "versus":
+        if args.mode == "modern":
+            res = run_modern(w_seed, sim_years, sim_pop, args.power_rate, args.mutation_rate,
+                             POWER_TREE, pick_power_mutation, args.policy_override, args.inject_event,
+                             loaded["state"] if loaded else None)
+        elif args.mode == "versus":
             res = run_single_world_versus(
                 seed=w_seed,
                 years=sim_years,
@@ -1545,6 +1573,20 @@ def main() -> None:
             "draws_or_frozen_wars": f"{draws}/{args.runs}",
             "median_war_duration_years": median_dur
         }
+    elif args.mode == "modern":
+        agg_stats = {
+            "democracy_survived_worlds": f"{sum(w['democracy_survived'] for w in all_worlds)}/{args.runs}",
+            "free_democracy_worlds": sum(w["society_outcome"] == "free_democracy" for w in all_worlds),
+            "constrained_democracy_worlds": sum(w["society_outcome"] == "constrained_democracy" for w in all_worlds),
+            "authoritarian_worlds": sum(w["society_outcome"] == "authoritarian" for w in all_worlds),
+            "extinct_worlds": sum(w["society_outcome"] == "extinction" for w in all_worlds),
+            "mean_final_freedom": round(sum(w["freedom"] for w in all_worlds)/args.runs, 2),
+            "mean_election_integrity": round(sum(w["election_integrity"] for w in all_worlds)/args.runs, 2),
+            "mean_elections_held": round(sum(w["elections_held"] for w in all_worlds)/args.runs, 2),
+            "mean_peaceful_transfers": round(sum(w["peaceful_transfers"] for w in all_worlds)/args.runs, 2),
+            "mean_unemployment_rate": round(sum(w["unemployment_rate"] for w in all_worlds)/args.runs, 4),
+            "mean_app_opportunities": round(sum(w["app_opportunities"] for w in all_worlds)/args.runs, 2)
+        }
     else:
         ext_count = sum(1 for w in all_worlds if w["outcome"] == "extinction")
         died_out = sum(1 for w in all_worlds if w["outcome"] == "powers_died_out")
@@ -1561,6 +1603,18 @@ def main() -> None:
             "registration_act_passed_worlds": f"{reg_passed}/{args.runs}"
         }
 
+    if args.mode != "versus":
+        mastery_count = sum(sum(w.get("mastery_levels", {}).values()) for w in all_worlds)
+        mastery_sum = sum(sum(int(level) * count for level, count in w.get("mastery_levels", {}).items()) for w in all_worlds)
+        agg_stats["mean_combined_powered_agents"] = round(sum(w.get("combined_powered_agents", 0) for w in all_worlds) / args.runs, 3)
+        agg_stats["pooled_powered_agent_mean_mastery"] = round(mastery_sum / mastery_count, 3) if mastery_count else 0
+    if args.mode == "modern":
+        for field in ("posts_created", "viral_posts", "fakes_created", "corrections", "grievance_turns", "dating_matches", "bullying_events"):
+            agg_stats["mean_internet_" + field] = round(sum(w.get("internet", {}).get(field, 0) for w in all_worlds) / args.runs, 3)
+        for field in ("convictions", "licenses_issued", "child_accidents", "hospital_admissions", "hospital_waitlisted", "epidemic_years", "quarantines", "healer_burnouts", "protests", "rank_protests", "impeachments", "sports_events", "self_defense_acquittals"):
+            agg_stats["mean_institutions_" + field] = round(sum(w.get("institutions", {}).get(field, 0) for w in all_worlds) / args.runs, 3)
+        for field in ("press_freedom", "phone_ownership_rate", "media_reports", "democratic_years", "networking_invitations"):
+            agg_stats["mean_" + field] = round(sum(w[field] for w in all_worlds) / args.runs, 3)
     featured = selected_payload
 
     summary_payload = {
@@ -1576,7 +1630,7 @@ def main() -> None:
         config = {k: getattr(args, k) for k in ("mode", "years", "pop", "power_rate", "mutation_rate", "tribe_a", "tribe_b", "wall_year", "wheel_interval")}
         config["seed"] = featured["seed"]
         config["years"] = horizon
-        save_payload = {"schema_version": 2, "world_index": featured["world_index"], "config": config, "state": featured_state}
+        save_payload = {"schema_version": 3, "world_index": featured["world_index"], "config": config, "state": featured_state}
     with open(args.output_json, "w", encoding="utf-8") as f:
         json.dump(summary_payload, f, indent=2)
 

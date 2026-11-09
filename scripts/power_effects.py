@@ -4,6 +4,7 @@ All randomness comes from the world's Random instance. JSON-safe state is owned 
 WorldPowers; the simulation retains agents, identity, family and succession rules.
 """
 from copy import deepcopy
+from expanded_powers import EXPANDED_EFFECTS, HOSTILE_EXPANDED, activate_expanded, powers_of, set_powers, has_power
 
 POWER_EFFECTS = {
     'Fire': 'Burn a hostile agent; burns cause injury until treated.',
@@ -38,8 +39,12 @@ POWER_EFFECTS = {
 }
 
 
+BASE_POWER_NAMES = frozenset(POWER_EFFECTS)
+POWER_EFFECTS.update(EXPANDED_EFFECTS)
+
+
 def initial_state(population):
-    return {'version': 2, 'resources': {'food': 2.0 * population, 'materials': 20.0,
+    return {'version': 3, 'resources': {'food': 2.0 * population, 'materials': 20.0,
             'medicine': 5.0, 'fortifications': 0.0, 'infrastructure': 1.0,
             'guard': 0.0, 'harvest_bonus': 0.0}, 'usage': {}, 'revivals': 0,
             'clones_created': 0, 'deaths': 0, 'last_year': 0, 'revealed_events': []}
@@ -50,6 +55,7 @@ class WorldPowers:
         self.agents = agents
         self.rng = rng
         self.state = state if state is not None else initial_state(sum(a['alive'] for a in agents.values()))
+        self.state['version'] = 3
         self.state.setdefault('revealed_events', [])
         self.r = self.state['resources']
         self.year = 0
@@ -62,6 +68,10 @@ class WorldPowers:
         self.living = []
 
     def setup_agent(self, a):
+        a.setdefault('power_xp', 0)
+        a.setdefault('mastery_level', min(5, a['power_xp'] // 10))
+        a.setdefault('power_uses_total', a['power_xp'])
+        a.setdefault('last_power_use_year', max(0, a.get('birth_year', 0)))
         if a.get('_powers_version') == 2:
             return
         defaults = {'injury': 0.0, 'energy': 100.0, 'power_ready_year': 0,
@@ -74,9 +84,9 @@ class WorldPowers:
 
     def emit(self, caster, text, secret=False):
         self.events.append({'year': self.year, 'category': 'power',
-                            'true_event': f"{caster['name']} [{caster.get('power')}]: {text}",
+                            'true_event': f"{caster['name']} [{caster.get('_active_power', caster.get('power'))}]: {text}",
                             'public_belief': 'An unexplained supernatural incident occurred.' if secret else
-                            f"{caster['name']} [{caster.get('power')}]: {text}", 'secret': secret})
+                            f"{caster['name']} [{caster.get('_active_power', caster.get('power'))}]: {text}", 'secret': secret, 'actor_id': caster['id'], 'power': caster.get('_active_power', caster.get('power')), 'target_id': caster.get('_power_target_id')})
 
     def observe_deaths(self):
         """Capture each death episode without erasing past lives on resurrection."""
@@ -104,6 +114,11 @@ class WorldPowers:
         for a in self.living:
             self.setup_agent(a)
             a['energy'] = min(100.0, a['energy'] + 18.0)
+            inactive = year - a.get('last_power_use_year', year)
+            if inactive >= 10 and (inactive - 10) % 5 == 0 and a.get('power_xp', 0) > 0:
+                a['power_xp'] = max(0, a['power_xp'] - 5)
+                a['mastery_level'] = min(5, a['power_xp'] // 10)
+                self.emit(a, 'lost practice mastery after prolonged disuse.')
             if a.get('imprisoned_until', 0) > year and any('Collar' in t or 'Dampen' in t or 'Suppress' in t for t in counter_tech):
                 a['suppressed_until'] = year
             if a.get('controlled_until', 0) < year and a.get('controlled_by') is not None:
@@ -153,8 +168,10 @@ class WorldPowers:
         if target.get('ward_charges', 0) > 0:
             target['ward_charges'] -= 1
             return False
-        if target.get('power') == 'Durability':
+        if has_power(target, 'Durability'):
             amount *= .35
+        if has_power(target, 'Stone Skin'):
+            amount *= .7
         if target.get('armored_until', 0) >= self.year:
             amount *= .55
         if target.get('sheltered_until', 0) >= self.year:
@@ -172,27 +189,56 @@ class WorldPowers:
             self.emit(target, f"died from {cause}.")
 
     def can_act(self, a):
-        confinement_escape = a.get('power') in ('Shapeshifting', 'Invisibility', 'Portals', 'Shadow')
+        confinement_escape = a.get('power') in ('Shapeshifting', 'Invisibility', 'Portals', 'Shadow', 'Shrinking')
         return (a['alive'] and a.get('power') in POWER_EFFECTS and
-                a.get('power_ready_year', 0) <= self.year and a.get('energy', 0) >= 25 and
+                a.get('power_ready_year', 0) <= self.year and a.get('energy', 0) >= 15 and
                 a.get('frozen_until', 0) < self.year and a.get('stunned_until', 0) < self.year and
                 a.get('stasis_until', 0) < self.year and a.get('frightened_until', 0) < self.year and
                 a.get('suppressed_until', 0) < self.year and
+                a.get('quarantined_until', 0) < self.year and a.get('hospitalized_until', 0) < self.year and
                 (a.get('imprisoned_until', 0) <= self.year or confinement_escape))
 
     def activate(self, a):
+        """Select a held ability while preserving permanent repertoire changes."""
+        held = powers_of(a)
+        if not held:
+            return False
+        set_powers(a, held)
+        a['power'] = self.rng.choice(held) if len(held) > 1 else held[0]
+        a['_active_power'] = a['power']
+        try:
+            return self._activate_selected(a)
+        finally:
+            a.pop('_active_power', None)
+            a.pop('_power_target_id', None)
+            a['power'] = (a.get('powers') or [None])[0]
+
+    def _activate_selected(self, a):
         """Try one action. Return success only when its actual effect occurred."""
         self.setup_agent(a)
         if not self.can_act(a) or a['id'] in self.activated_this_year:
             return False
         power = a['power']
-        cost = 60 if power in ('Necromancy', 'Cloning') else 25
+        level = min(5, a.get('mastery_level', 0))
+        potency = 1 + .1 * level
+        cost = max(15, (60 if power in ('Necromancy', 'Cloning') else 25) - 2 * level)
         if a['energy'] < cost:
             return False
         target = self.target(a)
+        a['_power_target_id'] = target['id'] if target else None
         changed = False
         message = ''
-        if power in ('Fire', 'Lightning', 'Poison', 'Ice', 'Magnetism', 'Illusions', 'Shadow', 'Mind Control', 'Time Slowing') and target:
+        if power in HOSTILE_EXPANDED and target and target.get('ward_charges', 0) > 0:
+            target['ward_charges'] -= 1
+            a['energy'] -= cost
+            a['power_ready_year'] = self.year + 3
+            self.activated_this_year.add(a['id'])
+            self.emit(a, f"an attack on {target['name']} was absorbed by a magic ward.")
+            return False
+        expanded = activate_expanded(self, a, target)
+        if expanded is not None:
+            changed, message = expanded
+        elif power in ('Fire', 'Lightning', 'Poison', 'Ice', 'Magnetism', 'Illusions', 'Shadow', 'Mind Control', 'Time Slowing') and target:
             if target.get('ward_charges', 0) > 0:
                 target['ward_charges'] -= 1
                 a['energy'] -= cost
@@ -201,11 +247,11 @@ class WorldPowers:
                 self.emit(a, f"an attack on {target['name']} was absorbed by a magic ward.")
                 return False
             if power == 'Fire':
-                changed = self.damage(target, .25, 'fire')
+                changed = self.damage(target, .25 * potency, 'fire')
                 if changed: target['burning_until'] = self.year + 2
                 message = f"burned {target['name']}; the burns persist unless treated."
             elif power == 'Lightning':
-                changed = self.damage(target, .12, 'lightning')
+                changed = self.damage(target, .12 * potency, 'lightning')
                 if changed: target['stunned_until'] = self.year + 1
                 message = f"struck and stunned {target['name']}."
             elif power == 'Poison':
@@ -240,27 +286,28 @@ class WorldPowers:
                 patient = max(injured, key=lambda b:b.get('injury', 0))
                 patient['burning_until'] = patient['poisoned_until'] = 0
                 message = f"cleansed burns and poison from {patient['name']} and irrigated crops."
-            else: message = 'irrigated crops with 6 food units of fresh water.'
-            self.r['food'] += 6
+            else: message = f'irrigated crops with {6 * potency:g} food units of fresh water.'
+            self.r['food'] += 6 * potency
             changed = True
         elif power == 'Weather':
-            self.r['food'] += 8
+            self.r['food'] += 8 * potency
             self.r['harvest_bonus'] += .04
-            changed, message = True, 'brought rain: +8 food and lower famine pressure this year.'
+            changed, message = True, f'brought rain: +{8 * potency:g} food and lower famine pressure this year.'
         elif power == 'Earth':
             self.r['fortifications'] += 1
             self.r['materials'] += 2
             changed, message = True, 'raised a stone fortification and 2 material.'
         elif power == 'Plant Control':
-            self.r['food'] += 10
+            self.r['food'] += 10 * potency
             self.r['medicine'] += 1
-            changed, message = True, 'grew crops (+10 food) and medicinal plants (+1 medicine).'
+            changed, message = True, f'grew crops (+{10 * potency:g} food) and medicinal plants (+1 medicine).' 
         elif power in ('Wind', 'Flight'):
             patients = self.allies(a)
             if patients:
                 patient = max(patients, key=lambda b:b.get('injury', 0))
                 patient['sheltered_until'] = self.year + 2
                 if power == 'Flight':
+                    a['airborne_until'] = self.year + 1
                     patient['location'] = self.towns[(self.towns.index(patient.get('location', self.towns[0])) + 1) % len(self.towns)] if patient.get('location') in self.towns else self.towns[0]
                     patient['injury'] = max(0.0, patient.get('injury', 0) - .08)
                     message = f"evacuated {patient['name']} to shelter; injury decreased."
@@ -269,9 +316,9 @@ class WorldPowers:
                     message = f"airlifted relief food (+5) and sheltered {patient['name']}."
                 changed = True
         elif power == 'Strength':
-            self.r['materials'] += 8
+            self.r['materials'] += 8 * potency
             self.r['infrastructure'] += .25
-            changed, message = True, 'hauled 8 material and repaired infrastructure (+0.25).'
+            changed, message = True, f'hauled {8 * potency:g} material and repaired infrastructure (+0.25).' 
         elif power == 'Giant Size':
             self.r['infrastructure'] += .5
             self.r['guard'] += 1
@@ -337,13 +384,13 @@ class WorldPowers:
             patients = [b for b in self.allies(a) if b.get('injury', 0) > .02]
             if patients and self.r['medicine'] >= 1:
                 patient = max(patients, key=lambda b:b['injury'])
-                patient['injury'] = max(0.0, patient['injury'] - .4)
+                patient['injury'] = max(0.0, patient['injury'] - .4 * potency)
                 patient['poisoned_until'] = 0
                 self.r['medicine'] -= 1
-                changed, message = True, f"healed {patient['name']}, restoring up to 0.4 injury at a cost of 1 medicine."
+                changed, message = True, f"healed {patient['name']}, restoring up to {0.4 * potency:g} injury at a cost of 1 medicine."
         elif power in ('Regeneration', 'Immortal'):
             if a['injury'] > 0 or (power == 'Regeneration' and a.get('poisoned_until', 0) >= self.year):
-                a['injury'] = max(0, a['injury'] - (.35 if power == 'Regeneration' else .15))
+                a['injury'] = max(0, a['injury'] - (.35 if power == 'Regeneration' else .15) * potency)
                 if power == 'Regeneration': a['poisoned_until'] = 0
                 changed, message = True, 'regrew damaged tissue.' if power == 'Regeneration' else 'recovered wounds through ageless vitality.'
         elif power == 'Necromancy':
@@ -369,7 +416,11 @@ class WorldPowers:
                 changed, message = True, f"resurrected {patient['name']}; their identity and family survived death."
         if changed:
             a['energy'] -= cost
-            a['power_ready_year'] = self.year + (8 if power in ('Cloning', 'Necromancy') else 3)
+            a['power_ready_year'] = self.year + max(2, (8 if power in ('Cloning', 'Necromancy') else 3) - level // 2)
+            a['power_xp'] += 1
+            a['power_uses_total'] += 1
+            a['last_power_use_year'] = self.year
+            a['mastery_level'] = min(5, a['power_xp'] // 10)
             self.activated_this_year.add(a['id'])
             self.state['usage'][power] = self.state['usage'].get(power, 0) + 1
             self.emit(a, message, secret=power in ('Shadow', 'Invisibility', 'Mind Control'))
@@ -381,6 +432,6 @@ class WorldPowers:
             return .2
         result = max(.2, 1 - a['injury'] * .65)
         for flag, factor in (('disarmed_until', .6), ('confused_until', .65), ('exposed_until', .8),
-                             ('hasted_until', 1.25), ('hidden_until', 1.2), ('armored_until', 1.2)):
+                             ('hasted_until', 1.25), ('lucky_until', 1.15), ('calmed_until', .85), ('hidden_until', 1.2), ('armored_until', 1.2)):
             if a.get(flag, 0) >= self.year: result *= factor
         return result

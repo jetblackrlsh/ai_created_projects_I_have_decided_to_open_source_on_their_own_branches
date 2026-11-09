@@ -1,8 +1,10 @@
-# Superpower World Sim v2: implemented mechanics
+# Superpower World Sim v3: implemented mechanics
 
 ## Every defined power has an action
 
-The individual-agent engine (evolution, monarch and wheel) has the following 29 concrete effects. Outcomes require an eligible target and available energy/resources. A power is not guaranteed to trigger every year. The engine's --list-powers option prints this same action catalog.
+The original 29 are listed below; read [expanded-systems.md](expanded-systems.md) for the added 24, combined inheritance/theft, social ranks, courts, health and media systems.
+
+The individual-agent engine (evolution, monarch, wheel and modern) has the following 29 concrete effects. Outcomes require an eligible target and available energy/resources. A power is not guaranteed to trigger every year. The engine's --list-powers option prints this same action catalog.
 
 - **Fire:** Burn a hostile agent; burns cause injury until treated.
 - **Ice:** Freeze a hostile agent, interrupting power actions and combat.
@@ -33,6 +35,10 @@ The individual-agent engine (evolution, monarch and wheel) has the following 29 
 - **Regeneration:** Restore the caster own injuries and remove poison.
 - **Immortal:** Recover from wounds slowly; cannot die from old age.
 - **Necromancy:** Revive one recently dead person with identity and family intact.
+
+## Use-earned mastery and modern society
+
+See [modern-society.md](modern-society.md) for mastery growth, the fifth simulation mode, jobs/phones, media, app rankings, elections, freedom outcomes, new interventions and batch statistics. All defined powers earn one XP per successful use, gain a level every ten successes to level five, and gain bounded cost/cooldown improvements. Selected direct damage, production and recovery effects also scale with mastery.
 
 ## Shared rules and interactions
 
@@ -66,11 +72,11 @@ Supported events: meteor, visitors, demon_rift, vampires, famine, golden_age, gi
 
 ## Versus mode
 
-Versus remains a distinct aggregate tribal model, not a world of individual POWER_TREE agents. Speed, strength and intelligence civilizations have mechanical work, hauling, food demand, combat, evasion and scheduled technology differences. Other individual powers are not inserted into this aggregate model. Its A/B position caps and technology checks remain asymmetric; swapping sides can change outcomes. It is not a balanced fighting-game or scientific matchup predictor.
+Versus remains a distinct aggregate tribal model, not a world of individual POWER_TREE agents. Speed, strength and intelligence civilizations have mechanical work, hauling, food demand, combat, evasion and scheduled technology differences. Other individual powers are not inserted into this aggregate model. Modern society uses the individual-agent power engine instead. Its A/B position caps and technology checks remain asymmetric; swapping sides can change outcomes. It is not a balanced fighting-game or scientific matchup predictor.
 
 ## Compatibility, reproducibility and output
 
-Version-2 full-state saves include agent power conditions/cooldowns, resources, revival and clone counters, revealed-secret indexes and RNG state. Full version-1 saves are accepted and migrated at the resume boundary: old people/history are preserved, new power fields/resources are initialized then. Such a migration intentionally changes future behavior to the v2 rules; it cannot reproduce a future from the older engine. Legacy summary-only snapshots are still rejected.
+Version-3 full-state saves include mastery and (where applicable) society/election/app state, plus agent power conditions/cooldowns, resources, revival and clone counters, revealed-secret indexes and RNG state. Full version-1/2 saves are accepted and migrated at the resume boundary: old people/history are preserved, new power fields/resources are initialized then. Such a migration intentionally changes future behavior to the v3 rules; it cannot reproduce a future from the older engine. Legacy summary-only snapshots are still rejected.
 
 Same-version uninterrupted versus checkpoint/resume equality is regression-tested in all four modes, in the same Python runtime. Keep the original final horizon fixed. Saved batches resume only their featured world. JSON includes power usage, resurrections, clones, resources, raw agents/families and full major-event chronicle; Markdown includes power metrics and the full chronicle. Batch aggregates still summarize outcomes rather than exporting every world's detailed people.
 

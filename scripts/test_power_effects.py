@@ -8,7 +8,7 @@ import sys
 import unittest
 
 sys.path.insert(0, str(Path(__file__).parent))
-from power_effects import POWER_EFFECTS, WorldPowers
+from power_effects import POWER_EFFECTS, WorldPowers, BASE_POWER_NAMES
 import simulate_world as engine
 
 
@@ -44,8 +44,8 @@ def fixture(power):
 
 class PowerTests(unittest.TestCase):
     def test_all_29_powers_have_actual_nonlog_effects(self):
-        self.assertEqual(set(POWER_EFFECTS), set(engine.POWER_TREE))
-        for power in engine.POWER_TREE:
+        self.assertTrue(BASE_POWER_NAMES <= set(engine.POWER_TREE))
+        for power in sorted(BASE_POWER_NAMES):
             with self.subTest(power=power):
                 w = fixture(power)
                 before_agents, before_resources = deepcopy(w.agents), deepcopy(w.r)
@@ -209,7 +209,7 @@ class PowerTests(unittest.TestCase):
         old.pop('powers')
         resumed = engine.run_single_world_evolution_or_monarch_or_wheel('monarch', 42, 11, 30, .1, .35, resume_state=old, total_years=100)
         self.assertIn('world_resources', resumed)
-        self.assertEqual(resumed['engine_version'], 2)
+        self.assertEqual(resumed['engine_version'], 3)
 
 
 if __name__ == '__main__':
