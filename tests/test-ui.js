@@ -1,0 +1,12 @@
+const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
+const html=fs.readFileSync(__dirname+'/../assets/index.html','utf8');
+const ctx={Uint32Array};vm.createContext(ctx);vm.runInContext(html.match(/<script id="core">([\s\S]*?)<\/script>/)[1]+';globalThis.C=Core',ctx);
+const C=ctx.C,c={campaign_id:'original-demo',scene_id:'floodgate',id:'inspect-001',action:'Inspect the mechanism',dc:18,modifiers:{Focus:3,tools:2},partial_margin:3,natural_override:true,success:'Locate jam.',partial:'Locate jam at a cost.',failure:'Lose one minute.'};
+const state=r=>({version:1,check:c,receipt:r});const receipt=raw_d20=>({signature:C.signature(c),raw_d20});
+for(let raw=1;raw<=20;raw++)assert.equal(C.outcome(c,raw).total,raw+5);
+assert.equal(C.outcome(c,5).outcome,'failure');assert.equal(C.outcome(c,12).outcome,'partial');assert.equal(C.outcome(c,13).outcome,'success');assert.equal(C.outcome(c,1).outcome,'failure');assert.equal(C.outcome({...c,dc:100},20).outcome,'success');assert.throws(()=>C.outcome(c,1.5));assert.throws(()=>C.action('custom',' '));assert.equal(C.action('inspect','hello').extra_text,'hello');C.validate(state(null));assert.throws(()=>C.validate(state({signature:'bad',raw_d20:5})));assert.throws(()=>C.validate(state({signature:C.signature(c),raw:5})));assert.throws(()=>C.validate({version:1,check:{...c,dc:101}}));assert.throws(()=>C.validate({version:1,check:{...c,partial:''}}));
+let values=[4294967295,19];assert.equal(C.roll(a=>a[0]=values.shift()),20);assert.equal(values.length,0);
+const payload=C.submission(c,receipt(12));assert.equal(payload.raw_d20,12);assert.equal(payload.check_id,c.id);assert.equal(payload.outcome,'partial');assert.equal('raw' in payload,false);
+assert.equal(C.reconcile(state(receipt(12)),state(null)).raw_d20,12);assert.equal(C.reconcile(state(null),state(receipt(12))).raw_d20,12);assert.throws(()=>C.reconcile(state(receipt(12)),state(receipt(13))));assert.throws(()=>C.reconcile(state(null),{version:1,check:{...c,id:'different'},receipt:null}));
+if(process.argv.includes('--fixtures')) console.log(JSON.stringify({check:c,payloads:Array.from({length:20},(_,i)=>C.submission(c,receipt(i+1)))}));
+else console.log('UI core tests passed: outcomes, payload, validation, rejection sampling, receipt conflicts.');

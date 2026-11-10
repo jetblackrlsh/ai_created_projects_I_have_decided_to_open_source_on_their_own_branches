@@ -1,0 +1,54 @@
+{
+  "player_characters": [
+    {
+      "name": "Ari",
+      "attributes": {
+        "Might": 1,
+        "Agility": 3,
+        "Insight": 2,
+        "Presence": 0
+      },
+      "goal": "Rescue the stranded pilot."
+    }
+  ],
+  "companions": [],
+  "inventory": [],
+  "abilities": [],
+  "transformations": [],
+  "factions": [],
+  "npcs": [],
+  "relationships": [],
+  "locations": [],
+  "quests": [],
+  "clues": [],
+  "world_clocks": [
+    {
+      "name": "bridge collapse",
+      "remaining": 8
+    }
+  ],
+  "chronicle": [],
+  "continuity_flags": [],
+  "open_threads": [],
+  "resolved_check_ids": [],
+  "schema_version": 1,
+  "campaign_id": "skybridge-demo",
+  "title": "Skybridge Rescue",
+  "system": "Freeform homebrew d20",
+  "created_at": "2026-11-10T21:30:56.056486+00:00",
+  "updated_at": "2026-11-10T21:30:56.056499+00:00",
+  "setting": "A floating city after a storm.",
+  "tone": "",
+  "rules": {
+    "natural_override": true
+  },
+  "resources": {},
+  "current_scene": {
+    "id": "scene-1"
+  },
+  "pending_check": null,
+  "turn_index": 0,
+  "session_index": 1,
+  "revision": 0,
+  "next_scene_prompt": "Begin at the damaged skybridge."
+}

@@ -1,0 +1,2 @@
+# Provenance
+Original, setting-neutral implementation based on the user's Freeform RPG Engine v1 specification, created with AI assistance. No private Google document content identifiers, campaign logs, credentials, or licensed fictional settings are bundled. Python standard library and browser platform APIs are used without vendored dependencies. CC0 applies to original contributions, not external trademarks or platform rights. This is an independent project, not an official ChatGPT plugin.
