@@ -9,9 +9,10 @@ from collections import Counter
 from pathlib import Path
 from combat_sim import POWER_PROFILES, _rng
 from power_mastery import configure_mastery
+from recruitment import validate_recruitment, apply_recruitment
 from threat_combat import create_state, step_round, living, defeated, active
 
-VERSION='4.5'
+VERSION='4.6'
 
 
 def number(v, lo, hi, name, integer=False):
@@ -22,7 +23,7 @@ def number(v, lo, hi, name, integer=False):
 
 def validate(config):
     c=copy.deepcopy(config)
-    if set(c)-{'name','description','fighters','world','rules'}: raise ValueError('Unknown campaign fields')
+    if set(c)-{'name','description','fighters','world','rules','recruitment'}: raise ValueError('Unknown campaign fields')
     if not isinstance(c.get('fighters'),list) or not 1<=len(c['fighters'])<=16: raise ValueError('1..16 fighters required')
     ids=set(); villains=0
     for f in c['fighters']:
@@ -52,6 +53,9 @@ def validate(config):
     r['devastation_power']=r.get('devastation_power','Strength')
     villain=next(f for f in c['fighters'] if f['team']=='threat')
     if r['devastation_power'] not in villain['powers'] or POWER_PROFILES[r['devastation_power']]['damage']<=0:raise ValueError('Threat must hold damaging devastation power')
+    if 'recruitment' in c:
+        c['recruitment']=validate_recruitment(c['recruitment'],c['fighters'])
+        if c['recruitment'] is None:raise ValueError('Omit recruitment rather than null')
     return c
 
 
@@ -60,12 +64,17 @@ def initialize(config,seed):
     for spec in c['fighters']:
         f=copy.deepcopy(spec); levels=f.pop('power_mastery',{})
         configure_mastery(f,levels,0); fs.append(f)
+    prelude=apply_recruitment(fs,c['recruitment'],seed) if 'recruitment' in c else None
     combat=create_state(fs)
     n=c['world']['regions'];q,rem=divmod(c['world']['population'],n)
-    return {'schema_version':1,'engine_version':VERSION,'config':c,'seed':seed,'step':0,'combat':combat,
+    state={'schema_version':1,'engine_version':VERSION,'config':c,'seed':seed,'step':0,'combat':combat,
             'regions':[{'id':i,'population':q+(i<rem),'initial_population':q+(i<rem),'integrity':100.0} for i in range(n)],
             'dead':0,'sheltered':0,'shelter_breached':False,'detected_at':0 if c['world']['initial_alert'] else None,
             'engaged_at':None,'outcome':None,'trace':[]}
+    if prelude is not None:
+        state['recruitment']=prelude
+        if prelude['rejected_ids']:state['detected_at']=0
+    return state
 
 
 def _living(s,team):return living(s['combat'],team)
@@ -80,7 +89,8 @@ def run(config=None,seed=0,state=None,stop_at=None):
     for turn in range(s['step']+1,end+1):
         s['step']=turn; heroes=_living(s,'heroes'); threat=_living(s,'threat')
         if not threat:s['outcome']='threat_stopped';break
-        villain=threat[0]; events=[]; skip={}; rescue=None
+        initial_threat_id=next(f['id'] for f in c['fighters'] if f['team']=='threat')
+        villain=next((f for f in threat if f['id']==initial_threat_id),threat[0]); events=[]; skip={}; rescue=None
         # All detecting contributions are explicit abilities, not arbitrary named-character luck.
         if s['detected_at'] is None and heroes:
             bonus=max(sum(_level(h,p)*k for p,k in [('Analytical Vision',.025),('Telepathy',.015),('Tactical Analysis',.02)]) for h in heroes)
@@ -108,6 +118,11 @@ def run(config=None,seed=0,state=None,stop_at=None):
                         skip[h['id']]='evacuation'
         devastate=not engaged or _rng(seed,'threat_choice',turn).random()>=r['fight_priority']
         if devastate:skip[villain['id']]='devastation'
+        if 'recruitment' in s:
+            for supporter in threat:
+                if supporter['id']==villain['id']:continue
+                if not engaged or _rng(seed,'supporter_choice',turn,supporter['id']).random()>=r['fight_priority']:
+                    skip[supporter['id']]='devastation'
         actions=step_round(s['combat'],seed,turn,skip_actions=skip)
         if rescue:
             hid,p,amount,rid=rescue
@@ -118,21 +133,26 @@ def run(config=None,seed=0,state=None,stop_at=None):
                 events.append({'event':'evacuation','hero_id':hid,'power':p,'people':amount,'region':rid})
         # Combat resolves first, so an incapacitated threat cannot strike afterward.
         threat=_living(s,'threat')
-        if devastate and threat and any(a['actor_id']==villain['id'] and a['action']=='devastation' for a in actions):
-            villain=threat[0];p=r['devastation_power']
+        candidates=threat if 'recruitment' in s else [f for f in threat if f['id']==villain['id']]
+        for destroyer in candidates:
+            if not any(a['actor_id']==destroyer['id'] and a['action']=='devastation' for a in actions):continue
+            villain=destroyer
+            p=r['devastation_power'] if villain['id']==initial_threat_id else next(t['devastation_power'] for t in c['recruitment']['targets'] if t['id']==villain['id'])
+            rng_parts=() if villain['id']==initial_threat_id else (villain['id'],)
             if villain['energy']>=10 and villain['statuses'].get('stunned',0)<turn and villain['statuses'].get('suppressed',0)<turn:
                 villain['energy']-=10
                 base=POWER_PROFILES[p]['damage']*(1+.06*_level(villain,p))*w['devastation_scale']
                 if villain['statuses'].get('frightened',0)>=turn and villain['statuses'].get('resolute',0)<turn:base*=.65
-                killed=max(1,int(base*_rng(seed,'devastation',turn).uniform(.7,1.3))) if base else 0
+                killed=max(1,int(base*_rng(seed,'devastation',turn,*rng_parts).uniform(.7,1.3))) if base else 0
                 available=[x for x in s['regions'] if x['population']]
                 if available:
-                    target=_rng(seed,'target_region',turn).choice(available);killed=min(killed,target['population'])
+                    target=_rng(seed,'target_region',turn,*rng_parts).choice(available);killed=min(killed,target['population'])
                     target['population']-=killed;target['integrity']=max(0,target['integrity']-100*killed/target['initial_population'])
                     region=target['id']
                 else:
                     killed=min(killed,s['sheltered']);s['sheltered']-=killed;s['shelter_breached']=True;region='shelter'
                 s['dead']+=killed;events.append({'event':'devastation','power':p,'people_killed':killed,'region':region})
+                if 'recruitment' in s:events[-1]['actor_id']=villain['id']
             else:events.append({'event':'devastation_prevented','reason':'energy or status'})
         survivors=sum(x['population'] for x in s['regions'])+s['sheltered']
         assert survivors+s['dead']==w['population']
@@ -147,9 +167,16 @@ def run(config=None,seed=0,state=None,stop_at=None):
 def summarize(s):
     n=s['config']['world']['population'];heroes=[f for f in s['combat']['fighters'] if f['team']=='heroes']
     disabled=[f['id'] for f in heroes if f['vigor']<=0 or f['resolve']<=0]
-    return {'seed':s['seed'],'outcome':s['outcome'],'steps':s['step'],'population':n,'dead':s['dead'],'survivors':n-s['dead'],
+    result={'seed':s['seed'],'outcome':s['outcome'],'steps':s['step'],'population':n,'dead':s['dead'],'survivors':n-s['dead'],
             'loss_percent':100*s['dead']/n,'disabled_heroes':disabled,'all_heroes_disabled':bool(heroes) and len(disabled)==len(heroes),
             'detected_at':s['detected_at'],'engaged_at':s['engaged_at'],'sheltered_survivors':s['sheltered']}
+    if 'recruitment' in s:
+        result['recruited_ids']=s['recruitment']['accepted_ids']
+        result['rejected_ids']=s['recruitment']['rejected_ids']
+        original_heroes=[f for f in s['combat']['fighters'] if s['recruitment']['original_teams'][f['id']]=='heroes']
+        result['original_heroes_incapacitated']=[f['id'] for f in original_heroes if not active(f)]
+        result['original_threat_incapacitated']=all(not active(f) for f in s['combat']['fighters'] if s['recruitment']['original_teams'][f['id']]=='threat')
+    return result
 
 
 def batch(config,runs=100,seed=10101):

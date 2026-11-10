@@ -1,4 +1,4 @@
-# Superpower World Sim v4.5
+# Superpower World Sim v4.6
 
 An offline, standard-library Python engine and AI-agent skill for fictional superpowered civilizations. Run many seeded worlds, compare their outcomes, and explore one world's named heroes, villains and dynasties. Stop at checkpoints and steer future history through decrees and events.
 
@@ -146,3 +146,7 @@ Use `assets/scenarios/multi-power-builds.json` for three original five/six-power
 ## World-threat campaigns (v4.5)
 
 Run `python3 scripts/threat_campaign.py --scenario assets/scenarios/world-threat.json --runs 100 --seed 10101 --output-json results.json`. This separate opt-in mode tracks one antagonist, a cooperating hero team, population devastation, detection/interception, rescue and exclusive stopped/extinction/unresolved outcomes. Every seed and full trace is retained. Read [the assumptions](references/world-threat.md) before interpreting percentages: bounded rotating-power profiles are not literal comic physics. Existing annual, arena and war modes are unchanged.
+
+## Pre-rampage recruitment and matched controls (v4.6)
+
+Use `assets/scenarios/world-threat-recruitment.json` with the campaign runner. Each defender receives one informed voluntary offer, with explicitly configured persuasion, trust, goal alignment and moral resistance. Accepted recruits actually join the threat coalition; rejection alerts defenders before attacks. A refusal-only control isolates that warning effect. Original identities, decisions, probabilities and rolls are retained. See [recruitment assumptions](references/recruitment.md). Solo controls simply remove the other defender while keeping all other settings and seeds unchanged. Existing no-prelude campaigns retain their exact behavior.

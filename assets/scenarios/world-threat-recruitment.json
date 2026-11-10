@@ -1,0 +1,102 @@
+{
+  "name": "The Last Dawn: recruitment before rampage",
+  "description": "One truthful noncoercive offer to each hero before attacks. Strong moral resistance and zero annihilation goal alignment are declared assumptions, not inferred canon.",
+  "fighters": [
+    {
+      "id": "vesper",
+      "name": "Vesper",
+      "team": "heroes",
+      "powers": [
+        "Shadow Blasts",
+        "Invisibility",
+        "Shadow Clones",
+        "Fear Influence",
+        "Tactical Analysis"
+      ],
+      "power_mastery": {
+        "Shadow Blasts": 3,
+        "Invisibility": 3,
+        "Shadow Clones": 3,
+        "Fear Influence": 3,
+        "Tactical Analysis": 3
+      },
+      "energy": 100
+    },
+    {
+      "id": "thunderfall",
+      "name": "Thunderfall",
+      "team": "threat",
+      "powers": [
+        "Strength",
+        "Durability",
+        "Lightning",
+        "Time Slowing",
+        "Resolve"
+      ],
+      "power_mastery": {
+        "Strength": 3,
+        "Durability": 3,
+        "Lightning": 3,
+        "Time Slowing": 3,
+        "Resolve": 3
+      },
+      "energy": 100
+    },
+    {
+      "id": "cipher",
+      "name": "Cipher Marshal",
+      "team": "heroes",
+      "powers": [
+        "Telepathic Link",
+        "Telepathy",
+        "Flight",
+        "Cybernetics",
+        "Analytical Vision",
+        "Space Adaptation"
+      ],
+      "power_mastery": {
+        "Telepathic Link": 3,
+        "Telepathy": 3,
+        "Flight": 3,
+        "Cybernetics": 3,
+        "Analytical Vision": 3,
+        "Space Adaptation": 3
+      },
+      "energy": 100
+    }
+  ],
+  "world": {
+    "population": 12000,
+    "regions": 12,
+    "horizon": 120,
+    "initial_alert": false,
+    "detection_base": 0.12,
+    "devastation_scale": 25
+  },
+  "rules": {
+    "fight_priority": 0.75,
+    "rescue_chance": 0.15,
+    "travel_steps": 2,
+    "devastation_power": "Strength"
+  },
+  "recruitment": {
+    "persuasion": 0.6,
+    "mode": "persuasion",
+    "targets": [
+      {
+        "id": "vesper",
+        "trust": 0.15,
+        "goal_alignment": 0,
+        "moral_resistance": 0.95,
+        "devastation_power": "Shadow Blasts"
+      },
+      {
+        "id": "cipher",
+        "trust": 0.1,
+        "goal_alignment": 0,
+        "moral_resistance": 0.95,
+        "devastation_power": "Cybernetics"
+      }
+    ]
+  }
+}

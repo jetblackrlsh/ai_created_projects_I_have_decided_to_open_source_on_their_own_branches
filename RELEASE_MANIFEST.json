@@ -1,10 +1,10 @@
 {
   "project": "superpower-world-sim",
-  "version": "4.5",
+  "version": "4.6",
   "release_date": "2026-11-10",
-  "provenance": "Owner-approved original extensions: nonlethal traced duels/tournaments, configured rivals and tracked main characters, broad scenario customization and 19 measurable behavior-driving goals. Original 53-power world retained. Synthetic examples only; no private history imported or reconstruction claim. Adds selectable public-rank or nonlethal-tournament leadership with actual policy effects and saved succession evidence. Adds independent per-power XP/mastery/rust with explicit legacy preservation, best-held ranking, named goals and individual arena potency. Adds owner-requested opt-in strategic war/civil-war system with faction alliances, territory fronts, resource attrition, mastery-dependent champion support, capture objectives and ceasefires. Supports64-power repertoires and nine original bounded themed abilities, with synthetic multi-power examples. Fixes checkpoint-boundary initialization and preserves alias mastery. Adds original opt-in seeded world-threat campaigns, continuous team combat, population conservation, detection/rescue and full-run records.",
+  "provenance": "Owner-approved original extensions: nonlethal traced duels/tournaments, configured rivals and tracked main characters, broad scenario customization and 19 measurable behavior-driving goals. Original 53-power world retained. Synthetic examples only; no private history imported or reconstruction claim. Adds selectable public-rank or nonlethal-tournament leadership with actual policy effects and saved succession evidence. Adds independent per-power XP/mastery/rust with explicit legacy preservation, best-held ranking, named goals and individual arena potency. Adds owner-requested opt-in strategic war/civil-war system with faction alliances, territory fronts, resource attrition, mastery-dependent champion support, capture objectives and ceasefires. Supports64-power repertoires and nine original bounded themed abilities, with synthetic multi-power examples. Fixes checkpoint-boundary initialization and preserves alias mastery. Adds original opt-in seeded world-threat campaigns, continuous team combat, population conservation, detection/rescue and full-run records. Adds opt-in truthful individualized recruitment, original-allegiance traces, threat coalition continuation and matched refusal controls.",
   "verification": {
-    "unit_integration_tests": 176,
+    "unit_integration_tests": 187,
     "war_batch_worlds": 10,
     "war_batch_years_per_world": 30,
     "seeded_resume": "exact tested in all four individual modes with warfare",
@@ -13,7 +13,10 @@
     "large_build_duels": 20,
     "large_build_tournaments": 10,
     "world_threat_runs": 100,
-    "no_hero_control_runs": 100
+    "no_hero_control_runs": 100,
+    "solo_comparison_runs": 200,
+    "recruitment_runs": 100,
+    "refusal_control_runs": 100
   },
   "manifest_excludes_itself": true,
   "excluded": [
@@ -30,13 +33,13 @@
     },
     {
       "path": "README.md",
-      "bytes": 19579,
-      "sha256": "4f42b9e9b707296472933ab29f94b2c2675170c0cd56dc2524382a7a4fe596e2"
+      "bytes": 20289,
+      "sha256": "a2bc310c5c3cce584658e182ca9ede2f0147dd37ed72bfb388c60c89375dc66d"
     },
     {
       "path": "SKILL.md",
-      "bytes": 16174,
-      "sha256": "73b056dd10858347e04186a90b13cc436317f0eca593f18500f54d18a5f3a6e7"
+      "bytes": 16833,
+      "sha256": "d3c372c5a5aea9d7e2e25810161a42ea4bfc60347355260024b945e1b628fbef"
     },
     {
       "path": "THIRD_PARTY_NOTICES.md",
@@ -89,6 +92,11 @@
       "sha256": "962997c6013b1a896114d679693be540ee6195c790cdc742c7b562bdca22c4bc"
     },
     {
+      "path": "assets/scenarios/world-threat-recruitment.json",
+      "bytes": 2312,
+      "sha256": "1a361c95286adbb92655bd28ae1a3ab9371ddda9b912d3285115264428c6aec5"
+    },
+    {
       "path": "assets/scenarios/world-threat.json",
       "bytes": 1879,
       "sha256": "70f2574f6b2cb16a3c82270bc8516c37ac3c26ce26d6194204def857fb8405f3"
@@ -117,6 +125,11 @@
       "path": "references/powers_and_mechanics.md",
       "bytes": 10869,
       "sha256": "a1266e2124a3ab06f152f8ef5b144312481fc4aa25c0c171112ac5345219e936"
+    },
+    {
+      "path": "references/recruitment.md",
+      "bytes": 3402,
+      "sha256": "556ce72e056e6170d5feaaa101a178f5fafacf7538c6fb79bb3ab048dd3c38fd"
     },
     {
       "path": "references/warfare.md",
@@ -187,6 +200,11 @@
       "path": "scripts/power_mastery.py",
       "bytes": 3787,
       "sha256": "fcc94195555b46d77f7273fabb2c721d32f49af9a7acbfda97aed7e03783951e"
+    },
+    {
+      "path": "scripts/recruitment.py",
+      "bytes": 3284,
+      "sha256": "690048cad0dff9768e7e318936b928c4346dc2d5221bd63eaeb9c2d70126be22"
     },
     {
       "path": "scripts/scenario_customization.py",
@@ -289,6 +307,11 @@
       "sha256": "d768e5cab3893c7fbe2799186f44ab9b79785447716589e21ae220380c29ca7b"
     },
     {
+      "path": "scripts/test_recruitment.py",
+      "bytes": 3889,
+      "sha256": "3fffb943e7b978afec032db23e783013f6e2b42463fb9c89a6afa29d22d95873"
+    },
+    {
       "path": "scripts/test_simulate_world.py",
       "bytes": 7401,
       "sha256": "4c24b07eaad52b36cec325f8ef873e90f2168890b60b59abc9b3847c150dc9ff"
@@ -320,8 +343,8 @@
     },
     {
       "path": "scripts/threat_campaign.py",
-      "bytes": 12298,
-      "sha256": "813fe18da9a08ebff3347f5bca92f910d08b083e3b83a4af264e5803db6dbb22"
+      "bytes": 14242,
+      "sha256": "9133a433849687fceb1e63c4213fdef981e6571f8df0d97bbb9716a05cdaf572"
     },
     {
       "path": "scripts/threat_combat.py",
