@@ -14,7 +14,7 @@ def main():
     source=base/m['source']; audio=base/m['audio']; out=a.output.resolve()
     if out in (source.resolve(),audio.resolve()): raise ValueError('Output would overwrite input')
     if hashlib.sha256(source.read_bytes()).hexdigest()!=m['source_sha256']: raise ValueError('Source hash mismatch')
-    im=Image.open(source).convert('RGB'); w=int(m.get('width',1280)); h=int(m.get('height',720)); fps=int(m.get('fps',24))
+    im=Image.open(source).convert('RGB'); w=int(m.get('width',640)); h=int(m.get('height',360)); fps=int(m.get('fps',24))
     if min(w,h,fps)<=0 or w%2 or h%2 or fps>120: raise ValueError('Invalid output settings')
     shots=m['shots']; ids=[s['id'] for s in shots]
     if not shots or len(ids)!=len(set(ids)): raise ValueError('Missing shots or duplicate IDs')

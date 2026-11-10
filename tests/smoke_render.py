@@ -21,8 +21,8 @@ with tempfile.TemporaryDirectory(prefix='spread-public-test-') as td:
  def dimensions():
   q=json.loads(subprocess.check_output(['ffprobe','-v','error','-select_streams','v:0','-show_entries','stream=width,height,r_frame_rate','-of','json',str(p/'out.mp4')]))
   return q['streams'][0]
- d=dimensions();assert (d['width'],d['height'],d['r_frame_rate'])==(1280,720,'24/1'),d
+ d=dimensions();assert (d['width'],d['height'],d['r_frame_rate'])==(640,360,'24/1'),d
  m.update(width=1920,height=1080,fps=24)
  result=execute(m);assert result.returncode==0,result.stderr
  d=dimensions();assert (d['width'],d['height'],d['r_frame_rate'])==(1920,1080,'24/1'),d
- print('PASS: zoom, cached hold, full decode, integrity/timing/bounds rejection, omitted-setting 720p24 default and explicit 1080p24 override')
+ print('PASS: zoom, cached hold, full decode, integrity/timing/bounds rejection, omitted-setting 360p24 default and explicit 1080p24 override')

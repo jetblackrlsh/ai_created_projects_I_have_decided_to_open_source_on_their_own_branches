@@ -24,7 +24,7 @@ Keep measured speech placement on a canonical 48 kHz sample clock. Derive each s
 
 ## Plan and render the camera
 
-Use **1280 × 720 at 24 fps** as the default production and delivery resolution. Leave manifest width/height/fps omitted to use these defaults, or record them explicitly as 1280/720/24. Do not silently override them to 1920 × 1080 for a full-quality or primary copy. Use a higher resolution only when the user requests it; the renderer supports explicit width/height overrides.
+Use **640 × 360 at 24 fps** as the default production and delivery resolution. Leave manifest width/height/fps omitted to use these defaults, or record them explicitly as 640/360/24. Do not silently override them to 1280 × 720 or 1920 × 1080 for a full-quality or primary copy. Use a higher resolution only when the user requests it; the renderer supports explicit width/height overrides.
 
 1. Use a short full-spread establishing view, then sequential page/panel closeups in the verified reading order. Visit EVERY panel. Use cuts or brief transitions; avoid long flights across unrelated panels while a line is being spoken.
 2. Keep each focused panel visible through all its dialogue and narration. Favor restrained pans/zooms within that panel, not random crops, artificial limb movement or regenerated scenery. Include complete caption boxes and faces. A static readable hold is preferable to a zoom that clips words.
