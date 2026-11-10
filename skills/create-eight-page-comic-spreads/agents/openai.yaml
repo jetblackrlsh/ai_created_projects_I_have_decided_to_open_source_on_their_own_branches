@@ -1,0 +1,14 @@
+interface:
+  display_name: Create Eight-Page Comic Spreads
+  short_description: Create caption-only anime comics in eight-page spreads
+  default_prompt: Use $create-eight-page-comic-spreads to create an original comic
+    as one image per eight pages in anime-style artwork.
+  icon_small: assets/icon.svg
+  icon_large: assets/icon.svg
+policy:
+  products:
+  - chatgpt
+  - codex
+  - api
+  - atlas
+  allow_implicit_invocation: true

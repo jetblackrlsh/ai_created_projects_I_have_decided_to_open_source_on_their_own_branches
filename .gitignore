@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+.venv/
+audio-runtime/
+*.onnx
+*.tflite
+*.bin
+*.wav
+*.mp4
+.env

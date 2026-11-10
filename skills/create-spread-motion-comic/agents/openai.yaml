@@ -1,0 +1,15 @@
+interface:
+  display_name: Create Spread Motion Comic
+  short_description: Animate one comic spread with a voiced cinematic soundtrack
+  default_prompt: Create a panel-focused motion comic from an existing or newly generated
+    eight-page single-image spread, with Kokoro cast voices and Stable Audio music
+    and effects.
+  icon_small: assets/icon.svg
+  icon_large: assets/icon.svg
+policy:
+  products:
+  - chatgpt
+  - codex
+  - api
+  - atlas
+  allow_implicit_invocation: true

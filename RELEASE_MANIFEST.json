@@ -1,0 +1,224 @@
+{
+  "project": "spread-motion-comic",
+  "branch": "project/spread-motion-comic",
+  "files": [
+    {
+      "path": ".gitignore",
+      "mode": "100644",
+      "bytes": 80,
+      "sha": "b4bed002a5beb1b5e6e97539c823a9b9f3d1d3ba",
+      "sha256": "3042a398d18d1567e01b3833539936cee2e08d680879a84fe30c100c8d7a2fbf"
+    },
+    {
+      "path": "LICENSE",
+      "mode": "100644",
+      "bytes": 7049,
+      "sha": "6ca207ef004cb69d03041e7e5c288a2be4968045",
+      "sha256": "7179683e8000e6bdc9bbc60d85edf0a4ac8e76f951857f54fcb775d5886f1309"
+    },
+    {
+      "path": "PROVENANCE.md",
+      "mode": "100644",
+      "bytes": 1639,
+      "sha": "69582debca6855011025895fc80a8ee6c01468cd",
+      "sha256": "b969c84ea6227bb1469ea1713b9433c15df147f56a77a23dbd20df95a090c139"
+    },
+    {
+      "path": "README.md",
+      "mode": "100644",
+      "bytes": 5135,
+      "sha": "fc0b26690566b6c8b3a30e00b1d9eedf99a48e11",
+      "sha256": "c8f3611dab0360a43efc1248ccb4dc027b196b2f24d67f3b38d160c2145914a2"
+    },
+    {
+      "path": "TEST_REPORT.md",
+      "mode": "100644",
+      "bytes": 1341,
+      "sha": "4166141e8999d29491d88d0777da0ee3111577da",
+      "sha256": "5ff167fb37163bd33a0ef76131c2bb502ac6c06e9e41dd720f4ff715462021e8"
+    },
+    {
+      "path": "THIRD_PARTY_NOTICES.md",
+      "mode": "100644",
+      "bytes": 1070,
+      "sha": "f93398e20ad5fc58b7b5493fcc532866cbfd43c3",
+      "sha256": "b36afa287e12fc73d7eca4950b4146c31ce240a53af8a5cd03eff900d2ce89b5"
+    },
+    {
+      "path": "requirements.txt",
+      "mode": "100644",
+      "bytes": 15,
+      "sha": "c9a490a4b74bdbd26c1f180ff940bc58357e8e22",
+      "sha256": "ae3337e5ae362bf1fad83355272ff595b58aae13d7a7ac67617f6f3161fa0c07"
+    },
+    {
+      "path": "skills/create-eight-page-comic-spreads/SKILL.md",
+      "mode": "100644",
+      "bytes": 6023,
+      "sha": "cd149d34c2acf00bed91a73bf1bc4494f58a2ab2",
+      "sha256": "044527af55560f398e1e2ba8beffc8f55ea299d496822719f89c2939258718fa"
+    },
+    {
+      "path": "skills/create-eight-page-comic-spreads/agents/openai.yaml",
+      "mode": "100644",
+      "bytes": 429,
+      "sha": "a125e4ec4e229e8606d3cdcd9ed0bf0c96a97cd5",
+      "sha256": "64179141b89ee6c83db208921ebf224ad515e7a121c49f3585fdf69ba815ff8e"
+    },
+    {
+      "path": "skills/create-eight-page-comic-spreads/assets/icon.svg",
+      "mode": "100644",
+      "bytes": 1210,
+      "sha": "4c3163aa85e15ed80114f93a9a2b140a53012c44",
+      "sha256": "49315dda7125ec5fc77ef5f2b96126d8b2121c6e72944b4702972e90f321d3ee"
+    },
+    {
+      "path": "skills/create-spread-motion-comic/SKILL.md",
+      "mode": "100644",
+      "bytes": 7034,
+      "sha": "11ea8b885b85bb699594b7acadcfbc7f306d600b",
+      "sha256": "32bdb8faa82a3cad5febd04d86e13ff4d6e8a7a77f56f031040715112595d10b"
+    },
+    {
+      "path": "skills/create-spread-motion-comic/agents/openai.yaml",
+      "mode": "100644",
+      "bytes": 479,
+      "sha": "4c8ddd30a056dd43086b855cc43fa2319e8cfdc3",
+      "sha256": "1574168a734dca172148118bbbc5859933609653564c9f483249a32da417591a"
+    },
+    {
+      "path": "skills/create-spread-motion-comic/assets/icon.svg",
+      "mode": "100644",
+      "bytes": 2094,
+      "sha": "f0ec0fb4fb305880342dc69ee33cec099fb4dd24",
+      "sha256": "d80a4c3e0fd2efa7af88433a53b25a92c78a644175c6669dd78fee50fb53acf6"
+    },
+    {
+      "path": "skills/create-spread-motion-comic/references/audio-mixing.md",
+      "mode": "100644",
+      "bytes": 4082,
+      "sha": "6817bf15cafb936e74f7a8e01d4c592f835c8fe1",
+      "sha256": "c3f69f7f30735edfcd780d0aa26b9e80d0c8967cacf592410d7cbdb6fd3d25d7"
+    },
+    {
+      "path": "skills/create-spread-motion-comic/references/audio-runtime-manifest.json",
+      "mode": "100644",
+      "bytes": 2509,
+      "sha": "df8e9cc78da9dafd65ac7763577e993d942b7bc1",
+      "sha256": "b5e623cd9ffd7eed04afb64e95d938e5b8c3f9ccf51711a961ae9d80f73f7ee5"
+    },
+    {
+      "path": "skills/create-spread-motion-comic/references/audio-runtime-requirements.txt",
+      "mode": "100644",
+      "bytes": 663,
+      "sha": "537168eec1a7e7a921883b4407c80edf7b772d52",
+      "sha256": "fa1f8f9ffb2f10ef6ed3c433204821db202e857df5a418faca1fea026b4065a6"
+    },
+    {
+      "path": "skills/create-spread-motion-comic/references/audio.md",
+      "mode": "100644",
+      "bytes": 2080,
+      "sha": "846ab10d017ab2d21a749eb816c3e54669cba435",
+      "sha256": "0f1247debcf9adb9464748865baf0767fe71c3d2eec3919cb10b0ca03a8541a7"
+    },
+    {
+      "path": "skills/create-spread-motion-comic/references/manifest.md",
+      "mode": "100644",
+      "bytes": 1666,
+      "sha": "54599f3cde937aa0627eb599eeae16eeb1a20632",
+      "sha256": "15ecc8bd34a1eb1fabd60160f02a33d894c5090a5fab4016292c6f2150ce6b9c"
+    },
+    {
+      "path": "skills/create-spread-motion-comic/references/runtime-setup.md",
+      "mode": "100644",
+      "bytes": 7362,
+      "sha": "355de3cd1f13154382284afadd49fdd2c6397d63",
+      "sha256": "c0b5887e797bc9201ca560345b0f181a046d8446f4dc9fcd3b2cb7dc8f222687"
+    },
+    {
+      "path": "skills/create-spread-motion-comic/references/vn_spec_schema.md",
+      "mode": "100644",
+      "bytes": 12129,
+      "sha": "6bc2d4f8646e54cf24468de2893d2c4a81222d88",
+      "sha256": "3c5387f6f57c98d68630ebd787f181d466785d47d4856c1e904b04567041f1a3"
+    },
+    {
+      "path": "skills/create-spread-motion-comic/scripts/kokoro_tts_vn.py",
+      "mode": "100644",
+      "bytes": 33907,
+      "sha": "18080d7d3d58a63b45d19bcec81b90ef81f78574",
+      "sha256": "1f2ee681894f462690f35c33e2784ca19f443f0763083340da0a2909a7d4c427"
+    },
+    {
+      "path": "skills/create-spread-motion-comic/scripts/priority_audio_mix.py",
+      "mode": "100644",
+      "bytes": 5996,
+      "sha": "614952864cf40652553fa81b11f6f360ca611f9f",
+      "sha256": "af98f822fbe4fafc6b7602216989f533096377d68fb8c5eca003c58d0eaa7854"
+    },
+    {
+      "path": "skills/create-spread-motion-comic/scripts/render_spread.py",
+      "mode": "100644",
+      "bytes": 3975,
+      "sha": "991ec4e36e3a771007261328700cb076227a3770",
+      "sha256": "758fdd422a22d5e8675126e5c2822aaec6e78c07d0cc28ba5323378240ab15e5"
+    },
+    {
+      "path": "skills/create-spread-motion-comic/scripts/sa3_vn_audio.py",
+      "mode": "100644",
+      "bytes": 38355,
+      "sha": "9e83a02ebe1e0500ba0fe56472a323bdc8430da6",
+      "sha256": "1516ff1dd5a0ed594594eceb7ec1b202d865415ac26f9bea61786c2d3cccb255"
+    },
+    {
+      "path": "skills/create-spread-motion-comic/scripts/setup_audio_runtime.py",
+      "mode": "100644",
+      "bytes": 15621,
+      "sha": "d37e8dd4ab45e3e64ac94ac5dc57d1de21d6b53a",
+      "sha256": "78d8a916d4b45a64560fb1531531e0606a17f8e05e24c6d460e0645482b664af"
+    },
+    {
+      "path": "skills/create-spread-motion-comic/scripts/sfx_comfort.py",
+      "mode": "100644",
+      "bytes": 2268,
+      "sha": "d89b35079bba6428ea9e8632bd1959846aadd2b3",
+      "sha256": "fb409a98b74404f85921c5a51f59a3ca7579a613728001ca03e7dfe06b2ea3ac"
+    },
+    {
+      "path": "skills/create-spread-motion-comic/scripts/smoke_audio_runtime.py",
+      "mode": "100644",
+      "bytes": 4484,
+      "sha": "40370ccf3befb13d4a120382ebf87635779032fb",
+      "sha256": "ff34126121e4aa89204a3370f909148ccff772cd70d89e5a91910b3a50814846"
+    },
+    {
+      "path": "skills/create-spread-motion-comic/scripts/test_priority_audio_mix.py",
+      "mode": "100644",
+      "bytes": 3187,
+      "sha": "7f25a85080e051096d02e8f9a20e39a1146e3a38",
+      "sha256": "ae670d11e57a3b7ec087a50c5f11ebfec75a86777ad08f32888732698e06ea3d"
+    },
+    {
+      "path": "skills/create-spread-motion-comic/scripts/test_sfx_comfort.py",
+      "mode": "100644",
+      "bytes": 1329,
+      "sha": "f440511cef70e88bcbe10598032226dcc94f6a84",
+      "sha256": "abe1897065ba7dc0bac6a70d7fc0ad83ec630fab7f148fbd17884b7bcecee455"
+    },
+    {
+      "path": "skills/create-spread-motion-comic/tests/test_audio_setup.py",
+      "mode": "100644",
+      "bytes": 5292,
+      "sha": "37b5a43ae7d0b0a608e0a542638d550af049063e",
+      "sha256": "74cbd83e49e1f778562915dc32af1b86efb67508a37a2ac59e55c639dbde3345"
+    },
+    {
+      "path": "tests/smoke_render.py",
+      "mode": "100644",
+      "bytes": 1808,
+      "sha": "f8ab1e80c84354e0c6c0e4089fcb24a6c83d0c96",
+      "sha256": "55a0b3c29396c43752fd7d284cafa0e11c05a4db2842ff576ce58c611360958d"
+    }
+  ],
+  "manifest_self_excluded": true
+}
