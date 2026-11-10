@@ -1,4 +1,4 @@
-# Superpower World Sim v3
+# Superpower World Sim v4
 
 An offline, standard-library Python engine and AI-agent skill for fictional superpowered civilizations. Run many seeded worlds, compare their outcomes, and explore one world's named heroes, villains and dynasties. Stop at checkpoints and steer future history through decrees and events.
 
@@ -25,6 +25,20 @@ Open `report.md` for the complete featured-world major-event chronicle and aggre
 - Adjust founders, initial power rate, mutation rate, seed, horizon, wheel interval, tribal matchup and wall year.
 - Save complete world state, resume later, and branch the same checkpoint into alternative choices.
 - Inspect objective secrets versus public beliefs, family relationships, hero mantles, succession, technologies and mortality statistics.
+
+## Custom stories, rivals and arenas
+
+V4 adds customizable founders, explicit tracked main characters, starting rivalries, standalone 1v1 fights and single-elimination tournaments. Configure up to eight of **19 measurable goal types** per character. Goals affect training, eligible power/target selection, real education and job competition, campaigns, publicity, protection and challenges; progress comes from recorded outcomes, not a text label or guaranteed success.
+
+```sh
+python3 scripts/simulate_world.py --scenario assets/scenarios/custom-goal-driven-world.json --runs 1 --output-json custom.json --output-report custom.md
+python3 scripts/simulate_world.py --mode duel --scenario assets/scenarios/rivals-and-main-characters.json --runs 100 --output-json fights.json --output-report fights.md
+python3 scripts/simulate_world.py --mode tournament --scenario assets/scenarios/rivals-and-main-characters.json --runs 10 --output-json tournament.json --output-report tournament.md
+```
+
+[Character/scenario/goal reference](references/characters-and-goals.md) describes every supported field and goal, bounds, actual behavioral hooks and examples. Track yearly changes, death/resurrection, family, power mastery, employment and goals without plot armor. JSON world settings define defaults; explicit fresh-run CLI options override them. Saves retain the scenario and goal progress.
+
+Arenas are nonlethal abstractions with seeded ability-aware rounds and before/after traces, not physical accuracy or proof of equal power strength. All 53 catalog abilities have distinct arena effects; Siphon copies only for the bout and Necromancy summons a sparring construct. Standalone fights do not change world state. Optional `--commit-results` requires a loaded world, a new save path and one run; it applies bounded practice/energy/injury/reputation consequences without advancing world time or RNG. Scenario world encounters also require `encounters.commit_consequences: true` for these consequences. Tournament draws advance by explicit seeded tie-break; byes are not fights.
 
 ## Mastery and modern society
 
@@ -56,7 +70,7 @@ python3 scripts/simulate_world.py --mode monarch --runs 1 --years 100 --checkpoi
 python3 scripts/simulate_world.py --load-state world.json --checkpoint-year 50 --policy-override hero_charter --inject-event meteor --save-state world-next.json --output-json next.json --output-report next.md
 ```
 
-Version-3 saves preserve mastery and society/election/app state in addition to power conditions, cooldowns, resources and revival/clone counters. Full version-1/2 saves migrate at the resume boundary; old history is retained, but future behavior follows the new rules. The original saved configuration is restored, including mode, seed and final horizon. Resume advances beyond the saved year, without restarting agents or history. New decrees and injected events take effect in the next simulated year. On fresh runs in the original modes injected events happen in year 5; modern-mode injections occur in the next year. Keep separate state files to compare alternate histories. Versus supports checkpoints but not decrees or injected events. A saved Monte Carlo batch resumes only its featured world.
+Version-4 saves also preserve scenario relationships, main-character timelines, arena traces and typed goal states. Version-3 saves preserve mastery and society/election/app state in addition to power conditions, cooldowns, resources and revival/clone counters. Full version-1/2 saves migrate at the resume boundary; old history is retained, but future behavior follows the new rules. The original saved configuration is restored, including mode, seed and final horizon. Resume advances beyond the saved year, without restarting agents or history. New decrees and injected events take effect in the next simulated year. On fresh runs in the original modes injected events happen in year 5; modern-mode injections occur in the next year. Keep separate state files to compare alternate histories. Versus supports checkpoints but not decrees or injected events. A saved Monte Carlo batch resumes only its featured world.
 
 Use `--help` for all options. Missing or legacy summary-only save files are rejected.
 
@@ -75,7 +89,7 @@ A compatible assistant interprets the engine output as a story. The repository i
 
 The regression suites exercise original and added powers, combined inheritance/permanent theft, practice growth/decay, resurrection/clone limits, virality/fakes/corrections, persistent grievances, ranking/job/phone effects, ballots and political outcomes, evidence-aware courts/licenses, pediatric collateral, hospitals/epidemics/quarantine/burnout, sports/protests/impeachment, old-save migration and exact seeded checkpoint continuity. Reproduce with `python3 -m unittest discover -s scripts -p 'test_*.py' -v`. Use `scripts/check_stability.py` and `scripts/check_modern_stability.py` for multi-world invariant/scenario sweeps. These tests do not establish equal power strength, real-world validity, exact video outcomes or access to another creator's source.
 
-This is a fictional, simplified simulation, not a prediction of real societies. Some famines and technologies are scheduled; event narration is templated. Powers combine explicit causal actions with scalar bonuses, not full physics. Effects are annual abstractions; contextual powers need eligible targets and may not activate every year. Institutional flags and counter-tech are coarse. Tribal A/B economy and combat rules are asymmetric, so versus is not balanced research. There is no GUI, custom scenario-JSON loader, arbitrary-power editor, network service or background simulation. Food/resource stocks are abstract units, not a spatial farming or nutrition model. Versus remains a separate aggregate three-tribe model; the 29 individual-agent actions apply to evolution, monarch, wheel and modern. The modern freedom/economic indices and voting rules are invented simulation assumptions, not empirically validated forecasts. Only one world's detailed history is exported per batch. Legacy summary snapshots cannot be upgraded into full state because the missing agents/RNG were never saved.
+This is a fictional, simplified simulation, not a prediction of real societies. Some famines and technologies are scheduled; event narration is templated. Powers combine explicit causal actions with scalar bonuses, not full physics. Effects are annual abstractions; contextual powers need eligible targets and may not activate every year. Institutional flags and counter-tech are coarse. Tribal A/B economy and combat rules are asymmetric, so versus is not balanced research. There is no GUI, arbitrary-power editor, network service or background simulation. Validated scenario JSON supports declared fields, not arbitrary code. Food/resource stocks are abstract units, not a spatial farming or nutrition model. Versus remains a separate aggregate three-tribe model; the 53 individual-agent actions apply to evolution, monarch, wheel and modern. The modern freedom/economic indices and voting rules are invented simulation assumptions, not empirically validated forecasts. Only one world's detailed history is exported per batch. Legacy summary snapshots cannot be upgraded into full state because the missing agents/RNG were never saved.
 
 Keep generated snapshots and histories private when they contain your own added material. No personal sessions, private journals, credentials or generated user histories are part of this release.
 

@@ -299,11 +299,15 @@ def hospitals_and_epidemics(state, agents, powers, rng, event):
         patient['injury'] = max(0.0, patient.get('injury', 0) - treatment)
         patient['hospitalized_until'] = year + 1 if patient['injury'] >= .25 else year
         inst['hospital_admissions'] += 1
+        if index < beds and staff:
+            clinician=staff[index % len(staff)]
+            clinician['patients_treated']=clinician.get('patients_treated',0)+1
     powers.r['medicine'] = max(0, medicine)
     workload = max(0, len(admitted) - beds)
     for healer in healers:
         assigned = min(max(0, int((100 - healer['healer_burnout']) / 30)), workload)
         workload -= assigned
+        healer['patients_treated']=healer.get('patients_treated',0)+assigned
         before = healer['healer_burnout']
         healer['healer_burnout'] = clamp(before + assigned * 22)
         healer['energy'] = max(0, healer.get('energy', 100) - assigned * 12)

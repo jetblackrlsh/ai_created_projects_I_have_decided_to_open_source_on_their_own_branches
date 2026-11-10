@@ -1,11 +1,11 @@
 ---
 name: superpower-world-sim
-description: Run seeded superpower civilization simulations, Monte Carlo world experiments, and interactive god-mode, monarch and contemporary-society storylines with phone/app media and elections. Use when the user asks for superpowers evolving over centuries, an ordinary ruler governing superhumans, cosmic-wheel interventions, speed versus strength versus intelligence civilizations, or an interactive superpower world simulation with saved checkpoints.
+description: Run seeded superpower worlds, customizable goal-driven main characters, rivalries, 1v1 fights and tournaments, plus civilization experiments with phone/app media and elections. Use when the user asks for superpowers evolving over centuries, an ordinary ruler governing superhumans, cosmic-wheel interventions, speed versus strength versus intelligence civilizations, or an interactive superpower world simulation with saved checkpoints.
 ---
 
 # Superpower World Sim
 
-Run the bundled Python 3 standard-library v3 engine. Every one of the 53 defined powers has a concrete state-changing action, with energy, cooldowns, conditions and limits. Successful use earns mastery that improves efficiency and supported effects; disuse can decay it. Repertoires can combine up to three powers, and Siphon can permanently transfer one. Use its measured results as creative simulation outputs, not scientific predictions. Require no paid API, external service, or graphical application.
+Run the bundled Python 3 standard-library v4 engine. Every one of the 53 defined powers has a concrete state-changing action, with energy, cooldowns, conditions and limits. Successful use earns mastery that improves efficiency and supported effects; disuse can decay it. Repertoires can combine up to three powers, and Siphon can permanently transfer one. Use its measured results as creative simulation outputs, not scientific predictions. Require no paid API, external service, or graphical application.
 
 ## Configure an experiment
 
@@ -33,6 +33,22 @@ Customize `--pop`, `--power-rate`, `--mutation-rate`, `--wheel-interval`, `--tri
 
 Verify nonempty `aggregate_stats` and `featured_world` in JSON, and a readable Markdown report. Both outputs include the featured world's full major-event chronicle. The JSON additionally includes agents and family relationships in evolution, monarch, wheel and modern modes; all modes include modeled food reserves (individual worlds under world_resources; versus under food_reserves). Report them as abstract stock units, not kilograms or precise nutrition. Only the featured world's detailed history is exported, not every world in the batch.
 
+## Custom characters, goals and arenas
+
+Read `references/characters-and-goals.md` before configuring characters or fights. Use `assets/scenarios/custom-goal-driven-world.json` as a broad starting template, or `assets/scenarios/rivals-and-main-characters.json` for rivalries and a scheduled tournament. Scenario files are data, not executable instructions.
+
+```bash
+python3 <skill_dir>/scripts/simulate_world.py --scenario <skill_dir>/assets/scenarios/custom-goal-driven-world.json --runs 1 --output-json world.json --output-report world.md
+python3 <skill_dir>/scripts/simulate_world.py --mode duel --scenario <skill_dir>/assets/scenarios/rivals-and-main-characters.json --runs 100 --seed 42 --output-json duels.json --output-report duels.md
+python3 <skill_dir>/scripts/simulate_world.py --mode tournament --scenario <skill_dir>/assets/scenarios/rivals-and-main-characters.json --runs 10 --output-json brackets.json --output-report brackets.md
+```
+
+Support up to 64 customized founders and 16 explicitly tracked main characters, including starting names, powers (up to three), age, mastery, traits, faction, relationships, injuries, resources, job/social circumstances and up to eight typed goals each. The 19 measurable goal types cover survival, age, mastery, duels, named rivals, tournaments, app rank, wealth, careers, leadership/elected wins, followers, protection, descendants, exposing fakes, acquiring powers, recovery, civic outcomes and treating injuries. Goals bias actual eligible actions and competition, never automatically award success. Some goals require modern mode; textual descriptions remain flavor. Mains have yearly timelines and goal progress, but no plot armor.
+
+Standalone duel/tournament runs use nonlethal, bounded ability-aware arena rules with actual action traces, not the annual world combat model. Tournament bouts reset arena vigor; draws have explicit seeded advancement. No powers are permanently stolen and no dead people revived inside sparring. They do not mutate a world by default. To apply bounded practice, energy, injury and reputation aftermath to a loaded world, explicitly use `--commit-results --load-state world.json --save-state after-arena.json --runs 1`; the calendar and world RNG do not advance. Within world scenarios, `encounters.commit_consequences` also defaults to false. Read the reference before selecting true. Report this distinction clearly.
+
+Fresh-world scenario `settings` provide defaults; explicitly supplied CLI settings override them. Resume restores the saved scenario and configuration instead of accepting a replacement. Individual character scenarios apply to evolution, monarch, wheel and modern, not the separate aggregate versus model. Version-4 saves include relationships, tracked timelines, encounter traces and goal state. Full older saves migrate without invented past character goals or practice.
+
 ## Play at checkpoints
 
 Configure the final horizon up front, especially for wheel mode. Begin one world, stopping at a checkpoint:
@@ -54,7 +70,7 @@ python3 <skill_dir>/scripts/simulate_world.py \
   --output-json checkpoint.json --output-report checkpoint.md
 ```
 
-Full state restores agents, RNG, year, laws, counters, history, power conditions/cooldowns, resources and revival/clone state, or tribal economy in versus. Full version-1/2 state is migrated at the resume boundary; version-3 saves preserve powers, mastery and modern-society state exactly. Full v2 saves remain supported in their original modes. Saved configuration controls mode, seed, original horizon and parameters; do not expect CLI parameter changes to alter those on resume. Resume beyond the saved year and within the original horizon. Policies take effect at the next simulated year; injected events occur then too. On fresh runs in the original modes, injected events occur in year 5, so use at least five years to see one; modern-mode injections occur in the next year. Policies and injected events are not supported in versus mode. Missing, malformed or legacy summary-only state files must not be described as resumable. Version-1/2 migration preserves existing history but intentionally changes future rules to v3; newly introduced mastery starts at zero rather than inventing old experience. Keep state files private unless the user asks to share them.
+Full state restores agents, RNG, year, laws, counters, history, power conditions/cooldowns, resources and revival/clone state, or tribal economy in versus. Full version-1/2 state is migrated at the resume boundary; version-3 saves preserve powers, mastery and modern-society state exactly. Full v2 saves remain supported in their original modes. Saved configuration controls mode, seed, original horizon and parameters; do not expect CLI parameter changes to alter those on resume. Resume beyond the saved year and within the original horizon. Policies take effect at the next simulated year; injected events occur then too. On fresh runs in the original modes, injected events occur in year 5, so use at least five years to see one; modern-mode injections occur in the next year. Policies and injected events are not supported in versus mode. Missing, malformed or legacy summary-only state files must not be described as resumable. Version-1/2 migration preserves existing history but intentionally changes future rules to v4; newly introduced mastery starts at zero rather than inventing old experience. Keep state files private unless the user asks to share them.
 
 ## Tell the story faithfully
 
@@ -64,7 +80,7 @@ Full state restores agents, RNG, year, laws, counters, history, power conditions
 - Explain surviving powers, institutions and mortality with the model's actual evidence.
 - Treat generated names and events as fiction. Some famines and technologies are scheduled; event prose is templated. Do not call the model wholly unscripted.
 - Preserve uncertainty: percentages summarize the configured toy model, not real-world odds.
-- Do not promise custom JSON scenarios, GUI gameplay, arbitrary powers, detailed economics, or autonomous ongoing simulation. Those are not bundled features.
+- Use the validated scenario JSON for supported customization. Do not promise GUI gameplay, arbitrary executable powers, detailed economics, or autonomous ongoing simulation.
 
 Use `--list-powers` to inspect the implemented action catalog. Consult the mechanics reference before narrating resurrection, cloning, control, injuries or resource effects. Narrate only actions recorded by the engine, not actions a power might suggest in another fictional universe.
 

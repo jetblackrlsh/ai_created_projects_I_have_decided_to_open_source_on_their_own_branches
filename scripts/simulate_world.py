@@ -15,10 +15,14 @@ import argparse
 import json
 import math
 import random
+import sys
 from typing import Any, Dict, List, Optional, Tuple
 from power_effects import WorldPowers, POWER_EFFECTS
 from expanded_powers import EXPANDED_POWER_TREE, powers_of, set_powers, has_power, inherit_powers
 from modern_society import run_modern, SOCIAL_POLICIES
+from story_setup import init_story, tick_story, export_story, prepare_story, MAX_YEARS
+from scenario_customization import apply_world
+from arena_runner import run_cli as run_arena_cli, load_scenario
 
 FIRST_NAMES = [
     "Aspen", "Jesse", "Cody", "Lennon", "Mel", "Leslie", "Darby", "Mason", "Alex",
@@ -381,7 +385,8 @@ def run_single_world_evolution_or_monarch_or_wheel(
     policy_override: Optional[str] = None,
     inject_event: Optional[str] = None,
     resume_state: Optional[Dict[str, Any]] = None,
-    total_years: Optional[int] = None
+    total_years: Optional[int] = None,
+    scenario: Optional[Dict[str, Any]] = None
 ) -> Dict[str, Any]:
     rng = random.Random(seed)
     founder_pool = FOUNDER_POWERS_MONARCH if mode == "monarch" else FOUNDER_POWERS_EVOLUTION
@@ -537,10 +542,13 @@ def run_single_world_evolution_or_monarch_or_wheel(
         terminal = resume_state.get("terminal", False)
         rng.setstate(restore_tuples(resume_state["rng_state"]))
 
+    story = resume_state.get("story") if resume_state else init_story(agents, scenario, current_year, mode=mode)
+    if scenario is not None and years > MAX_YEARS:
+        raise ValueError("Tracked stories support at most10000 years")
     if mode == "monarch" and not resume_state:
         log_event(
             1, "governance",
-            f"Monarch {agents[1]['name']} (crowned at 19 with no powers) established a 9-person non-powered Royal Guard paid from the treasury.",
+            f"Monarch {agents[1]['name']} (crowned at {agents[1]['age']} with {agents[1]['power'] or 'no powers'}) established a 9-person non-powered Royal Guard paid from the treasury.",
             weight=3
         )
 
@@ -566,6 +574,8 @@ def run_single_world_evolution_or_monarch_or_wheel(
             log_event(current_year + 1, "tech", f"By decree, the state completed {policy_override.replace('_', ' ')}.", weight=3)
 
     powers = WorldPowers(agents, rng, resume_state.get("powers") if resume_state else None)
+    if not resume_state:
+        apply_world(scenario,powers,laws,counter_tech)
     injection_year = current_year + 1 if resume_state else 5
     for year in range(current_year + 1, years + 1) if not terminal else []:
         current_year = year
@@ -574,6 +584,7 @@ def run_single_world_evolution_or_monarch_or_wheel(
             log_event(year, "extinction", f"All human life in the world went extinct in Year {year}.", weight=10)
             break
 
+        prepare_story(story, agents, year, mode=mode)
         powers.begin_year(year, create_agent, towns, chronicle, counter_tech)
         for event in powers.events:
             drama_score += 2
@@ -1041,7 +1052,13 @@ def run_single_world_evolution_or_monarch_or_wheel(
                                 weight=4
                             )
 
+        arena_events = tick_story(story, agents, rng, year, mode=mode)
+        chronicle.extend(arena_events)
+        drama_score += len(arena_events) * 3
+
     powers.observe_deaths()
+    if story is not None and story["last_tick"] < current_year:
+        chronicle.extend(tick_story(story, agents, rng, current_year, mode=mode))
     living_end = [a for a in agents.values() if a["alive"]]
     powered_end = [a for a in living_end if a["power"]]
     power_share = round(len(powered_end) / len(living_end), 3) if living_end else 0.0
@@ -1071,6 +1088,7 @@ def run_single_world_evolution_or_monarch_or_wheel(
     state = {
         "year": current_year,
         "powers": powers.state,
+        "story": story,
         "terminal": not living_end,
         "rng_state": rng.getstate(),
         "variables": {'agents': agents, 'next_id': next_id, 'ruler_id': ruler_id, 'initial_royal_family': initial_royal_family, 'royal_family_lost_year': royal_family_lost_year, 'laws': laws, 'counter_tech': counter_tech, 'cannons_invented': cannons_invented, 'cannon_deaths': cannon_deaths, 'famine_deaths': famine_deaths, 'combat_deaths': combat_deaths, 'purge_deaths': purge_deaths, 'active_cult': active_cult, 'towns': towns, 'chronicle': chronicle, 'min_pop': min_pop, 'min_pop_year': min_pop_year, 'max_pop': max_pop, 'max_pop_year': max_pop_year, 'revenge_sworn_count': revenge_sworn_count, 'revenge_fulfilled_count': revenge_fulfilled_count, 'revenge_turned_hero_count': revenge_turned_hero_count, 'hero_turned_villain_count': hero_turned_villain_count, 'drama_score': drama_score}
@@ -1094,7 +1112,8 @@ def run_single_world_evolution_or_monarch_or_wheel(
         "mastery_levels": {str(i): sum(a.get("mastery_level", 0) == i for a in living_end if a["power"]) for i in range(6)},
         "resurrections": powers.state["revivals"],
         "clones_created": powers.state["clones_created"],
-        "engine_version": 3,
+        "engine_version": 4,
+        "story": export_story(story),
         "_state": state,
         "final_population": len(living_end),
         "final_powered_count": len(powered_end),
@@ -1436,6 +1455,17 @@ def format_markdown_report(summary: Dict[str, Any]) -> str:
         lines.append(f"- **World Resources**: {json.dumps(feat.get('world_resources', {}))}")
         lines.append(f"- **Mastery Levels**: {json.dumps(feat.get('mastery_levels', {}))}")
     lines.append("")
+    story = feat.get("story")
+    if story:
+        lines.extend(["", "## Main characters and arena events"])
+        for record in story["main_characters"].values():
+            latest = record["timeline"][-1]
+            lines.append(f"- {record['name']} (id {record['id']}): tracked across {len(record['timeline'])} checkpoints; alive={latest['alive']}, age={latest['age']}, role={latest['role']}, powers={latest['powers']}, arena appearances={len(record['encounter_ids'])}.")
+        for aid, goals in story.get("goals", {}).items():
+            for goal in goals:
+                state=goal["state"]
+                lines.append(f"- Character {aid} goal {goal['id']} ({goal['type']}): {state['status']}; measured progress={state['progress']}; {state.get('reason') or ''}")
+        lines.append(f"- Rival duels/tournaments: {len(story['encounters'])}; explicit practice awards: {story['practice_awards']}. Full annual histories and round traces are in JSON.")
     lines.append(f"## 3. Chronicle of Major Events (World #{feat['world_index']})")
     lines.append("")
     for ev in feat["chronicle"]:
@@ -1456,7 +1486,7 @@ def restore_tuples(value: Any) -> Any:
 def main() -> None:
     parser = argparse.ArgumentParser(description="Run original superpower world simulations.")
     parser.add_argument("--list-powers", action="store_true", help="Print each defined power and its implemented action, then exit")
-    parser.add_argument("--mode", choices=["evolution", "monarch", "wheel", "versus", "modern"], default="evolution")
+    parser.add_argument("--mode", choices=["evolution", "monarch", "wheel", "versus", "modern", "duel", "tournament"], default="evolution")
     parser.add_argument("--runs", type=int, default=100)
     parser.add_argument("--years", type=int, default=None)
     parser.add_argument("--pop", type=int, default=None)
@@ -1473,6 +1503,12 @@ def main() -> None:
     parser.add_argument("--checkpoint-year", type=int, default=None)
     parser.add_argument("--save-state", default=None)
     parser.add_argument("--load-state", default=None)
+    parser.add_argument("--scenario", default=None, help="Validated character/rival/main-character scenario JSON")
+    parser.add_argument("--fighter-a", default=None, help="Arena character key or world id")
+    parser.add_argument("--fighter-b", default=None, help="Arena character key or world id")
+    parser.add_argument("--entrants", nargs="+", default=None, help="Tournament keys or world ids")
+    parser.add_argument("--max-rounds", type=int, default=30)
+    parser.add_argument("--commit-results", action="store_true", help="Explicitly commit bounded arena consequences to a saved world; requires save-state and one run")
     parser.add_argument("--output-json", default="sim_output.json")
     parser.add_argument("--output-report", default="sim_report.md")
     args = parser.parse_args()
@@ -1480,21 +1516,42 @@ def main() -> None:
     if args.list_powers:
         print(json.dumps(POWER_EFFECTS, indent=2))
         return
+    if args.mode in ("duel", "tournament"):
+        try:
+            run_arena_cli(args, POWER_TREE)
+        except (ValueError, TypeError, KeyError, OSError) as exc:
+            parser.error(str(exc))
+        return
+    if args.commit_results or args.fighter_a is not None or args.fighter_b is not None or args.entrants is not None:
+        parser.error("Arena selection/commit options require duel or tournament mode")
+    if args.load_state and args.scenario is not None:
+        parser.error("A saved world preserves its configured scenario; do not supply a replacement scenario on resume")
     loaded = None
     if args.load_state:
         try:
             with open(args.load_state, encoding="utf-8") as f:
                 loaded = json.load(f)
-            if loaded.get("schema_version") not in (1, 2, 3) or "config" not in loaded or "state" not in loaded:
-                raise ValueError("Expected a version-1, version-2 or version-3 full world state; legacy summary snapshots cannot be resumed")
+            if loaded.get("schema_version") not in (1, 2, 3, 4) or "config" not in loaded or "state" not in loaded:
+                raise ValueError("Expected a version-1 through version-4 full world state; legacy summary snapshots cannot be resumed")
             required = {"mode", "years", "pop", "power_rate", "mutation_rate", "tribe_a", "tribe_b", "wall_year", "wheel_interval", "seed"}
-            if set(loaded["config"]) != required:
+            if not required <= set(loaded["config"]) or set(loaded["config"]) - required - {"scenario"}:
                 raise ValueError("Invalid saved configuration fields")
             for key, value in loaded["config"].items():
                 setattr(args, key, value)
             args.runs = 1
         except (OSError, ValueError, TypeError) as exc:
             parser.error(f"Cannot load state: {exc}")
+    try:
+        scenario_data = load_scenario(args.scenario, POWER_TREE)
+        if scenario_data is not None and not loaded:
+            explicit={token.split("=",1)[0] for token in sys.argv[1:] if token.startswith("--")}
+            for key,value in scenario_data.get("settings",{}).items():
+                if "--"+key.replace("_","-") not in explicit:
+                    setattr(args,key,value)
+    except (OSError, ValueError, TypeError) as exc:
+        parser.error("Invalid scenario: " + str(exc))
+    if args.mode == "versus" and scenario_data is not None:
+        parser.error("Individual characters and rivals require an individual-agent mode, not aggregate versus")
     if args.runs < 1 or args.pop is not None and args.pop < 1:
         parser.error("runs and population must be positive")
     if not 0 <= args.power_rate <= 1 or not 0 <= args.mutation_rate <= 1:
@@ -1511,6 +1568,8 @@ def main() -> None:
     default_years = {"evolution": 1000, "monarch": 100, "wheel": 1000, "versus": 450, "modern": 100}[args.mode]
     horizon = args.years if args.years is not None else default_years
     sim_years = args.checkpoint_year if args.checkpoint_year is not None else horizon
+    if scenario_data is not None and horizon > MAX_YEARS:
+        parser.error("Tracked stories support at most10000 years")
     if sim_years < 1 or horizon < 1 or sim_years > horizon:
         parser.error("years must be positive and checkpoint-year must be within the configured horizon")
     if loaded and sim_years <= loaded["state"]["year"]:
@@ -1518,6 +1577,12 @@ def main() -> None:
     default_pop = 20 if args.mode == "versus" else (24 if args.mode == "wheel" else 300)
     sim_pop = args.pop if args.pop else default_pop
 
+    if scenario_data is not None and not loaded:
+        effective_pop = 24 if args.mode == "wheel" and sim_pop == 300 else sim_pop
+        try:
+            init_story({i:{"id":i,"name":str(i),"age":25,"alive":True,"role":"citizen"} for i in range(1,effective_pop+1)}, scenario_data, mode=args.mode)
+        except ValueError as exc:
+            parser.error("Invalid scenario references: " + str(exc))
     all_worlds: List[Dict[str, Any]] = []
     selected_payload = None
     try:
@@ -1529,7 +1594,7 @@ def main() -> None:
         if args.mode == "modern":
             res = run_modern(w_seed, sim_years, sim_pop, args.power_rate, args.mutation_rate,
                              POWER_TREE, pick_power_mutation, args.policy_override, args.inject_event,
-                             loaded["state"] if loaded else None)
+                             loaded["state"] if loaded else None, scenario=scenario_data)
         elif args.mode == "versus":
             res = run_single_world_versus(
                 seed=w_seed,
@@ -1552,7 +1617,8 @@ def main() -> None:
                 policy_override=args.policy_override,
                 inject_event=args.inject_event,
                 resume_state=loaded["state"] if loaded else None,
-                total_years=horizon
+                total_years=horizon,
+                scenario=scenario_data
             )
         res["world_index"] = loaded.get("world_index", 1) if loaded else i + 1
         if (selected_index == i + 1 or
@@ -1604,6 +1670,9 @@ def main() -> None:
         }
 
     if args.mode != "versus":
+        agg_stats["completed_character_goals"] = sum(sum(g["state"]["status"] == "completed" for goals in (w.get("story") or {}).get("goals", {}).values() for g in goals) for w in all_worlds)
+        agg_stats["world_rival_duels"] = sum(sum(e["kind"] == "rival_duel" for e in (w.get("story") or {}).get("encounters", [])) for w in all_worlds)
+        agg_stats["world_tournaments"] = sum(sum(e["kind"] == "tournament" for e in (w.get("story") or {}).get("encounters", [])) for w in all_worlds)
         mastery_count = sum(sum(w.get("mastery_levels", {}).values()) for w in all_worlds)
         mastery_sum = sum(sum(int(level) * count for level, count in w.get("mastery_levels", {}).items()) for w in all_worlds)
         agg_stats["mean_combined_powered_agents"] = round(sum(w.get("combined_powered_agents", 0) for w in all_worlds) / args.runs, 3)
@@ -1630,7 +1699,9 @@ def main() -> None:
         config = {k: getattr(args, k) for k in ("mode", "years", "pop", "power_rate", "mutation_rate", "tribe_a", "tribe_b", "wall_year", "wheel_interval")}
         config["seed"] = featured["seed"]
         config["years"] = horizon
-        save_payload = {"schema_version": 3, "world_index": featured["world_index"], "config": config, "state": featured_state}
+        if scenario_data is not None:
+            config["scenario"] = scenario_data
+        save_payload = {"schema_version": 4, "world_index": featured["world_index"], "config": config, "state": featured_state}
     with open(args.output_json, "w", encoding="utf-8") as f:
         json.dump(summary_payload, f, indent=2)
 

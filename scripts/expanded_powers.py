@@ -121,7 +121,7 @@ Siphon changes primary identities; wrappers must not restore a stolen primary.
     c, year = context, context.year
     potency = 1 + .1 * min(5, max(0, caster.get('mastery_level', 0)))
     allies = c.allies(caster)
-    patient = max(allies, key=lambda a: a.get('injury', 0), default=caster)
+    patient = c.priority_patient(caster,allies) if hasattr(c,'priority_patient') else max(allies,key=lambda a:a.get('injury',0),default=caster)
 
     def resource(name, amount):
         c.r[name] = min(RESOURCE_CAP, max(0.0, c.r.get(name, 0) + amount))

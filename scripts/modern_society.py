@@ -6,6 +6,8 @@ network calls, communications or predictions about actual people/governments.
 import math
 import random
 from power_effects import WorldPowers, POWER_EFFECTS
+from story_setup import init_story, tick_story, export_story, prepare_story, MAX_YEARS
+from scenario_customization import apply_world
 from expanded_powers import powers_of, set_powers, has_power, inherit_powers
 from modern_media import tick as internet_tick
 from modern_institutions import tick as institutions_tick
@@ -68,7 +70,7 @@ def update_rankings(state, agents):
 
 
 def job_score(a):
-    return a['curiosity'] * 30 + a['compassion'] * 10 + a.get('reputation', 50) * .25 + a.get('app_score', 0) * .35 + min(10, a.get('knowledge_points',0)*.2)
+    return a['curiosity'] * 30 + a['compassion'] * 10 + a.get('reputation', 50) * .25 + a.get('app_score', 0) * .35 + min(10, a.get('knowledge_points',0)*.2) + (5 if a.get('goal_directives',{}).get('desired_job') else 0)
 
 
 def employment(state, agents, rng):
@@ -94,6 +96,14 @@ def employment(state, agents, rng):
                     state['app_opportunities'] += 1
         else:
             a['job'] = 'unemployed' if rng.random() < .12 else ('teacher' if a['dream'] == 'knowledge' else 'farmer')
+        wanted=a.get('goal_directives',{}).get('desired_job')
+        qualified={'medic':a['compassion']>=.55 or a.get('knowledge_points',0)>=25,'engineer':a['curiosity']>=.55 or a.get('knowledge_points',0)>=20,
+                   'journalist':a['curiosity']>=.55 or a['dream']=='knowledge' or a.get('knowledge_points',0)>=20,
+                   'civil_servant':a['compassion']>=.3,'entrepreneur':a['ambition']+a['greed']>=.8 or a.get('knowledge_points',0)>=15,
+                   'hero_contractor':a.get('power_license',False) and a.get('mastery_level',0)>=1 and a['reputation']>=65,
+                   'security':True,'teacher':a['curiosity']>=.3,'farmer':True,'unemployed':True}
+        if wanted in JOBS and qualified.get(wanted,False) and (index<professional_slots or wanted in ('farmer','teacher','unemployed')):
+            a['job']=wanted
         a['income'] = float(JOBS[a['job']])
         a['wealth'] = clamp(a.get('wealth', 0) + a['income'] - 12, 0, 10000)
         if not a.get('has_phone') and a['wealth'] >= 15:
@@ -140,7 +150,7 @@ def run_election(state, agents, rng, year):
     if not candidates:
         state['leader_id'] = None
         return None
-    candidates.sort(key=lambda a: (-(a['charisma'] * 30 + a['reputation'] * .5 + a['app_score'] * .15), a['id']))
+    candidates.sort(key=lambda a: (-(a['charisma'] * 30 + a['reputation'] * .5 + a['app_score'] * .15 + 25*a.get('goal_directives',{}).get('campaign_bias',0)), a['id']))
     nominees = candidates[:min(3, len(candidates))]
     old = state['leader_id']
     if state['regime'] == 'authoritarian' and old in agents and agents[old]['alive'] and all(a['id'] != old for a in nominees):
@@ -206,7 +216,7 @@ def govern(state, leader):
 
 
 def run_modern(seed, years, starting_pop, power_rate, mutation_rate, power_tree,
-               mutator, policy_override=None, inject_event=None, resume_state=None):
+               mutator, policy_override=None, inject_event=None, resume_state=None, scenario=None):
     rng = random.Random(seed)
     agents, next_id, chronicle = {}, 1, []
     state = society_state()
@@ -239,7 +249,10 @@ def run_modern(seed, years, starting_pop, power_rate, mutation_rate, power_tree,
         for _ in range(starting_pop):
             power = rng.choice(list(power_tree)) if rng.random() < power_rate else None
             create_agent(-25, age=rng.randint(18,55), power=power)
+    story = resume_state.get('story') if resume_state else init_story(agents,scenario,current_year,mode='modern')
+    if scenario is not None and years>MAX_YEARS:raise ValueError('Tracked stories support at most10000 years')
     powers = WorldPowers(agents, rng, resume_state.get('powers') if resume_state else None)
+    if not resume_state:apply_world(scenario,powers,society=state,counter_tech=state['counter_tech'])
     terminal = resume_state.get('terminal', False) if resume_state else False
     intervention_year = current_year + 1
     if policy_override:
@@ -270,6 +283,7 @@ def run_modern(seed, years, starting_pop, power_rate, mutation_rate, power_tree,
             elif inject_event == 'golden_age': powers.r['food'] += len(living)
             elif inject_event == 'prophet': rng.choice(living)['charisma']=.99
             event('intervention',f"Modern society experienced {inject_event}.")
+        prepare_story(story,agents,year,society=state,mode='modern')
         powers.begin_year(year, create_agent, ['Central City','Harbor City','North City'], chronicle, state['counter_tech'])
         chronicle.extend(powers.events)
         power_event_cursor=len(powers.events)
@@ -328,8 +342,10 @@ def run_modern(seed, years, starting_pop, power_rate, mutation_rate, power_tree,
             child=create_agent(year,power=power,parent_a=a['id'],parent_b=b['id'],last_name=a['last_name'])
             set_powers(child,inherited)
             a['children'].append(child['id']);b['children'].append(child['id'])
+        chronicle.extend(tick_story(story,agents,rng,year,society=state,mode='modern'))
         state['year']=year
     powers.observe_deaths()
+    if story is not None and story['last_tick']<current_year:chronicle.extend(tick_story(story,agents,rng,current_year,society=state,mode='modern'))
     living=[a for a in agents.values() if a['alive']]
     powered=[a for a in living if a['power']]
     update_rankings(state,agents)
@@ -337,8 +353,8 @@ def run_modern(seed, years, starting_pop, power_rate, mutation_rate, power_tree,
     share=len(powered)/len(living) if living else 0
     political='extinction' if not living else ('authoritarian' if state['regime']=='authoritarian' else ('free_democracy' if state['freedom']>=60 else 'constrained_democracy'))
     snapshot={'year':current_year,'agents':agents,'next_id':next_id,'society':state,'chronicle':chronicle,
-              'powers':powers.state,'rng_state':rng.getstate(),'terminal':not living}
-    return {'seed':seed,'mode':'modern','engine_version':3,'years_simulated':current_year,
+              'powers':powers.state,'story':story,'rng_state':rng.getstate(),'terminal':not living}
+    return {'seed':seed,'mode':'modern','engine_version':4,'story':export_story(story),'years_simulated':current_year,
             'outcome':'extinction' if not living else ('powers_died_out' if not powered else ('powered_majority' if share>=.5 else 'powered_minority')),
             'combined_powered_agents':sum(len(powers_of(a))>1 for a in living),
             'surviving_powers':{p:sum(p in powers_of(a) for a in living) for p in power_tree if any(p in powers_of(a) for a in living)},

@@ -86,6 +86,7 @@ def tick(agents,society,powers,rng,year):
     # A bounded feed of witnessed public power incidents.
     witnessed=[e for e in powers.events if e.get('actor_id') in agents and not e.get('secret') and 'died from' not in e['true_event']]
     rng.shuffle(witnessed)
+    witnessed.sort(key=lambda e: -agents[e['actor_id']].get('goal_directives',{}).get('media_bias',0))
     for e in witnessed[:3]:
         person=agents[e['actor_id']]
         phone_users=[a for a in living if a.get('has_phone') and a['age']>=12]
@@ -95,6 +96,13 @@ def tick(agents,society,powers,rng,year):
         post=add_post(society,agents,rng,year,author,person,kind=kind)
         if post and post['views']>=10000:
             emit('viral_media',f"A {kind} clip about {person['name']} reached {post['views']} simulated impressions.")
+    # Goal-driven public updates describe real work/practice, not invented deeds.
+    for person in living:
+        if person.get('goal_directives',{}).get('media_bias',0)>0 and person.get('has_phone') and person.get('energy',100)>=3 and (person.get('job','unemployed')!='unemployed' or person.get('education_sessions',0)>0 or person.get('arena_practice',0)>0 or person.get('patients_treated',0)>0) and rng.random()<.25:
+            posted=add_post(society,agents,rng,year,person,person,'work/practice update')
+            if posted:
+                person['energy']-=3
+                emit('goal_action',f"{person['name']} posted a documented work/practice update while pursuing a public-standing goal.")
     # Programmers and face-changing powers can manufacture false evidence.
     makers=[a for a in living if a['age']>=18 and a.get('has_phone') and
             (('Shapeshifting' in abilities(a)) or a.get('job')=='engineer' and a.get('curiosity',0)>.65) and
@@ -121,6 +129,8 @@ def tick(agents,society,powers,rng,year):
         if post['fake'] and not post['corrected'] and post['year']<year and investigators and rng.random()<min(.85,.15*len(investigators)):
             detective=rng.choice(investigators)
             if correct_post(society,agents,post,year,'Psychometry provenance' if 'Psychometry' in abilities(detective) else 'record comparison/investigation'):
+                post['corrected_by']=detective['id']
+                detective['fraud_exposures']=detective.get('fraud_exposures',0)+1
                 victim=agents.get(post['subject_id'],{'name':'a citizen'})
                 emit('correction',f"{detective['name']} proved the clip about {victim['name']} was fabricated; the correction did not erase every grievance.")
     # Corrections do not simply delete grievances; delayed choices can change roles.

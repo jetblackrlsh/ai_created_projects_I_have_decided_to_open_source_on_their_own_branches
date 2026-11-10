@@ -122,7 +122,7 @@ class WorldTests(unittest.TestCase):
                     a.pop(key)
         path.write_text(json.dumps(save))
         data = self.cli('--load-state', str(path))
-        self.assertEqual(data['featured_world']['engine_version'], 3)
+        self.assertEqual(data['featured_world']['engine_version'], 4)
         self.assertIn('world_resources', data['featured_world'])
 
     def test_invalid_controls_and_legacy_state_rejected(self):

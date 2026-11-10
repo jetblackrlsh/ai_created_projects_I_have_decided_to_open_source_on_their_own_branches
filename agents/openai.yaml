@@ -1,8 +1,8 @@
 interface:
   display_name: Superpower World Sim
-  short_description: Simulate powers, society, elections and viral media
-  default_prompt: Use $superpower-world-sim to run a modern superpowered society with
-    elections, viral media and meaningful power effects.
+  short_description: Simulate superpowers, goal-driven characters and duels
+  default_prompt: Use $superpower-world-sim to run a customizable superpowered world with
+    tracked main characters, measurable goals, rivalries and meaningful power effects.
   icon_small: assets/icon.svg
   icon_large: assets/icon.svg
 policy:

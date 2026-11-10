@@ -1,4 +1,4 @@
-# Superpower World Sim v3: implemented mechanics
+# Superpower World Sim v4: implemented mechanics
 
 ## Every defined power has an action
 
@@ -76,10 +76,10 @@ Versus remains a distinct aggregate tribal model, not a world of individual POWE
 
 ## Compatibility, reproducibility and output
 
-Version-3 full-state saves include mastery and (where applicable) society/election/app state, plus agent power conditions/cooldowns, resources, revival and clone counters, revealed-secret indexes and RNG state. Full version-1/2 saves are accepted and migrated at the resume boundary: old people/history are preserved, new power fields/resources are initialized then. Such a migration intentionally changes future behavior to the v3 rules; it cannot reproduce a future from the older engine. Legacy summary-only snapshots are still rejected.
+Version-3 full-state saves include mastery and (where applicable) society/election/app state, plus agent power conditions/cooldowns, resources, revival and clone counters, revealed-secret indexes and RNG state. Full version-1/2 saves are accepted and migrated at the resume boundary: old people/history are preserved, new power fields/resources are initialized then. Such a migration intentionally changes future behavior to the current v4 rules; it cannot reproduce a future from the older engine. Legacy summary-only snapshots are still rejected.
 
 Same-version uninterrupted versus checkpoint/resume equality is regression-tested in all four modes, in the same Python runtime. Keep the original final horizon fixed. Saved batches resume only their featured world. JSON includes power usage, resurrections, clones, resources, raw agents/families and full major-event chronicle; Markdown includes power metrics and the full chronicle. Batch aggregates still summarize outcomes rather than exporting every world's detailed people.
 
 Use python3 scripts/test_simulate_world.py and python3 scripts/test_power_effects.py to check regressions and every power's real outcome. Multi-seed stability checks test finite resources, bounded actions/clones, revival limits and population growth; they are not proof of competitive balance. Powers can be impactful without equally strong outcomes.
 
-No GUI, custom scenario-JSON loader, arbitrary-power editor, external API, paid dependency or autonomous background service is bundled. It remains an offline fictional simulation and story laboratory.
+Validated custom JSON scenarios, typed goals and nonlethal arenas are described in [characters and goals](characters-and-goals.md). No GUI, arbitrary-power editor, external API, paid dependency or autonomous background service is bundled. It remains an offline fictional simulation and story laboratory.

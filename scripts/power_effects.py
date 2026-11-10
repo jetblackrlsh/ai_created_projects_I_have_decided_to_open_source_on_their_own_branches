@@ -140,7 +140,7 @@ class WorldPowers:
         for a in candidates:
             if len(self.activated_this_year) >= 24:
                 break
-            if a['age'] >= 12 and self.rng.random() < .35:
+            if a['age'] >= 12 and self.rng.random() < min(.85,.35+a.get('goal_directives',{}).get('training_bias',0)):
                 self.activate(a)
         self.r['food'] = min(self.r['food'], max(20.0, population * 4.0))
         for key in ('materials', 'medicine', 'fortifications', 'infrastructure', 'guard'):
@@ -149,16 +149,36 @@ class WorldPowers:
         self.state['last_year'] = year
 
     def enemies(self, a):
-        return [b for b in self.living if b['alive'] and b['id'] != a['id'] and
-                ((a['role'] == 'villain' and b['role'] != 'villain') or
-                 (a['role'] != 'villain' and b['role'] == 'villain'))]
+        def hostile(b):
+            if b['id'] in a.get('enemy_ids',[]):return True
+            if b['id'] in a.get('ally_ids',[]) or a.get('faction') and a.get('faction')==b.get('faction'):return False
+            return b['id'] in a.get('enemy_ids',[]) or ((a['role']=='villain') != (b['role']=='villain'))
+        return [b for b in self.living if b['alive'] and b['id']!=a['id'] and hostile(b)]
 
     def allies(self, a):
-        return [b for b in self.living if b['alive'] and
-                ((b['role'] == 'villain') == (a['role'] == 'villain'))]
+        protect=a.get('goal_directives',{}).get('protect_id')
+        return [b for b in self.living if b['alive'] and (b['id']==protect or b['id'] in a.get('ally_ids',[]) or a.get('faction') and a.get('faction')==b.get('faction') or (b['role']=='villain')==(a['role']=='villain'))]
+
+    def priority_patient(self,a,patients):
+        if not patients:return a
+        protect=a.get('goal_directives',{}).get('protect_id')
+        if protect is not None:
+            found=next((b for b in patients if b['id']==protect),None)
+            if found is not None:return found
+        if a.get('goal_directives',{}).get('avoid_fights') and a.get('injury',0)>0 and a in patients:return a
+        return max(patients,key=lambda b:b.get('injury',0))
 
     def target(self, a):
-        targets = self.enemies(a)
+        protect=a.get('goal_directives',{}).get('protect_id')
+        targets=[b for b in self.enemies(a) if b['id']!=protect]
+        desired=a.get('goal_directives',{}).get('prefer_power')
+        if a.get('_active_power')=='Siphon' and desired:
+            holders=[b for b in targets if has_power(b,desired)]
+            if holders:return self.rng.choice(holders)
+        protect=a.get('goal_directives',{}).get('protect_id')
+        if protect in self.agents:
+            attackers=[b for b in targets if b.get('revenge_target_id')==protect or protect in b.get('enemy_ids',[])]
+            if attackers:return self.rng.choice(attackers)
         return self.rng.choice(targets) if targets else None
 
     def damage(self, target, amount, cause):
@@ -204,7 +224,11 @@ class WorldPowers:
         if not held:
             return False
         set_powers(a, held)
-        a['power'] = self.rng.choice(held) if len(held) > 1 else held[0]
+        preferred=a.get('goal_directives',{}).get('prefer_power')
+        if preferred not in held and preferred and 'Siphon' in held:preferred='Siphon'
+        if preferred not in held and a.get('goal_directives',{}).get('protect_id') is not None:
+            preferred=next((p for p in ('Healing','Magic','Water','Flight','Bubbles','Starlight') if p in held),None)
+        a['power'] = preferred if preferred in held else self.rng.choice(held) if len(held)>1 else held[0]
         a['_active_power'] = a['power']
         try:
             return self._activate_selected(a)
@@ -283,7 +307,7 @@ class WorldPowers:
         elif power == 'Water':
             injured = [b for b in self.allies(a) if b.get('burning_until', 0) >= self.year or b.get('poisoned_until', 0) >= self.year]
             if injured:
-                patient = max(injured, key=lambda b:b.get('injury', 0))
+                patient = self.priority_patient(a,injured)
                 patient['burning_until'] = patient['poisoned_until'] = 0
                 message = f"cleansed burns and poison from {patient['name']} and irrigated crops."
             else: message = f'irrigated crops with {6 * potency:g} food units of fresh water.'
@@ -304,7 +328,7 @@ class WorldPowers:
         elif power in ('Wind', 'Flight'):
             patients = self.allies(a)
             if patients:
-                patient = max(patients, key=lambda b:b.get('injury', 0))
+                patient = self.priority_patient(a,patients)
                 patient['sheltered_until'] = self.year + 2
                 if power == 'Flight':
                     a['airborne_until'] = self.year + 1
@@ -383,10 +407,12 @@ class WorldPowers:
         elif power == 'Healing':
             patients = [b for b in self.allies(a) if b.get('injury', 0) > .02]
             if patients and self.r['medicine'] >= 1:
-                patient = max(patients, key=lambda b:b['injury'])
+                patient = self.priority_patient(a,patients)
                 patient['injury'] = max(0.0, patient['injury'] - .4 * potency)
                 patient['poisoned_until'] = 0
                 self.r['medicine'] -= 1
+                a['patients_treated']=a.get('patients_treated',0)+1
+                a['_power_target_id']=patient['id']
                 changed, message = True, f"healed {patient['name']}, restoring up to {0.4 * potency:g} injury at a cost of 1 medicine."
         elif power in ('Regeneration', 'Immortal'):
             if a['injury'] > 0 or (power == 'Regeneration' and a.get('poisoned_until', 0) >= self.year):

@@ -209,7 +209,7 @@ class PowerTests(unittest.TestCase):
         old.pop('powers')
         resumed = engine.run_single_world_evolution_or_monarch_or_wheel('monarch', 42, 11, 30, .1, .35, resume_state=old, total_years=100)
         self.assertIn('world_resources', resumed)
-        self.assertEqual(resumed['engine_version'], 3)
+        self.assertEqual(resumed['engine_version'], 4)
 
 
 if __name__ == '__main__':

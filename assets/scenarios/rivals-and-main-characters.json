@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "characters": [
+    {"key": "aurora", "name": "Aurora", "powers": ["Flight", "Ice"], "age": 22, "main_character": true},
+    {"key": "granite", "name": "Granite", "powers": ["Strength", "Stone Skin"], "age": 24, "main_character": true},
+    {"key": "echo", "name": "Echo", "powers": ["Illusions"], "age": 23},
+    {"key": "spark", "name": "Spark", "powers": ["Lightning"], "age": 21}
+  ],
+  "rivalries": [{"a": "aurora", "b": "granite", "mutual": true, "intensity": 1.0, "interval": 3}],
+  "encounters": {"enabled": true, "max_per_year": 2, "max_rounds": 20, "commit_consequences": true},
+  "tournaments": [{"year": 5, "name": "Founders Cup", "entrants": ["aurora", "granite", "echo", "spark"]}],
+  "fight": {"a": "aurora", "b": "granite"}
+}
