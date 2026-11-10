@@ -5,7 +5,7 @@ description: Run seeded superpower worlds, customizable goal-driven main charact
 
 # Superpower World Sim
 
-Run the bundled Python 3 standard-library v4.6 engine. Every one of the 62 defined powers has a concrete state-changing action, with energy, cooldowns, conditions and limits. Successful use earns mastery separately for the ability used; its own mastery improves efficiency and effects, and each ability rusts independently. Repertoires can combine up to 64 powers, and Siphon can permanently transfer one. Use its measured results as creative simulation outputs, not scientific predictions. Require no paid API, external service, or graphical application.
+Run the bundled Python 3 standard-library v4.7 engine. Every one of the 62 defined powers has a concrete state-changing action, with energy, cooldowns, conditions and limits. Successful use earns mastery separately for the ability used; its own mastery improves efficiency and effects, and each ability rusts independently. Repertoires can combine up to 64 powers, and Siphon can permanently transfer one. Use its measured results as creative simulation outputs, not scientific predictions. Require no paid API, external service, or graphical application.
 
 ## Configure an experiment
 
@@ -40,6 +40,10 @@ Read `references/world-threat.md` and run `scripts/threat_campaign.py --scenario
 ## Compare solo defenders and pre-rampage recruitment
 
 Read `references/recruitment.md` for opt-in individualized truthful persuasion, moral resistance, team changes and coalition outcomes. For solo controls remove only the other hero; preserve powers, mastery, world rules and the seed list. For recruitment comparisons disclose every assumed personality value and acceptance probability, report refusals and defections separately, and use an alerted/no-defection control to isolate the warning effect. Never present modeled personality assumptions as canon facts or a special-bonus event as proof of all cooperation. Preserve every seed, including losses.
+
+## Run character-driven social dynamics
+
+Enable `world.social_dynamics` for annual individual-world modes and read `references/social-dynamics.md`. Configure each character’s `persuasiveness`, `susceptibility` and `morality` (0..1), typed goals and initial ally/enemy relationships. Relationships can form, break, become conflict and reconcile; cooperation must have recorded practical effects and costs. Track `form_alliance`, `resolve_conflict` and `cooperate` goals from real state, not invented dialogue. Preserve checkpointed relationships and interaction evidence. Disclose modeled morality as resistance to harmful proposals, not an objective judgment of a person. For threat-campaign recruitment use `mode: "character"` and `assets/scenarios/character-recruitment.json` so offers read character-owned stats and objective preferences; retain legacy v4.6 mode only for exact old-study reproduction. For ongoing social actions inside threat fights, explicitly configure `tactical_social` as described in the same reference. These consume real combat actions and energy, allow finite offers and actual coalition changes, and distinguish threat renunciation from incapacitation. Do not confuse annual relationship updates with this separate tactical adapter.
 
 ## Start a war or civil war
 

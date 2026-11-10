@@ -18,13 +18,14 @@ The scenario's `settings` can also carry supported defaults. CLI flags should be
 
 Starting conditions are not permanent guarantees. A configured medic may lose or change jobs. A wealthy founder can lose money. A popular hero can lose followers. A main character can die, lose a fight, fail a goal or remain blocked. A `description` is narrative context, not executable instructions. `faction` is a label unless `world.warfare` declares its exact ID, which makes it an operative war allegiance (see `warfare.md`). Named counter technologies only have effects where the world engine recognizes them.
 
-Limits: **64 configured characters, 16 tracked mains, 8 goals per character, 3 catalog powers per character**. The founder population must accommodate configured characters. Stable `key` strings allow references without guessing numeric IDs; explicit positive founder `id` values are also supported.
+Limits: **64 configured characters, 16 tracked mains, 8 goals per character, 64 catalog powers per character**. The founder population must accommodate configured characters. Stable `key` strings allow references without guessing numeric IDs; explicit positive founder `id` values are also supported.
 
 Useful character fields:
 
 - Identity/context: `key`, `id`, `name`, `last_name`, `description`, `faction`.
 - Powers and biology: `powers`, `age`, `mastery_level` (all-power starting shorthand), `power_mastery` (per-power starting levels), `injury`, `energy`, `alive`.
 - Personality: `traits` containing ambition, compassion, greed, curiosity and charisma (0..1); `dream` family/freedom/knowledge/order/fame; `motive` money/streets/fame/revenge/country.
+- Social decision stats: flat `persuasiveness`, `susceptibility`, `morality` (0..1); enabled social dynamics initializes omitted values from charisma, 0.5, and compassion respectively. These are fictional behavior parameters, not judgments about real people.
 - Social starting state: `role` citizen/hero/villain; `wealth`, `job`, `income`, `has_phone`, `reputation`, `followers`, `power_license`, `party` pluralist/security/populist.
 - Conditions: `healer_burnout`, `imprisoned_years`, `hospitalized_years`, `quarantined_years`, `infected_years`.
 - Tracking: `main_character: true`, `goals`; or top-level `main_characters` references.
@@ -60,8 +61,11 @@ Each goal needs `type`, optionally a unique `id`, and the fields below. Count de
 | `recover_health` | `value` (0..1) | Living character's injury is at or below threshold |
 | `improve_society` | `metric`, `value` (0..100) | Society reaches freedom, election_integrity or press_freedom target |
 | `treat_injuries` | `count` | Actual successful Healing treatments recorded for the character |
+| `form_alliance` | `target` | The named pair becomes allied in the social ledger |
+| `resolve_conflict` | `target`, `count` | Recorded reconciliations for that named pair reach count |
+| `cooperate` | `count` | Actual costed aid/planning interactions attributed to the character |
 
-There are **19 listed goal types** in this interface. A societal target is an observed outcome, not proof the character personally caused the entire change. Protection is survival tracking, not invulnerability or a guarantee the protector prevented every danger. A tournament can award advancement after a drawn bout; that advances the bracket but does not manufacture a duel victory.
+There are **22 listed goal types** in this interface. A societal target is an observed outcome, not proof the character personally caused the entire change. Protection is survival tracking, not invulnerability or a guarantee the protector prevented every danger. A tournament can award advancement after a drawn bout; that advances the bracket but does not manufacture a duel victory.
 
 Planning produces bounded preferences for real decisions: practice, suitable jobs, campaigning, media activity, power choice, peer challenges, caution and protection. It does not award free mastery, money, office, powers, medical success or victory. Untargeted duel goals select an eligible adult peer with similar mastery; named defeat goals prioritize the named rival. Health/survival caution takes precedence over seeking fights. Actions remain subject to eligibility, energy, resources, chance, opponents and world conditions.
 
@@ -88,3 +92,7 @@ Separate annual world mechanics can still be dangerous. Nonlethal arena rules do
 ## Separate power progression
 
 Use `power_mastery: {"Fire":4,"Healing":1}` on a founder, and optionally name `power` on a `reach_mastery` goal. Independent XP and last-use records determine each power’s level and rust. Best currently held level supplies the compatibility scalar and public rank component; it never gives a novice secondary ability expert effects. See README for acquisition, archived lost powers, explicit legacy migration and committed-practice rules.
+
+## Dynamic social relationships
+
+Opt in with `world.social_dynamics: {}` and read `social-dynamics.md`. This works in modern, evolution, monarch and wheel individual worlds, not aggregate versus mode. Social state is saved and exported under `story.social_dynamics`; main-character timelines include their own social stats and current ally/enemy IDs. Form-alliance and resolve-conflict goals direct meeting opportunities; cooperate goals count recorded interactions, not declared intentions. Without enabled social dynamics these three goal types explicitly report blocked prerequisites. Completed social goals remain historical achievements even after a subsequent breakup. Enabled social alliances suppress rivalry bouts while allied; ordinary unrelated dangers remain.

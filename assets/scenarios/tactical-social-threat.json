@@ -1,0 +1,142 @@
+{
+  "name": "The Last Dawn: social recruitment",
+  "description": "A lightning-powered destroyer attacks a populated world; a shadow tactician and cybernetic investigator cooperate to stop him. Equal expert mastery3, original names, no extra reinforcement heroes.",
+  "fighters": [
+    {
+      "id": "vesper",
+      "name": "Vesper",
+      "team": "heroes",
+      "powers": [
+        "Shadow Blasts",
+        "Invisibility",
+        "Shadow Clones",
+        "Fear Influence",
+        "Tactical Analysis"
+      ],
+      "power_mastery": {
+        "Shadow Blasts": 3,
+        "Invisibility": 3,
+        "Shadow Clones": 3,
+        "Fear Influence": 3,
+        "Tactical Analysis": 3
+      },
+      "energy": 100,
+      "persuasiveness": 0.55,
+      "susceptibility": 0.5,
+      "morality": 0.95,
+      "goal_positions": {
+        "destroy_population": -1
+      }
+    },
+    {
+      "id": "thunderfall",
+      "name": "Thunderfall",
+      "team": "threat",
+      "powers": [
+        "Strength",
+        "Durability",
+        "Lightning",
+        "Time Slowing",
+        "Resolve"
+      ],
+      "power_mastery": {
+        "Strength": 3,
+        "Durability": 3,
+        "Lightning": 3,
+        "Time Slowing": 3,
+        "Resolve": 3
+      },
+      "energy": 100,
+      "persuasiveness": 0.6,
+      "susceptibility": 0.5,
+      "morality": 0.05,
+      "goal_positions": {
+        "destroy_population": 1
+      }
+    },
+    {
+      "id": "cipher",
+      "name": "Cipher Marshal",
+      "team": "heroes",
+      "powers": [
+        "Telepathic Link",
+        "Telepathy",
+        "Flight",
+        "Cybernetics",
+        "Analytical Vision",
+        "Space Adaptation"
+      ],
+      "power_mastery": {
+        "Telepathic Link": 3,
+        "Telepathy": 3,
+        "Flight": 3,
+        "Cybernetics": 3,
+        "Analytical Vision": 3,
+        "Space Adaptation": 3
+      },
+      "energy": 100,
+      "persuasiveness": 0.55,
+      "susceptibility": 0.5,
+      "morality": 0.95,
+      "goal_positions": {
+        "destroy_population": -1
+      }
+    }
+  ],
+  "world": {
+    "population": 12000,
+    "regions": 12,
+    "horizon": 120,
+    "initial_alert": false,
+    "detection_base": 0.12,
+    "devastation_scale": 25
+  },
+  "rules": {
+    "fight_priority": 0.75,
+    "rescue_chance": 0.15,
+    "travel_steps": 2,
+    "devastation_power": "Strength"
+  },
+  "tactical_social": {
+    "offer_rate": 0.15,
+    "cooperate_rate": 0.2,
+    "max_offers_per_pair": 1,
+    "offer_interval": 5,
+    "team_objectives": {
+      "heroes": {
+        "objective": "destroy_population",
+        "stance": -1,
+        "harmfulness": 0
+      },
+      "threat": {
+        "objective": "destroy_population",
+        "stance": 1,
+        "harmfulness": 1
+      }
+    },
+    "devastation_powers": {
+      "vesper": "Shadow Blasts",
+      "thunderfall": "Strength",
+      "cipher": "Cybernetics"
+    }
+  },
+  "recruitment": {
+    "mode": "character",
+    "proposal": {
+      "objective": "destroy_population",
+      "harmfulness": 1
+    },
+    "targets": [
+      {
+        "id": "vesper",
+        "trust": 0.15,
+        "devastation_power": "Shadow Blasts"
+      },
+      {
+        "id": "cipher",
+        "trust": 0.1,
+        "devastation_power": "Cybernetics"
+      }
+    ]
+  }
+}

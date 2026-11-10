@@ -1,10 +1,10 @@
 {
   "project": "superpower-world-sim",
-  "version": "4.6",
+  "version": "4.7",
   "release_date": "2026-11-10",
-  "provenance": "Owner-approved original extensions: nonlethal traced duels/tournaments, configured rivals and tracked main characters, broad scenario customization and 19 measurable behavior-driving goals. Original 53-power world retained. Synthetic examples only; no private history imported or reconstruction claim. Adds selectable public-rank or nonlethal-tournament leadership with actual policy effects and saved succession evidence. Adds independent per-power XP/mastery/rust with explicit legacy preservation, best-held ranking, named goals and individual arena potency. Adds owner-requested opt-in strategic war/civil-war system with faction alliances, territory fronts, resource attrition, mastery-dependent champion support, capture objectives and ceasefires. Supports64-power repertoires and nine original bounded themed abilities, with synthetic multi-power examples. Fixes checkpoint-boundary initialization and preserves alias mastery. Adds original opt-in seeded world-threat campaigns, continuous team combat, population conservation, detection/rescue and full-run records. Adds opt-in truthful individualized recruitment, original-allegiance traces, threat coalition continuation and matched refusal controls.",
+  "provenance": "Owner-approved original extensions: nonlethal traced duels/tournaments, configured rivals and tracked main characters, broad scenario customization and 19 measurable behavior-driving goals. Original 53-power world retained. Synthetic examples only; no private history imported or reconstruction claim. Adds selectable public-rank or nonlethal-tournament leadership with actual policy effects and saved succession evidence. Adds independent per-power XP/mastery/rust with explicit legacy preservation, best-held ranking, named goals and individual arena potency. Adds owner-requested opt-in strategic war/civil-war system with faction alliances, territory fronts, resource attrition, mastery-dependent champion support, capture objectives and ceasefires. Supports64-power repertoires and nine original bounded themed abilities, with synthetic multi-power examples. Fixes checkpoint-boundary initialization and preserves alias mastery. Adds original opt-in seeded world-threat campaigns, continuous team combat, population conservation, detection/rescue and full-run records. Adds opt-in truthful individualized recruitment, original-allegiance traces, threat coalition continuation and matched refusal controls. Adds character-owned social stats, goal-driven annual relations and finite tactical diplomacy with actual coalition changes.",
   "verification": {
-    "unit_integration_tests": 187,
+    "unit_integration_tests": 234,
     "war_batch_worlds": 10,
     "war_batch_years_per_world": 30,
     "seeded_resume": "exact tested in all four individual modes with warfare",
@@ -16,7 +16,9 @@
     "no_hero_control_runs": 100,
     "solo_comparison_runs": 200,
     "recruitment_runs": 100,
-    "refusal_control_runs": 100
+    "refusal_control_runs": 100,
+    "social_tactical_matched_runs": 600,
+    "social_annual_demo_worlds": 10
   },
   "manifest_excludes_itself": true,
   "excluded": [
@@ -33,13 +35,13 @@
     },
     {
       "path": "README.md",
-      "bytes": 20289,
-      "sha256": "a2bc310c5c3cce584658e182ca9ede2f0147dd37ed72bfb388c60c89375dc66d"
+      "bytes": 21038,
+      "sha256": "2311e9e0c09c1677a2093b40aeab40a6d14dc7aa221cf13051d83195a207b952"
     },
     {
       "path": "SKILL.md",
-      "bytes": 16833,
-      "sha256": "d3c372c5a5aea9d7e2e25810161a42ea4bfc60347355260024b945e1b628fbef"
+      "bytes": 18098,
+      "sha256": "e38adb627c27f9496fcbed199ab81e94b1b9fbd87ae836b02a41bc57852e121a"
     },
     {
       "path": "THIRD_PARTY_NOTICES.md",
@@ -48,13 +50,18 @@
     },
     {
       "path": "agents/openai.yaml",
-      "bytes": 455,
-      "sha256": "7a01b373e252b69233dc664d20dfc170044496ce91b8e701efbba1c8fb7b51ae"
+      "bytes": 459,
+      "sha256": "85a6666e9e7281fc0dffb9a89796d2e895664f2c3911140ead058c9bd7d5873c"
     },
     {
       "path": "assets/icon.svg",
       "bytes": 420,
       "sha256": "e9301497fa98ef56aaca7ede0857b9a18dc06c34040f0679c609a6bf49b1d38b"
+    },
+    {
+      "path": "assets/scenarios/character-recruitment.json",
+      "bytes": 2725,
+      "sha256": "a32df1a7497425a37733b4317f38f0942d6435d5d1e8c4f2536863b44e34baec"
     },
     {
       "path": "assets/scenarios/civil-war.json",
@@ -87,6 +94,16 @@
       "sha256": "a2c5d618573759482a4ee63219153f59fbf59d384d49d869ed721208677ecb95"
     },
     {
+      "path": "assets/scenarios/social-goal-driven-world.json",
+      "bytes": 3943,
+      "sha256": "3cfebdf3f55b89daed79db8e5cca890b953b31591500b329bdc3f263e128bf84"
+    },
+    {
+      "path": "assets/scenarios/tactical-social-threat.json",
+      "bytes": 3252,
+      "sha256": "c98cb94c3168c262d9f771cc7d8fd2a2923b9f81d51208f45727ab96fe021e6e"
+    },
+    {
       "path": "assets/scenarios/tournament-government.json",
       "bytes": 541,
       "sha256": "962997c6013b1a896114d679693be540ee6195c790cdc742c7b562bdca22c4bc"
@@ -103,8 +120,8 @@
     },
     {
       "path": "references/characters-and-goals.md",
-      "bytes": 10117,
-      "sha256": "5ca1847847704a64e86f7533e1abd7fe5a1fac34ef7800b85eac8e9be4cb15f7"
+      "bytes": 11432,
+      "sha256": "22cdeed758ac7a9b8dd0810602d9d3d112ab70c111c157e393611d5987147f62"
     },
     {
       "path": "references/expanded-systems.md",
@@ -128,8 +145,13 @@
     },
     {
       "path": "references/recruitment.md",
-      "bytes": 3402,
-      "sha256": "556ce72e056e6170d5feaaa101a178f5fafacf7538c6fb79bb3ab048dd3c38fd"
+      "bytes": 5199,
+      "sha256": "31cf7af2aa86ab16b36507cdd28cbf5f0fa4bc0872bba77e11a72d178e64aa62"
+    },
+    {
+      "path": "references/social-dynamics.md",
+      "bytes": 8584,
+      "sha256": "9d8238e00f93b910d228d5a4a5fc3c69ffc1572a1c65df450c3f78fe931053a4"
     },
     {
       "path": "references/warfare.md",
@@ -168,8 +190,8 @@
     },
     {
       "path": "scripts/goal_engine.py",
-      "bytes": 14204,
-      "sha256": "7d76a50db2e75311409ff8282106b1aa8643a229d18daa308be3a72be01e7abe"
+      "bytes": 15517,
+      "sha256": "f97279277891ec8a99701126c0602f438dc901a61f270d107cccebe4402c0002"
     },
     {
       "path": "scripts/government_systems.py",
@@ -188,8 +210,8 @@
     },
     {
       "path": "scripts/modern_society.py",
-      "bytes": 26179,
-      "sha256": "dff301500c4c8c77c52404b777b9a373c7390fcd1a9f26abac11919d7b85e5c6"
+      "bytes": 26189,
+      "sha256": "809f7040963cd18a5e10fbd80297ef948b18146211d13ce8dd363797e6eba4d8"
     },
     {
       "path": "scripts/power_effects.py",
@@ -203,23 +225,33 @@
     },
     {
       "path": "scripts/recruitment.py",
-      "bytes": 3284,
-      "sha256": "690048cad0dff9768e7e318936b928c4346dc2d5221bd63eaeb9c2d70126be22"
+      "bytes": 5480,
+      "sha256": "6329d3ea11118a7858bb72c622aaa0646ae2ac721246324b7675dea15e63686c"
     },
     {
       "path": "scripts/scenario_customization.py",
-      "bytes": 10453,
-      "sha256": "2cbaf008be28284ad5d8af57a9b93170d50953b30f598caf60ae62dba1142cf0"
+      "bytes": 10848,
+      "sha256": "2829924026583ff3883b22bd0136da7669e0cbec2a7c364e2c7f5ba1b5a03b8e"
     },
     {
       "path": "scripts/simulate_world.py",
-      "bytes": 91746,
-      "sha256": "d9c26aa1f3a510662eb31002cc6952332669c62441e5270aae8b0dc7ca598544"
+      "bytes": 91757,
+      "sha256": "8945f9cb3f95ca65930d99476eee28a906e342bddcceb986fca76254ca22495a"
+    },
+    {
+      "path": "scripts/social_dynamics.py",
+      "bytes": 12199,
+      "sha256": "6d55270e29def8f61a03e8e52c6550a44ae1acb67de89e9c5a20c3b175ca75f5"
     },
     {
       "path": "scripts/story_setup.py",
-      "bytes": 19961,
-      "sha256": "a53852db5bb16531924a3ffe8fa8f6a891664ac8aec5d80e1a7f1ae74255a34a"
+      "bytes": 20670,
+      "sha256": "7dca376d1a62b513b230374d76be2782b30ec08b11e9dcc56166ef7b9db2d1c5"
+    },
+    {
+      "path": "scripts/tactical_social.py",
+      "bytes": 10692,
+      "sha256": "5d35661c12697e688d36a1acc68cf31945354e02892cc7acb47cd4c395fad526"
     },
     {
       "path": "scripts/test_arena_integration.py",
@@ -235,6 +267,11 @@
       "path": "scripts/test_catalog_integration.py",
       "bytes": 2123,
       "sha256": "08bc7d911ce43a46fa59fb34e6088a0818de23e872297e60b0de9ecf2b5965fd"
+    },
+    {
+      "path": "scripts/test_character_recruitment.py",
+      "bytes": 2168,
+      "sha256": "01fc6a91a0775c9cd3d811e523f836248d0be0d51d874b74b1183e0587c1d7a0"
     },
     {
       "path": "scripts/test_checkpoint_boundaries.py",
@@ -317,9 +354,29 @@
       "sha256": "4c24b07eaad52b36cec325f8ef873e90f2168890b60b59abc9b3847c150dc9ff"
     },
     {
+      "path": "scripts/test_social_dynamics.py",
+      "bytes": 5299,
+      "sha256": "3e5edfce6a18b2f137ad0a9d4dfe587b1d5d86410b0ddc11b9eae1a0cf3ba8b1"
+    },
+    {
+      "path": "scripts/test_social_integration.py",
+      "bytes": 3137,
+      "sha256": "ed5a30b7dbb7238223318ef818b93c72ec8df2d2b09eb7b47f2e9f94d135cbcb"
+    },
+    {
       "path": "scripts/test_story_setup.py",
       "bytes": 5285,
       "sha256": "07b9a37faa58ec7dcacc4f280cc21a305c03a182aa61e7cb2e927ddac723271c"
+    },
+    {
+      "path": "scripts/test_tactical_social.py",
+      "bytes": 4775,
+      "sha256": "72ef0268185c9c32901c5578cf64ccbe3eaae98dfcf617e08100c24345971854"
+    },
+    {
+      "path": "scripts/test_tactical_social_integration.py",
+      "bytes": 2952,
+      "sha256": "b89fe5865a20df8fa8cb7a75e79ef548cbc47e848a4865aa3d70bdb36288eade"
     },
     {
       "path": "scripts/test_threat_campaign.py",
@@ -343,8 +400,8 @@
     },
     {
       "path": "scripts/threat_campaign.py",
-      "bytes": 14242,
-      "sha256": "9133a433849687fceb1e63c4213fdef981e6571f8df0d97bbb9716a05cdaf572"
+      "bytes": 16951,
+      "sha256": "c6c78987bec4e1ce0fcba76fbf1f04f75c2c9b34710d793385e583721d620a2d"
     },
     {
       "path": "scripts/threat_combat.py",

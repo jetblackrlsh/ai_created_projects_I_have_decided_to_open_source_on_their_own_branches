@@ -1,8 +1,9 @@
 interface:
   display_name: Superpower World Sim
   short_description: Simulate superpowers, goal-driven characters and duels
-  default_prompt: Use $superpower-world-sim to run a customizable superpowered world with
-    tracked main characters, measurable goals, rivalries and meaningful power effects.
+  default_prompt: Use $superpower-world-sim to run a customizable superpowered world
+    with tracked main characters, measurable goals, rivalries and meaningful power
+    effects.
   icon_small: assets/icon.svg
   icon_large: assets/icon.svg
 policy:

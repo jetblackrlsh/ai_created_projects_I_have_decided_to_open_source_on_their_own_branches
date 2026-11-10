@@ -1,0 +1,211 @@
+{
+  "version": 1,
+  "settings": {
+    "mode": "modern",
+    "years": 30,
+    "pop": 40,
+    "seed": 3101,
+    "power_rate": 0.3,
+    "mutation_rate": 0.05
+  },
+  "characters": [
+    {
+      "key": "ada",
+      "name": "Ada Vale",
+      "age": 27,
+      "powers": [
+        "Healing",
+        "Flight"
+      ],
+      "power_mastery": {
+        "Healing": 3,
+        "Flight": 2
+      },
+      "main_character": true,
+      "role": "hero",
+      "job": "medic",
+      "persuasiveness": 0.72,
+      "susceptibility": 0.48,
+      "morality": 0.9,
+      "traits": {
+        "compassion": 0.9,
+        "charisma": 0.7
+      },
+      "goals": [
+        {
+          "type": "form_alliance",
+          "target": "bo"
+        },
+        {
+          "type": "cooperate",
+          "count": 5
+        },
+        {
+          "type": "treat_injuries",
+          "count": 5
+        }
+      ]
+    },
+    {
+      "key": "bo",
+      "name": "Bo Mercer",
+      "age": 29,
+      "powers": [
+        "Healing",
+        "Durability"
+      ],
+      "main_character": true,
+      "role": "hero",
+      "job": "medic",
+      "persuasiveness": 0.58,
+      "susceptibility": 0.65,
+      "morality": 0.85,
+      "goals": [
+        {
+          "type": "treat_injuries",
+          "count": 5
+        },
+        {
+          "type": "form_alliance",
+          "target": "ada"
+        },
+        {
+          "type": "cooperate",
+          "count": 5
+        }
+      ]
+    },
+    {
+      "key": "cora",
+      "name": "Cora Quill",
+      "age": 31,
+      "powers": [
+        "Telepathy"
+      ],
+      "main_character": true,
+      "persuasiveness": 0.85,
+      "susceptibility": 0.3,
+      "morality": 0.65,
+      "traits": {
+        "ambition": 0.9,
+        "charisma": 0.85
+      },
+      "goals": [
+        {
+          "type": "win_elections",
+          "count": 1
+        },
+        {
+          "type": "become_leader"
+        }
+      ]
+    },
+    {
+      "key": "dane",
+      "name": "Dane Sol",
+      "age": 33,
+      "powers": [
+        "Strength"
+      ],
+      "main_character": true,
+      "persuasiveness": 0.67,
+      "susceptibility": 0.4,
+      "morality": 0.6,
+      "traits": {
+        "ambition": 0.85,
+        "charisma": 0.7
+      },
+      "goals": [
+        {
+          "type": "win_elections",
+          "count": 1
+        },
+        {
+          "type": "become_leader"
+        }
+      ]
+    },
+    {
+      "key": "elin",
+      "name": "Elin Rook",
+      "age": 26,
+      "powers": [
+        "Analytical Vision"
+      ],
+      "main_character": true,
+      "job": "journalist",
+      "persuasiveness": 0.7,
+      "susceptibility": 0.55,
+      "morality": 0.8,
+      "goals": [
+        {
+          "type": "resolve_conflict",
+          "target": "finn"
+        },
+        {
+          "type": "expose_fakes",
+          "count": 3
+        },
+        {
+          "type": "cooperate",
+          "count": 3
+        }
+      ]
+    },
+    {
+      "key": "finn",
+      "name": "Finn Marr",
+      "age": 28,
+      "powers": [
+        "Tactical Analysis"
+      ],
+      "main_character": true,
+      "job": "journalist",
+      "persuasiveness": 0.6,
+      "susceptibility": 0.6,
+      "morality": 0.75,
+      "goals": [
+        {
+          "type": "resolve_conflict",
+          "target": "elin"
+        },
+        {
+          "type": "expose_fakes",
+          "count": 3
+        },
+        {
+          "type": "cooperate",
+          "count": 3
+        }
+      ]
+    }
+  ],
+  "relationships": [
+    {
+      "type": "ally",
+      "a": "cora",
+      "b": "dane",
+      "mutual": true
+    },
+    {
+      "type": "enemy",
+      "a": "elin",
+      "b": "finn",
+      "mutual": true
+    }
+  ],
+  "world": {
+    "social_dynamics": {
+      "max_pairs": 256,
+      "max_interactions": 32,
+      "encounter_rate": 0.6,
+      "history_limit": 256
+    }
+  },
+  "encounters": {
+    "enabled": true,
+    "max_per_year": 2,
+    "max_rounds": 20,
+    "commit_consequences": false
+  }
+}

@@ -102,7 +102,7 @@ def _ref(ref,keys,agents):
     return ref
 
 
-def init_story(agents,scenario,year=0,mode=None):
+def init_story(agents,scenario,year=0,mode=None,seed=0):
     if scenario is None:return None
     if mode is not None and mode!='modern' and scenario.get('world',{}).get('society',{}).get('leadership_system','elections')!='elections':raise ValueError('Alternate leadership systems require modern mode')
     keys={};used=set();reserved={c['id'] for c in scenario['characters'] if 'id' in c};free=iter(sorted(agents))
@@ -149,6 +149,9 @@ def init_story(agents,scenario,year=0,mode=None):
     for c in scenario['characters']:
         if c.get('goals'):
             story['goals'][str(keys[c['key']])]=resolve_goals(validate_goals(c['goals'],_catalog()),keys,agents)
+    if scenario.get('world',{}).get('social_dynamics') is not None:
+        from social_dynamics import init_social_dynamics
+        init_social_dynamics(story,agents,scenario['world']['social_dynamics'],seed,year)
     track(story,agents,year)
     return story
 
@@ -168,6 +171,9 @@ def track(story,agents,year,replace_current=False):
         row={'year':year,'alive':a['alive'],'age':a['age'],'powers':powers_of(a),'role':a.get('role'),'injury':a.get('injury',0),'energy':a.get('energy',100),'mastery_level':a.get('mastery_level',0),'death_year':a.get('death_year'),'death_cause':a.get('death_cause'),'resurrections':a.get('resurrections',0),'spouse_id':a.get('spouse'),'children_ids':list(a.get('children',[])),'rival_ids':list(a.get('rival_ids',[]))}
         for field in ('job','income','wealth','reputation','app_rank','goal','imprisoned_until'):
             if field in a:row[field]=a[field]
+        for stat in ('persuasiveness','susceptibility','morality'):
+            if stat in a:row[stat]=a[stat]
+        if 'social_dynamics' in story:row['ally_ids']=list(a.get('ally_ids',[]));row['enemy_ids']=list(a.get('enemy_ids',[]))
         row['power_mastery']=deepcopy(ensure_mastery(deepcopy(a),year))
         row['goal_directives']=deepcopy(a.get('goal_directives',{}))
         row['goal_progress']=[{'id':g['id'],'type':g['type'],'status':g['state']['status'],'progress':g['state']['progress'],'reason':g['state'].get('reason'),'target':g.get('target_id'),'threshold':g.get('value',g.get('count',g.get('year',g.get('rank',g.get('power',g.get('job'))))))} for g in story.get('goals',{}).get(str(aid),[])]
@@ -204,6 +210,9 @@ def tick_story(story,agents,rng,year,society=None,mode=None):
     if story['last_tick']>=year:return []
     if year>MAX_YEARS:raise ValueError('Tracked stories support at most10000 years')
     opts=story['config']['encounters'];events=[];seen=set();budget=opts.get('max_per_year',2)
+    if 'social_dynamics' in story:
+        from social_dynamics import tick_social_dynamics
+        events.extend(tick_social_dynamics(story,agents,year) or [])
     reserved={i for t in story['tournaments'] if not t['completed'] and t['year']==year for i in t['entrant_ids']}
     def log(text):events.append({'year':year,'category':'arena','true_event':text,'public_belief':text,'secret':False})
     def save(result,kind,ids,seed,label):
@@ -222,6 +231,7 @@ def tick_story(story,agents,rng,year,society=None,mode=None):
         for rel in story['rivalries']:
             if budget<=0 or len(story['encounters'])>=MAX_ENCOUNTERS or story.get('trace_actions',0)+opts.get('max_rounds',20)*2>30000:break
             a,b=rel['a_id'],rel['b_id']
+            if 'social_dynamics' in story and b in agents[a].get('ally_ids',[]):continue
             if a in seen or b in seen or a in reserved or b in reserved or year-rel['last_fight_year']<rel['interval']:continue
             if rel.get('goal_generated') and agents[a].get('goal_directives',{}).get('seek_rival_id')!=b:continue
             if agents[a].get('goal_directives',{}).get('avoid_fights') or agents[b].get('goal_directives',{}).get('avoid_fights'):continue

@@ -259,7 +259,7 @@ def run_modern(seed, years, starting_pop, power_rate, mutation_rate, power_tree,
             power = rng.choice(list(power_tree)) if rng.random() < power_rate else None
             create_agent(-25, age=rng.randint(18,55), power=power)
     warfare = resume_state.get('warfare') if resume_state else init_warfare(scenario)
-    story = resume_state.get('story') if resume_state else init_story(agents,scenario,current_year,mode='modern')
+    story = resume_state.get('story') if resume_state else init_story(agents,scenario,current_year,mode='modern',seed=seed)
     if scenario is not None and years>MAX_YEARS:raise ValueError('Tracked stories support at most10000 years')
     powers = WorldPowers(agents, rng, resume_state.get('powers') if resume_state else None)
     if not resume_state:apply_world(scenario,powers,society=state,counter_tech=state['counter_tech'])

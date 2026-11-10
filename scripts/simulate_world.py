@@ -546,7 +546,7 @@ def run_single_world_evolution_or_monarch_or_wheel(
         rng.setstate(restore_tuples(resume_state["rng_state"]))
 
     warfare = resume_state.get("warfare") if resume_state else init_warfare(scenario)
-    story = resume_state.get("story") if resume_state else init_story(agents, scenario, current_year, mode=mode)
+    story = resume_state.get("story") if resume_state else init_story(agents, scenario, current_year, mode=mode, seed=seed)
     if scenario is not None and years > MAX_YEARS:
         raise ValueError("Tracked stories support at most10000 years")
     if mode == "monarch" and not resume_state:

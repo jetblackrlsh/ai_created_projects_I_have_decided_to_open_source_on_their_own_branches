@@ -19,6 +19,7 @@ JOBS=('unemployed','farmer','teacher','journalist','medic','engineer','civil_ser
 SPECS={
  'win_elections':('count',1,1000), 'improve_society':('value',0,100),
  'treat_injuries':('count',1,100000),
+ 'form_alliance':(None,None,None), 'resolve_conflict':('count',1,1000), 'cooperate':('count',1,10000),
  'survive_until':('year',1,10000), 'reach_age':('value',1,10000),
  'reach_mastery':('value',0,5), 'win_duels':('count',1,1000),
  'defeat_character':('count',1,1000), 'win_tournaments':('count',1,1000),
@@ -40,7 +41,7 @@ def validate_goals(goals,catalog):
             raise ValueError('Unknown goal type')
         kind=raw['type']; field,lo,hi=SPECS[kind]
         allowed={'id','type'} | ({field} if field else set())
-        if kind in ('defeat_character','protect_character'):allowed.add('target')
+        if kind in ('defeat_character','protect_character','form_alliance','resolve_conflict'):allowed.add('target')
         if kind=='improve_society':allowed.add('metric')
         if kind=='reach_mastery':allowed.add('power')
         if set(raw)-allowed:raise ValueError('Unsupported fields for '+kind)
@@ -104,6 +105,20 @@ def _measure(goal,agent,context,year):
         return 0,False,'blocked','Character is dead; progress requires resurrection'
     if kind in SOCIAL and society is None:
         return 0,False,'blocked','Requires modern society metrics'
+    if kind in ('form_alliance','resolve_conflict','cooperate'):
+        social=(context.get('story') or {}).get('social_dynamics')
+        if social is None:return 0,False,'blocked','Requires enabled social dynamics'
+        if kind=='cooperate':
+            value=social.get('agent_stats',{}).get(aid,{}).get('cooperations',0)
+            return value,value>=goal['count'],'active',None
+        target=goal.get('target_id')
+        if target is None or str(target)==aid:return 0,False,'blocked','Requires a distinct resolved target'
+        pair=next((p for p in social.get('pairs',{}).values() if {str(p['a']),str(p['b'])}=={aid,str(target)}),None)
+        if kind=='form_alliance':
+            value=int(bool(pair and pair.get('status')=='allied'))
+            return value,bool(value),'active',None
+        value=(pair or {}).get('resolution_count',0)
+        return value,value>=goal['count'],'active',None
     if kind=='survive_until':
         return year,agent.get('alive',False) and year>=goal['year'],('active' if agent.get('alive') else 'failed'),'Character died before the survival goal' if not agent.get('alive') else None
     if kind=='protect_character':
@@ -202,6 +217,9 @@ def plan_goals(goals,agent,context,year):
         if kind=='reach_mastery' and goal.get('power') in powers_of(agent):directives.setdefault('prefer_power',goal['power'])
         if kind=='defeat_character' and 'target_id' in goal:directives['seek_rival_id']=goal['target_id']
         if kind=='obtain_power':directives.setdefault('prefer_power',goal['power'])
+        if kind in ('form_alliance','resolve_conflict') and 'target_id' in goal:
+            directives.setdefault('social_target_id',goal['target_id']);directives.setdefault('social_intent',kind)
+        if kind=='cooperate':directives['seek_cooperation']=True
         if kind=='get_job':directives.setdefault('desired_job',goal['job'])
         if kind=='earn_wealth':directives.setdefault('desired_job','entrepreneur')
         system=(context.get('society') or {}).get('leadership_system','elections')

@@ -1,4 +1,4 @@
-# Superpower World Sim v4.6
+# Superpower World Sim v4.7
 
 An offline, standard-library Python engine and AI-agent skill for fictional superpowered civilizations. Run many seeded worlds, compare their outcomes, and explore one world's named heroes, villains and dynasties. Stop at checkpoints and steer future history through decrees and events.
 
@@ -150,3 +150,7 @@ Run `python3 scripts/threat_campaign.py --scenario assets/scenarios/world-threat
 ## Pre-rampage recruitment and matched controls (v4.6)
 
 Use `assets/scenarios/world-threat-recruitment.json` with the campaign runner. Each defender receives one informed voluntary offer, with explicitly configured persuasion, trust, goal alignment and moral resistance. Accepted recruits actually join the threat coalition; rejection alerts defenders before attacks. A refusal-only control isolates that warning effect. Original identities, decisions, probabilities and rolls are retained. See [recruitment assumptions](references/recruitment.md). Solo controls simply remove the other defender while keeping all other settings and seeds unchanged. Existing no-prelude campaigns retain their exact behavior.
+
+## Character-driven social dynamics (v4.7)
+
+Characters own persuasiveness, susceptibility and morality. Enable `world.social_dynamics` for annual goal-driven alliances, breakups, conflicts, reconciliation and costed aid; use `assets/scenarios/social-goal-driven-world.json`. Three measurable goals track alliance formation, conflict resolution and cooperation. For ongoing action-costed tactical offers, actual coalition changes and threat renunciation, use `assets/scenarios/tactical-social-threat.json`. Prelude offers consume the same bounded per-pair budget. Read [social dynamics](references/social-dynamics.md) for explicit fictional formulas, limitations and deterministic checkpoint behavior. Legacy configurations keep their old behavior.
