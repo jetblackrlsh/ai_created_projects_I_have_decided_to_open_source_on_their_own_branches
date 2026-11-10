@@ -12,7 +12,7 @@ from power_mastery import configure_mastery
 from recruitment import validate_recruitment, apply_recruitment
 from threat_combat import create_state, step_round, living, defeated, active
 
-VERSION='4.7'
+VERSION='4.8'
 
 
 def number(v, lo, hi, name, integer=False):
@@ -27,7 +27,7 @@ def validate(config):
     if not isinstance(c.get('fighters'),list) or not 1<=len(c['fighters'])<=16: raise ValueError('1..16 fighters required')
     ids=set(); villains=0
     for f in c['fighters']:
-        if set(f)-{'id','name','team','powers','power_mastery','energy','persuasiveness','susceptibility','morality','goal_positions'}: raise ValueError('Unknown fighter field')
+        if set(f)-{'id','name','team','powers','power_mastery','energy','persuasiveness','susceptibility','morality','goal_positions','stat_powers','combat_stats'}: raise ValueError('Unknown fighter field')
         if not isinstance(f.get('id'),str) or not f['id'] or f['id'] in ids: raise ValueError('Unique nonempty string fighter ids required')
         ids.add(f['id'])
         if f.get('team') not in ('threat','heroes'): raise ValueError('Team must be threat or heroes')
@@ -37,6 +37,11 @@ def validate(config):
         if not isinstance(f.get('power_mastery',{}),dict) or set(f.get('power_mastery',{}))-set(ps): raise ValueError('Mastery must refer to held powers')
         for p,l in f.get('power_mastery',{}).items(): number(l,0,5,p,True)
         number(f.get('energy',100),0,100,'energy')
+        if 'stat_powers' in f:
+            from stat_modifiers import validate_stat_powers
+            f['stat_powers']=validate_stat_powers(f['stat_powers'])
+            if 'tactical_social' not in c and any(a['effect']['path'] in ('persuasiveness','susceptibility','morality') for a in f['stat_powers']):
+                raise ValueError('Social-stat abilities require tactical_social')
         for field in ('persuasiveness','susceptibility','morality'):
             if field in f:number(f[field],0,1,field)
         if 'goal_positions' in f:
@@ -107,6 +112,8 @@ def run(config=None,seed=0,state=None,stop_at=None):
     end=w['horizon'] if stop_at is None else number(stop_at,s['step'],w['horizon'],'stop_at',True)
     if s['outcome']:return s
     for turn in range(s['step']+1,end+1):
+        from combat_sim import _expire_stats
+        _expire_stats(s['combat']['fighters'],turn)
         s['step']=turn; heroes=_living(s,'heroes'); threat=_living(s,'threat')
         if not threat:s['outcome']='threat_stopped';break
         initial_threat_id=next(f['id'] for f in c['fighters'] if f['team']=='threat')
@@ -168,7 +175,8 @@ def run(config=None,seed=0,state=None,stop_at=None):
             rng_parts=() if villain['id']==initial_threat_id else (villain['id'],)
             if villain['energy']>=10 and villain['statuses'].get('stunned',0)<turn and villain['statuses'].get('suppressed',0)<turn:
                 villain['energy']-=10
-                base=POWER_PROFILES[p]['damage']*(1+.06*_level(villain,p))*w['devastation_scale']
+                damage=max(0,min(100,POWER_PROFILES[p]['damage']+villain.get('combat_stats',{}).get('damage',0)))
+                base=damage*(1+.06*_level(villain,p))*w['devastation_scale']
                 if villain['statuses'].get('frightened',0)>=turn and villain['statuses'].get('resolute',0)<turn:base*=.65
                 killed=max(1,int(base*_rng(seed,'devastation',turn,*rng_parts).uniform(.7,1.3))) if base else 0
                 available=[x for x in s['regions'] if x['population']]

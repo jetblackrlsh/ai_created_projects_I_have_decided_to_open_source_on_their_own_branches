@@ -8,7 +8,7 @@ DREAMS={'family','freedom','knowledge','order','fame'}
 MOTIVES={'money','streets','fame','revenge','country'}
 JOBS={'unemployed','farmer','teacher','journalist','medic','engineer','civil_servant','security','entrepreneur','hero_contractor'}
 PARTIES={'pluralist','security','populist'}
-CHAR_FIELDS={'key','id','name','last_name','description','faction','powers','age','mastery_level','main_character','traits','dream','motive','role','wealth','job','income','has_phone','reputation','followers','injury','energy','alive','power_license','healer_burnout','imprisoned_years','hospitalized_years','quarantined_years','infected_years','party','goals','knowledge_points','power_mastery','persuasiveness','susceptibility','morality'}
+CHAR_FIELDS={'key','id','name','last_name','description','faction','powers','age','mastery_level','main_character','traits','dream','motive','role','wealth','job','income','has_phone','reputation','followers','injury','energy','alive','power_license','healer_burnout','imprisoned_years','hospitalized_years','quarantined_years','infected_years','party','goals','knowledge_points','power_mastery','persuasiveness','susceptibility','morality','stat_powers'}
 SETTINGS={'mode','years','pop','power_rate','mutation_rate','seed','wheel_interval','wall_year','tribe_a','tribe_b'}
 LAWS={'royal_guard','hero_charter','gifted_draft','registration_act','power_ban','royal_amnesty','civil_rights_act','election_protection','emergency_powers','free_press','ranking_app','public_health_act'}
 RESOURCES={'food','materials','medicine','fortifications','infrastructure','guard','harvest_bonus'}
@@ -30,6 +30,13 @@ def validate_custom_character(c,catalog):
         if field in c and type(c[field]) is not bool:raise ValueError(field+' must be boolean')
     for field,lo,hi,integer in [('wealth',0,10000,False),('income',0,1000,False),('reputation',0,100,False),('followers',0,100000,False),('injury',0,.95,False),('energy',0,100,False),('healer_burnout',0,100,False),('knowledge_points',0,100,False),('imprisoned_years',0,1000,True),('hospitalized_years',0,100,True),('quarantined_years',0,100,True),('infected_years',0,10,True)]:
         if field in c:bounded(c[field],lo,hi,field,integer)
+    if 'stat_powers' in c:
+        from stat_modifiers import validate_stat_powers
+        c['stat_powers']=validate_stat_powers(c['stat_powers'])
+        for ability in c['stat_powers']:
+            path=ability['effect']['path']
+            if path in ('vigor','resolve','guard') or path.startswith(('combat_stats.','power_levels.')):
+                raise ValueError('Annual character stat power has no consumer for '+path)
     for key in ('persuasiveness','susceptibility','morality'):
         if key in c:bounded(c[key],0,1,key)
     if 'power_mastery' in c:
@@ -60,6 +67,11 @@ def validate_world_settings(data):
     if 'social_dynamics' in world:
         from social_dynamics import validate_social_dynamics
         world['social_dynamics']=validate_social_dynamics(world['social_dynamics'])
+    if world.get('social_dynamics') is None:
+        for character in data.get('characters',[]):
+            for ability in character.get('stat_powers',[]):
+                if ability['effect']['path'] in ('persuasiveness','susceptibility','morality'):
+                    raise ValueError('Social stat powers require enabled social dynamics')
     from war_system import validate_warfare
     validate_warfare(world.get('warfare'))
     resources=world.get('resources',{})
@@ -85,7 +97,7 @@ def validate_world_settings(data):
 
 
 def apply_character(a,c,year,modern=False):
-    for field in ('last_name','description','faction','dream','role','wealth','job','income','has_phone','reputation','followers','injury','energy','alive','power_license','healer_burnout','knowledge_points','persuasiveness','susceptibility','morality'):
+    for field in ('last_name','description','faction','dream','role','wealth','job','income','has_phone','reputation','followers','injury','energy','alive','power_license','healer_burnout','knowledge_points','persuasiveness','susceptibility','morality','stat_powers'):
         if field in c:a[field]=deepcopy(c[field])
     if 'motive' in c:a['goal']=c['motive']
     for prefix in ('imprisoned','hospitalized','quarantined','infected'):

@@ -123,6 +123,9 @@ def init_story(agents,scenario,year=0,mode=None,seed=0):
         configure_mastery(a,levels,year)
         a.update(c.get('traits',{}))
         apply_character(a,c,year,modern=mode=='modern')
+    for aid in used:
+        for ability in agents[aid].get('stat_powers',[]):
+            if ability.get('target_id') is not None:ability['target_id']=str(_ref(ability['target_id'],keys,agents))
     apply_relationships(agents,scenario.get('relationships',[]),lambda ref:_ref(ref,keys,agents))
     mains=list(scenario.get('main_characters',[]))+[c['key'] for c in scenario['characters'] if c.get('main_character')]
     main_ids=list(dict.fromkeys(_ref(ref,keys,agents) for ref in mains))

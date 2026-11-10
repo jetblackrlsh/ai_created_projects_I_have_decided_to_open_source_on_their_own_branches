@@ -12,7 +12,15 @@ def load_scenario(value,catalog):
     if value is None:return None
     if isinstance(value,str):
         with open(value,encoding='utf-8') as f:value=json.load(f)
-    return validate_scenario(value,catalog)
+    # Annual and encounter attributes intentionally have different consumers.
+    value=deepcopy(value);definitions={}
+    from stat_modifiers import validate_stat_powers
+    for c in value.get('characters',[]):
+        if 'stat_powers' in c:definitions[c['key']]=validate_stat_powers(c.pop('stat_powers'))
+    result=validate_scenario(value,catalog)
+    for c in result['characters']:
+        if c['key'] in definitions:c['stat_powers']=definitions[c['key']]
+    return result
 
 
 def roster_for(scenario,loaded):
@@ -38,6 +46,9 @@ def roster_for(scenario,loaded):
         apply_character(agents[aid],c,0)
         levels={p:c.get('mastery_level',0) for p in c['powers']};levels.update(c.get('power_mastery',{}))
         configure_mastery(agents[aid],levels,0)
+    for a in agents.values():
+        for definition in a.get('stat_powers',[]):
+            if 'target_id' in definition:definition['target_id']=str(_ref(definition['target_id'],keys,agents))
     return agents,keys
 
 
@@ -56,7 +67,7 @@ def format_report(payload):
         for action in bout['trace']:
             before={a['id']:a for a in action['before']};after={a['id']:a for a in action['after']}
             target=action['target_id'];actor=action['actor_id']
-            lines.append(f"- Round {action['round']}: {actor} used {action['power'] or 'ordinary technique'} on {target}; target vigor {before[target]['vigor']:.2f}→{after[target]['vigor']:.2f}, resolve {before[target]['resolve']:.2f}→{after[target]['resolve']:.2f}. {'; '.join(action['notes'])}")
+            lines.append(f"- Round {action['round']}: {actor} used {action['power'] or 'ordinary technique'} on {target}; target vigor {before[target]['vigor']:.2f}→{after[target]['vigor']:.2f}, resolve {before[target]['resolve']:.2f}→{after[target]['resolve']:.2f}. {'; '.join(n if isinstance(n,str) else json.dumps(n,sort_keys=True) for n in action['notes'])}")
     return '\n'.join(lines)+'\n'
 
 

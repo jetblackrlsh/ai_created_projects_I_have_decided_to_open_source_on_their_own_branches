@@ -7,7 +7,7 @@ import math
 import random
 from government_systems import select_leadership
 from power_mastery import ensure_mastery,sync_mastery,mastery_distribution
-from power_effects import WorldPowers, POWER_EFFECTS
+from power_effects import WorldPowers, POWER_EFFECTS, expire_world_modifiers
 from war_system import init_warfare, tick_warfare
 from story_setup import init_story, tick_story, export_story, prepare_story, MAX_YEARS
 from scenario_customization import apply_world
@@ -109,6 +109,11 @@ def employment(state, agents, rng):
         if wanted in JOBS and qualified.get(wanted,False) and (index<professional_slots or wanted in ('farmer','teacher','unemployed')):
             a['job']=wanted
         a['income'] = float(JOBS[a['job']])
+        if a.get('stat_modifiers'):
+            # Income is recalculated from the job; preserve installed snapshot
+            # bonuses/debuffs rather than erasing them before they affect pay.
+            bonus=sum(r['delta'] for r in a['stat_modifiers']['active'] if r['path']=='income' and r['expires_at']>state.get('year',0))
+            a['income']=clamp(a['income']+bonus,0,1000)
         a['wealth'] = clamp(a.get('wealth', 0) + a['income'] - 12, 0, 10000)
         if not a.get('has_phone') and a['wealth'] >= 15:
             a['wealth'] -= 5
@@ -298,6 +303,7 @@ def run_modern(seed, years, starting_pop, power_rate, mutation_rate, power_tree,
             elif inject_event == 'golden_age': powers.r['food'] += len(living)
             elif inject_event == 'prophet': rng.choice(living)['charisma']=.99
             event('intervention',f"Modern society experienced {inject_event}.")
+        expire_world_modifiers(agents,year)
         prepare_story(story,agents,year,society=state,mode='modern')
         powers.begin_year(year, create_agent, ['Central City','Harbor City','North City'], chronicle, state['counter_tech'])
         chronicle.extend(powers.events)

@@ -109,21 +109,60 @@ def _fighter(source):
     unknown = set(powers) - set(POWER_PROFILES)
     if unknown:
         raise ValueError('Unsupported powers: ' + ', '.join(sorted(unknown)))
-    return dict(id=str(source['id']), name=str(source.get('name',source['id'])),
+    result = dict(id=str(source['id']), name=str(source.get('name',source['id'])),
                 powers=powers, vigor=100.0, energy=_number(source.get('energy',100),100,0,100),
                 mastery=_number(source.get('mastery_level',0),0,0,5),
                 power_levels={power:_number(level_for(source,power),0,0,5) for power in powers}, guard=0.0,
                 resolve=100.0, statuses={}, ward=False, recovery_used=False,
                 last_damage=0.0, copied=None)
+    if 'stat_powers' in source:
+        from stat_modifiers import validate_stat_powers
+        result['stat_powers']=validate_stat_powers(source['stat_powers'])
+        for ability in result['stat_powers']:
+            path=ability['effect']['path']
+            if path not in ('energy','vigor','resolve','guard','persuasiveness','susceptibility','morality') and not path.startswith(('power_levels.','combat_stats.')):
+                raise ValueError('Stat has no combat consumer: '+path)
+    for key in ('persuasiveness','susceptibility','morality','goal_positions','combat_stats'):
+        if key in source:result[key]=copy.deepcopy(source[key])
+    # A detached arena has one shared locality, not a global-world radius.
+    if result.get('stat_powers'):result['region']='encounter'
+    return result
 
 
-def _profile(fighter, turn):
+def _base_profile(fighter, turn):
     if fighter['statuses'].get('suppressed',0) >= turn:
         return None, dict(zip(_FIELDS,(7,0,0,0,0,0,0,'')))
     if not fighter['powers'] or fighter['energy'] < 10:
         return None, dict(zip(_FIELDS,(9,0,0,0,0,0,0,'')))
     power = fighter['powers'][(turn-1) % len(fighter['powers'])]
     return power, POWER_PROFILES[power].copy()
+
+
+def _profile(fighter, turn):
+    power, profile = _base_profile(fighter, turn)
+    return power,_apply_stat_offsets(fighter,profile)
+
+
+def _apply_stat_offsets(fighter, profile):
+    profile=profile.copy()
+    limits={'damage':(0,100),'guard':(0,100),'heal':(0,100),'accuracy':(-1,1),'evade':(-1,1),'control':(0,100),'initiative':(-100,100)}
+    for key, offset in fighter.get('combat_stats',{}).items():
+        if key not in limits or isinstance(offset,bool) or not isinstance(offset,(int,float)) or not math.isfinite(offset):
+            raise ValueError('Invalid combat stat offset')
+        lo,hi=limits[key];profile[key]=max(lo,min(hi,profile[key]+offset))
+    return profile
+
+
+def _expire_stats(fighters, turn):
+    if any(f.get('stat_modifiers') for f in fighters):
+        from stat_modifiers import expire_modifiers
+        for f in fighters:expire_modifiers(f,turn)
+
+
+def _cast_stats(actor, fighters, turn):
+    if not actor.get('stat_powers'):return None
+    from stat_modifiers import stat_power_action
+    return stat_power_action(actor,fighters,turn)
 
 
 def simulate_fight(fighter_a, fighter_b, seed=0, max_rounds=30, rules=None):
@@ -144,11 +183,16 @@ def simulate_fight(fighter_a, fighter_b, seed=0, max_rounds=30, rules=None):
     pair = sorted([_fighter(fighter_a), _fighter(fighter_b)], key=lambda x:x['id'])
     if pair[0]['id'] == pair[1]['id']:
         raise ValueError('Fighter ids must be unique')
+    if any(a['effect']['path'] in ('persuasiveness','susceptibility','morality') for f in pair for a in f.get('stat_powers',[])):
+        raise ValueError('Arena has no social mechanics; use a tactical-social campaign')
+    if any(f.get('stat_powers') for f in pair):
+        for f in pair:f['region']='encounter';f['team']=f['id']
     starting = copy.deepcopy(pair)
     trace=[]
     winner=None
     reason='round_limit'
     for turn in range(1,max_rounds+1):
+        _expire_stats(pair,turn)
         order=sorted(pair,key=lambda f:(_profile(f,turn)[1]['initiative'] -
             (6 if f['statuses'].get('slow',0)>=turn else 0) +
             _rng(seed,'initiative',turn,f['id']).random()*12),reverse=True)
@@ -165,7 +209,10 @@ def simulate_fight(fighter_a, fighter_b, seed=0, max_rounds=30, rules=None):
                     if actor['statuses'].get(tag,0)>=turn)
             actor['vigor']=max(0,actor['vigor']-dot)
             stunned=actor['statuses'].get('stunned',0)>=turn
-            if actor['vigor']>0 and not stunned:
+            stat_event=_cast_stats(actor,pair,turn) if actor['vigor']>0 and actor['resolve']>0 and not stunned else None
+            if stat_event:
+                note.append(stat_event);power=None;action_mastery=0;energy_spent=stat_event['energy_cost']
+            if actor['vigor']>0 and not stunned and not stat_event:
                 if power:
                     energy_spent=10
                     actor['energy']-=energy_spent
@@ -176,7 +223,7 @@ def simulate_fight(fighter_a, fighter_b, seed=0, max_rounds=30, rules=None):
                     if eligible:
                         actor['copied']=sorted(eligible)[0]
                 if special=='copy' and actor['copied']:
-                    p=POWER_PROFILES[actor['copied']].copy()
+                    p=_apply_stat_offsets(actor,POWER_PROFILES[actor['copied']])
                     special=p['special']; note.append('bout-only copy: '+actor['copied'])
                 heal=p['heal']*factor
                 if special=='rewind': heal=min(heal,actor['last_damage'])

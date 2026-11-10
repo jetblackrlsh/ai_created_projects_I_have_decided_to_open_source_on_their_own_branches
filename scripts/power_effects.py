@@ -51,6 +51,17 @@ def initial_state(population):
             'clones_created': 0, 'deaths': 0, 'last_year': 0, 'revealed_events': []}
 
 
+def expire_world_modifiers(agents,year):
+    # Opt-in: legacy agents and their RNG streams remain untouched.
+    for a in agents.values():
+        if a.get('stat_modifiers'):
+            from stat_modifiers import expire_modifiers
+            expire_modifiers(a,year)
+            if 'power_mastery' in a:
+                from power_mastery import sync_mastery
+                sync_mastery(a)
+
+
 class WorldPowers:
     def __init__(self, agents, rng, state=None):
         self.agents = agents
@@ -134,7 +145,7 @@ class WorldPowers:
             # Natural recovery does not invalidate active healing choices.
             a['injury'] = max(0.0, a['injury'] - .025)
         # At most 24 actions per year; rotate the opportunity pool with world-seeded RNG.
-        candidates = [a for a in self.living if a['alive'] and a.get('power') in POWER_EFFECTS]
+        candidates = [a for a in self.living if a['alive'] and (a.get('power') in POWER_EFFECTS or a.get('stat_powers'))]
         self.rng.shuffle(candidates)
         for a in candidates:
             if len(self.activated_this_year) >= 24:
@@ -219,6 +230,20 @@ class WorldPowers:
 
     def activate(self, a):
         """Select a held ability while preserving permanent repertoire changes."""
+        if a.get('stat_powers') and a.get('alive') and a['id'] not in self.activated_this_year:
+            self.setup_agent(a)
+            blocked=any(a.get(k,0)>=self.year for k in ('frozen_until','stunned_until','stasis_until','suppressed_until','quarantined_until','hospitalized_until'))
+            blocked=blocked or a.get('imprisoned_until',0)>self.year or (a.get('frightened_until',0)>=self.year and a.get('resolute_until',0)<self.year)
+            if not blocked:
+                from stat_modifiers import stat_power_action
+                targets=[b for b in self.agents.values() if b.get('alive') and b.get('location')==a.get('location')]
+                for candidate in targets:self.setup_agent(candidate)
+                event=stat_power_action(a,targets,self.year)
+                if event:
+                    self.activated_this_year.add(a['id'])
+                    self.state['usage']['Stat Manipulation']=self.state['usage'].get('Stat Manipulation',0)+1
+                    self.events.append({'year':self.year,'category':'power','actor_id':a['id'],'power':'Stat Manipulation','true_event':f"{a['name']} used a configured stat-manipulation ability.",'public_belief':f"{a['name']} used a configured stat-manipulation ability.",'secret':False,'details':event})
+                    return True
         held = powers_of(a)
         if not held:
             return False

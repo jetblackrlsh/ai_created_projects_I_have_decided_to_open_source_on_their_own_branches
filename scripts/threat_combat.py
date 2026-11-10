@@ -6,7 +6,7 @@ Each combatant gets at most one action per round; temporary shadow copies are
 abstract attack/guard/evade bonuses, not extra turns. No XP or world mutation.
 """
 from copy import deepcopy
-from combat_sim import _fighter, _profile, _rng, POWER_PROFILES
+from combat_sim import _fighter, _profile, _rng, POWER_PROFILES, _expire_stats, _cast_stats, _apply_stat_offsets
 
 
 def create_state(fighters):
@@ -17,6 +17,8 @@ def create_state(fighters):
         if not isinstance(source.get('team'),str) or not source['team']:
             raise ValueError('Each fighter requires a team')
         row=_fighter(source); row['team']=source['team'];rows.append(row)
+    if any(f.get('stat_powers') for f in rows):
+        for f in rows:f['region']='encounter'
     if len({r['id'] for r in rows})!=len(rows):raise ValueError('Duplicate combat id')
     if not 1<=len({r['team'] for r in rows})<=2:raise ValueError('One or two teams required')
     return {'fighters':sorted(rows,key=lambda x:x['id']),'last_round':0}
@@ -43,6 +45,7 @@ def step_round(state, seed, round_number, skip_actions=None):
         raise ValueError('Unknown skipped combatant')
     if any(not isinstance(v,str) or not v for v in skip_actions.values()):raise ValueError('Skip reason required')
     state['last_round']=round_number; turn=round_number; traces=[]
+    _expire_stats(state['fighters'],turn)
     order=sorted(state['fighters'],key=lambda f:(_profile(f,turn)[1]['initiative']-(6 if f['statuses'].get('slow',0)>=turn else 0)+_rng(seed,'initiative',turn,f['id']).random()*12,f['id']),reverse=True)
     for actor in order:
         if not active(actor):continue
@@ -58,6 +61,8 @@ def step_round(state, seed, round_number, skip_actions=None):
         elif stunned:action='stunned';notes.append('activation skipped')
         elif actor['id'] in skip_actions:action=skip_actions[actor['id']]
         elif target is None:action='no opponents'
+        elif (stat_event := _cast_stats(actor,state['fighters'],turn)) is not None:
+            action='stat_power';spent=stat_event['energy_cost'];notes.append(stat_event)
         else:
             if power:spent=10;actor['energy']-=spent
             factor=1+mastery*.06
@@ -65,7 +70,7 @@ def step_round(state, seed, round_number, skip_actions=None):
                 eligible=sorted(x for x in target['powers'] if x!='Siphon')
                 if eligible:actor['copied']=eligible[0]
             if special=='copy' and actor['copied']:
-                p=POWER_PROFILES[actor['copied']].copy();special=p['special'];notes.append('encounter-only copy: '+actor['copied'])
+                p=_apply_stat_offsets(actor,POWER_PROFILES[actor['copied']]);special=p['special'];notes.append('encounter-only copy: '+actor['copied'])
             heal=p['heal']*factor
             if special=='rewind':heal=min(heal,actor['last_damage'])
             if special=='recover' and actor['vigor']<35 and not actor['recovery_used']:

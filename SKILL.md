@@ -5,7 +5,7 @@ description: Run seeded superpower worlds, customizable goal-driven main charact
 
 # Superpower World Sim
 
-Run the bundled Python 3 standard-library v4.7 engine. Every one of the 62 defined powers has a concrete state-changing action, with energy, cooldowns, conditions and limits. Successful use earns mastery separately for the ability used; its own mastery improves efficiency and effects, and each ability rusts independently. Repertoires can combine up to 64 powers, and Siphon can permanently transfer one. Use its measured results as creative simulation outputs, not scientific predictions. Require no paid API, external service, or graphical application.
+Run the bundled Python 3 standard-library v4.8 engine. Every one of the 62 defined powers has a concrete state-changing action, with energy, cooldowns, conditions and limits. Successful use earns mastery separately for the ability used; its own mastery improves efficiency and effects, and each ability rusts independently. Repertoires can combine up to 64 powers, and Siphon can permanently transfer one. Use its measured results as creative simulation outputs, not scientific predictions. Require no paid API, external service, or graphical application.
 
 ## Configure an experiment
 
@@ -123,3 +123,12 @@ In modern mode, explain election results, jobs, public ranking/reputation and ci
 Read `references/expanded-systems.md` before narrating clinical, court, deception, combination or stolen-power consequences. Respect engine truth versus public belief and note the difference between forged evidence and proven wrongdoing. Do not imply that a correction instantly removes grievances or that a reputation score proves guilt.
 
 Run `python3 -m unittest discover -s <skill_dir>/scripts -p 'test_*.py' -v` when validating or modifying the engine. Use `scripts/check_stability.py` and `scripts/check_modern_stability.py` for reproducible multi-world checks.
+
+
+## Stat-manipulation powers (v4.8)
+
+Read `references/stat-modifiers.md` and `references/annual-stat-powers.md` when configuring boosts, debuffs, rejuvenation, altered personality/social influence, resource changes or per-power mastery changes. Characters may hold up to 32 `stat_powers` definitions in addition to their catalog powers. These operate on real mode-appropriate numeric attributes, not arbitrary JSON fields, with self/one-person/local-area targeting, explicit action and energy costs, cooldowns, duration, and replace/refresh/bounded-stack policies. They support additive, snapshot multiplication and temporary set operations. Save the ledgers and cooldown state with the character.
+
+In detached duels/tournaments and threat campaigns, a ready stat ability replaces that combat action; otherwise the normal ability rotation continues. Area scope is the current encounter, never unseen people elsewhere in the world. Tactical-social campaigns can alter the actual persuasion/susceptibility/morality used by diplomacy; detached arenas reject such definitions because they have no social consumer. Combat-only attributes cannot silently appear on annual citizens. Annual statistics that are derived (rank/app score, compatibility mastery) change through their real inputs; IDs, histories, boolean life/death, teams and timestamps are not numeric stats. Income bonuses are included in real wages, age changes preserve subsequent aging, and per-power XP changes update mastery.
+
+Use `assets/scenarios/stat-power-world.json` for an annual demonstration and `assets/scenarios/stat-power-threat.json` for combat. Preserve prior behavior when no stat powers are configured. Explain the model's lossy boundary clipping and native time units (years vs rounds); do not describe temporary resource shifts as permanent healing or resurrection. The aggregate versus mode still has no individual-character stat engine.

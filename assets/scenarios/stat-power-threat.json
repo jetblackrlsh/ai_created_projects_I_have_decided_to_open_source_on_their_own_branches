@@ -1,0 +1,10 @@
+{
+  "name": "The Diminisher and the Shieldwright",
+  "description": "Original bounded stat-power demonstration. Both actors pay combat actions and energy; no claim of balanced powers.",
+  "fighters": [
+    {"id":"diminisher","name":"The Diminisher","team":"threat","powers":["Strength","Durability"],"power_mastery":{"Strength":2,"Durability":2},"stat_powers":[{"id":"sap-strength","scope":"other","relation":"enemy","energy_cost":12,"cooldown":4,"effect":{"path":"power_levels.Strength","operation":"add","value":-2,"duration":3,"stacking":"replace"}}]},
+    {"id":"shieldwright","name":"Shieldwright","team":"heroes","powers":["Strength","Flight"],"power_mastery":{"Strength":3,"Flight":2},"stat_powers":[{"id":"bulwark","scope":"local","relation":"ally","energy_cost":14,"cooldown":5,"effect":{"path":"guard","operation":"add","value":20,"duration":3,"stacking":"replace"}}]}
+  ],
+  "world":{"population":12000,"regions":12,"horizon":40,"initial_alert":true},
+  "rules":{"travel_steps":0,"fight_priority":0.8}
+}

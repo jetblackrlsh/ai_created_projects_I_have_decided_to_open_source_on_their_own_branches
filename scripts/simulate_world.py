@@ -17,7 +17,7 @@ import math
 import random
 import sys
 from typing import Any, Dict, List, Optional, Tuple
-from power_effects import WorldPowers, POWER_EFFECTS
+from power_effects import WorldPowers, POWER_EFFECTS, expire_world_modifiers
 from power_mastery import ensure_mastery,mastery_distribution
 from expanded_powers import EXPANDED_POWER_TREE, powers_of, set_powers, has_power, inherit_powers
 from modern_society import run_modern, SOCIAL_POLICIES
@@ -588,6 +588,7 @@ def run_single_world_evolution_or_monarch_or_wheel(
             log_event(year, "extinction", f"All human life in the world went extinct in Year {year}.", weight=10)
             break
 
+        expire_world_modifiers(agents,year)
         prepare_story(story, agents, year, mode=mode)
         powers.begin_year(year, create_agent, towns, chronicle, counter_tech)
         for event in powers.events:
