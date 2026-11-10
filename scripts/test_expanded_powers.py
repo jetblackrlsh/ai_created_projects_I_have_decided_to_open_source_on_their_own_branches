@@ -21,6 +21,12 @@ def fixture(power, seed=42):
     agents = {1: person(1, power), 2: person(2, 'Fire', 'villain'),
               3: person(3, 'Water')}
     w = WorldPowers(agents, random.Random(seed))
+    def factory(year, age=25, power=None, last_name='Test'):
+        i=max(w.agents)+1
+        a=person(i,power);a['age']=age;a['last_name']=last_name
+        w.agents[i]=a
+        return a
+    w.create_agent=factory
     w.year = 10
     w.living = list(agents.values())
     w.chronicle = [{'true_event': 'A concealed rescue', 'secret': True}]
@@ -104,7 +110,7 @@ class ExpandedPowerTests(unittest.TestCase):
 
     def test_siphon_capacity_and_no_recursive_siphoning(self):
         w = fixture('Siphon')
-        set_powers(w.agents[1], ['Siphon', 'Water', 'Ice'])
+        set_powers(w.agents[1], ['Siphon'] + ['Capacity Test '+str(i) for i in range(MAX_POWERS-1)])
         before = deepcopy(w.agents)
         self.assertFalse(activate_expanded(w, w.agents[1], w.agents[2])[0])
         self.assertEqual(w.agents, before)
@@ -114,7 +120,7 @@ class ExpandedPowerTests(unittest.TestCase):
 
     def test_repertoire_migrates_legacy_and_deduplicates(self):
         a = {'power': 'Fire', 'powers': ['Water', 'Fire', 'Ice', 'Speed']}
-        self.assertEqual(powers_of(a), ['Fire', 'Water', 'Ice'])
+        self.assertEqual(powers_of(a), ['Fire', 'Water', 'Ice', 'Speed'])
         self.assertEqual(set_powers(a, ['Speed', 'Speed', None, 'Ice']), ['Speed', 'Ice'])
         self.assertTrue(has_power(a, 'Ice'))
         self.assertEqual(a['power'], 'Speed')

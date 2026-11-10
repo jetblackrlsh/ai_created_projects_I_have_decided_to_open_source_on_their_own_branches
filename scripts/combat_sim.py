@@ -1,6 +1,6 @@
 """Detached nonlethal arena model, not the world's annual combat approximation.
 
-All 53 powers have explicit bounded arena adaptations in POWER_PROFILES. Vigor is
+All 62 powers have explicit bounded arena adaptations in POWER_PROFILES. Vigor is
 bout stamina, NOT world health. No deaths, aging, permanent theft, resurrection,
 legal effects or source mutation occur here. Siphon copies a technique for this
 bout only; Necromancy uses an inert spectral sparring construct (not resurrection).
@@ -18,6 +18,15 @@ from power_mastery import ensure_mastery, level_for
 # damage, guard, heal, accuracy, evade, control, initiative, special
 _FIELDS = ('damage', 'guard', 'heal', 'accuracy', 'evade', 'control', 'initiative', 'special')
 _RAW = {
+ 'Shadow Blasts': (24,0,0,0,0,0,0,''),
+ 'Fear Influence': (4,0,0,.08,0,22,1,'fear'),
+ 'Shadow Clones': (19,7,0,.10,.08,0,1,'shadow_duplicate'),
+ 'Cybernetics': (17,11,3,0,0,0,3,'interface'),
+ 'Analytical Vision': (10,0,0,.24,0,0,2,'reveal'),
+ 'Space Adaptation': (10,10,0,0,.08,0,1,'cleanse'),
+ 'Tactical Analysis': (12,6,0,.15,.05,0,5,'insight'),
+ 'Resolve': (8,8,0,0,0,0,1,'resolve'),
+ 'Telepathic Link': (9,5,0,.18,.08,5,3,'insight'),
  'Fire': (20,0,0,0,0,0,0,'burn'),
  'Ice': (12,5,0,0,0,0,0,'slow'),
  'Water': (11,7,0,0,0,0,1,'cleanse'),
@@ -120,7 +129,7 @@ def _profile(fighter, turn):
 def simulate_fight(fighter_a, fighter_b, seed=0, max_rounds=30, rules=None):
     """Pure deterministic duel. Swapping arguments preserves exact results.
 
-    Caps: 1..200 rounds, 3 powers, mastery0..5, energy0..100. Fresh arena
+    Caps: 1..200 rounds, 64 powers, mastery0..5, energy0..100. Fresh arena
     vigor/resolve; supplied energy is respected. Potency uses the selected
     ability's own level, never the maximum compatibility scalar. Siphon copies
     techniques at the caster's Siphon level, not the donor's level. Initiative is rerolled each
@@ -177,6 +186,10 @@ def simulate_fight(fighter_a, fighter_b, seed=0, max_rounds=30, rules=None):
                 actor['guard']=min(35,actor['guard']+p['guard']*factor)
                 if special=='ward': actor['ward']=True
                 if special=='energize': actor['energy']=min(100,actor['energy']+7)
+                if special=='resolve':
+                    actor['resolve']=min(100,actor['resolve']+18*factor)
+                    actor['statuses'].pop('frightened',None)
+                    actor['statuses']['resolute']=turn+2
                 if special=='cleanse':
                     for tag in ('poison','burn','rot'): actor['statuses'].pop(tag,None)
                 defense=_profile(target,turn)[1]
@@ -187,12 +200,15 @@ def simulate_fight(fighter_a, fighter_b, seed=0, max_rounds=30, rules=None):
                 if hit:
                     damage=p['damage']*factor*(.85+rng.random()*.3)
                     if actor['statuses'].get('disarmed',0)>=turn: damage*=.7
+                    if actor['statuses'].get('frightened',0)>=turn and actor['statuses'].get('resolute',0)<turn: damage*=.65
                     if target['ward'] and power:
                         damage=0; target['ward']=False; note.append('ward blocked power')
                     else:
                         soak=min(target['guard'],damage*.75)
                         target['guard']-=soak; damage-=soak
-                        target['resolve']=max(0,target['resolve']-p['control']*factor)
+                        target['resolve']=max(0,target['resolve']-p['control']*factor*(.4 if target['statuses'].get('resolute',0)>=turn else 1))
+                        if special=='fear' and target['statuses'].get('resolute',0)<turn:
+                            target['statuses']['frightened']=turn+2
                         tags={'burn':'burn','poison':'poison','rot':'rot','slow':'slow',
                               'disarm':'disarmed','suppress':'suppressed','reveal':'revealed'}
                         if special in tags: target['statuses'][tags[special]]=turn+2

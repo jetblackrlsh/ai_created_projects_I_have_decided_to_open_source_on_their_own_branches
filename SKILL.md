@@ -5,7 +5,7 @@ description: Run seeded superpower worlds, customizable goal-driven main charact
 
 # Superpower World Sim
 
-Run the bundled Python 3 standard-library v4.3 engine. Every one of the 53 defined powers has a concrete state-changing action, with energy, cooldowns, conditions and limits. Successful use earns mastery separately for the ability used; its own mastery improves efficiency and effects, and each ability rusts independently. Repertoires can combine up to three powers, and Siphon can permanently transfer one. Use its measured results as creative simulation outputs, not scientific predictions. Require no paid API, external service, or graphical application.
+Run the bundled Python 3 standard-library v4.4 engine. Every one of the 62 defined powers has a concrete state-changing action, with energy, cooldowns, conditions and limits. Successful use earns mastery separately for the ability used; its own mastery improves efficiency and effects, and each ability rusts independently. Repertoires can combine up to 64 powers, and Siphon can permanently transfer one. Use its measured results as creative simulation outputs, not scientific predictions. Require no paid API, external service, or graphical application.
 
 ## Configure an experiment
 
@@ -39,6 +39,10 @@ Use `assets/scenarios/civil-war.json` or `assets/scenarios/international-war.jso
 
 Describe results as abstract strategic simulation. Do not call army-unit losses named-person deaths or narrate unrecorded tactical feats. Power support is an explicit strategic projection of existing ability profiles and independent mastery, not a second invocation of every literal world power effect. Faction objectives are measurable; character-specific territorial goal types are not added. Do not imply a territorial victory automatically changes the world's separate elected/royal leader.
 
+## Configure large themed builds
+
+Read `references/large-builds.md` and use `assets/scenarios/multi-power-builds.json` for five-plus-ability characters. Up to 64 powers are supported throughout world and arena state; each retains independent mastery. Natural inheritance remains capped at three for population balance. Do not confuse ability origins, personality, or a moral code with unbounded powers.
+
 ## Configure separate power mastery
 
 Characters support starting `power_mastery` levels, for example `{"Fire":4,"Healing":1}`, restricted to their held powers and integer levels0..5. The old starting `mastery_level` is shorthand for all configured abilities, with individual entries overriding it. Use `{"type":"reach_mastery","power":"Healing","value":3}` for a named goal; without `power`, the goal measures best held mastery. Each power has independent XP/use/rust records in output and main-character timelines. New powers begin novice; Siphon does not transfer another person’s training. Lost powers retain archived personal experience but do not affect current rank. Ranking’s mastery component uses the best CURRENT ability, not an average or additive total. Compatibility scalar fields are summaries, not editable shared training pools.
@@ -61,7 +65,7 @@ python3 <skill_dir>/scripts/simulate_world.py --mode duel --scenario <skill_dir>
 python3 <skill_dir>/scripts/simulate_world.py --mode tournament --scenario <skill_dir>/assets/scenarios/rivals-and-main-characters.json --runs 10 --output-json brackets.json --output-report brackets.md
 ```
 
-Support up to 64 customized founders and 16 explicitly tracked main characters, including starting names, powers (up to three), age, mastery, traits, faction, relationships, injuries, resources, job/social circumstances and up to eight typed goals each. The 19 measurable goal types cover survival, age, mastery, duels, named rivals, tournaments, app rank, wealth, careers, leadership/elected wins, followers, protection, descendants, exposing fakes, acquiring powers, recovery, civic outcomes and treating injuries. Goals bias actual eligible actions and competition, never automatically award success. Some goals require modern mode; textual descriptions remain flavor. Mains have yearly timelines and goal progress, but no plot armor.
+Support up to 64 customized founders and 16 explicitly tracked main characters, including starting names, powers (up to 64), age, mastery, traits, faction, relationships, injuries, resources, job/social circumstances and up to eight typed goals each. The 19 measurable goal types cover survival, age, mastery, duels, named rivals, tournaments, app rank, wealth, careers, leadership/elected wins, followers, protection, descendants, exposing fakes, acquiring powers, recovery, civic outcomes and treating injuries. Goals bias actual eligible actions and competition, never automatically award success. Some goals require modern mode; textual descriptions remain flavor. Mains have yearly timelines and goal progress, but no plot armor.
 
 Standalone duel/tournament runs use nonlethal, bounded ability-aware arena rules with actual action traces, not the annual world combat model. Tournament bouts reset arena vigor; draws have explicit seeded advancement. No powers are permanently stolen and no dead people revived inside sparring. They do not mutate a world by default. To apply bounded practice, energy, injury and reputation aftermath to a loaded world, explicitly use `--commit-results --load-state world.json --save-state after-arena.json --runs 1`; the calendar and world RNG do not advance. Within world scenarios, `encounters.commit_consequences` also defaults to false. Read the reference before selecting true. Report this distinction clearly.
 

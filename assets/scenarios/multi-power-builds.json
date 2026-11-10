@@ -1,0 +1,102 @@
+{
+  "version": 1,
+  "settings": {
+    "mode": "modern",
+    "pop": 20,
+    "years": 20,
+    "seed": 440
+  },
+  "characters": [
+    {
+      "key": "nocturne",
+      "name": "Nocturne",
+      "age": 30,
+      "role": "hero",
+      "main_character": true,
+      "powers": [
+        "Shadow Blasts",
+        "Invisibility",
+        "Shadow Clones",
+        "Fear Influence",
+        "Tactical Analysis"
+      ],
+      "power_mastery": {
+        "Shadow Blasts": 3,
+        "Invisibility": 4,
+        "Shadow Clones": 2,
+        "Fear Influence": 2,
+        "Tactical Analysis": 4
+      },
+      "description": "Shadow-themed investigator; five independently trained abilities."
+    },
+    {
+      "key": "tempest",
+      "name": "Tempest Guardian",
+      "age": 28,
+      "role": "hero",
+      "main_character": true,
+      "powers": [
+        "Strength",
+        "Durability",
+        "Lightning",
+        "Time Slowing",
+        "Resolve"
+      ],
+      "power_mastery": {
+        "Strength": 4,
+        "Durability": 4,
+        "Lightning": 2,
+        "Time Slowing": 1,
+        "Resolve": 3
+      },
+      "traits": {
+        "compassion": 0.9,
+        "ambition": 0.5
+      },
+      "description": "Physical guardian with lightning and time effects. A moral code is personality, not automatic moral correctness."
+    },
+    {
+      "key": "circuit",
+      "name": "Circuit Detective",
+      "age": 35,
+      "role": "hero",
+      "main_character": true,
+      "powers": [
+        "Telepathic Link",
+        "Telepathy",
+        "Flight",
+        "Cybernetics",
+        "Analytical Vision",
+        "Space Adaptation"
+      ],
+      "power_mastery": {
+        "Telepathic Link": 4,
+        "Telepathy": 1,
+        "Flight": 3,
+        "Cybernetics": 3,
+        "Analytical Vision": 4,
+        "Space Adaptation": 2
+      },
+      "description": "Augmented investigator; communications and mind reading are distinct, equipment origin is flavor."
+    }
+  ],
+  "fight": {
+    "a": "nocturne",
+    "b": "tempest"
+  },
+  "tournaments": [
+    {
+      "year": 3,
+      "name": "Founders Exhibition",
+      "entrants": [
+        "nocturne",
+        "tempest",
+        "circuit"
+      ]
+    }
+  ],
+  "encounters": {
+    "enabled": true,
+    "commit_consequences": false
+  }
+}

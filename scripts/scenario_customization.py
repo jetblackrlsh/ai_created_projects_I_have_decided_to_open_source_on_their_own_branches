@@ -31,9 +31,9 @@ def validate_custom_character(c,catalog):
     for field,lo,hi,integer in [('wealth',0,10000,False),('income',0,1000,False),('reputation',0,100,False),('followers',0,100000,False),('injury',0,.95,False),('energy',0,100,False),('healer_burnout',0,100,False),('knowledge_points',0,100,False),('imprisoned_years',0,1000,True),('hospitalized_years',0,100,True),('quarantined_years',0,100,True),('infected_years',0,10,True)]:
         if field in c:bounded(c[field],lo,hi,field,integer)
     if 'power_mastery' in c:
-        from expanded_powers import canonical_power
+        from expanded_powers import canonical_power, MAX_POWERS
         values=c['power_mastery']
-        if not isinstance(values,dict) or len(values)>3:raise ValueError('power_mastery must map at most3 held powers to levels')
+        if not isinstance(values,dict) or len(values)>MAX_POWERS:raise ValueError('power_mastery must map at most64 held powers to levels')
         if len({canonical_power(p) for p in values})!=len(values):raise ValueError('Duplicate mastery power alias')
         held={canonical_power(p) for p in c.get('powers',[])}
         if any(canonical_power(p) not in held for p in values):raise ValueError('Starting mastery must name a held power')

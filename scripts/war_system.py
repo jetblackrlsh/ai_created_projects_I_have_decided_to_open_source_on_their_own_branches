@@ -78,7 +78,7 @@ def tick_warfare(s,agents,rng,year):
         w.update(status='ended',winner=winner,end_year=year,end_reason=why);emit(w['id']+' ended: '+why,war=w['id'],winner=winner)
     def strength(f,defense=False):
         val=sum(fs[x]['army']*(.4+.006*fs[x]['morale'])*(.3+.7*min(1,fs[x]['supplies']/20))*(1-fs[x]['exhaustion']/150) for x in sorted(coalition(f)));uses=[]
-        eligible=[a for a in agents.values() if a.get('alive',True) and powers_of(a) and a.get('faction') in coalition(f) and a.get('age',0)>=18 and a.get('injury',0)<.8 and a.get('energy',100)>=10 and all(a.get(k,0)<year for k in ('imprisoned_until','hospitalized_until','quarantined_until','stasis_until','frozen_until','stunned_until','frightened_until','suppressed_until'))]
+        eligible=[a for a in agents.values() if a.get('alive',True) and powers_of(a) and a.get('faction') in coalition(f) and a.get('age',0)>=18 and a.get('injury',0)<.8 and a.get('energy',100)>=10 and all(a.get(k,0)<year for k in ('imprisoned_until','hospitalized_until','quarantined_until','stasis_until','frozen_until','stunned_until','suppressed_until')) and (a.get('frightened_until',0)<year or a.get('resolute_until',0)>=year)]
         for a in sorted(eligible,key=lambda a:a['id'])[:16]:
             candidates=[]
             for p in powers_of(a):

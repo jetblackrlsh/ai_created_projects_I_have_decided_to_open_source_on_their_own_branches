@@ -4,12 +4,14 @@ Compatibility scalar mastery is the strongest CURRENT power, not a shared pool.
 Historical records for lost powers remain but do not contribute while unheld.
 """
 
-def _name(value):return 'Fortune' if value=='Luck' else value
+def _name(value):
+    from expanded_powers import canonical_power
+    return canonical_power(value)
 
 
 def held_powers(agent):
-    values=[agent.get('power')]+list(agent.get('powers') or [])
-    return list(dict.fromkeys(_name(p) for p in values if isinstance(p,str) and p))[:3]
+    from expanded_powers import powers_of
+    return powers_of(agent)
 
 
 def ensure_mastery(agent,year=0):
@@ -23,9 +25,12 @@ def ensure_mastery(agent,year=0):
         if xp and held:agent['mastery_migration']='Legacy shared experience credited once to each then-held power; historical per-power use counts unknown.'
     records=agent['power_mastery']
     # Canonical alias, retaining the better record if an old producer wrote both.
-    if 'Luck' in records:
-        legacy=records.pop('Luck')
-        if legacy.get('xp',0)>records.get('Fortune',{}).get('xp',-1):records['Fortune']=legacy
+    for alias in list(records):
+        canonical=_name(alias)
+        if canonical != alias:
+            legacy=records.pop(alias)
+            if legacy.get('xp',0)>records.get(canonical,{}).get('xp',-1):
+                records[canonical]=legacy
     for power in held:
         records.setdefault(power,{'xp':0,'level':0,'last_use_year':year,'uses_total':0,'acquired_year':year})
     agent['_mastery_year']=max(year,agent.get('_mastery_year',year))

@@ -34,6 +34,9 @@ class WarTests(unittest.TestCase):
   for flag in ['imprisoned_until','hospitalized_until','quarantined_until','stasis_until','frozen_until','stunned_until','frightened_until','suppressed_until']:
    state=init_warfare(scenario());a={1:dict(id=1,age=30,alive=True,faction='crown',powers=['Strength'],power='Strength',energy=100)};a[1][flag]=1
    events=tick_warfare(state,a,random.Random(2),1);self.assertEqual(events[0]['details']['power_support'],[]);self.assertEqual(a[1]['energy'],100)
+ def test_resolve_resists_fear_for_war_support(self):
+  state=init_warfare(scenario());a={1:dict(id=1,age=30,alive=True,faction='crown',powers=['Resolve','Strength'],energy=100,frightened_until=2,resolute_until=2)}
+  events=tick_warfare(state,a,random.Random(2),1);self.assertTrue(events[0]['details']['power_support']);self.assertEqual(a[1]['energy'],92)
  def test_resume_and_idempotence(self):
   s=init_warfare(scenario());r=random.Random(42);tick_warfare(s,{},r,1);saved=copy.deepcopy(s);rs=r.getstate()
   for y in range(2,20):tick_warfare(s,{},r,y)

@@ -1060,6 +1060,8 @@ def run_single_world_evolution_or_monarch_or_wheel(
         arena_events = tick_story(story, agents, rng, year, mode=mode)
         chronicle.extend(arena_events)
         drama_score += len(arena_events) * 3
+        # Initialize newly granted powers/deaths at the same year with or without a save.
+        powers.observe_deaths()
 
     powers.observe_deaths()
     if story is not None and story["last_tick"] < current_year:

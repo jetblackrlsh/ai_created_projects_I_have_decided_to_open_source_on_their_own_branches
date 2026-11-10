@@ -1,13 +1,17 @@
 {
   "project": "superpower-world-sim",
-  "version": "4.3",
+  "version": "4.4",
   "release_date": "2026-11-10",
-  "provenance": "Owner-approved original extensions: nonlethal traced duels/tournaments, configured rivals and tracked main characters, broad scenario customization and 19 measurable behavior-driving goals. Original 53-power world retained. Synthetic examples only; no private history imported or reconstruction claim. Adds selectable public-rank or nonlethal-tournament leadership with actual policy effects and saved succession evidence. Adds independent per-power XP/mastery/rust with explicit legacy preservation, best-held ranking, named goals and individual arena potency. Adds owner-requested opt-in strategic war/civil-war system with faction alliances, territory fronts, resource attrition, mastery-dependent champion support, capture objectives and ceasefires.",
+  "provenance": "Owner-approved original extensions: nonlethal traced duels/tournaments, configured rivals and tracked main characters, broad scenario customization and 19 measurable behavior-driving goals. Original 53-power world retained. Synthetic examples only; no private history imported or reconstruction claim. Adds selectable public-rank or nonlethal-tournament leadership with actual policy effects and saved succession evidence. Adds independent per-power XP/mastery/rust with explicit legacy preservation, best-held ranking, named goals and individual arena potency. Adds owner-requested opt-in strategic war/civil-war system with faction alliances, territory fronts, resource attrition, mastery-dependent champion support, capture objectives and ceasefires. Supports64-power repertoires and nine original bounded themed abilities, with synthetic multi-power examples. Fixes checkpoint-boundary initialization and preserves alias mastery.",
   "verification": {
-    "unit_integration_tests": 132,
+    "unit_integration_tests": 149,
     "war_batch_worlds": 10,
     "war_batch_years_per_world": 30,
-    "seeded_resume": "exact tested in all four individual modes with warfare"
+    "seeded_resume": "exact tested in all four individual modes with warfare",
+    "large_build_batch_worlds": 10,
+    "large_build_years_per_world": 30,
+    "large_build_duels": 20,
+    "large_build_tournaments": 10
   },
   "manifest_excludes_itself": true,
   "excluded": [
@@ -19,353 +23,278 @@
   "files": [
     {
       "path": "LICENSE",
-      "size_bytes": 7048,
-      "mode": "644",
-      "git_blob_sha1": "0e259d42c996742e9e3cba14c677129b2c1b6311",
+      "bytes": 7048,
       "sha256": "a2010f343487d3f7618affe54f789f5487602331c0a8d03f49e9a7c547cf0499"
     },
     {
       "path": "README.md",
-      "size_bytes": 17730,
-      "mode": "644",
-      "git_blob_sha1": "0e6d523f90ff0a51bb2061049cbd9843e9dbacee",
-      "sha256": "37fc40576e0a9d70d776e219954ac4d98093f6b902db5ecaa36f48f133d0a00e"
+      "bytes": 18984,
+      "sha256": "191832a7cdfb6ee975d3b03f79b528270e707ca23920fe52751c0b5ddbe6beeb"
     },
     {
       "path": "SKILL.md",
-      "size_bytes": 15073,
-      "mode": "644",
-      "git_blob_sha1": "8ebcfe02c8297930cc18df9dc6103e3f17b043c4",
-      "sha256": "50c6a46ee4a3f5289021d42aef404834f4e9081bc3c48df3c68f7108ea114763"
+      "bytes": 15471,
+      "sha256": "3fa690de1f500a840339b7e1c51257815e1af895058d1b78fe18c76c27163da0"
     },
     {
       "path": "THIRD_PARTY_NOTICES.md",
-      "size_bytes": 890,
-      "mode": "644",
-      "git_blob_sha1": "a8ab075bd19d85896426cecde304dd54fe9d8ea4",
+      "bytes": 890,
       "sha256": "3d0a0b5be03aaa137d3443cadc0f4c56909570e8d6ebe35f68739fff7a79de15"
     },
     {
       "path": "agents/openai.yaml",
-      "size_bytes": 455,
-      "mode": "644",
-      "git_blob_sha1": "499cded3e0b82e723ad2a997a02a6072ee4a3686",
+      "bytes": 455,
       "sha256": "7a01b373e252b69233dc664d20dfc170044496ce91b8e701efbba1c8fb7b51ae"
     },
     {
       "path": "assets/icon.svg",
-      "size_bytes": 420,
-      "mode": "644",
-      "git_blob_sha1": "2468028d1ed0fc8009b1fc45e7bb027adaf0d079",
+      "bytes": 420,
       "sha256": "e9301497fa98ef56aaca7ede0857b9a18dc06c34040f0679c609a6bf49b1d38b"
     },
     {
       "path": "assets/scenarios/civil-war.json",
-      "size_bytes": 1504,
-      "mode": "644",
-      "git_blob_sha1": "38c77d0ece3fd8c335a9c792a9322d85bb419e2d",
+      "bytes": 1504,
       "sha256": "4fa9c32d33f26490acb86011001926a8ef94e9769aa60ecb8d5bdb265f4ce2d1"
     },
     {
       "path": "assets/scenarios/custom-goal-driven-world.json",
-      "size_bytes": 4040,
-      "mode": "644",
-      "git_blob_sha1": "9349dfa876a3ea3e983bd4b4f63663b77ebd1aeb",
+      "bytes": 4040,
       "sha256": "23b70e9badc331cd0206cc6252ba80cbe807b7103d87332cce055bba5efd9426"
     },
     {
       "path": "assets/scenarios/international-war.json",
-      "size_bytes": 1518,
-      "mode": "644",
-      "git_blob_sha1": "e1239a8d3afd2283f4326b40c6da4ff841378a17",
+      "bytes": 1518,
       "sha256": "0e525efd5a527006a6d0ed95f53e22329a0dc090831538efa360901196d401ff"
     },
     {
+      "path": "assets/scenarios/multi-power-builds.json",
+      "bytes": 2267,
+      "sha256": "a93f1421d5238dddb47ba78f3f438344619070734063e98c5380f1c1bfad86ce"
+    },
+    {
       "path": "assets/scenarios/rank-government.json",
-      "size_bytes": 421,
-      "mode": "644",
-      "git_blob_sha1": "ff2c8dad53e07c418a989d43ea8a9d2599d3834a",
+      "bytes": 421,
       "sha256": "da0aaf6c7681ebd3da36a184449a0b7d1746a7d6b1e56ce5b0bba251a88864bf"
     },
     {
       "path": "assets/scenarios/rivals-and-main-characters.json",
-      "size_bytes": 762,
-      "mode": "644",
-      "git_blob_sha1": "a4480f0d4ec95b61c548f4032ff1115f5e18a2bd",
+      "bytes": 762,
       "sha256": "a2c5d618573759482a4ee63219153f59fbf59d384d49d869ed721208677ecb95"
     },
     {
       "path": "assets/scenarios/tournament-government.json",
-      "size_bytes": 541,
-      "mode": "644",
-      "git_blob_sha1": "be59380b795f6393f6e2ecae2faffda2c56e4b0d",
+      "bytes": 541,
       "sha256": "962997c6013b1a896114d679693be540ee6195c790cdc742c7b562bdca22c4bc"
     },
     {
       "path": "references/characters-and-goals.md",
-      "size_bytes": 10117,
-      "mode": "644",
-      "git_blob_sha1": "fc86aca40a72d6bb50e0f74418e7aec201df178e",
+      "bytes": 10117,
       "sha256": "5ca1847847704a64e86f7533e1abd7fe5a1fac34ef7800b85eac8e9be4cb15f7"
     },
     {
       "path": "references/expanded-systems.md",
-      "size_bytes": 8946,
-      "mode": "644",
-      "git_blob_sha1": "033312da4a759cefc8d40d7da59d1a0e7452b43b",
-      "sha256": "8749504169348e1488f20034c74cf49fd2f86c75d5917bf0c5bc66773fcd19c2"
+      "bytes": 8922,
+      "sha256": "50711c56eea859fefb11c692df5d493c12e6667eb1e0752d333a82f14c34dea9"
+    },
+    {
+      "path": "references/large-builds.md",
+      "bytes": 3445,
+      "sha256": "7c3b91ec0265ff4aa52acdae3972af23f6bd0f58b11ee4f8f60f253b54ba458b"
     },
     {
       "path": "references/modern-society.md",
-      "size_bytes": 9488,
-      "mode": "644",
-      "git_blob_sha1": "19a446b10065a2370a654ae9cc377537e9677c84",
-      "sha256": "a5e71a3478d927f230284783dcd8147a6ed97d377bef2e690eddf4a7acff77ab"
+      "bytes": 9488,
+      "sha256": "dd64799095cabcd4d85f8672ea6662db7c05b452250f2da177f526579bc779ee"
     },
     {
       "path": "references/powers_and_mechanics.md",
-      "size_bytes": 10869,
-      "mode": "644",
-      "git_blob_sha1": "646bf6b828c774d8418957e3a4af4f22c7d5ff60",
+      "bytes": 10869,
       "sha256": "a1266e2124a3ab06f152f8ef5b144312481fc4aa25c0c171112ac5345219e936"
     },
     {
       "path": "references/warfare.md",
-      "size_bytes": 4248,
-      "mode": "644",
-      "git_blob_sha1": "79176f32df2234fe8ad829789e64ec71f3eb561c",
+      "bytes": 4248,
       "sha256": "4629d4001bfedf680e1e383897d35fae1fd3399fa3779e50252a881744dbbd5e"
     },
     {
       "path": "scripts/arena_runner.py",
-      "size_bytes": 8937,
-      "mode": "644",
-      "git_blob_sha1": "dd078f73f76244537b3e0fe24605c0ba613d10c2",
+      "bytes": 8937,
       "sha256": "75d1aa5feaa3c32e9af859ef8f939bab16a26ac61c1af6af2687ded96d2c1c48"
     },
     {
       "path": "scripts/check_modern_stability.py",
-      "size_bytes": 2134,
-      "mode": "644",
-      "git_blob_sha1": "783402af6339637ca8fe02305b7becb40df6e528",
+      "bytes": 2134,
       "sha256": "b1eaf90123bfc009f4f04208cd7168bda7983f2d9fb9468a7e1abaab9c79c3ea"
     },
     {
       "path": "scripts/check_stability.py",
-      "size_bytes": 2078,
-      "mode": "644",
-      "git_blob_sha1": "550f95f4c128fbd0a39dd442c41efc6e2ce44b6d",
+      "bytes": 2078,
       "sha256": "ccc4dc3bf1565061317f793cfa636c8be6dbb6f71358a616ba9c896b0d1b3ce3"
     },
     {
       "path": "scripts/combat_sim.py",
-      "size_bytes": 13412,
-      "mode": "644",
-      "git_blob_sha1": "b71c9f2ea0ae237c6470bf731f88cb5662daa9dc",
-      "sha256": "4cda2cc8087577e5b1a5c1f02eaeec40238db07629b7ac7a5052f6f5b5cb1c45"
+      "bytes": 14422,
+      "sha256": "bc1055135f5d523e839157a2839bbcfd76b11647e00d7beab77555e2b1e00414"
     },
     {
       "path": "scripts/expanded_powers.py",
-      "size_bytes": 14192,
-      "mode": "644",
-      "git_blob_sha1": "ea1213c0d2f730980555a9cdb0de264a9171a658",
-      "sha256": "678553ff1400d7c8d8d59ee71ea28ed6882aaaa0a9b5ac7ab3d859821fa655dc"
+      "bytes": 20766,
+      "sha256": "2670ebc92befe2992f2e123996558f759cb6ae94c6e48013393a34765aaa47cf"
     },
     {
       "path": "scripts/goal_engine.py",
-      "size_bytes": 14204,
-      "mode": "644",
-      "git_blob_sha1": "b473ece783387825ec88d09250e189d44705d3d7",
+      "bytes": 14204,
       "sha256": "7d76a50db2e75311409ff8282106b1aa8643a229d18daa308be3a72be01e7abe"
     },
     {
       "path": "scripts/government_systems.py",
-      "size_bytes": 3781,
-      "mode": "644",
-      "git_blob_sha1": "85eed04b6d4edb5b12d9b547c80dbd81c9fec9a1",
+      "bytes": 3781,
       "sha256": "cc660d0ac2222bc3aa56d0b3b6f9f311b5e25a8a252740e61a631322c68a1578"
     },
     {
       "path": "scripts/modern_institutions.py",
-      "size_bytes": 21663,
-      "mode": "644",
-      "git_blob_sha1": "c378197878a08ce6a31074903fa476e49ef140ee",
+      "bytes": 21663,
       "sha256": "dfb0fafb18b31de920433fd0e83ae0af9338a784378bc607ee46d06a99532782"
     },
     {
       "path": "scripts/modern_media.py",
-      "size_bytes": 11954,
-      "mode": "644",
-      "git_blob_sha1": "7503af8a358eadfc066b7f20c1ebd1df2ca65746",
+      "bytes": 11954,
       "sha256": "c68ae3a236ee7eb8da88e1a6844c698422ed07ad9982d8f01b48dfef16896c64"
     },
     {
       "path": "scripts/modern_society.py",
-      "size_bytes": 25843,
-      "mode": "644",
-      "git_blob_sha1": "5fc9538f0c4bb32cd66b83748779d9bd9fb131b4",
-      "sha256": "942cb184bcc92c3965e1fe1841e731ac8ba4c6a30a1f2d47c030de6272a4370f"
+      "bytes": 26179,
+      "sha256": "dff301500c4c8c77c52404b777b9a373c7390fcd1a9f26abac11919d7b85e5c6"
     },
     {
       "path": "scripts/power_effects.py",
-      "size_bytes": 26261,
-      "mode": "644",
-      "git_blob_sha1": "0a042ffb11fdb3eba499980dcee2adba337364b1",
-      "sha256": "e1c754f6cf0ce7dd2d5118c70596c708b8df336a73d4044367898897d02bdb00"
+      "bytes": 26594,
+      "sha256": "1f0680268c5f724333fba6378e803997456cdac759be3bca3ca7e742d41344c9"
     },
     {
       "path": "scripts/power_mastery.py",
-      "size_bytes": 3739,
-      "mode": "644",
-      "git_blob_sha1": "079c386c1f1231468140713939b651ad39e0ba63",
-      "sha256": "3f9d9dcef3c6e980dde5ded36b1e63297f0504a2791d62c851b2f476b2987141"
+      "bytes": 3787,
+      "sha256": "fcc94195555b46d77f7273fabb2c721d32f49af9a7acbfda97aed7e03783951e"
     },
     {
       "path": "scripts/scenario_customization.py",
-      "size_bytes": 10431,
-      "mode": "644",
-      "git_blob_sha1": "307149a0ce3f15fed83ca20047d934ddebf1885c",
-      "sha256": "65ecb2e0b09de3f8c0f69b8b238cc222fa237fe5c8169189f42757f56e8405d0"
+      "bytes": 10453,
+      "sha256": "2cbaf008be28284ad5d8af57a9b93170d50953b30f598caf60ae62dba1142cf0"
     },
     {
       "path": "scripts/simulate_world.py",
-      "size_bytes": 91624,
-      "mode": "644",
-      "git_blob_sha1": "56631292ed8a7d5b557ce3989830cd98394fd2ee",
-      "sha256": "6515d19a6bbc247e2b8ad3839a9257f6fa3e92554063b8d15404831dae829759"
+      "bytes": 91746,
+      "sha256": "d9c26aa1f3a510662eb31002cc6952332669c62441e5270aae8b0dc7ca598544"
     },
     {
       "path": "scripts/story_setup.py",
-      "size_bytes": 19939,
-      "mode": "644",
-      "git_blob_sha1": "ab59226f08c9f2c9c475e5574f8a236a11f9c495",
-      "sha256": "1619ca8edece6404883e754f79ec8d20a12410a24e3430f1c54c95528a81752e"
+      "bytes": 19961,
+      "sha256": "a53852db5bb16531924a3ffe8fa8f6a891664ac8aec5d80e1a7f1ae74255a34a"
     },
     {
       "path": "scripts/test_arena_integration.py",
-      "size_bytes": 5583,
-      "mode": "644",
-      "git_blob_sha1": "60e685cbc164f004cc1ac39e81cc816fd161cbb0",
+      "bytes": 5583,
       "sha256": "0541e63fb4b0d45592fdd360bf4c29c4845f116885f4b890522ee3bd9112cac8"
     },
     {
+      "path": "scripts/test_build_powers.py",
+      "bytes": 4507,
+      "sha256": "8c6af89f1f37aa2cbf15b4bf322ea0b673bbc01cdce9bcc6c70c32308c974e3a"
+    },
+    {
       "path": "scripts/test_catalog_integration.py",
-      "size_bytes": 2123,
-      "mode": "644",
-      "git_blob_sha1": "f61fd6f1fe931dc1cf3e122bfb5442a3a6ea54a4",
-      "sha256": "91a31105ca002647c798f20d25ebf47445fd2cbcfe182b16e85dfc7b2f44b775"
+      "bytes": 2123,
+      "sha256": "08bc7d911ce43a46fa59fb34e6088a0818de23e872297e60b0de9ecf2b5965fd"
+    },
+    {
+      "path": "scripts/test_checkpoint_boundaries.py",
+      "bytes": 1302,
+      "sha256": "3492242768d5d30e59e3d8b220954aba1377f34b79d9d679f4410619f682c6bd"
     },
     {
       "path": "scripts/test_combat_sim.py",
-      "size_bytes": 5848,
-      "mode": "644",
-      "git_blob_sha1": "a3fbcd2daad9fa0c044b2539b663f166cef8c76a",
-      "sha256": "b98731000d8d8814f3aa5f9cc1090ee9c43db9cb69f51afc2f8ea3811a3058cd"
+      "bytes": 5848,
+      "sha256": "9e857b8dbe0b5dfb8a8d3168910321c54fe9bd257d40b4c44a9628887c70d935"
     },
     {
       "path": "scripts/test_customization_integration.py",
-      "size_bytes": 3995,
-      "mode": "644",
-      "git_blob_sha1": "dc73026c3d0a960abebcbb9fa002e1a1c98627cd",
+      "bytes": 3995,
       "sha256": "478a7223be25e6b3f089b16467e6edb999bf0690b78560b8555202c5c0f40379"
     },
     {
       "path": "scripts/test_expanded_powers.py",
-      "size_bytes": 9793,
-      "mode": "644",
-      "git_blob_sha1": "62130650f745f7965bea6b0da6b1905a46b7fe91",
-      "sha256": "2d5784a6105d127824a098894eca5b35b4fdf9060d6472f0f2c26a750ea564b4"
+      "bytes": 10060,
+      "sha256": "8d1cd4d1490cb82d09096a4292edcfb09cb1a0e69e4e6e940c42c3a68c866aba"
     },
     {
       "path": "scripts/test_goal_engine.py",
-      "size_bytes": 6536,
-      "mode": "644",
-      "git_blob_sha1": "c9a0fe35532272d75d4c3756c3d1af7dd830eec3",
+      "bytes": 6536,
       "sha256": "a46bc6dc43ece2d50e5e1ef7602af8fffa9da194e24709546d881374b98b62dc"
     },
     {
       "path": "scripts/test_goal_integration.py",
-      "size_bytes": 2617,
-      "mode": "644",
-      "git_blob_sha1": "dafdde13150c4b78481c7043335f024f6aa79a40",
+      "bytes": 2617,
       "sha256": "203fa97dfbd890c9c51404bd27ad79ab95a84e41984b94647ed53c2f4ad094c3"
     },
     {
       "path": "scripts/test_government_systems.py",
-      "size_bytes": 6397,
-      "mode": "644",
-      "git_blob_sha1": "d4a13ffa2259976346aefb5b53a0dd5c9858e791",
+      "bytes": 6397,
       "sha256": "cde2873bbd890e1f82cebee0bff462bcba420c60c7c16c0be0deea67c33002b9"
     },
     {
+      "path": "scripts/test_large_repertoires.py",
+      "bytes": 3389,
+      "sha256": "60b103e30a80c484bdd88a113578e3472ba229477935139c3747a98bd63f90a5"
+    },
+    {
       "path": "scripts/test_modern_institutions.py",
-      "size_bytes": 11251,
-      "mode": "644",
-      "git_blob_sha1": "cb2f6d4bd824374df4e6c232f73f1b1b888f02d9",
+      "bytes": 11251,
       "sha256": "5084e887c97c58185b04dc5dbc2b6115f7bbff1882412f62d82534d23da5a93c"
     },
     {
       "path": "scripts/test_modern_media.py",
-      "size_bytes": 3013,
-      "mode": "644",
-      "git_blob_sha1": "a96c65cdc653eb3d77266ed1266d5333f8428ab3",
+      "bytes": 3013,
       "sha256": "280784752f6e01737a9345e18ddf9aeafed03f2e739de402d8b570a0e7f84c6a"
     },
     {
       "path": "scripts/test_modern_society.py",
-      "size_bytes": 8272,
-      "mode": "644",
-      "git_blob_sha1": "b8a9309522d11921da981ba18bb703fe3ba86548",
+      "bytes": 8272,
       "sha256": "95cd8ebf869740e76221ac619681a90449a77c267d664e0657628b09de2d063c"
     },
     {
       "path": "scripts/test_power_effects.py",
-      "size_bytes": 10553,
-      "mode": "644",
-      "git_blob_sha1": "ffcca0a85954d5c498a301c24b86740e8b65249d",
+      "bytes": 10553,
       "sha256": "192e5220077fe157cb5abd9cb4aef842bbe880942a739198632aa4d7b00ad6a6"
     },
     {
       "path": "scripts/test_power_mastery.py",
-      "size_bytes": 5034,
-      "mode": "644",
-      "git_blob_sha1": "130770e5e87834f8d1bd7c4e5857de29fb92b82b",
+      "bytes": 5034,
       "sha256": "e1fc41b1d825e4006ccbf225ec677dcb790858eff7053e57dee8146d8fdca546"
     },
     {
       "path": "scripts/test_power_mastery_world.py",
-      "size_bytes": 1937,
-      "mode": "644",
-      "git_blob_sha1": "4563aba1782219a815be2816e03cdff6d25e325b",
+      "bytes": 1937,
       "sha256": "d768e5cab3893c7fbe2799186f44ab9b79785447716589e21ae220380c29ca7b"
     },
     {
       "path": "scripts/test_simulate_world.py",
-      "size_bytes": 7401,
-      "mode": "644",
-      "git_blob_sha1": "12ce11c808f355a0ac52c4451a4ce41fe4abe5ae",
+      "bytes": 7401,
       "sha256": "4c24b07eaad52b36cec325f8ef873e90f2168890b60b59abc9b3847c150dc9ff"
     },
     {
       "path": "scripts/test_story_setup.py",
-      "size_bytes": 5285,
-      "mode": "644",
-      "git_blob_sha1": "53b85e658ce3f420497be68eb34945d90e656566",
+      "bytes": 5285,
       "sha256": "07b9a37faa58ec7dcacc4f280cc21a305c03a182aa61e7cb2e927ddac723271c"
     },
     {
       "path": "scripts/test_war_system.py",
-      "size_bytes": 4693,
-      "mode": "644",
-      "git_blob_sha1": "c453ff11b92f85144b520ed65c9959118ca095a4",
-      "sha256": "69bd740b8b81aaf3612f79925953a2806d99aeba33c4e1c6149869a23f5ebf36"
+      "bytes": 5049,
+      "sha256": "289b9741532cefb38643e04d85a673b0a772e5c7704cc71f0fb371b3ed73ec2a"
     },
     {
       "path": "scripts/war_system.py",
-      "size_bytes": 9388,
-      "mode": "644",
-      "git_blob_sha1": "5295ab8c9de344af426b3fbb50899dad94df213f",
-      "sha256": "c0f6b626dc5fbece51607c96a4eb0df84a83450683dbe4b8546eba8ac3b0b827"
+      "bytes": 9443,
+      "sha256": "216fcd55fcea9b0468ed03c7b399848e0f2d6e1783e7f78ad68908147bf6f595"
     }
   ]
 }

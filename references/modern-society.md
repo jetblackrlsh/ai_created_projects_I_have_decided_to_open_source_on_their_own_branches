@@ -16,7 +16,7 @@ The level used for an action is the level before that action's experience award.
 
 ## Run a modern world
 
-Use --mode modern, default horizon 100 years and 300 founders, with all 53 powers eligible. Example:
+Use --mode modern, default horizon 100 years and 300 founders, with all 62 powers eligible. Example:
 
 python3 scripts/simulate_world.py --mode modern --runs 100 --years 100 --power-rate 0.20 --output-json modern.json --output-report modern.md
 

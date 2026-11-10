@@ -7,7 +7,7 @@ Arena mechanics are pure; only this adapter commits bounded declared consequence
 from copy import deepcopy
 import json
 import math
-from expanded_powers import canonical_power, powers_of, set_powers
+from expanded_powers import canonical_power, powers_of, set_powers, MAX_POWERS
 from combat_sim import simulate_fight, simulate_tournament
 from scenario_customization import validate_custom_character, validate_world_settings, apply_character, apply_relationships
 from goal_engine import validate_goals, resolve_goals, plan_goals, evaluate_goals
@@ -49,7 +49,7 @@ def validate_scenario(raw,catalog):
             ids.add(c['id'])
         if 'name' in c and (not isinstance(c['name'],str) or not c['name'].strip() or len(c['name'])>120):raise ValueError('Invalid character name')
         powers=c.get('powers',[])
-        if not isinstance(powers,list) or len(powers)>3 or any(not isinstance(p,str) for p in powers):raise ValueError('Use at most3 named powers per character')
+        if not isinstance(powers,list) or len(powers)>MAX_POWERS or any(not isinstance(p,str) for p in powers):raise ValueError('Use at most64 named powers per character')
         c['powers']=[canonical_power(p) for p in powers]
         if len(set(c['powers']))!=len(c['powers']) or any(p not in catalog for p in c['powers']):raise ValueError('Unknown or duplicate character power')
         if 'age' in c:

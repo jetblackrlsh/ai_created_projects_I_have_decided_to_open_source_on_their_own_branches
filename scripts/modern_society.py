@@ -264,6 +264,10 @@ def run_modern(seed, years, starting_pop, power_rate, mutation_rate, power_tree,
     powers = WorldPowers(agents, rng, resume_state.get('powers') if resume_state else None)
     if not resume_state:apply_world(scenario,powers,society=state,counter_tech=state['counter_tech'])
     if state.get('leadership_system','elections') != 'elections':state['regime']=state['leadership_system']+'_rule'
+    # Year-zero saves must have the same canonical initial state as uninterrupted runs.
+    powers.year = current_year
+    powers.observe_deaths()
+    update_rankings(state, agents)
     terminal = resume_state.get('terminal', False) if resume_state else False
     intervention_year = current_year + 1
     if policy_override:
@@ -359,6 +363,9 @@ def run_modern(seed, years, starting_pop, power_rate, mutation_rate, power_tree,
         chronicle.extend(tick_warfare(warfare,agents,rng,year))
         chronicle.extend(tick_story(story,agents,rng,year,society=state,mode='modern'))
         state['year']=year
+        # Canonical end-of-year state, independent of whether this is a checkpoint.
+        powers.observe_deaths()
+        update_rankings(state,agents)
     powers.observe_deaths()
     if story is not None and story['last_tick']<current_year:chronicle.extend(tick_story(story,agents,rng,current_year,society=state,mode='modern'))
     living=[a for a in agents.values() if a['alive']]

@@ -2,7 +2,7 @@
 
 These are original bounded game mechanics inspired by narrative possibilities, not a reconstruction or verification of another creator's hidden simulator. No real people, accounts, phones, courts or internet services are involved.
 
-## 24 added powers (53 distinct catalog entries total)
+## Original 24 added powers (53 entries before the nine v4.4 build extensions)
 
 The original 29 actions remain. The added concrete actions are:
 
@@ -33,7 +33,7 @@ The original 29 actions remain. The added concrete actions are:
 
 Luck is an alias for Fortune, not a duplicate power. Infinite Speed is represented by the existing bounded Speed ability; no infinities enter arithmetic. Time Rewind reverses a bounded recent injury, not the complete world's history. Malicious Rot can seed a real modeled infection; Suppression can injure a genuinely airborne Flight holder. Perfect Memory also earns bounded knowledge that improves job selection. Invulnerability is a bounded protective ward, not universal immunity to every possible hazard. Context and resource/energy limits still apply. These powers are original interpretations of the named narrative abilities; where the transcript gives only a name, the concrete action and its limits are our design. Exact behavior is in scripts/expanded_powers.py and --list-powers.
 
-People may inherit up to three powers. Mastery currently represents the individual's overall practiced control of their repertoire, not a separate level tree for every held ability. The normal 78% inheritance gate remains; additional parental abilities have independent 35% inheritance opportunities, with configured mutation. Combined repertoires such as Giant Size + Stone Skin or Invulnerability affect actual actions and defensive traits. Actions select one held ability at a time and use the same bounded annual budget; combinations do not multiply unlimited turns. Primary power stays available for legacy interfaces, while powers stores the repertoire. Siphon permanently removes a transferable ability from its target and adds it to the thief, respecting capacity and excluding recursive Siphon theft. Acquisition provenance is saved.
+People may inherit up to 64 powers. Mastery is tracked independently for each held ability; only the selected ability earns practice. The normal 78% inheritance gate remains; additional parental abilities have independent 35% inheritance opportunities, with configured mutation. Combined repertoires such as Giant Size + Stone Skin or Invulnerability affect actual actions and defensive traits. Actions select one held ability at a time and use the same bounded annual budget; combinations do not multiply unlimited turns. Primary power stays available for legacy interfaces, while powers stores the repertoire. Siphon permanently removes a transferable ability from its target and adds it to the thief, respecting capacity and excluding recursive Siphon theft. Acquisition provenance is saved.
 
 ## Mastery, growth and disuse
 

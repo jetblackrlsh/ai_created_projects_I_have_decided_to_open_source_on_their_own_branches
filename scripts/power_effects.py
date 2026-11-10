@@ -212,7 +212,7 @@ class WorldPowers:
         return (a['alive'] and a.get('power') in POWER_EFFECTS and
                 a.get('power_ready_year', 0) <= self.year and a.get('energy', 0) >= 15 and
                 a.get('frozen_until', 0) < self.year and a.get('stunned_until', 0) < self.year and
-                a.get('stasis_until', 0) < self.year and a.get('frightened_until', 0) < self.year and
+                a.get('stasis_until', 0) < self.year and (a.get('frightened_until', 0) < self.year or a.get('power') == 'Resolve' or a.get('resolute_until', 0) >= self.year) and
                 a.get('suppressed_until', 0) < self.year and
                 a.get('quarantined_until', 0) < self.year and a.get('hospitalized_until', 0) < self.year and
                 (a.get('imprisoned_until', 0) <= self.year or confinement_escape))
@@ -244,7 +244,7 @@ class WorldPowers:
         power = a['power']
         level = level_for(a,power)
         potency = 1 + .1 * level
-        cost = max(15, (60 if power in ('Necromancy', 'Cloning') else 25) - 2 * level)
+        cost = max(15, (60 if power in ('Necromancy', 'Cloning', 'Shadow Clones') else 25) - 2 * level)
         if a['energy'] < cost:
             return False
         target = self.target(a)
@@ -290,7 +290,7 @@ class WorldPowers:
             elif power == 'Illusions':
                 target['confused_until'] = self.year + 2
                 changed, message = True, f"trapped {target['name']} in combat-decoy illusions."
-            elif power == 'Shadow':
+            elif power == 'Shadow' and target.get('resolute_until', 0) < self.year:
                 target['frightened_until'] = self.year + 1
                 changed, message = True, f"terrified {target['name']} into hiding."
             elif power == 'Mind Control':
@@ -441,7 +441,7 @@ class WorldPowers:
                 changed, message = True, f"resurrected {patient['name']}; their identity and family survived death."
         if changed:
             a['energy'] -= cost
-            a['power_ready_year'] = self.year + max(2, (8 if power in ('Cloning', 'Necromancy') else 3) - level // 2)
+            a['power_ready_year'] = self.year + max(2, (8 if power in ('Cloning', 'Shadow Clones', 'Necromancy') else 3) - level // 2)
             award_use(a,power,self.year)
             self.activated_this_year.add(a['id'])
             self.state['usage'][power] = self.state['usage'].get(power, 0) + 1
@@ -450,10 +450,10 @@ class WorldPowers:
 
     def combat_multiplier(self, a):
         self.setup_agent(a)
-        if any(a.get(k, 0) >= self.year for k in ('frozen_until', 'stunned_until', 'stasis_until', 'frightened_until')):
+        if any(a.get(k, 0) >= self.year for k in ('frozen_until', 'stunned_until', 'stasis_until')) or (a.get('frightened_until', 0) >= self.year and a.get('resolute_until', 0) < self.year):
             return .2
         result = max(.2, 1 - a['injury'] * .65)
         for flag, factor in (('disarmed_until', .6), ('confused_until', .65), ('exposed_until', .8),
-                             ('hasted_until', 1.25), ('lucky_until', 1.15), ('calmed_until', .85), ('hidden_until', 1.2), ('armored_until', 1.2)):
-            if a.get(flag, 0) >= self.year: result *= factor
+                             ('tactical_until', 1.15), ('hasted_until', 1.25), ('lucky_until', 1.15), ('calmed_until', .85), ('hidden_until', 1.2), ('armored_until', 1.2)):
+            if a.get(flag, 0) >= self.year and not (flag == 'confused_until' and a.get('resolute_until', 0) >= self.year): result *= factor
         return result

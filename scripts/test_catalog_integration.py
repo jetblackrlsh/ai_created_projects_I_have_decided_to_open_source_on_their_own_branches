@@ -14,7 +14,7 @@ class ChooseSiphon(random.Random):
 
 class CatalogIntegrationTests(unittest.TestCase):
     def test_catalog_is_complete_and_alias_not_duplicated(self):
-        self.assertEqual(len(engine.POWER_TREE),53)
+        self.assertEqual(len(engine.POWER_TREE),62)
         self.assertEqual(set(engine.POWER_TREE),set(POWER_EFFECTS))
         self.assertNotIn('Luck',engine.POWER_TREE)
         self.assertIn('Fortune',engine.POWER_TREE)

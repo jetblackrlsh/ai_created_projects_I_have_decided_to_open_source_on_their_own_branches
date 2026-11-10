@@ -11,7 +11,7 @@ def fighter(id,power=None,**kw):
 class CombatTests(unittest.TestCase):
     def test_catalog(self):
         self.assertEqual(set(POWER_PROFILES),set(POWER_TREE))
-        self.assertEqual(len(POWER_PROFILES),53)
+        self.assertEqual(len(POWER_PROFILES),62)
 
     def test_every_power_changes_state(self):
         for name in POWER_PROFILES:

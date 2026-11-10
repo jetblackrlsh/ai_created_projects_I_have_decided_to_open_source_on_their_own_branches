@@ -5,16 +5,32 @@ eligibility, ward interception, energy, cooldown, XP and event accounting. Expir
 conditions are tested by year rather than deleted, preserving checkpoint replay.
 """
 
-MAX_POWERS = 3
+MAX_POWERS = 64
+INHERITED_POWER_LIMIT = 3
 RESOURCE_CAP = 10000.0
-POWER_ALIASES = {'Luck': 'Fortune'}
+POWER_ALIASES = {'Luck': 'Fortune', 'Super Strength': 'Strength',
+    'Super Durability': 'Durability', 'Divine Lightning': 'Lightning',
+    'Time Manipulation': 'Time Slowing', 'Time Manipulation (via Lightning)': 'Time Slowing', 'Rocket Flight': 'Flight',
+    'Shadow Energy Blasts': 'Shadow Blasts', 'Shadow Blending': 'Invisibility',
+    'Master Strategist': 'Tactical Analysis', 'Combat Virtue': 'Resolve',
+    'Cybernetic Enhancements': 'Cybernetics', 'Space Operations': 'Space Adaptation',
+    'Telepathic Comms': 'Telepathic Link'}
 HOSTILE_EXPANDED = frozenset({'Time Stop', 'Steam', 'Power Suppression', 'Charm',
-    'Hurricane Breath', 'Rot', 'Siphon', 'Sparks', 'Starlight'})
+    'Hurricane Breath', 'Rot', 'Siphon', 'Sparks', 'Starlight', 'Shadow Blasts', 'Fear Influence'})
 
 
 def canonical_power(name):
     return POWER_ALIASES.get(name, name)
 EXPANDED_EFFECTS = {
+    'Shadow Blasts': 'Injure a hostile person with a projected shadow bolt; no automatic fear or invisibility.',
+    'Fear Influence': 'Frighten a hostile person, disrupting their next eligible actions without changing allegiance.',
+    'Shadow Clones': 'Create a finite-lived non-reproducing duplicate with the held repertoire; duplicates cannot clone.',
+    'Cybernetics': 'Spend material to calibrate augmented armor and speed, repair systems and salvage components.',
+    'Analytical Vision': 'Scan a living target, record their current power signatures and expose concealment and tactics.',
+    'Space Adaptation': 'Spend supplies on a bounded off-world salvage expedition, returning samples and environmental protection.',
+    'Tactical Analysis': 'Prepare a tactical advantage for an ally and expose opposing tactics.',
+    'Resolve': 'Recover from fear/confusion and temporarily resist their disruptive effects; not proof of moral goodness.',
+    'Telepathic Link': 'Coordinate with a living ally through a recorded mental link and grant a shared tactical advantage.',
     'Psychometry': 'Read an object trace to reveal an existing recorded secret.',
     'Fortune': 'Grant an ally a bounded lucky combat opportunity.',
     'Bubbles': 'Enclose an ally in a protective rescue bubble.',
@@ -35,7 +51,7 @@ EXPANDED_EFFECTS = {
     'Shrinking': 'Shrink to escape confinement and conceal the caster.',
     'Hurricane Breath': 'Disarm a hostile person and clear salvageable debris.',
     'Rot': 'Inflict a persistent decay injury on a hostile person.',
-    'Siphon': 'Permanently transfer one power from a hostile person; capacity is three.',
+    'Siphon': 'Permanently transfer one power from a hostile person; capacity is 64.',
     'Adrenaline': 'Boost initiative and recover a bounded amount of usable energy.',
     'Smoke': 'Conceal the caster and confuse a hostile person.',
     'Sparks': 'Deliver a small electrical injury and stun a hostile person.',
@@ -60,7 +76,9 @@ def powers_of(agent):
             value = canonical_power(value)
         if isinstance(value, str) and value and value not in result:
             result.append(value)
-    return result[:MAX_POWERS]
+    if len(result) > MAX_POWERS:
+        raise ValueError("Repertoire exceeds 64 powers")
+    return result
 
 
 def set_powers(agent, names):
@@ -70,8 +88,8 @@ def set_powers(agent, names):
             name = canonical_power(name)
         if isinstance(name, str) and name and name not in unique:
             unique.append(name)
-        if len(unique) == MAX_POWERS:
-            break
+    if len(unique) > MAX_POWERS:
+        raise ValueError("Repertoire exceeds 64 powers")
     agent['powers'] = unique
     agent['power'] = unique[0] if unique else None
     if 'power_mastery' in agent:
@@ -99,7 +117,7 @@ Siphoned powers are ordinary permanent powers and can therefore be inherited.
     rng.shuffle(others)
     selected = [primary]
     for power in others:
-        if len(selected) >= MAX_POWERS:
+        if len(selected) >= INHERITED_POWER_LIMIT:
             break
         if rng.random() < .35:
             selected.append(power)
@@ -137,9 +155,84 @@ Siphon changes primary identities; wrappers must not restore a stolen primary.
         return True
 
     hostile = {'Time Stop', 'Steam', 'Power Suppression', 'Charm',
-               'Hurricane Breath', 'Rot', 'Siphon', 'Sparks'}
+               'Hurricane Breath', 'Rot', 'Siphon', 'Sparks', 'Shadow Blasts', 'Fear Influence'}
     if p in hostile and (not target or not target.get('alive', False)):
         return False, 'No eligible hostile target.'
+    if p == 'Shadow Blasts':
+        return c.damage(target, .23 * potency, 'shadow blast'), f"projected a shadow bolt at {target['name']}."
+    if p == 'Fear Influence':
+        if target.get('resolute_until', 0) >= year:
+            return False, 'Target resisted fear through active resolve.'
+        return flag(target, 'frightened_until', year + 1), f"frightened {target['name']}, disrupting actions temporarily."
+    if p == 'Shadow Clones':
+        living_count = sum(a['alive'] for a in c.agents.values())
+        clones = sum(a['alive'] and a.get('clone_of') is not None for a in c.agents.values())
+        if caster.get('clone_of') is not None or clones >= max(1, living_count // 20) or c.r.get('food', 0) < 5 or not c.create_agent:
+            return False, 'No cloning capacity, food, or eligible original.'
+        clone = c.create_agent(year, age=caster['age'], power=p, last_name=caster['last_name'])
+        clone['name'] = caster['name'] + ' (shadow clone ' + str(clone['id']) + ')'
+        clone['clone_of'], clone['clone_expires'] = caster['id'], year + 3
+        clone['royal_blood'] = False
+        clone['role'] = caster.get('role', 'citizen')
+        for key in ('faction', 'ally_ids', 'enemy_ids'):
+            if key in caster:
+                from copy import deepcopy
+                clone[key] = deepcopy(caster[key])
+        set_powers(clone, list(caster.get('powers') or powers_of(caster)))
+        c.setup_agent(clone)
+        c.r['food'] -= 5
+        c.state['clones_created'] += 1
+        return True, f"created {clone['name']} with the held repertoire and novice independent mastery; it expires within three years."
+    if p == 'Cybernetics':
+        if c.r.get('materials', 0) < 3:
+            return False, 'Insufficient replacement components.'
+        resource('materials', -3)
+        changed = flag(caster, 'armored_until', year + 2)
+        flag(caster, 'hasted_until', year + 1)
+        caster['injury'] = max(0.0, caster.get('injury', 0) - .05 * potency)
+        caster['system_interfaces'] = min(10000, caster.get('system_interfaces', 0) + 1)
+        resource('infrastructure', .2 * potency)
+        return True, 'spent three material calibrating augmented armor/speed, repairing damage and interfacing with infrastructure.'
+    if p == 'Analytical Vision':
+        subject = target or next((a for a in allies if a['id'] != caster['id']), None)
+        if not subject or not subject.get('alive'):
+            return False, 'No living subject to scan.'
+        caster['last_scan'] = {'target_id': subject['id'], 'year': year,
+                              'powers': powers_of(subject), 'injury': subject.get('injury', 0)}
+        subject['hidden_until'] = 0
+        flag(subject, 'exposed_until', year + 2)
+        return True, f"scanned {subject['name']}, recording power signatures and exposing concealment and tactics."
+    if p == 'Space Adaptation':
+        if c.r.get('food', 0) < 2 or c.r.get('materials', 0) < 1:
+            return False, 'Insufficient expedition supplies.'
+        resource('food', -2)
+        resource('materials', -1)
+        resource('materials', 4 * potency)
+        caster['space_missions'] = min(10000, caster.get('space_missions', 0) + 1)
+        caster['last_space_mission'] = {'year': year, 'samples': 4 * potency, 'returned': True}
+        flag(caster, 'sheltered_until', year + 2)
+        return True, 'completed an abstract off-world salvage expedition and returned with samples; gained environmental protection.'
+    if p == 'Tactical Analysis':
+        changed = flag(patient, 'tactical_until', year + 2)
+        if target:
+            changed = flag(target, 'exposed_until', year + 2) or changed
+        return changed, f"prepared tactics for {patient['name']} and assessed the opposition."
+    if p == 'Resolve':
+        changed = any(caster.get(k, 0) >= year for k in ('frightened_until', 'confused_until'))
+        caster['frightened_until'] = caster['confused_until'] = 0
+        changed = flag(caster, 'resolute_until', year + 2) or changed
+        return changed, 'regained composure and fortified resolve against fear and confusion.'
+    if p == 'Telepathic Link':
+        partner = next((a for a in allies if a['id'] != caster['id']), None)
+        if not partner:
+            return False, 'No living ally available for mental communication.'
+        caster['mental_link'] = {'partner_id': partner['id'], 'until': year + 2}
+        partner['mental_link'] = {'partner_id': caster['id'], 'until': year + 2}
+        flag(caster, 'tactical_until', year + 2)
+        flag(partner, 'tactical_until', year + 2)
+        if target:
+            flag(target, 'exposed_until', year + 1)
+        return True, f"shared tactical information with {partner['name']} through a temporary mental link."
     if p == 'Psychometry':
         revealed = c.state.setdefault('revealed_events', [])
         secrets = [(i, event) for i, event in enumerate(c.chronicle)
