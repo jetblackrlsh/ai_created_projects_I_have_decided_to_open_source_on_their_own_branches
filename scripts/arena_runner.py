@@ -1,3 +1,4 @@
+from power_mastery import configure_mastery
 """CLI adapter for pure arena experiments and explicit saved-world consequences."""
 from collections import Counter
 from copy import deepcopy
@@ -35,6 +36,8 @@ def roster_for(scenario,loaded):
                      'power':c['powers'][0] if c['powers'] else None,'alive':True,
                      'energy':100,'mastery_level':c.get('mastery_level',0),'age':c.get('age',25)}
         apply_character(agents[aid],c,0)
+        levels={p:c.get('mastery_level',0) for p in c['powers']};levels.update(c.get('power_mastery',{}))
+        configure_mastery(agents[aid],levels,0)
     return agents,keys
 
 

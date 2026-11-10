@@ -5,7 +5,7 @@ description: Run seeded superpower worlds, customizable goal-driven main charact
 
 # Superpower World Sim
 
-Run the bundled Python 3 standard-library v4.1 engine. Every one of the 53 defined powers has a concrete state-changing action, with energy, cooldowns, conditions and limits. Successful use earns mastery that improves efficiency and supported effects; disuse can decay it. Repertoires can combine up to three powers, and Siphon can permanently transfer one. Use its measured results as creative simulation outputs, not scientific predictions. Require no paid API, external service, or graphical application.
+Run the bundled Python 3 standard-library v4.2 engine. Every one of the 53 defined powers has a concrete state-changing action, with energy, cooldowns, conditions and limits. Successful use earns mastery separately for the ability used; its own mastery improves efficiency and effects, and each ability rusts independently. Repertoires can combine up to three powers, and Siphon can permanently transfer one. Use its measured results as creative simulation outputs, not scientific predictions. Require no paid API, external service, or graphical application.
 
 ## Configure an experiment
 
@@ -32,6 +32,12 @@ python3 <skill_dir>/scripts/simulate_world.py \
 Customize `--pop`, `--power-rate`, `--mutation-rate`, `--wheel-interval`, `--tribe-a`, `--tribe-b`, and `--wall-year`. Set `--select-world auto` to feature the highest-drama run, or use a 1-based world index. Seeds advance by 97 across a batch. Runtime depends on population, years, runs and hardware; do not promise a fixed completion time.
 
 Verify nonempty `aggregate_stats` and `featured_world` in JSON, and a readable Markdown report. Both outputs include the featured world's full major-event chronicle. The JSON additionally includes agents and family relationships in evolution, monarch, wheel and modern modes; all modes include modeled food reserves (individual worlds under world_resources; versus under food_reserves). Report them as abstract stock units, not kilograms or precise nutrition. Only the featured world's detailed history is exported, not every world in the batch.
+
+## Configure separate power mastery
+
+Characters support starting `power_mastery` levels, for example `{"Fire":4,"Healing":1}`, restricted to their held powers and integer levels0..5. The old starting `mastery_level` is shorthand for all configured abilities, with individual entries overriding it. Use `{"type":"reach_mastery","power":"Healing","value":3}` for a named goal; without `power`, the goal measures best held mastery. Each power has independent XP/use/rust records in output and main-character timelines. New powers begin novice; Siphon does not transfer another person’s training. Lost powers retain archived personal experience but do not affect current rank. Ranking’s mastery component uses the best CURRENT ability, not an average or additive total. Compatibility scalar fields are summaries, not editable shared training pools.
+
+Old shared-mastery saves migrate once by preserving their prior XP/level on each power already held. State explicitly records this policy because historical per-power attribution was not saved. Do not describe the copied credit as measured historic use. Pure arenas grant no XP; explicitly committed bouts train only held powers actually used, once each. Arena potency uses the selected ability’s mastery; copied techniques use the caster’s Siphon mastery. Read README's per-power-build section for precise limits and migration behavior.
 
 ## Select leadership rules
 

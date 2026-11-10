@@ -4,6 +4,7 @@ All randomness comes from the world's Random instance. JSON-safe state is owned 
 WorldPowers; the simulation retains agents, identity, family and succession rules.
 """
 from copy import deepcopy
+from power_mastery import ensure_mastery, level_for, award_use, decay_mastery
 from expanded_powers import EXPANDED_EFFECTS, HOSTILE_EXPANDED, activate_expanded, powers_of, set_powers, has_power
 
 POWER_EFFECTS = {
@@ -68,6 +69,7 @@ class WorldPowers:
         self.living = []
 
     def setup_agent(self, a):
+        ensure_mastery(a,getattr(self,'year',0))
         a.setdefault('power_xp', 0)
         a.setdefault('mastery_level', min(5, a['power_xp'] // 10))
         a.setdefault('power_uses_total', a['power_xp'])
@@ -114,11 +116,8 @@ class WorldPowers:
         for a in self.living:
             self.setup_agent(a)
             a['energy'] = min(100.0, a['energy'] + 18.0)
-            inactive = year - a.get('last_power_use_year', year)
-            if inactive >= 10 and (inactive - 10) % 5 == 0 and a.get('power_xp', 0) > 0:
-                a['power_xp'] = max(0, a['power_xp'] - 5)
-                a['mastery_level'] = min(5, a['power_xp'] // 10)
-                self.emit(a, 'lost practice mastery after prolonged disuse.')
+            for rusty_power in decay_mastery(a,year):
+                self.emit(a, f'lost practice mastery in {rusty_power} after prolonged disuse.')
             if a.get('imprisoned_until', 0) > year and any('Collar' in t or 'Dampen' in t or 'Suppress' in t for t in counter_tech):
                 a['suppressed_until'] = year
             if a.get('controlled_until', 0) < year and a.get('controlled_by') is not None:
@@ -243,7 +242,7 @@ class WorldPowers:
         if not self.can_act(a) or a['id'] in self.activated_this_year:
             return False
         power = a['power']
-        level = min(5, a.get('mastery_level', 0))
+        level = level_for(a,power)
         potency = 1 + .1 * level
         cost = max(15, (60 if power in ('Necromancy', 'Cloning') else 25) - 2 * level)
         if a['energy'] < cost:
@@ -443,10 +442,7 @@ class WorldPowers:
         if changed:
             a['energy'] -= cost
             a['power_ready_year'] = self.year + max(2, (8 if power in ('Cloning', 'Necromancy') else 3) - level // 2)
-            a['power_xp'] += 1
-            a['power_uses_total'] += 1
-            a['last_power_use_year'] = self.year
-            a['mastery_level'] = min(5, a['power_xp'] // 10)
+            award_use(a,power,self.year)
             self.activated_this_year.add(a['id'])
             self.state['usage'][power] = self.state['usage'].get(power, 0) + 1
             self.emit(a, message, secret=power in ('Shadow', 'Invisibility', 'Mind Control'))

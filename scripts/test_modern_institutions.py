@@ -81,7 +81,7 @@ class InstitutionTests(unittest.TestCase):
         self.assertEqual(a[1]['imprisoned_until'], 0)
         self.assertGreater(a[1]['community_service'], 0)
         self.assertGreater(a[1]['safety_compliance'], 0)
-        self.assertEqual(a[1]['power_xp'], 0)
+        self.assertEqual(a[1]['power_xp'], 10)  # Legacy fixture starts at mastery1; diversion grants no extra XP.
 
     def test_hospital_capacity_triage_medicine_and_burnout(self):
         a, s, p = world(24)

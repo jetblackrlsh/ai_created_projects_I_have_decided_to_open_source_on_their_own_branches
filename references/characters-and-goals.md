@@ -23,7 +23,7 @@ Limits: **64 configured characters, 16 tracked mains, 8 goals per character, 3 c
 Useful character fields:
 
 - Identity/context: `key`, `id`, `name`, `last_name`, `description`, `faction`.
-- Powers and biology: `powers`, `age`, `mastery_level`, `injury`, `energy`, `alive`.
+- Powers and biology: `powers`, `age`, `mastery_level` (all-power starting shorthand), `power_mastery` (per-power starting levels), `injury`, `energy`, `alive`.
 - Personality: `traits` containing ambition, compassion, greed, curiosity and charisma (0..1); `dream` family/freedom/knowledge/order/fame; `motive` money/streets/fame/revenge/country.
 - Social starting state: `role` citizen/hero/villain; `wealth`, `job`, `income`, `has_phone`, `reputation`, `followers`, `power_license`, `party` pluralist/security/populist.
 - Conditions: `healer_burnout`, `imprisoned_years`, `hospitalized_years`, `quarantined_years`, `infected_years`.
@@ -84,3 +84,7 @@ World rivalry and scheduled tournament settings use `encounters.commit_consequen
 Committed bout consequences are bounded practice, fatigue, bruising and reputation, with recorded before/after state. Tournament participants receive consequences per bout, so a champion may accrue more fatigue than a first-round loser. Arena vigor is not direct world health. Arena Siphon is a bout-only copied technique; it does not steal a world power. Arena Necromancy uses a declared spectral sparring construct, not a resurrection. Arena results do not automatically kill, age, imprison or permanently transfer powers.
 
 Separate annual world mechanics can still be dangerous. Nonlethal arena rules do not make the entire world nonlethal.
+
+## Separate power progression
+
+Use `power_mastery: {"Fire":4,"Healing":1}` on a founder, and optionally name `power` on a `reach_mastery` goal. Independent XP and last-use records determine each power’s level and rust. Best currently held level supplies the compatibility scalar and public rank component; it never gives a novice secondary ability expert effects. See README for acquisition, archived lost powers, explicit legacy migration and committed-practice rules.

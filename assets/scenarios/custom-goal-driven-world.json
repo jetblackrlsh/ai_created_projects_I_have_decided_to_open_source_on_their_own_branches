@@ -1,48 +1,199 @@
 {
   "version": 1,
-  "settings": {"mode": "modern", "years": 30, "pop": 80, "seed": 2088, "power_rate": 0.65, "mutation_rate": 0.08},
+  "settings": {
+    "mode": "modern",
+    "years": 30,
+    "pop": 80,
+    "seed": 2088,
+    "power_rate": 0.65,
+    "mutation_rate": 0.08
+  },
   "world": {
-    "resources": {"food": 400, "medicine": 80, "materials": 200, "infrastructure": 35},
-    "laws": {"free_press": true, "ranking_app": true, "civil_rights_act": true},
-    "society": {"freedom": 72, "integrity": 68, "press_freedom": 80, "regime": "democracy"}
+    "resources": {
+      "food": 400,
+      "medicine": 80,
+      "materials": 200,
+      "infrastructure": 35
+    },
+    "laws": {
+      "free_press": true,
+      "ranking_app": true,
+      "civil_rights_act": true
+    },
+    "society": {
+      "freedom": 72,
+      "integrity": 68,
+      "press_freedom": 80,
+      "regime": "democracy"
+    }
   },
   "characters": [
     {
-      "key": "mira", "name": "Mira Vale", "age": 24,
+      "key": "mira",
+      "name": "Mira Vale",
+      "age": 24,
       "description": "An ambitious rescue medic who wants public recognition for useful work, not manufactured heroics.",
-      "powers": ["Healing", "Flight"], "mastery_level": 1, "main_character": true,
-      "dream": "fame", "motive": "fame", "role": "hero", "job": "medic", "power_license": true,
-      "wealth": 35, "reputation": 45, "followers": 20, "has_phone": true,
-      "traits": {"ambition": 0.75, "compassion": 0.85, "greed": 0.15, "curiosity": 0.65, "charisma": 0.7},
+      "powers": [
+        "Healing",
+        "Flight"
+      ],
+      "mastery_level": 1,
+      "main_character": true,
+      "dream": "fame",
+      "motive": "fame",
+      "role": "hero",
+      "job": "medic",
+      "power_license": true,
+      "wealth": 35,
+      "reputation": 45,
+      "followers": 20,
+      "has_phone": true,
+      "traits": {
+        "ambition": 0.75,
+        "compassion": 0.85,
+        "greed": 0.15,
+        "curiosity": 0.65,
+        "charisma": 0.7
+      },
       "goals": [
-        {"id": "field-mastery", "type": "reach_mastery", "value": 4},
-        {"id": "rescue-practice", "type": "treat_injuries", "count": 5},
-        {"id": "public-following", "type": "gain_followers", "value": 1000},
-        {"id": "professional-success", "type": "earn_wealth", "value": 150}
+        {
+          "id": "field-mastery",
+          "type": "reach_mastery",
+          "value": 4
+        },
+        {
+          "id": "rescue-practice",
+          "type": "treat_injuries",
+          "count": 5
+        },
+        {
+          "id": "public-following",
+          "type": "gain_followers",
+          "value": 1000
+        },
+        {
+          "id": "professional-success",
+          "type": "earn_wealth",
+          "value": 150
+        }
+      ],
+      "power_mastery": {
+        "Healing": 1,
+        "Flight": 0
+      }
+    },
+    {
+      "key": "oren",
+      "name": "Oren Vale",
+      "age": 28,
+      "description": "Mira's older brother. A competitive public servant who wants to win both an election and a fair rematch against an old sparring rival.",
+      "powers": [
+        "Stone Skin",
+        "Empathy"
+      ],
+      "mastery_level": 2,
+      "main_character": true,
+      "dream": "freedom",
+      "motive": "country",
+      "role": "citizen",
+      "job": "civil_servant",
+      "party": "pluralist",
+      "wealth": 40,
+      "reputation": 60,
+      "followers": 80,
+      "has_phone": true,
+      "traits": {
+        "ambition": 0.8,
+        "compassion": 0.7,
+        "greed": 0.15,
+        "curiosity": 0.5,
+        "charisma": 0.85
+      },
+      "goals": [
+        {
+          "id": "rematch",
+          "type": "defeat_character",
+          "target": "cass",
+          "count": 1
+        },
+        {
+          "id": "elected-mandate",
+          "type": "win_elections",
+          "count": 1
+        },
+        {
+          "id": "freer-city",
+          "type": "improve_society",
+          "metric": "freedom",
+          "value": 85
+        }
       ]
     },
     {
-      "key": "oren", "name": "Oren Vale", "age": 28,
-      "description": "Mira's older brother. A competitive public servant who wants to win both an election and a fair rematch against an old sparring rival.",
-      "powers": ["Stone Skin", "Empathy"], "mastery_level": 2, "main_character": true,
-      "dream": "freedom", "motive": "country", "role": "citizen", "job": "civil_servant", "party": "pluralist",
-      "wealth": 40, "reputation": 60, "followers": 80, "has_phone": true,
-      "traits": {"ambition": 0.8, "compassion": 0.7, "greed": 0.15, "curiosity": 0.5, "charisma": 0.85},
-      "goals": [
-        {"id": "rematch", "type": "defeat_character", "target": "cass", "count": 1},
-        {"id": "elected-mandate", "type": "win_elections", "count": 1},
-        {"id": "freer-city", "type": "improve_society", "metric": "freedom", "value": 85}
-      ]
+      "key": "cass",
+      "name": "Cass Rowan",
+      "age": 27,
+      "powers": [
+        "Speed",
+        "Sparks"
+      ],
+      "mastery_level": 2,
+      "role": "hero",
+      "power_license": true
     },
-    {"key": "cass", "name": "Cass Rowan", "age": 27, "powers": ["Speed", "Sparks"], "mastery_level": 2, "role": "hero", "power_license": true},
-    {"key": "tessa", "name": "Tessa Vale", "age": 53, "powers": ["Perfect Memory"], "dream": "family", "role": "citizen"}
+    {
+      "key": "tessa",
+      "name": "Tessa Vale",
+      "age": 53,
+      "powers": [
+        "Perfect Memory"
+      ],
+      "dream": "family",
+      "role": "citizen"
+    }
   ],
   "relationships": [
-    {"type": "parent", "a": "tessa", "b": "mira"},
-    {"type": "parent", "a": "tessa", "b": "oren"},
-    {"type": "ally", "a": "mira", "b": "oren", "mutual": true}
+    {
+      "type": "parent",
+      "a": "tessa",
+      "b": "mira"
+    },
+    {
+      "type": "parent",
+      "a": "tessa",
+      "b": "oren"
+    },
+    {
+      "type": "ally",
+      "a": "mira",
+      "b": "oren",
+      "mutual": true
+    }
   ],
-  "rivalries": [{"a": "oren", "b": "cass", "mutual": true, "intensity": 0.85, "interval": 3}],
-  "encounters": {"enabled": true, "max_per_year": 2, "max_rounds": 20, "commit_consequences": false},
-  "tournaments": [{"year": 5, "name": "Civic Arena Invitational", "entrants": ["mira", "oren", "cass"]}]
+  "rivalries": [
+    {
+      "a": "oren",
+      "b": "cass",
+      "mutual": true,
+      "intensity": 0.85,
+      "interval": 3
+    }
+  ],
+  "encounters": {
+    "enabled": true,
+    "max_per_year": 2,
+    "max_rounds": 20,
+    "commit_consequences": false
+  },
+  "tournaments": [
+    {
+      "year": 5,
+      "name": "Civic Arena Invitational",
+      "entrants": [
+        "mira",
+        "oren",
+        "cass"
+      ]
+    }
+  ]
 }

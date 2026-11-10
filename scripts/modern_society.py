@@ -6,6 +6,7 @@ network calls, communications or predictions about actual people/governments.
 import math
 import random
 from government_systems import select_leadership
+from power_mastery import ensure_mastery,sync_mastery,mastery_distribution
 from power_effects import WorldPowers, POWER_EFFECTS
 from story_setup import init_story, tick_story, export_story, prepare_story, MAX_YEARS
 from scenario_customization import apply_world
@@ -61,6 +62,7 @@ def update_rankings(state, agents):
     for a in agents.values():
         if not a['alive']:
             continue
+        ensure_mastery(a,state.get('year',0))
         if state['laws'].get('ranking_app') and a.get('has_phone'):
             a['app_score'] = clamp(a.get('mastery_level', 0) * 10 +
                                    a.get('reputation', 50) * .45 +
@@ -239,6 +241,7 @@ def run_modern(seed, years, starting_pop, power_rate, mutation_rate, power_tree,
              'greed': rng.uniform(.05,.7), 'curiosity': rng.uniform(.1,.95),
              'charisma': rng.uniform(.1,.95), 'dream': rng.choice(['family','freedom','knowledge','order','fame'])}
         setup_citizen(a, rng)
+        ensure_mastery(a,max(0,birth_year))
         agents[aid] = a
         return a
     def event(category, text):
@@ -382,6 +385,7 @@ def run_modern(seed, years, starting_pop, power_rate, mutation_rate, power_tree,
             'internet':state.get('internet',{}),'institutions':state.get('institutions',{}),
             'agents':agents,'world_resources':powers.r,'power_usage':powers.state['usage'],
             'resurrections':powers.state['revivals'],'clones_created':powers.state['clones_created'],
+            'power_mastery_levels':mastery_distribution(living),
             'mastery_levels':{str(i):sum(a.get('mastery_level',0)==i for a in living if a['power']) for i in range(6)},
             'drama_score':len(chronicle)+state['democratic_breakdowns']*25+state['peaceful_transfers']*5,
             'chronicle':chronicle,'_state':snapshot}

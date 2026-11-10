@@ -13,6 +13,7 @@ import json
 import math
 import random
 from expanded_powers import powers_of
+from power_mastery import ensure_mastery, level_for
 
 # damage, guard, heal, accuracy, evade, control, initiative, special
 _FIELDS = ('damage', 'guard', 'heal', 'accuracy', 'evade', 'control', 'initiative', 'special')
@@ -93,13 +94,16 @@ def _fighter(source):
         raise ValueError('Each fighter needs a stable unique id')
     if source.get('alive') is False:
         raise ValueError('Dead world agents cannot enter a nonlethal arena')
+    source = copy.deepcopy(source)
+    ensure_mastery(source)
     powers = powers_of(source)
     unknown = set(powers) - set(POWER_PROFILES)
     if unknown:
         raise ValueError('Unsupported powers: ' + ', '.join(sorted(unknown)))
     return dict(id=str(source['id']), name=str(source.get('name',source['id'])),
                 powers=powers, vigor=100.0, energy=_number(source.get('energy',100),100,0,100),
-                mastery=_number(source.get('mastery_level',0),0,0,5), guard=0.0,
+                mastery=_number(source.get('mastery_level',0),0,0,5),
+                power_levels={power:_number(level_for(source,power),0,0,5) for power in powers}, guard=0.0,
                 resolve=100.0, statuses={}, ward=False, recovery_used=False,
                 last_damage=0.0, copied=None)
 
@@ -117,7 +121,9 @@ def simulate_fight(fighter_a, fighter_b, seed=0, max_rounds=30, rules=None):
     """Pure deterministic duel. Swapping arguments preserves exact results.
 
     Caps: 1..200 rounds, 3 powers, mastery0..5, energy0..100. Fresh arena
-    vigor/resolve; supplied energy is respected. Initiative is rerolled each
+    vigor/resolve; supplied energy is respected. Potency uses the selected
+    ability's own level, never the maximum compatibility scalar. Siphon copies
+    techniques at the caster's Siphon level, not the donor's level. Initiative is rerolled each
     round using ID-keyed randomness. Round limit uses vigor+resolve, ties draw.
     rules supports only {'nonlethal': True}; unknown rules fail rather than lie.
     """
@@ -141,8 +147,10 @@ def simulate_fight(fighter_a, fighter_b, seed=0, max_rounds=30, rules=None):
             target=pair[1] if actor is pair[0] else pair[0]
             before=copy.deepcopy(pair)
             power,p=_profile(actor,turn)
+            action_mastery=actor['power_levels'].get(power,0) if power else 0
             rng=_rng(seed,'action',turn,actor['id'])
             note=[]
+            energy_spent=0
             # Damage-over-time is stamina pressure only, and cannot kill.
             dot=sum(amount for tag,amount in [('burn',3),('poison',4),('rot',5)]
                     if actor['statuses'].get(tag,0)>=turn)
@@ -150,8 +158,9 @@ def simulate_fight(fighter_a, fighter_b, seed=0, max_rounds=30, rules=None):
             stunned=actor['statuses'].get('stunned',0)>=turn
             if actor['vigor']>0 and not stunned:
                 if power:
-                    actor['energy']-=10
-                factor=1+actor['mastery']*.06
+                    energy_spent=10
+                    actor['energy']-=energy_spent
+                factor=1+action_mastery*.06
                 special=p['special']
                 if special=='copy' and actor['copied'] is None:
                     eligible=[x for x in target['powers'] if x!='Siphon']
@@ -195,7 +204,7 @@ def simulate_fight(fighter_a, fighter_b, seed=0, max_rounds=30, rules=None):
             elif stunned: note.append('stunned; activation skipped')
             actor['energy']=min(100,actor['energy']+3)
             trace.append(dict(round=turn,actor_id=actor['id'],target_id=target['id'],
-                              power=power,notes=note,before=before,after=copy.deepcopy(pair)))
+                              power=power,action_mastery=action_mastery,energy_spent=energy_spent,notes=note,before=before,after=copy.deepcopy(pair)))
             defeated=[f for f in pair if f['vigor']<=0 or f['resolve']<=0]
             if defeated:
                 winner=next((f['id'] for f in pair if f not in defeated),None)

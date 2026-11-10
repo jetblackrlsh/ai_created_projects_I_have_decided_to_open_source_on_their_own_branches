@@ -9,6 +9,7 @@ import sys
 import tempfile
 import unittest
 sys.path.insert(0,str(Path(__file__).parent))
+from power_mastery import configure_mastery
 import modern_society as m
 import simulate_world as engine
 from test_power_effects import fixture
@@ -17,7 +18,7 @@ from test_power_effects import fixture
 class ModernTests(unittest.TestCase):
     def test_mastery_is_earned_and_changes_cost_and_effect(self):
         novice=fixture('Fire'); expert=fixture('Fire')
-        expert.agents[1]['mastery_level']=5;expert.agents[1]['power_xp']=50
+        configure_mastery(expert.agents[1],{'Fire':5},10)
         novice.activate(novice.agents[1]);expert.activate(expert.agents[1])
         self.assertGreater(expert.agents[2]['injury'],novice.agents[2]['injury'])
         self.assertGreater(expert.agents[1]['energy'],novice.agents[1]['energy'])
@@ -34,11 +35,13 @@ class ModernTests(unittest.TestCase):
     def test_disuse_decay_and_public_rank_labels(self):
         w=fixture('Earth');a=w.agents[1]
         a.update(power_xp=20,mastery_level=2,power_uses_total=20,last_power_use_year=1,power_ready_year=1000)
+        a['power_mastery']['Earth'].update(xp=20,level=2,last_use_year=1)
         w.begin_year(11,w.create_agent,w.towns,[],[])
         self.assertEqual(a['power_xp'],15);self.assertEqual(a['mastery_level'],1)
         self.assertEqual(a['power_uses_total'],20)
         self.assertEqual([m.rank_for_score(x) for x in (100,75,60,45,30,15,0)],list('SABCDEF'))
         agents={1:dict(a)};agents[1].update(alive=True,has_phone=True,reputation=100,mastery_level=5,followers=10000)
+        configure_mastery(agents[1],{'Earth':5},11)
         state=m.society_state();m.update_rankings(state,agents)
         self.assertEqual(agents[1]['app_rank'],'S')
         state['laws']['ranking_app']=False;m.update_rankings(state,agents)
@@ -81,6 +84,8 @@ class ModernTests(unittest.TestCase):
             a.update(id=i,age=30,alive=True,imprisoned_until=0,curiosity=.7,compassion=.6,
                      reputation=50,app_score=0,job='unemployed',power='Fire',mastery_level=2,
                      followers=0,has_phone=True,dream='order',power_license=True,quarantined_until=0,hospitalized_until=0)
+        for a in agents.values():
+            a['powers']=['Fire'];configure_mastery(a,{'Fire':2},1)
         agents[3]['reputation']=100;agents[3]['followers']=1000
         state=m.society_state();m.update_rankings(state,agents)
         self.assertGreater(agents[3]['app_score'],agents[1]['app_score'])

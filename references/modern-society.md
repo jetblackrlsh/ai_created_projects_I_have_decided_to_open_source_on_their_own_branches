@@ -4,7 +4,7 @@ This is an original, explicit interpretation of superhero-society story possibil
 
 ## Use-earned power mastery
 
-A successful state-changing power action earns one power_xp plus a cumulative use count. After ten inactive years and every five thereafter, five practice XP decays; cumulative uses remain. See [expanded systems](expanded-systems.md) for all newer subsystems. Failed actions and ward-blocked attacks earn none. Every ten successful uses increases mastery_level by one, to a maximum of five. Children and newly created clones start at zero; mastery is not inherited as free experience. An old full save without mastery fields starts at zero at its migration boundary rather than fabricating unseen historical uses.
+A successful state-changing action earns one XP and one use in the ability’s own power_mastery record. Each ability separately loses five XP after ten unused years and every five thereafter; using another ability does not prevent this rust. Cumulative uses remain. See [expanded systems](expanded-systems.md) for all newer subsystems. Failed actions and ward-blocked attacks earn none. Every ten XP increases that power’s level by one, to a maximum of five. Children and newly created clones start at zero; mastery is not inherited as free experience. An old full save without any mastery fields starts at zero. A shared-mastery save migrates once by crediting its previous shared XP/level to each then-held ability, explicitly marked in state because old per-power attribution is unknown. Later acquisitions start at zero; archived personal progression is retained for lost powers but excluded while unheld.
 
 Mastery changes mechanics:
 - Energy cost falls by two per level, to a minimum of 15.
@@ -12,7 +12,7 @@ Mastery changes mechanics:
 - Fire/Lightning injury, Water/Weather/Plant Control food production, Strength hauling and Healing/Regeneration/Immortal recovery gain 10% per level.
 - Other powers gain efficiency and reuse frequency, not unimplemented new physics or arbitrary effects.
 
-The level used for an action is the level before that action's experience award. Existing resurrection, clone, resource and action caps still apply. Exported mastery_levels describe final living powered agents; pooled_powered_agent_mean_mastery summarizes those agents across a batch.
+The level used for an action is the level before that action's experience award. Existing resurrection, clone, resource and action caps still apply. Compatibility mastery_level is the best CURRENT ability’s level. Exported mastery_levels describe that best level per living powered agent; pooled_powered_agent_mean_mastery summarizes those agents. power_mastery_levels and pooled_held_power_mean_mastery instead count every held ability’s separate level. Rankings use best held mastery: novice secondary powers neither inherit expert effects nor dilute expertise. See README for per-power configuration and named goals.
 
 ## Run a modern world
 

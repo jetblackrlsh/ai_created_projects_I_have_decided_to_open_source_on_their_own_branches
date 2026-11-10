@@ -1,4 +1,4 @@
-# Superpower World Sim v4.1
+# Superpower World Sim v4.2
 
 An offline, standard-library Python engine and AI-agent skill for fictional superpowered civilizations. Run many seeded worlds, compare their outcomes, and explore one world's named heroes, villains and dynasties. Stop at checkpoints and steer future history through decrees and events.
 
@@ -25,6 +25,24 @@ Open `report.md` for the complete featured-world major-event chronicle and aggre
 - Adjust founders, initial power rate, mutation rate, seed, horizon, wheel interval, tribal matchup and wall year.
 - Save complete world state, resume later, and branch the same checkpoint into alternative choices.
 - Inspect objective secrets versus public beliefs, family relationships, hero mantles, succession, technologies and mortality statistics.
+
+## Per-power builds (v4.2)
+
+Each held ability has its own `power_mastery` record with XP, level (0..5), successful-use count and last-use year. Ten XP earns a level. A Fire expert can remain a novice healer: only the ability actually used earns XP and supplies potency/cost/cooldown benefits. Each power rusts independently after ten years unused, losing five XP then every five unused years. Practicing Fire does not prevent Healing from rusting. Energy and the action cooldown remain shared character resources.
+
+Configure starting levels explicitly:
+
+```json
+{"key":"mira","powers":["Fire","Healing"],"power_mastery":{"Fire":4,"Healing":1},"goals":[{"type":"reach_mastery","power":"Healing","value":3}]}
+```
+
+`mastery_level` remains a starting shorthand for all specified powers; explicit entries override it. Omitted starting entries default to zero. A named mastery goal trains/evaluates that power and reports blocked if it is not held; an unnamed goal measures the strongest currently held ability. The compatibility `mastery_level` and `power_xp` fields now summarize the strongest currently held level/XP. Public ranking, career thresholds and aggregate character statistics use the **best currently held mastery**, not the average or sum: novice acquisitions neither dilute expertise nor inflate it.
+
+Newly acquired/inherited powers begin at zero experience. Siphon transfers the ability, not the donor’s learned mastery. Lost-power records are retained but excluded from active ranking/effects; reacquisition restores the character’s own retained experience, subject to disuse decay while living. Resurrection retains the same person’s progression. Separate new clones/children start novice, as before. Save schema4 remains supported.
+
+Legacy saves cannot reveal which old uses belonged to which power. One explicit migration therefore credits the previous shared XP/level to **each ability already held**, preserving existing capabilities without silently resetting them. The save records this migration; unknown historical per-power use counts are not fabricated. Subsequent acquisitions start novice and future XP separates normally. Old summaries remain recognizable but future rules intentionally change.
+
+Arena traces record the action’s individual mastery and fighter per-power levels. Copied Siphon techniques use the caster’s Siphon mastery, never the donor’s. Pure previews and government tournaments grant no practice XP. Explicitly committed bouts grant one practice XP per held power actually attempted with energy expenditure, not every power in the roster and not copied foreign powers. Individual main-character timelines retain the separate progression ledger.
 
 ## Selectable governments (v4.1)
 
@@ -53,7 +71,7 @@ Arenas are nonlethal abstractions with seeded ability-aware rounds and before/af
 
 ## Mastery and modern society
 
-Successful power use now earns XP and bounded mastery levels that improve costs, cooldowns and supported effects. A new `--mode modern` runs jobs, wages, simulated phones, a public ranking app, media coverage, individual-ballot elections and elected administrations. Reputation/ranking affect employment and campaigns; governing choices change freedom, integrity and democratic-survival outcomes. These are our own explicit toy rules, not a reconstruction of any video creator's hidden simulator.
+Successful power use earns XP and bounded mastery **separately for every ability**, improving that ability’s costs, cooldowns and supported effects. A new `--mode modern` runs jobs, wages, simulated phones, a public ranking app, media coverage, individual-ballot elections and elected administrations. Reputation/ranking affect employment and campaigns; governing choices change freedom, integrity and democratic-survival outcomes. These are our own explicit toy rules, not a reconstruction of any video creator's hidden simulator.
 
 ```sh
 python3 scripts/simulate_world.py --mode modern --runs 100 --years 100 --output-json modern.json --output-report modern.md

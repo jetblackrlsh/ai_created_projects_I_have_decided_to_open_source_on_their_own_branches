@@ -18,6 +18,7 @@ import random
 import sys
 from typing import Any, Dict, List, Optional, Tuple
 from power_effects import WorldPowers, POWER_EFFECTS
+from power_mastery import ensure_mastery,mastery_distribution
 from expanded_powers import EXPANDED_POWER_TREE, powers_of, set_powers, has_power, inherit_powers
 from modern_society import run_modern, SOCIAL_POLICIES
 from story_setup import init_story, tick_story, export_story, prepare_story, MAX_YEARS
@@ -444,6 +445,7 @@ def run_single_world_evolution_or_monarch_or_wheel(
             "royal_blood": force_royal,
             "kills": 0
         }
+        ensure_mastery(agent,max(0,birth_year))
         agents[aid] = agent
         return agent
 
@@ -1109,6 +1111,7 @@ def run_single_world_evolution_or_monarch_or_wheel(
         "agents": agents,
         "world_resources": powers.r,
         "power_usage": powers.state["usage"],
+        "power_mastery_levels": mastery_distribution(living_end),
         "mastery_levels": {str(i): sum(a.get("mastery_level", 0) == i for a in living_end if a["power"]) for i in range(6)},
         "resurrections": powers.state["revivals"],
         "clones_created": powers.state["clones_created"],
@@ -1462,6 +1465,7 @@ def format_markdown_report(summary: Dict[str, Any]) -> str:
         for record in story["main_characters"].values():
             latest = record["timeline"][-1]
             lines.append(f"- {record['name']} (id {record['id']}): tracked across {len(record['timeline'])} checkpoints; alive={latest['alive']}, age={latest['age']}, role={latest['role']}, powers={latest['powers']}, arena appearances={len(record['encounter_ids'])}.")
+            lines.append('  Per-power mastery: '+', '.join(f"{p} level {r['level']} ({r['xp']} XP)" for p,r in latest.get('power_mastery',{}).items() if p in latest['powers']))
         for aid, goals in story.get("goals", {}).items():
             for goal in goals:
                 state=goal["state"]
@@ -1681,6 +1685,9 @@ def main() -> None:
         mastery_count = sum(sum(w.get("mastery_levels", {}).values()) for w in all_worlds)
         mastery_sum = sum(sum(int(level) * count for level, count in w.get("mastery_levels", {}).items()) for w in all_worlds)
         agg_stats["mean_combined_powered_agents"] = round(sum(w.get("combined_powered_agents", 0) for w in all_worlds) / args.runs, 3)
+        per_power_count=sum(sum(w.get("power_mastery_levels",{}).values()) for w in all_worlds)
+        per_power_sum=sum(sum(int(level)*count for level,count in w.get("power_mastery_levels",{}).items()) for w in all_worlds)
+        agg_stats["pooled_held_power_mean_mastery"]=round(per_power_sum/per_power_count,3) if per_power_count else 0
         agg_stats["pooled_powered_agent_mean_mastery"] = round(mastery_sum / mastery_count, 3) if mastery_count else 0
     if args.mode == "modern":
         for field in ("posts_created", "viral_posts", "fakes_created", "corrections", "grievance_turns", "dating_matches", "bullying_events"):

@@ -74,6 +74,9 @@ def set_powers(agent, names):
             break
     agent['powers'] = unique
     agent['power'] = unique[0] if unique else None
+    if 'power_mastery' in agent:
+        from power_mastery import ensure_mastery
+        ensure_mastery(agent,agent.get('_mastery_year',0))
     return unique
 
 
@@ -119,7 +122,8 @@ Siphon changes primary identities; wrappers must not restore a stolen primary.
     if p not in EXPANDED_EFFECTS:
         return None
     c, year = context, context.year
-    potency = 1 + .1 * min(5, max(0, caster.get('mastery_level', 0)))
+    from power_mastery import level_for
+    potency = 1 + .1 * level_for(caster,caster['power'])
     allies = c.allies(caster)
     patient = c.priority_patient(caster,allies) if hasattr(c,'priority_patient') else max(allies,key=lambda a:a.get('injury',0),default=caster)
 

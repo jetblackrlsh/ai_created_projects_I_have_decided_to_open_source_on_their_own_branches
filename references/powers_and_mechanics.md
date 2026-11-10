@@ -38,7 +38,7 @@ The individual-agent engine (evolution, monarch, wheel and modern) has the follo
 
 ## Use-earned mastery and modern society
 
-See [modern-society.md](modern-society.md) for mastery growth, the fifth simulation mode, jobs/phones, media, app rankings, elections, freedom outcomes, new interventions and batch statistics. All defined powers earn one XP per successful use, gain a level every ten successes to level five, and gain bounded cost/cooldown improvements. Selected direct damage, production and recovery effects also scale with mastery.
+See [modern-society.md](modern-society.md) for mastery growth, the fifth simulation mode, jobs/phones, media, app rankings, elections, freedom outcomes, new interventions and batch statistics. Each defined power separately earns one XP per successful use, gains a level every ten XP to level five, and gains bounded cost/cooldown improvements using its own level. Separate power_mastery records also track independent rust; compatibility scalar mastery summarizes best currently held level only. Selected direct damage, production and recovery effects also scale with mastery.
 
 ## Shared rules and interactions
 

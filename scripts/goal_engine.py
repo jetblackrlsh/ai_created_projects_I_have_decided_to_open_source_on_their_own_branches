@@ -1,3 +1,4 @@
+from power_mastery import level_for
 """Measurable character goals. Planning advises; evaluation never grants outcomes.
 
 Persist the list returned by evaluate_goals. All functions are pure with respect
@@ -41,6 +42,7 @@ def validate_goals(goals,catalog):
         allowed={'id','type'} | ({field} if field else set())
         if kind in ('defeat_character','protect_character'):allowed.add('target')
         if kind=='improve_society':allowed.add('metric')
+        if kind=='reach_mastery':allowed.add('power')
         if set(raw)-allowed:raise ValueError('Unsupported fields for '+kind)
         goal=deepcopy(raw);goal.setdefault('id',f'goal_{index+1}')
         if not isinstance(goal['id'],str) or not goal['id'].strip() or len(goal['id'])>80 or goal['id'] in seen:
@@ -58,10 +60,11 @@ def validate_goals(goals,catalog):
                 if type(value) is not int:raise ValueError('Goal '+field+' must be an integer')
         if field=='rank' and goal[field] not in RANKS[1:]:raise ValueError('Rank must be F..S')
         if field=='job' and goal[field] not in JOBS:raise ValueError('Unknown job')
-        if field=='power':
-            if not isinstance(goal[field],str):raise ValueError('Power must be a catalog name')
-            goal[field]=canonical_power(goal[field])
-            if goal[field] not in catalog:raise ValueError('Unknown goal power')
+        if field=='power' or kind=='reach_mastery' and 'power' in goal:
+            power_field='power' if kind=='reach_mastery' else field
+            if not isinstance(goal[power_field],str):raise ValueError('Power must be a catalog name')
+            goal[power_field]=canonical_power(goal[power_field])
+            if goal[power_field] not in catalog:raise ValueError('Unknown goal power')
         if 'target' in allowed:
             target=goal.get('target')
             if isinstance(target,bool) or not isinstance(target,(str,int)) or (isinstance(target,str) and not target.strip()):
@@ -117,7 +120,9 @@ def _measure(goal,agent,context,year):
         value=society[metric];done=value>=goal['value']
     elif kind=='treat_injuries':value=agent.get('patients_treated',0);done=value>=goal['count']
     elif kind=='reach_age':value=agent.get('age',0);done=value>=goal['value']
-    elif kind=='reach_mastery':value=agent.get('mastery_level',0);done=value>=goal['value']
+    elif kind=='reach_mastery':
+        if goal.get('power') and goal['power'] not in powers_of(agent):return 0,False,'blocked','Requested mastery power is not held'
+        value=level_for(agent,goal['power']) if goal.get('power') else agent.get('mastery_level',0);done=value>=goal['value']
     elif kind in ('win_duels','defeat_character'):
         if kind=='defeat_character' and 'target_id' not in goal:return 0,False,'blocked','Target is not resolved'
         if kind=='defeat_character' and str(goal['target_id'])==aid:return 0,False,'blocked','A character cannot defeat itself'
@@ -190,9 +195,11 @@ def plan_goals(goals,agent,context,year):
     for goal in evaluated:
         if goal['state']['status'] in ('completed','failed'):continue
         kind=goal['type']
+        if kind=='reach_mastery' and goal.get('power') and goal['power'] not in powers_of(agent):continue
         if kind in SOCIAL and context.get('society') is None:continue
         if kind in ('reach_mastery','win_duels','win_tournaments','defeat_character'):
             directives['training_bias']=.25
+        if kind=='reach_mastery' and goal.get('power') in powers_of(agent):directives.setdefault('prefer_power',goal['power'])
         if kind=='defeat_character' and 'target_id' in goal:directives['seek_rival_id']=goal['target_id']
         if kind=='obtain_power':directives.setdefault('prefer_power',goal['power'])
         if kind=='get_job':directives.setdefault('desired_job',goal['job'])

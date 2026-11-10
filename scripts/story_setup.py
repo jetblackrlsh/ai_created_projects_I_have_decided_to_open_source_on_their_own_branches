@@ -1,3 +1,4 @@
+from power_mastery import configure_mastery,ensure_mastery,award_use
 """Validated character setup, rivalry encounters and explicit main-character ledger.
 
 World hooks consume the world's RNG and persist all scheduling/tracking state.
@@ -117,6 +118,9 @@ def init_story(agents,scenario,year=0,mode=None):
         if 'mastery_level' in c:
             a['mastery_level']=c['mastery_level'];a['power_xp']=10*c['mastery_level']
             a['power_uses_total']=0;a['last_power_use_year']=year
+        levels={p:c.get('mastery_level',0) for p in powers_of(a)}
+        levels.update(c.get('power_mastery',{}))
+        configure_mastery(a,levels,year)
         a.update(c.get('traits',{}))
         apply_character(a,c,year,modern=mode=='modern')
     apply_relationships(agents,scenario.get('relationships',[]),lambda ref:_ref(ref,keys,agents))
@@ -164,6 +168,7 @@ def track(story,agents,year,replace_current=False):
         row={'year':year,'alive':a['alive'],'age':a['age'],'powers':powers_of(a),'role':a.get('role'),'injury':a.get('injury',0),'energy':a.get('energy',100),'mastery_level':a.get('mastery_level',0),'death_year':a.get('death_year'),'death_cause':a.get('death_cause'),'resurrections':a.get('resurrections',0),'spouse_id':a.get('spouse'),'children_ids':list(a.get('children',[])),'rival_ids':list(a.get('rival_ids',[]))}
         for field in ('job','income','wealth','reputation','app_rank','goal','imprisoned_until'):
             if field in a:row[field]=a[field]
+        row['power_mastery']=deepcopy(ensure_mastery(deepcopy(a),year))
         row['goal_directives']=deepcopy(a.get('goal_directives',{}))
         row['goal_progress']=[{'id':g['id'],'type':g['type'],'status':g['state']['status'],'progress':g['state']['progress'],'reason':g['state'].get('reason'),'target':g.get('target_id'),'threshold':g.get('value',g.get('count',g.get('year',g.get('rank',g.get('power',g.get('job'))))))} for g in story.get('goals',{}).get(str(aid),[])]
         record['timeline'].append(row)
@@ -175,14 +180,18 @@ def commit_bout(result,agents,year,story):
     for state in result['final_state']:
         aid=int(state['id']);a=agents[aid]
         if not a['alive']:raise ValueError('Cannot commit arena results to a dead world agent')
-        fields=('alive','energy','injury','power_xp','mastery_level','reputation','arena_practice')
+        fields=('alive','energy','injury','power_xp','mastery_level','power_mastery','reputation','arena_practice')
         before={k:deepcopy(a.get(k)) for k in fields};before['powers']=powers_of(a)
         a['arena_practice']=a.get('arena_practice',0)+1
         a['energy']=max(0,a.get('energy',100)-min(35,5+result['rounds']))
         a['injury']=min(.75,a.get('injury',0)+(.08 if str(aid)==winner else .12))
-        if powers_of(a):
-            a['power_xp']=a.get('power_xp',0)+1;a['power_uses_total']=a.get('power_uses_total',0)+1
-            a['mastery_level']=min(5,a['power_xp']//10);a['last_power_use_year']=year
+        def paid_activation(event):
+            if 'energy_spent' in event:return event['energy_spent']>0
+            before_state=next((f for f in event.get('before',[]) if f['id']==str(aid)),{})
+            after_state=next((f for f in event.get('after',[]) if f['id']==str(aid)),{})
+            return after_state.get('energy',100)<before_state.get('energy',0)
+        used={event.get('power') for event in result.get('trace',[]) if event.get('actor_id')==str(aid) and paid_activation(event)} & set(powers_of(a))
+        for power in sorted(used):award_use(a,power,year)
         if 'reputation' in a:a['reputation']=max(0,min(100,a['reputation']+(1 if str(aid)==winner else 0)))
         story['practice_awards']+=1
         after={k:deepcopy(a.get(k)) for k in fields};after['powers']=powers_of(a)
