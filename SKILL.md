@@ -5,7 +5,7 @@ description: Run seeded superpower worlds, customizable goal-driven main charact
 
 # Superpower World Sim
 
-Run the bundled Python 3 standard-library v4.4 engine. Every one of the 62 defined powers has a concrete state-changing action, with energy, cooldowns, conditions and limits. Successful use earns mastery separately for the ability used; its own mastery improves efficiency and effects, and each ability rusts independently. Repertoires can combine up to 64 powers, and Siphon can permanently transfer one. Use its measured results as creative simulation outputs, not scientific predictions. Require no paid API, external service, or graphical application.
+Run the bundled Python 3 standard-library v4.5 engine. Every one of the 62 defined powers has a concrete state-changing action, with energy, cooldowns, conditions and limits. Successful use earns mastery separately for the ability used; its own mastery improves efficiency and effects, and each ability rusts independently. Repertoires can combine up to 64 powers, and Siphon can permanently transfer one. Use its measured results as creative simulation outputs, not scientific predictions. Require no paid API, external service, or graphical application.
 
 ## Configure an experiment
 
@@ -32,6 +32,10 @@ python3 <skill_dir>/scripts/simulate_world.py \
 Customize `--pop`, `--power-rate`, `--mutation-rate`, `--wheel-interval`, `--tribe-a`, `--tribe-b`, and `--wall-year`. Set `--select-world auto` to feature the highest-drama run, or use a 1-based world index. Seeds advance by 97 across a batch. Runtime depends on population, years, runs and hardware; do not promise a fixed completion time.
 
 Verify nonempty `aggregate_stats` and `featured_world` in JSON, and a readable Markdown report. Both outputs include the featured world's full major-event chronicle. The JSON additionally includes agents and family relationships in evolution, monarch, wheel and modern modes; all modes include modeled food reserves (individual worlds under world_resources; versus under food_reserves). Report them as abstract stock units, not kilograms or precise nutrition. Only the featured world's detailed history is exported, not every world in the batch.
+
+## Run a world-destroyer versus a hero team
+
+Read `references/world-threat.md` and run `scripts/threat_campaign.py --scenario assets/scenarios/world-threat.json --runs 100 --seed 10101 --output-json threat-results.json`. This separate opt-in campaign supports actual cooperating teams, detection, interception, rescue, population destruction and every-run traces. Do not substitute nonlethal1v1 arena wins for world survival. Define extinction as all modeled civilians lost, distinguish hero incapacitation from death, and disclose the bounded rotating-power combat abstractions. Preserve all raw runs and report exclusive outcomes plus casualty severity; do not tune or reroll to manufacture variety.
 
 ## Start a war or civil war
 

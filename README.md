@@ -1,4 +1,4 @@
-# Superpower World Sim v4.2
+# Superpower World Sim v4.5
 
 An offline, standard-library Python engine and AI-agent skill for fictional superpowered civilizations. Run many seeded worlds, compare their outcomes, and explore one world's named heroes, villains and dynasties. Stop at checkpoints and steer future history through decrees and events.
 
@@ -142,3 +142,7 @@ Start a civil war or international war already in progress, with real factions, 
 Characters may hold up to 64 powers, each with its own XP, mastery and rust. Input overflow now fails explicitly rather than dropping powers. Natural inheritance remains capped at three; larger custom founders and permanent acquisitions do not multiply turns or energy. Nine added abilities bring the catalog to 62: Shadow Blasts, Fear Influence, Shadow Clones, Cybernetics, Analytical Vision, Space Adaptation, Tactical Analysis, Resolve and Telepathic Link. All have bounded world actions and arena profiles; war support uses those profiles.
 
 Use `assets/scenarios/multi-power-builds.json` for three original five/six-power templates. See [large builds](references/large-builds.md) for mapping a themed card, compatibility and limitations. Shadow clones retain the repertoire but begin with novice mastery, dissolve after three years, cannot reproduce or recursively clone, and consume food, energy and cooldown. Space adaptation models supply-cost salvage expeditions, not orbital physics or a navigable galaxy. Resolve is composure, not a guarantee of moral goodness. Technology/divinity/shadow origins are fictional descriptions, not extra mechanics beyond the selected capabilities.
+
+## World-threat campaigns (v4.5)
+
+Run `python3 scripts/threat_campaign.py --scenario assets/scenarios/world-threat.json --runs 100 --seed 10101 --output-json results.json`. This separate opt-in mode tracks one antagonist, a cooperating hero team, population devastation, detection/interception, rescue and exclusive stopped/extinction/unresolved outcomes. Every seed and full trace is retained. Read [the assumptions](references/world-threat.md) before interpreting percentages: bounded rotating-power profiles are not literal comic physics. Existing annual, arena and war modes are unchanged.

@@ -1,17 +1,19 @@
 {
   "project": "superpower-world-sim",
-  "version": "4.4",
+  "version": "4.5",
   "release_date": "2026-11-10",
-  "provenance": "Owner-approved original extensions: nonlethal traced duels/tournaments, configured rivals and tracked main characters, broad scenario customization and 19 measurable behavior-driving goals. Original 53-power world retained. Synthetic examples only; no private history imported or reconstruction claim. Adds selectable public-rank or nonlethal-tournament leadership with actual policy effects and saved succession evidence. Adds independent per-power XP/mastery/rust with explicit legacy preservation, best-held ranking, named goals and individual arena potency. Adds owner-requested opt-in strategic war/civil-war system with faction alliances, territory fronts, resource attrition, mastery-dependent champion support, capture objectives and ceasefires. Supports64-power repertoires and nine original bounded themed abilities, with synthetic multi-power examples. Fixes checkpoint-boundary initialization and preserves alias mastery.",
+  "provenance": "Owner-approved original extensions: nonlethal traced duels/tournaments, configured rivals and tracked main characters, broad scenario customization and 19 measurable behavior-driving goals. Original 53-power world retained. Synthetic examples only; no private history imported or reconstruction claim. Adds selectable public-rank or nonlethal-tournament leadership with actual policy effects and saved succession evidence. Adds independent per-power XP/mastery/rust with explicit legacy preservation, best-held ranking, named goals and individual arena potency. Adds owner-requested opt-in strategic war/civil-war system with faction alliances, territory fronts, resource attrition, mastery-dependent champion support, capture objectives and ceasefires. Supports64-power repertoires and nine original bounded themed abilities, with synthetic multi-power examples. Fixes checkpoint-boundary initialization and preserves alias mastery. Adds original opt-in seeded world-threat campaigns, continuous team combat, population conservation, detection/rescue and full-run records.",
   "verification": {
-    "unit_integration_tests": 149,
+    "unit_integration_tests": 176,
     "war_batch_worlds": 10,
     "war_batch_years_per_world": 30,
     "seeded_resume": "exact tested in all four individual modes with warfare",
     "large_build_batch_worlds": 10,
     "large_build_years_per_world": 30,
     "large_build_duels": 20,
-    "large_build_tournaments": 10
+    "large_build_tournaments": 10,
+    "world_threat_runs": 100,
+    "no_hero_control_runs": 100
   },
   "manifest_excludes_itself": true,
   "excluded": [
@@ -28,13 +30,13 @@
     },
     {
       "path": "README.md",
-      "bytes": 18984,
-      "sha256": "191832a7cdfb6ee975d3b03f79b528270e707ca23920fe52751c0b5ddbe6beeb"
+      "bytes": 19579,
+      "sha256": "4f42b9e9b707296472933ab29f94b2c2675170c0cd56dc2524382a7a4fe596e2"
     },
     {
       "path": "SKILL.md",
-      "bytes": 15471,
-      "sha256": "3fa690de1f500a840339b7e1c51257815e1af895058d1b78fe18c76c27163da0"
+      "bytes": 16174,
+      "sha256": "73b056dd10858347e04186a90b13cc436317f0eca593f18500f54d18a5f3a6e7"
     },
     {
       "path": "THIRD_PARTY_NOTICES.md",
@@ -87,6 +89,11 @@
       "sha256": "962997c6013b1a896114d679693be540ee6195c790cdc742c7b562bdca22c4bc"
     },
     {
+      "path": "assets/scenarios/world-threat.json",
+      "bytes": 1879,
+      "sha256": "70f2574f6b2cb16a3c82270bc8516c37ac3c26ce26d6194204def857fb8405f3"
+    },
+    {
       "path": "references/characters-and-goals.md",
       "bytes": 10117,
       "sha256": "5ca1847847704a64e86f7533e1abd7fe5a1fac34ef7800b85eac8e9be4cb15f7"
@@ -115,6 +122,11 @@
       "path": "references/warfare.md",
       "bytes": 4248,
       "sha256": "4629d4001bfedf680e1e383897d35fae1fd3399fa3779e50252a881744dbbd5e"
+    },
+    {
+      "path": "references/world-threat.md",
+      "bytes": 5048,
+      "sha256": "3663bf94a625ae04998b6084550d0bae927649780e4d55e669d6b2cb82081e0f"
     },
     {
       "path": "scripts/arena_runner.py",
@@ -287,9 +299,34 @@
       "sha256": "07b9a37faa58ec7dcacc4f280cc21a305c03a182aa61e7cb2e927ddac723271c"
     },
     {
+      "path": "scripts/test_threat_campaign.py",
+      "bytes": 2059,
+      "sha256": "072956d0065d70588217264d51e270f3a2ff3554c0d3e03328f508b3233f7454"
+    },
+    {
+      "path": "scripts/test_threat_combat.py",
+      "bytes": 3411,
+      "sha256": "17569fc8c03be1fefb0cb6b45af435292935d7ae8dea5a67b2d623f4bb40605d"
+    },
+    {
+      "path": "scripts/test_threat_review.py",
+      "bytes": 2383,
+      "sha256": "fabbe68b72ddfc003e16e842e49ad506294c0873ffba64b4f342bb9684c60a06"
+    },
+    {
       "path": "scripts/test_war_system.py",
       "bytes": 5049,
       "sha256": "289b9741532cefb38643e04d85a673b0a772e5c7704cc71f0fb371b3ed73ec2a"
+    },
+    {
+      "path": "scripts/threat_campaign.py",
+      "bytes": 12298,
+      "sha256": "813fe18da9a08ebff3347f5bca92f910d08b083e3b83a4af264e5803db6dbb22"
+    },
+    {
+      "path": "scripts/threat_combat.py",
+      "bytes": 7052,
+      "sha256": "0c2d860183bdb2f5424afdd8e4f757bfaea9564ece5d246d5e7296acd9d7db1f"
     },
     {
       "path": "scripts/war_system.py",
