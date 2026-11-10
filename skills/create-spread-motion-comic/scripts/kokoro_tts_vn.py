@@ -31,6 +31,7 @@ from pathlib import Path
 import numpy as np
 import onnxruntime as ort
 from kokoro_onnx import Kokoro
+from kokoro_pronunciation import phonemize_for_kokoro, PRONUNCIATION_VERSION
 from scipy import signal
 import soundfile as sf
 
@@ -526,6 +527,8 @@ def main():
                 cand_meta = json.loads(meta_path.read_text(encoding="utf-8"))
                 if (
                     cand_meta.get("text") == raw_text
+                    and cand_meta.get("pronunciation_version") == PRONUNCIATION_VERSION
+                    and cand_meta.get("lang") == lang
                     and cand_meta.get("voice") == voice_id
                     and abs(float(cand_meta.get("pitch_semitones", 0.0)) - float(spk_info.get("pitch_semitones", 0.0))) < 1e-4
                     and cand_meta.get("reverb_type", "none") == spk_info.get("reverb_type", "none")
@@ -550,7 +553,8 @@ def main():
 
             for p_idx, p_text in enumerate(raw_pages):
                 p_tts = sanitize_text_for_tts(p_text)
-                raw_p, sr = engine.create(p_tts, voice=voice_id, speed=1.0, lang=lang, trim=False)
+                p_phonemes = phonemize_for_kokoro(p_tts, engine.tokenizer, lang)
+                raw_p, sr = engine.create(p_phonemes, voice=voice_id, speed=1.0, lang=lang, trim=False, is_phonemes=True)
                 is_last_page = p_idx == len(raw_pages) - 1
                 lead_s = 0.07 if p_idx == 0 else 0.03
                 if is_last_page:
@@ -567,6 +571,7 @@ def main():
                     "page_index": p_idx,
                     "text": p_text,
                     "tts_text": p_tts,
+                    "phonemes": p_phonemes,
                     "rel_start": round(p_rel_start, 4),
                     "rel_end": round(p_rel_end, 4),
                     "speech_duration": round(speech_dur_p, 4),
@@ -633,6 +638,8 @@ def main():
             "scene": scene_id,
             "speaker": speaker,
             "voice": voice_id,
+            "lang": lang,
+            "pronunciation_version": PRONUNCIATION_VERSION,
             "speed": speed,
             "pitch_semitones": float(spk_info.get("pitch_semitones", 0.0)),
             "reverb_type": spk_info.get("reverb_type", "none"),

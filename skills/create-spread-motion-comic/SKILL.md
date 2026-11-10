@@ -18,6 +18,8 @@ Turn ONE accepted spread into a complete panel-focused film. Reuse the source ar
 
 Read [audio production](references/audio.md), [runtime setup](references/runtime-setup.md), [story/audio schema](references/vn_spec_schema.md), and [mixing](references/audio-mixing.md). This public package includes the required local audio adapters and pinned runtime recipe; it does not require private skills or model weights.
 
+Before synthesis, apply the AI initialism and cache-safety rules in `references/audio.md` using `scripts/kokoro_pronunciation.py`; keep captions unchanged.
+
 Use Kokoro for ALL spoken lines with one stable, distinct stock voice per narrator/character. Record actual voice IDs, speed and per-utterance files. Generate suitable instrumental music and motivated sound effects with the documented Stable Audio Small model, not synthesized beeps, stock placeholder tones, or an unannounced provider. A prompt is not a generated audio asset. If the required local generation cannot run, preserve the plan and report the exact blocker rather than calling silent or substitute audio a successful test.
 
 Keep measured speech placement on a canonical 48 kHz sample clock. Derive each shot's duration from its actual audio lines plus intentional pauses and effect tails. Give short panels enough dwell time; do not speed through speech to fit an arbitrary video length. Never overlap dialogue accidentally. Mix from stems, then render one master rather than concatenating separately encoded clips.

@@ -41,6 +41,8 @@ No private skill dependency is required. Read `skills/create-spread-motion-comic
 
 This downloads about 2 GB of pinned official weights plus isolated dependencies; allow at least 5 GB free. Do not run this command merely to install the skill. The default check without `--restore` performs no downloads. `--test` generates fresh local Kokoro, music and SFX smoke clips and does not certify listening quality.
 
+English AI initialisms use explicit letter-name phonemes; display captions stay unchanged. See the pronunciation and cache-safety section in `references/audio.md` within the motion-comic skill.
+
 Use the runtime's Python and `kokoro_tts_vn.py --help` / `sa3_vn_audio.py --help` with the documented story schema. Keep one distinct available stock voice per actual speaker. Narration-only comics remain narration-only. The adapters produce measured speech timelines, voice stems, generated music/SFX and mixing diagnostics. Map the timeline to the source panel rectangles, accounting for silent camera-transition gaps; never estimate speech duration from text.
 
 ## Tests and limitations

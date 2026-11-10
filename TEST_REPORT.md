@@ -9,3 +9,10 @@ Executed from the staged public package on Linux with Python 3.12 on 2026-11-10:
 - Both SKILL.md files passed the available skill frontmatter validator.
 
 No model downloads, fresh full voice/music/SFX production, host image generation or independent listening were performed for this source-packaging release. Earlier private end-to-end production is not included as public test evidence. No CI workflow is added by this release. Final media still needs visual and listening review by its producer.
+
+## AI initialism correction
+
+- Nine pronunciation-helper regression tests passed: exact/legacy/dotted AI, possessives/plurals, repeated occurrences, case/word boundaries, source preservation, language/vocabulary guards.
+- Actual pinned kokoro-onnx/espeak phonemization demonstrated `A I` → /ɐ ˈaɪ/ while explicit AI override is /ˌeɪˈaɪ/.
+- Actual Kokoro inference of a full sentence with the override produced finite, nonzero audio. This is a runtime smoke test, not certified perceptual listening.
+- Adapter applies the helper at each subtitle-page synthesis call with `is_phonemes=True`, records pronunciation version, and invalidates pre-fix caches.
