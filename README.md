@@ -57,4 +57,4 @@ Audio numerical tests require NumPy/SciPy/SoundFile. See TEST_REPORT.md for comm
 
 Original project contributions are offered under the repository's CC0 1.0 Universal license, only to the extent the contributors hold those rights. External models, packages, FFmpeg and image-generation services retain their own terms. See THIRD_PARTY_NOTICES.md and PROVENANCE.md. No model weights, private comic, private conversation, generated test video, credentials or personal archive is distributed.
 
-YouTube deliverables include a public-ready plain-text description and matching Markdown metadata, with title and tags separate. Private delivery and QA information stays outside public copy.
+YouTube deliverables include a public-ready plain-text description and matching Markdown metadata, starting with the title and ending with comma-separated tags, with separate title and tags fields also retained. Private delivery and QA information stays outside public copy.

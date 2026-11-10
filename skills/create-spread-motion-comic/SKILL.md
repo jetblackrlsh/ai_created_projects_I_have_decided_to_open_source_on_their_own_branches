@@ -44,7 +44,7 @@ Use **640 × 360 at 24 fps** as the default production and delivery resolution. 
 
 ## Public-ready YouTube metadata
 
-Read [YouTube metadata](references/youtube-metadata.md) before delivery. Always provide a complete public-ready description as `youtube-description.txt` and the same text in a clearly separated Description section of `youtube-metadata.md`, with Title and Tags separate. Never mix private delivery or QA notes into the description. Run `scripts/check_youtube_description.py` on the description and manually verify every claim and public link.
+Read [YouTube metadata](references/youtube-metadata.md) before delivery. Always provide a complete public-ready description as `youtube-description.txt` and the same text in a clearly separated Description section of `youtube-metadata.md`, starting with the exact video title and ending with comma-separated tags. Retain separate Title and Tags fields in the metadata too. Never mix private delivery or QA notes into the description. Run `scripts/check_youtube_description.py` on the description and manually verify every claim and public link.
 
 ## Checkpoint and deliver
 

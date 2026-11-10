@@ -6,6 +6,10 @@ from pathlib import Path
 
 def errors(text):
     result = []
+    lines = [line.strip() for line in text.splitlines() if line.strip()]
+    if len(lines) < 3: result.append("requires title, body, and final tag list")
+    if lines and ("," not in lines[-1] or any(not tag.strip() for tag in lines[-1].split(","))):
+        result.append("last line must be comma-separated tags")
     if not text.strip(): result.append("empty description")
     if len(text) > 5000: result.append("description exceeds 5000 characters")
     patterns = {
