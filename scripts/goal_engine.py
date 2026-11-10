@@ -109,6 +109,7 @@ def _measure(goal,agent,context,year):
         if not target.get('alive'):return year,False,'failed','Protected character died'
         return year,year>=goal['year'],'active',None
     if kind=='win_elections':
+        if society.get('leadership_system','elections')!='elections':return 0,False,'blocked','Leadership is not determined by elections'
         value=sum(1 for election in society.get('elections',[]) if str(election.get('winner_id'))==aid);done=value>=goal['count']
     elif kind=='improve_society':
         metric='integrity' if goal['metric']=='election_integrity' else goal['metric']
@@ -124,7 +125,7 @@ def _measure(goal,agent,context,year):
                   (kind=='win_duels' or str(goal['target_id']) in {str(f['id']) for f in bout.get('starting_state',[])}))
         done=value>=goal['count']
     elif kind=='win_tournaments':
-        value=sum(1 for event in (context.get('story') or {}).get('encounters',[]) if event.get('result',{}).get('champion_id')==aid)
+        value=agent.get('government_tournament_wins',0)+sum(1 for event in (context.get('story') or {}).get('encounters',[]) if event.get('result',{}).get('champion_id')==aid)
         done=value>=goal['count']
     elif kind=='reach_rank':
         value=agent.get('app_rank','Unranked');done=value in RANKS and RANKS.index(value)>=RANKS.index(goal['rank'])
@@ -196,7 +197,11 @@ def plan_goals(goals,agent,context,year):
         if kind=='obtain_power':directives.setdefault('prefer_power',goal['power'])
         if kind=='get_job':directives.setdefault('desired_job',goal['job'])
         if kind=='earn_wealth':directives.setdefault('desired_job','entrepreneur')
-        if kind in ('become_leader','win_elections','improve_society'):directives['campaign_bias']=.25
+        system=(context.get('society') or {}).get('leadership_system','elections')
+        if kind in ('become_leader','win_elections','improve_society') and system=='elections':directives['campaign_bias']=.25
+        if kind=='become_leader' and system in ('rank','tournament'):
+            directives['training_bias']=.25
+            if system=='rank':directives['media_bias']=.25
         if kind=='improve_society':
             directives['media_bias']=.25;directives['civic_focus']='pluralist'
         if kind=='treat_injuries':

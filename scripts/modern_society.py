@@ -5,6 +5,7 @@ network calls, communications or predictions about actual people/governments.
 """
 import math
 import random
+from government_systems import select_leadership
 from power_effects import WorldPowers, POWER_EFFECTS
 from story_setup import init_story, tick_story, export_story, prepare_story, MAX_YEARS
 from scenario_customization import apply_world
@@ -32,7 +33,7 @@ def as_tuple(value):
 
 def society_state():
     return {'freedom': 80.0, 'integrity': 80.0, 'press_freedom': 80.0,
-            'regime': 'democracy', 'leader_id': None, 'year': 0,
+            'regime': 'democracy', 'leadership_system': 'elections', 'leader_id': None, 'year': 0,
             'laws': {'free_press': True, 'ranking_app': True},
             'terms': {}, 'elections': [], 'democratic_years': 0,
             'democratic_breakdowns': 0, 'democratic_recoveries': 0,
@@ -203,6 +204,10 @@ def govern(state, leader):
         if state['laws'].get('free_press'): state['press_freedom'] += .5
         else: state['press_freedom'] -= 2
     for k in ('freedom', 'integrity', 'press_freedom'): state[k] = clamp(state[k])
+    if state.get('leadership_system','elections') != 'elections':
+        state['regime'] = state['leadership_system']+'_rule'
+        state['min_freedom'] = min(state['min_freedom'], state['freedom'])
+        return False
     if state['freedom'] < 35 or state['integrity'] < 30:
         state['regime'] = 'authoritarian'
     elif state['freedom'] >= 55 and state['integrity'] >= 50:
@@ -253,6 +258,7 @@ def run_modern(seed, years, starting_pop, power_rate, mutation_rate, power_tree,
     if scenario is not None and years>MAX_YEARS:raise ValueError('Tracked stories support at most10000 years')
     powers = WorldPowers(agents, rng, resume_state.get('powers') if resume_state else None)
     if not resume_state:apply_world(scenario,powers,society=state,counter_tech=state['counter_tech'])
+    if state.get('leadership_system','elections') != 'elections':state['regime']=state['leadership_system']+'_rule'
     terminal = resume_state.get('terminal', False) if resume_state else False
     intervention_year = current_year + 1
     if policy_override:
@@ -319,7 +325,10 @@ def run_modern(seed, years, starting_pop, power_rate, mutation_rate, power_tree,
             current_leader=agents.get(state['leader_id'])
             if current_leader: current_leader['reputation']=clamp(current_leader['reputation']-2)
             event('economy', 'A food shortage injured citizens and reduced trust in the administration.')
-        if year==1 or (year-1)%4==0 or state['leader_id'] is None or not agents.get(state['leader_id'],{}).get('alive',False):
+        if state.get('leadership_system','elections') != 'elections':
+            accession=select_leadership(state,agents,rng,year)
+            if accession:event('government',accession)
+        elif year==1 or (year-1)%4==0 or state['leader_id'] is None or not agents.get(state['leader_id'],{}).get('alive',False):
             election=run_election(state,agents,rng,year)
             if election:event('election',f"{'Free' if election['free'] else 'Restricted'} election: {election['winner']} ({election['party']}) won {max(election['votes'].values())} of {election['eligible_voters']} ballots.")
         leader=agents.get(state['leader_id'])
@@ -352,6 +361,7 @@ def run_modern(seed, years, starting_pop, power_rate, mutation_rate, power_tree,
     adults=[a for a in living if a['age']>=18]
     share=len(powered)/len(living) if living else 0
     political='extinction' if not living else ('authoritarian' if state['regime']=='authoritarian' else ('free_democracy' if state['freedom']>=60 else 'constrained_democracy'))
+    if living and state.get('leadership_system','elections')!='elections':political=state['leadership_system']+'_government'
     snapshot={'year':current_year,'agents':agents,'next_id':next_id,'society':state,'chronicle':chronicle,
               'powers':powers.state,'story':story,'rng_state':rng.getstate(),'terminal':not living}
     return {'seed':seed,'mode':'modern','engine_version':4,'story':export_story(story),'years_simulated':current_year,
@@ -359,7 +369,7 @@ def run_modern(seed, years, starting_pop, power_rate, mutation_rate, power_tree,
             'combined_powered_agents':sum(len(powers_of(a))>1 for a in living),
             'surviving_powers':{p:sum(p in powers_of(a) for a in living) for p in power_tree if any(p in powers_of(a) for a in living)},
             'final_population':len(living),'final_powered_count':len(powered),'final_power_share':share,
-            'society_outcome':political,'democracy_survived':bool(living) and state['democratic_breakdowns']==0,
+            'society_outcome':political,'leadership_system':state.get('leadership_system','elections'),'democracy_survived':bool(living) and state.get('leadership_system','elections')=='elections' and state['democratic_breakdowns']==0,
             'freedom':state['freedom'],'election_integrity':state['integrity'],'press_freedom':state['press_freedom'],
             'elections_held':len(state['elections']),'free_elections':sum(e['free'] for e in state['elections']),
             'peaceful_transfers':state['peaceful_transfers'],'democratic_years':state['democratic_years'],

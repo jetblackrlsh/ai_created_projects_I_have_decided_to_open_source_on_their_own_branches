@@ -1,0 +1,32 @@
+{
+  "settings": {
+    "mode": "modern",
+    "years": 30,
+    "pop": 40,
+    "seed": 42
+  },
+  "world": {
+    "society": {
+      "leadership_system": "tournament",
+      "leadership_interval": 4,
+      "government_tournament_size": 16,
+      "government_tournament_rounds": 30
+    }
+  },
+  "characters": [
+    {
+      "key": "aspirant",
+      "name": "Ari",
+      "age": 25,
+      "powers": [
+        "Strength"
+      ],
+      "main_character": true,
+      "goals": [
+        {
+          "type": "become_leader"
+        }
+      ]
+    }
+  ]
+}

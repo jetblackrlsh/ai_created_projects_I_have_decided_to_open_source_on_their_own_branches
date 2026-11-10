@@ -1,4 +1,4 @@
-# Superpower World Sim v4
+# Superpower World Sim v4.1
 
 An offline, standard-library Python engine and AI-agent skill for fictional superpowered civilizations. Run many seeded worlds, compare their outcomes, and explore one world's named heroes, villains and dynasties. Stop at checkpoints and steer future history through decrees and events.
 
@@ -25,6 +25,17 @@ Open `report.md` for the complete featured-world major-event chronicle and aggre
 - Adjust founders, initial power rate, mutation rate, seed, horizon, wheel interval, tribal matchup and wall year.
 - Save complete world state, resume later, and branch the same checkpoint into alternative choices.
 - Inspect objective secrets versus public beliefs, family relationships, hero mantles, succession, technologies and mortality statistics.
+
+## Selectable governments (v4.1)
+
+Modern scenarios can set `world.society.leadership_system` to `elections` (unchanged default), `rank`, or `tournament`. See `assets/scenarios/rank-government.json` and `assets/scenarios/tournament-government.json`.
+
+- **Rank government:** each year the eligible adult with the highest numeric public app score leads. S–F letters are coarse labels; numeric scores resolve within-band differences. Exact ties retain an eligible incumbent, otherwise lowest stable ID wins. No phone, prison, hospitalization, quarantine or stasis excludes a candidate. Banning the app creates a vacancy until a ranking is available. No hidden strength-only rank replaces the public app.
+- **Tournament government:** a nonlethal championship appoints the leader in year 1 and every four years, or immediately when the incumbent becomes ineligible. Adults must also have injury below .65 and energy at least 30. Up to 64 compete; larger populations use a seeded lottery with an incumbent defense slot. One eligible adult accedes without claiming a tournament win. None means vacancy. Brackets, action traces and seeded draw advancement are retained. Government bouts award an attributed championship counter, but no world injuries, fatigue, stolen powers or free mastery.
+
+Configure `leadership_interval` (1..20, tournament only), `government_tournament_size` (2..64), and `government_tournament_rounds` (1..100). Latest 64 government brackets and 512 succession changes are retained, with lifetime championship counters. Leaders govern through their actual party and existing law/resource effects. High rank or combat skill does not guarantee compassionate government. Election goals are blocked in these systems; leadership goals bias relevant practice and, for rank rule, honest publicity. Government championships count toward tournament goals.
+
+These are non-democratic selection constitutions even if civil liberties stay high. Reports identify rank/tournament government separately; they never count those worlds as surviving electoral democracies. Democratic impeachment does not apply. Existing elections and the separate monarch mode remain unchanged. Save schema4 remains compatible; older modern saves default to elections. Selection is annual rather than instantaneous within a year.
 
 ## Custom stories, rivals and arenas
 

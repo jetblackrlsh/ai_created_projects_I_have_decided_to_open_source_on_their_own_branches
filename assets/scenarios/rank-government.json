@@ -1,0 +1,29 @@
+{
+  "settings": {
+    "mode": "modern",
+    "years": 30,
+    "pop": 40,
+    "seed": 42
+  },
+  "world": {
+    "society": {
+      "leadership_system": "rank"
+    }
+  },
+  "characters": [
+    {
+      "key": "aspirant",
+      "name": "Ari",
+      "age": 25,
+      "powers": [
+        "Strength"
+      ],
+      "main_character": true,
+      "goals": [
+        {
+          "type": "become_leader"
+        }
+      ]
+    }
+  ]
+}

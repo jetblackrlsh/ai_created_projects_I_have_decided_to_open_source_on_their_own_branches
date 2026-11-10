@@ -54,10 +54,13 @@ def validate_world_settings(data):
     tech=world.get('counter_tech',[])
     if not isinstance(tech,list) or len(tech)>20 or any(not isinstance(t,str) or not t.strip() or len(t)>100 for t in tech):raise ValueError('Use at most20 named counter technologies')
     society=world.get('society',{})
-    if not isinstance(society,dict) or set(society)-{'freedom','integrity','press_freedom','regime'}:raise ValueError('Unknown society condition')
+    if not isinstance(society,dict) or set(society)-{'freedom','integrity','press_freedom','regime','leadership_system','leadership_interval','government_tournament_size','government_tournament_rounds'}:raise ValueError('Unknown society condition')
     for field in ('freedom','integrity','press_freedom'):
         if field in society:bounded(society[field],0,100,field)
     if 'regime' in society and society['regime'] not in ('democracy','authoritarian'):raise ValueError('Invalid starting regime')
+    if society.get('leadership_system','elections') not in ('elections','rank','tournament'):raise ValueError('Invalid leadership system')
+    for field,lo,hi in [('leadership_interval',1,20),('government_tournament_size',2,64),('government_tournament_rounds',1,100)]:
+        if field in society:bounded(society[field],lo,hi,field,True)
     relationships=data.setdefault('relationships',[])
     if not isinstance(relationships,list) or len(relationships)>128:raise ValueError('Use at most128 starting relationships')
     for r in relationships:

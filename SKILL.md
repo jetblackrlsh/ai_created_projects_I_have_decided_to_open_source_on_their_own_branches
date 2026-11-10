@@ -5,7 +5,7 @@ description: Run seeded superpower worlds, customizable goal-driven main charact
 
 # Superpower World Sim
 
-Run the bundled Python 3 standard-library v4 engine. Every one of the 53 defined powers has a concrete state-changing action, with energy, cooldowns, conditions and limits. Successful use earns mastery that improves efficiency and supported effects; disuse can decay it. Repertoires can combine up to three powers, and Siphon can permanently transfer one. Use its measured results as creative simulation outputs, not scientific predictions. Require no paid API, external service, or graphical application.
+Run the bundled Python 3 standard-library v4.1 engine. Every one of the 53 defined powers has a concrete state-changing action, with energy, cooldowns, conditions and limits. Successful use earns mastery that improves efficiency and supported effects; disuse can decay it. Repertoires can combine up to three powers, and Siphon can permanently transfer one. Use its measured results as creative simulation outputs, not scientific predictions. Require no paid API, external service, or graphical application.
 
 ## Configure an experiment
 
@@ -32,6 +32,12 @@ python3 <skill_dir>/scripts/simulate_world.py \
 Customize `--pop`, `--power-rate`, `--mutation-rate`, `--wheel-interval`, `--tribe-a`, `--tribe-b`, and `--wall-year`. Set `--select-world auto` to feature the highest-drama run, or use a 1-based world index. Seeds advance by 97 across a batch. Runtime depends on population, years, runs and hardware; do not promise a fixed completion time.
 
 Verify nonempty `aggregate_stats` and `featured_world` in JSON, and a readable Markdown report. Both outputs include the featured world's full major-event chronicle. The JSON additionally includes agents and family relationships in evolution, monarch, wheel and modern modes; all modes include modeled food reserves (individual worlds under world_resources; versus under food_reserves). Report them as abstract stock units, not kilograms or precise nutrition. Only the featured world's detailed history is exported, not every world in the batch.
+
+## Select leadership rules
+
+In modern mode, set scenario `world.society.leadership_system` to `elections` (default), `rank` or `tournament`. Use `assets/scenarios/rank-government.json` or `assets/scenarios/tournament-government.json`. Rank rule chooses the highest eligible adult's numeric public app score annually, not merely the S–F letter; exact ties retain the incumbent, then use lowest ID. No phone or banned app means no eligible ranking. Tournament rule appoints the nonlethal championship winner every four years or when the incumbent is unavailable; sole eligible accession is not a tournament win. Adults in confinement, hospital, quarantine or stasis cannot lead; tournament entrants also need injury<.65 and energy>=30. Fields `leadership_interval`, `government_tournament_size` and `government_tournament_rounds` provide bounded tournament options. More than the entrant cap uses a seeded lottery preserving an eligible incumbent's slot.
+
+Actual leader policies affect society. Retained government brackets/leadership history and individual championship counters provide evidence. Government bouts do not spend world energy, injure agents or grant mastery; the political appointment is their consequence. These are rank/tournament constitutions, not electoral democracies, and no democratic-impeachment guarantee applies. Rank score can change through media and reputation, not only power. Election goals report blocked outside election government. Old saves retain elections unless already configured otherwise. Monarch remains a separate unchanged mode. Read README's selectable-government section before narrating succession.
 
 ## Custom characters, goals and arenas
 

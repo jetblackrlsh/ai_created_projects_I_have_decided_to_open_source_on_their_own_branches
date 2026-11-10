@@ -103,6 +103,7 @@ def _ref(ref,keys,agents):
 
 def init_story(agents,scenario,year=0,mode=None):
     if scenario is None:return None
+    if mode is not None and mode!='modern' and scenario.get('world',{}).get('society',{}).get('leadership_system','elections')!='elections':raise ValueError('Alternate leadership systems require modern mode')
     keys={};used=set();reserved={c['id'] for c in scenario['characters'] if 'id' in c};free=iter(sorted(agents))
     for c in scenario['characters']:
         aid=c.get('id')

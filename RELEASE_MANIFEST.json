@@ -1,13 +1,15 @@
 {
   "project": "superpower-world-sim",
-  "version": 4,
+  "version": "4.1",
   "release_date": "2026-11-10",
-  "provenance": "Owner-approved original extensions: nonlethal traced duels/tournaments, configured rivals and tracked main characters, broad scenario customization and 19 measurable behavior-driving goals. Original 53-power world retained. Synthetic examples only; no private history imported or reconstruction claim.",
+  "provenance": "Owner-approved original extensions: nonlethal traced duels/tournaments, configured rivals and tracked main characters, broad scenario customization and 19 measurable behavior-driving goals. Original 53-power world retained. Synthetic examples only; no private history imported or reconstruction claim. Adds selectable public-rank or nonlethal-tournament leadership with actual policy effects and saved succession evidence.",
   "verification": {
-    "unit_integration_tests": 101,
+    "unit_integration_tests": 108,
     "stability_worlds": 35,
     "stability_years_per_world": 100,
-    "seeded_resume": "exact tested in all individual modes, including active goals in modern"
+    "seeded_resume": "exact tested in all individual modes, including active goals in modern",
+    "government_batch_worlds": 10,
+    "government_batch_years": 12
   },
   "manifest_excludes_itself": true,
   "excluded": [
@@ -26,17 +28,17 @@
     },
     {
       "path": "README.md",
-      "size_bytes": 12145,
+      "size_bytes": 14458,
       "mode": "644",
-      "git_blob_sha1": "9b88d66fa1fd898e3e80471ebea80f0d2fb795e7",
-      "sha256": "2177d9ad3f7c3b47a3ab63a6108858389b0a0014447eb8e800737214024f194b"
+      "git_blob_sha1": "fd83976175a69d2a514107de86761bc1e0f99fe0",
+      "sha256": "cf4a80b2b7cc14cb0c9ffb54eb9714cd8f165a06742a037d2083e5c27c1330ca"
     },
     {
       "path": "SKILL.md",
-      "size_bytes": 10647,
+      "size_bytes": 12296,
       "mode": "644",
-      "git_blob_sha1": "e55e859bedb5a4be845bb500fe25678a5e08a35f",
-      "sha256": "89f04ad5279e01c73643f90bdc26865d53d951681efcf40f6683e7e109884bed"
+      "git_blob_sha1": "918145d05b62044003160beb65daa7b5bdbfdb51",
+      "sha256": "ecd3a4b04db319935238702bb7ee4b1365dc67c4e038782ff84534a34388a208"
     },
     {
       "path": "THIRD_PARTY_NOTICES.md",
@@ -67,11 +69,25 @@
       "sha256": "7287921e3b1dde90ac81e90352b2b2089c8874859c8677e0f8d3f894c80b2f63"
     },
     {
+      "path": "assets/scenarios/rank-government.json",
+      "size_bytes": 421,
+      "mode": "644",
+      "git_blob_sha1": "ff2c8dad53e07c418a989d43ea8a9d2599d3834a",
+      "sha256": "da0aaf6c7681ebd3da36a184449a0b7d1746a7d6b1e56ce5b0bba251a88864bf"
+    },
+    {
       "path": "assets/scenarios/rivals-and-main-characters.json",
       "size_bytes": 762,
       "mode": "644",
       "git_blob_sha1": "a4480f0d4ec95b61c548f4032ff1115f5e18a2bd",
       "sha256": "a2c5d618573759482a4ee63219153f59fbf59d384d49d869ed721208677ecb95"
+    },
+    {
+      "path": "assets/scenarios/tournament-government.json",
+      "size_bytes": 541,
+      "mode": "644",
+      "git_blob_sha1": "be59380b795f6393f6e2ecae2faffda2c56e4b0d",
+      "sha256": "962997c6013b1a896114d679693be540ee6195c790cdc742c7b562bdca22c4bc"
     },
     {
       "path": "references/characters-and-goals.md",
@@ -138,10 +154,17 @@
     },
     {
       "path": "scripts/goal_engine.py",
-      "size_bytes": 13084,
+      "size_bytes": 13544,
       "mode": "644",
-      "git_blob_sha1": "0d44d99cb5411ba4d048210b04dfccead72d6230",
-      "sha256": "814a2dc981f4c1d7056291e85001517156491f1a7cddaaa6b9c67fe06d7c8f58"
+      "git_blob_sha1": "87489af3ffb638e14c32bb8951c2d4ae05f27d85",
+      "sha256": "a8fb4bd11264b2d8ad2e7edd6167c7d92d4feb91170e712933b27db5e1253514"
+    },
+    {
+      "path": "scripts/government_systems.py",
+      "size_bytes": 3781,
+      "mode": "644",
+      "git_blob_sha1": "85eed04b6d4edb5b12d9b547c80dbd81c9fec9a1",
+      "sha256": "cc660d0ac2222bc3aa56d0b3b6f9f311b5e25a8a252740e61a631322c68a1578"
     },
     {
       "path": "scripts/modern_institutions.py",
@@ -159,10 +182,10 @@
     },
     {
       "path": "scripts/modern_society.py",
-      "size_bytes": 24517,
+      "size_bytes": 25377,
       "mode": "644",
-      "git_blob_sha1": "975e476bb6652a128c03773eeb140e968d71dd27",
-      "sha256": "c3b6dd42a6d5b196b6f65bd26eb29834290669b42e675a2645776e4e75b4cffc"
+      "git_blob_sha1": "33ceca227221f5df4c9ae32a4bc2e69b01b2acf5",
+      "sha256": "c4b2d21771e035995a27780d0e0d2f02fff3d3dfe3b9d433354ca5940e74005b"
     },
     {
       "path": "scripts/power_effects.py",
@@ -173,24 +196,24 @@
     },
     {
       "path": "scripts/scenario_customization.py",
-      "size_bytes": 9158,
+      "size_bytes": 9598,
       "mode": "644",
-      "git_blob_sha1": "350d289c23d25ecc0063567426c1ea2206b985ec",
-      "sha256": "da034381a4c67c30c1521d2a966b14941636be33ae4466dd027e28e21cdf89e2"
+      "git_blob_sha1": "2bc1af131394bb3aa5ccbc91da4d7a745419c3d8",
+      "sha256": "f4eef9a0c4537aeda40f2685153087bc7aff23fdc36335dc3927c99202bd0ebb"
     },
     {
       "path": "scripts/simulate_world.py",
-      "size_bytes": 90083,
+      "size_bytes": 90670,
       "mode": "644",
-      "git_blob_sha1": "f13597f227ed2d97fca684e7af309d8a8b7cfa19",
-      "sha256": "bc8625430b09e777dfd7603369bd95d0b87b4127136ee82912b4bba4f420cf7b"
+      "git_blob_sha1": "253b1bf2709bd29445def8bfccc0253dd0d8d715",
+      "sha256": "f8b51b5cd899db950fe2f095a7ebc99f6e4c496ac2b45c0e9a9da1f5c7c33752"
     },
     {
       "path": "scripts/story_setup.py",
-      "size_bytes": 19054,
+      "size_bytes": 19263,
       "mode": "644",
-      "git_blob_sha1": "2486ebab86efa2ced6d53eb1f30d56be45de2360",
-      "sha256": "37ede76928faae62e9f5433b7ecace5474546ec5462fb414591c59fe183d58f5"
+      "git_blob_sha1": "a9b75a505e2d5cd0caac9c52ebbd0f14c0b48486",
+      "sha256": "0ad2bd580f20c1f6f5f2eee92ad2bfd0b386b2a0677c031c8963ee55dcbe6394"
     },
     {
       "path": "scripts/test_arena_integration.py",
@@ -240,6 +263,13 @@
       "mode": "644",
       "git_blob_sha1": "dafdde13150c4b78481c7043335f024f6aa79a40",
       "sha256": "203fa97dfbd890c9c51404bd27ad79ab95a84e41984b94647ed53c2f4ad094c3"
+    },
+    {
+      "path": "scripts/test_government_systems.py",
+      "size_bytes": 6397,
+      "mode": "644",
+      "git_blob_sha1": "d4a13ffa2259976346aefb5b53a0dd5c9858e791",
+      "sha256": "cde2873bbd890e1f82cebee0bff462bcba420c60c7c16c0be0deea67c33002b9"
     },
     {
       "path": "scripts/test_modern_institutions.py",

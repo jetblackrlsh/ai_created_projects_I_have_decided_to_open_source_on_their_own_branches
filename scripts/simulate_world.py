@@ -1426,6 +1426,7 @@ def format_markdown_report(summary: Dict[str, Any]) -> str:
         lines.append(f"- **{feat['tribe_a'].title()} Losses**: {feat['losses_combat_a']} combat, {feat['losses_famine_a']} famine (Final pop: {feat['final_pop_a']})")
         lines.append(f"- **{feat['tribe_b'].title()} Losses**: {feat['losses_combat_b']} combat, {feat['losses_famine_b']} famine (Final pop: {feat['final_pop_b']})")
     elif mode == "modern":
+        lines.append(f"- **Leadership System**: {feat.get('leadership_system','elections')}")
         lines.append(f"- **Society Outcome**: {feat['society_outcome']}")
         lines.append(f"- **Final Population**: {feat['final_population']} ({feat['final_powered_count']} powered)")
         lines.append(f"- **Freedom / Election Integrity / Press Freedom**: {feat['freedom']:.1f} / {feat['election_integrity']:.1f} / {feat['press_freedom']:.1f}")
@@ -1645,9 +1646,13 @@ def main() -> None:
             "free_democracy_worlds": sum(w["society_outcome"] == "free_democracy" for w in all_worlds),
             "constrained_democracy_worlds": sum(w["society_outcome"] == "constrained_democracy" for w in all_worlds),
             "authoritarian_worlds": sum(w["society_outcome"] == "authoritarian" for w in all_worlds),
+            "rank_government_worlds": sum(w["society_outcome"] == "rank_government" for w in all_worlds),
+            "tournament_government_worlds": sum(w["society_outcome"] == "tournament_government" for w in all_worlds),
             "extinct_worlds": sum(w["society_outcome"] == "extinction" for w in all_worlds),
             "mean_final_freedom": round(sum(w["freedom"] for w in all_worlds)/args.runs, 2),
             "mean_election_integrity": round(sum(w["election_integrity"] for w in all_worlds)/args.runs, 2),
+            "mean_government_tournaments": round(sum(w["government"].get("government_tournaments_held",0) for w in all_worlds)/args.runs,2),
+            "mean_leadership_changes": round(sum(w["government"].get("leadership_changes",0) for w in all_worlds)/args.runs,2),
             "mean_elections_held": round(sum(w["elections_held"] for w in all_worlds)/args.runs, 2),
             "mean_peaceful_transfers": round(sum(w["peaceful_transfers"] for w in all_worlds)/args.runs, 2),
             "mean_unemployment_rate": round(sum(w["unemployment_rate"] for w in all_worlds)/args.runs, 4),
