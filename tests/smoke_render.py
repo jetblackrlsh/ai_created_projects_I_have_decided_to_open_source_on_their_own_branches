@@ -15,4 +15,14 @@ with tempfile.TemporaryDirectory(prefix='spread-public-test-') as td:
  original=m['source_sha256'];m['source_sha256']='0'*64;result=execute(m);assert result.returncode and 'Source hash mismatch' in result.stderr;m['source_sha256']=original
  m['shots'][0]['duration']=3;result=execute(m);assert result.returncode and 'Audio/timeline mismatch' in result.stderr;m['shots'][0]['duration']=.5
  m['shots'][1]['rect']=[0,0,201,100];result=execute(m);assert result.returncode and 'Invalid source rectangle' in result.stderr
- print('PASS: zoom, cached hold, full decode, source-integrity, duration and bounds negative controls')
+ m['shots'][1]['rect']=[0,0,100,100]
+ for key in ['width','height','fps']:m.pop(key)
+ result=execute(m);assert result.returncode==0,result.stderr
+ def dimensions():
+  q=json.loads(subprocess.check_output(['ffprobe','-v','error','-select_streams','v:0','-show_entries','stream=width,height,r_frame_rate','-of','json',str(p/'out.mp4')]))
+  return q['streams'][0]
+ d=dimensions();assert (d['width'],d['height'],d['r_frame_rate'])==(1280,720,'24/1'),d
+ m.update(width=1920,height=1080,fps=24)
+ result=execute(m);assert result.returncode==0,result.stderr
+ d=dimensions();assert (d['width'],d['height'],d['r_frame_rate'])==(1920,1080,'24/1'),d
+ print('PASS: zoom, cached hold, full decode, integrity/timing/bounds rejection, omitted-setting 720p24 default and explicit 1080p24 override')

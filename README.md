@@ -29,6 +29,8 @@ For a real production, first prepare a finished 48 kHz mix and a reviewed manife
 
     python3 skills/create-spread-motion-comic/scripts/render_spread.py manifest.json output.mp4
 
+Normal production defaults to **1280 × 720 at 24 fps**, including the primary delivered copy. Omit width/height/fps in the manifest for this default. Explicit width 1920 and height 1080 remain supported when the user requests a higher-resolution version.
+
 The CLI validates source SHA-256, rectangles, IDs and duration. It exits nonzero on invalid input or failed encoding. Every output frame is contained/letterboxed, never stretched. `end_rect` enables brief overview-to-panel zooms; separate those from spoken full-panel holds. The accompanying `.render.json` records technical checks, not perceptual approval.
 
 ## Local audio production

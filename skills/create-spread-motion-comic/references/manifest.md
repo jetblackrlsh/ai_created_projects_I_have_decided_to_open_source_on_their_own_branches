@@ -4,7 +4,7 @@ Use JSON paths relative to the manifest directory, or absolute paths. Source coo
 
 - `source`: original image path; `source_sha256`: exact lowercase SHA-256.
 - `audio`: canonical finished mix path (not a stem or placeholder).
-- `width`, `height`: positive even output dimensions, default 1280 × 720; `fps`: default 24.
+- Optional `width`, `height`: positive even output dimensions, default 1280 × 720; optional `fps`: default 24. Omit all three for the normal 720p/24fps production. Use explicit higher dimensions only when requested; for example width 1920, height 1080, fps 24.
 - `shots`: ordered list. Each has `id`, `rect: [left, top, right, bottom]`, `duration` in seconds and optional `end_rect` for a gentle pan/zoom. Omit end_rect for readable holds. Rectangles must remain inside the original. Include a full-spread establishing shot explicitly if desired.
 
 Production-specific fields should include panel/page IDs, speaker/line assignments, sample-clock starts/ends, cast mapping, text-safety review, model/stem provenance and listening review. The renderer ignores extra fields and cannot validate those semantic claims.

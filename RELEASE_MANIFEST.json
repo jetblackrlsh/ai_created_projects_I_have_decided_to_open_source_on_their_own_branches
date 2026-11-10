@@ -26,16 +26,16 @@
     {
       "path": "README.md",
       "mode": "100644",
-      "bytes": 5135,
-      "sha": "fc0b26690566b6c8b3a30e00b1d9eedf99a48e11",
-      "sha256": "c8f3611dab0360a43efc1248ccb4dc027b196b2f24d67f3b38d160c2145914a2"
+      "bytes": 5392,
+      "sha": "a1e57e18576efd0e3b58cb162d9309115b4a8f21",
+      "sha256": "6044d055340108a6c488be02ce95c0d04ba9e2c49904134f648a6b9eb71dad44"
     },
     {
       "path": "TEST_REPORT.md",
       "mode": "100644",
-      "bytes": 1341,
-      "sha": "4166141e8999d29491d88d0777da0ee3111577da",
-      "sha256": "5ff167fb37163bd33a0ef76131c2bb502ac6c06e9e41dd720f4ff715462021e8"
+      "bytes": 1495,
+      "sha": "79e2e110c2eac59120cfb26cf37b62405324c49e",
+      "sha256": "97dff193cefe536fa781ba7fc3de391a9004700c35575dd73bac17e14132d401"
     },
     {
       "path": "THIRD_PARTY_NOTICES.md",
@@ -75,9 +75,9 @@
     {
       "path": "skills/create-spread-motion-comic/SKILL.md",
       "mode": "100644",
-      "bytes": 7034,
-      "sha": "11ea8b885b85bb699594b7acadcfbc7f306d600b",
-      "sha256": "32bdb8faa82a3cad5febd04d86e13ff4d6e8a7a77f56f031040715112595d10b"
+      "bytes": 7414,
+      "sha": "52f35b46db79033892a098ed5a4b56fbf4e76078",
+      "sha256": "1b46b3cf924f1a1288a72fada2b3308b9d341d93d5f83adc93346284a463c0aa"
     },
     {
       "path": "skills/create-spread-motion-comic/agents/openai.yaml",
@@ -124,9 +124,9 @@
     {
       "path": "skills/create-spread-motion-comic/references/manifest.md",
       "mode": "100644",
-      "bytes": 1666,
-      "sha": "54599f3cde937aa0627eb599eeae16eeb1a20632",
-      "sha256": "15ecc8bd34a1eb1fabd60160f02a33d894c5090a5fab4016292c6f2150ce6b9c"
+      "bytes": 1834,
+      "sha": "9a2a134ba6c9f350f44b79656e6d608c6a545ed2",
+      "sha256": "35cff92a77ccd7fe5fdc6eb7bf85d4fa243dbd6899c769f10874c0a127191384"
     },
     {
       "path": "skills/create-spread-motion-comic/references/runtime-setup.md",
@@ -215,9 +215,9 @@
     {
       "path": "tests/smoke_render.py",
       "mode": "100644",
-      "bytes": 1808,
-      "sha": "f8ab1e80c84354e0c6c0e4089fcb24a6c83d0c96",
-      "sha256": "55a0b3c29396c43752fd7d284cafa0e11c05a4db2842ff576ce58c611360958d"
+      "bytes": 2486,
+      "sha": "cddabc5eb608ab412e4c734ca0fff9db08c230f0",
+      "sha256": "9c9e0f09dbd5e34f3e12517149ec0c67e3465d4887d2decdaf265baf946f7ebf"
     }
   ],
   "manifest_self_excluded": true
