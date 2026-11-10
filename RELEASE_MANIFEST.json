@@ -1,15 +1,13 @@
 {
   "project": "superpower-world-sim",
-  "version": "4.2",
+  "version": "4.3",
   "release_date": "2026-11-10",
-  "provenance": "Owner-approved original extensions: nonlethal traced duels/tournaments, configured rivals and tracked main characters, broad scenario customization and 19 measurable behavior-driving goals. Original 53-power world retained. Synthetic examples only; no private history imported or reconstruction claim. Adds selectable public-rank or nonlethal-tournament leadership with actual policy effects and saved succession evidence. Adds independent per-power XP/mastery/rust with explicit legacy preservation, best-held ranking, named goals and individual arena potency.",
+  "provenance": "Owner-approved original extensions: nonlethal traced duels/tournaments, configured rivals and tracked main characters, broad scenario customization and 19 measurable behavior-driving goals. Original 53-power world retained. Synthetic examples only; no private history imported or reconstruction claim. Adds selectable public-rank or nonlethal-tournament leadership with actual policy effects and saved succession evidence. Adds independent per-power XP/mastery/rust with explicit legacy preservation, best-held ranking, named goals and individual arena potency. Adds owner-requested opt-in strategic war/civil-war system with faction alliances, territory fronts, resource attrition, mastery-dependent champion support, capture objectives and ceasefires.",
   "verification": {
-    "unit_integration_tests": 121,
-    "stability_worlds": 21,
-    "stability_years_per_world": 100,
-    "seeded_resume": "exact tested in all individual modes, including active goals in modern",
-    "government_batch_worlds": 10,
-    "government_batch_years": 12
+    "unit_integration_tests": 132,
+    "war_batch_worlds": 10,
+    "war_batch_years_per_world": 30,
+    "seeded_resume": "exact tested in all four individual modes with warfare"
   },
   "manifest_excludes_itself": true,
   "excluded": [
@@ -28,17 +26,17 @@
     },
     {
       "path": "README.md",
-      "size_bytes": 17197,
+      "size_bytes": 17730,
       "mode": "644",
-      "git_blob_sha1": "c93a139dd3318c33ea9685c53d252db2567e1010",
-      "sha256": "c9f632e5628a4d120117eb0951228ec21387f055a42e24e869adee8fa0eb4672"
+      "git_blob_sha1": "0e6d523f90ff0a51bb2061049cbd9843e9dbacee",
+      "sha256": "37fc40576e0a9d70d776e219954ac4d98093f6b902db5ecaa36f48f133d0a00e"
     },
     {
       "path": "SKILL.md",
-      "size_bytes": 13740,
+      "size_bytes": 15073,
       "mode": "644",
-      "git_blob_sha1": "b231d42f3ca9d091e714f604436c637a175a0057",
-      "sha256": "764b9305f7b60551b101288e381599c469ba8b000808fff0934e49f2432ee7c1"
+      "git_blob_sha1": "8ebcfe02c8297930cc18df9dc6103e3f17b043c4",
+      "sha256": "50c6a46ee4a3f5289021d42aef404834f4e9081bc3c48df3c68f7108ea114763"
     },
     {
       "path": "THIRD_PARTY_NOTICES.md",
@@ -62,11 +60,25 @@
       "sha256": "e9301497fa98ef56aaca7ede0857b9a18dc06c34040f0679c609a6bf49b1d38b"
     },
     {
+      "path": "assets/scenarios/civil-war.json",
+      "size_bytes": 1504,
+      "mode": "644",
+      "git_blob_sha1": "38c77d0ece3fd8c335a9c792a9322d85bb419e2d",
+      "sha256": "4fa9c32d33f26490acb86011001926a8ef94e9769aa60ecb8d5bdb265f4ce2d1"
+    },
+    {
       "path": "assets/scenarios/custom-goal-driven-world.json",
       "size_bytes": 4040,
       "mode": "644",
       "git_blob_sha1": "9349dfa876a3ea3e983bd4b4f63663b77ebd1aeb",
       "sha256": "23b70e9badc331cd0206cc6252ba80cbe807b7103d87332cce055bba5efd9426"
+    },
+    {
+      "path": "assets/scenarios/international-war.json",
+      "size_bytes": 1518,
+      "mode": "644",
+      "git_blob_sha1": "e1239a8d3afd2283f4326b40c6da4ff841378a17",
+      "sha256": "0e525efd5a527006a6d0ed95f53e22329a0dc090831538efa360901196d401ff"
     },
     {
       "path": "assets/scenarios/rank-government.json",
@@ -91,10 +103,10 @@
     },
     {
       "path": "references/characters-and-goals.md",
-      "size_bytes": 10045,
+      "size_bytes": 10117,
       "mode": "644",
-      "git_blob_sha1": "101b091c7fec4d4373f5e1c15c6fde2b79e6c96d",
-      "sha256": "ed5fa639160981bdd291c31ed4898df6a1a60dadccb1d63e3249cbe7f6b34904"
+      "git_blob_sha1": "fc86aca40a72d6bb50e0f74418e7aec201df178e",
+      "sha256": "5ca1847847704a64e86f7533e1abd7fe5a1fac34ef7800b85eac8e9be4cb15f7"
     },
     {
       "path": "references/expanded-systems.md",
@@ -116,6 +128,13 @@
       "mode": "644",
       "git_blob_sha1": "646bf6b828c774d8418957e3a4af4f22c7d5ff60",
       "sha256": "a1266e2124a3ab06f152f8ef5b144312481fc4aa25c0c171112ac5345219e936"
+    },
+    {
+      "path": "references/warfare.md",
+      "size_bytes": 4248,
+      "mode": "644",
+      "git_blob_sha1": "79176f32df2234fe8ad829789e64ec71f3eb561c",
+      "sha256": "4629d4001bfedf680e1e383897d35fae1fd3399fa3779e50252a881744dbbd5e"
     },
     {
       "path": "scripts/arena_runner.py",
@@ -182,10 +201,10 @@
     },
     {
       "path": "scripts/modern_society.py",
-      "size_bytes": 25607,
+      "size_bytes": 25843,
       "mode": "644",
-      "git_blob_sha1": "4f8d2e65f465a54a8ee959387ad9148248bba39b",
-      "sha256": "dc5e968bc8535d9bcf726c10b604203c99e52671670e4d7d509812d2f9b14b82"
+      "git_blob_sha1": "5fc9538f0c4bb32cd66b83748779d9bd9fb131b4",
+      "sha256": "942cb184bcc92c3965e1fe1841e731ac8ba4c6a30a1f2d47c030de6272a4370f"
     },
     {
       "path": "scripts/power_effects.py",
@@ -203,17 +222,17 @@
     },
     {
       "path": "scripts/scenario_customization.py",
-      "size_bytes": 10334,
+      "size_bytes": 10431,
       "mode": "644",
-      "git_blob_sha1": "6d6d3c030a164e123db47a04d596051045a93d26",
-      "sha256": "66fd83ce688c0fde48368602e6031f222a2b67296eaf3ab3cfcd0221054973c0"
+      "git_blob_sha1": "307149a0ce3f15fed83ca20047d934ddebf1885c",
+      "sha256": "65ecb2e0b09de3f8c0f69b8b238cc222fa237fe5c8169189f42757f56e8405d0"
     },
     {
       "path": "scripts/simulate_world.py",
-      "size_bytes": 91365,
+      "size_bytes": 91624,
       "mode": "644",
-      "git_blob_sha1": "ab91bc1357bdf32013a2e842a030890dc010f3b6",
-      "sha256": "22e3031e51d4b8dbc5d32862555c7cb91e01f960bb10215dc058036c637152c8"
+      "git_blob_sha1": "56631292ed8a7d5b557ce3989830cd98394fd2ee",
+      "sha256": "6515d19a6bbc247e2b8ad3839a9257f6fa3e92554063b8d15404831dae829759"
     },
     {
       "path": "scripts/story_setup.py",
@@ -333,6 +352,20 @@
       "mode": "644",
       "git_blob_sha1": "53b85e658ce3f420497be68eb34945d90e656566",
       "sha256": "07b9a37faa58ec7dcacc4f280cc21a305c03a182aa61e7cb2e927ddac723271c"
+    },
+    {
+      "path": "scripts/test_war_system.py",
+      "size_bytes": 4693,
+      "mode": "644",
+      "git_blob_sha1": "c453ff11b92f85144b520ed65c9959118ca095a4",
+      "sha256": "69bd740b8b81aaf3612f79925953a2806d99aeba33c4e1c6149869a23f5ebf36"
+    },
+    {
+      "path": "scripts/war_system.py",
+      "size_bytes": 9388,
+      "mode": "644",
+      "git_blob_sha1": "5295ab8c9de344af426b3fbb50899dad94df213f",
+      "sha256": "c0f6b626dc5fbece51607c96a4eb0df84a83450683dbe4b8546eba8ac3b0b827"
     }
   ]
 }

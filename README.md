@@ -133,3 +133,6 @@ Original package file SHA-256 hashes:
 - scripts/simulate_world.py: `a593e18b78fe8f725ab415de6c29b49b605e168dfbaeea35f1a9ba20196cd6b5`
 
 The owner's contributions are released under the repository's [CC0 1.0 Universal dedication](LICENSE), only to the extent of rights they hold. Third-party trademarks and rights are not waived. See [notices](THIRD_PARTY_NOTICES.md) and [release manifest](RELEASE_MANIFEST.json).
+
+## v4.3: configurable strategic wars
+Start a civil war or international war already in progress, with real factions, coalitions, border territories, fortifications, army/supply/morale states, capture objectives and ceasefires. Character allegiances and independently mastered powers affect battle strength. Save/resume preserves warfare. See `references/warfare.md` and the two complete `assets/scenarios/*war.json` examples. Armies are abstract units; this does not add detailed tactics or automatically replace political leaders.

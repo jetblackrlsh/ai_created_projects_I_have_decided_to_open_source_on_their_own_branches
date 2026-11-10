@@ -5,7 +5,7 @@ description: Run seeded superpower worlds, customizable goal-driven main charact
 
 # Superpower World Sim
 
-Run the bundled Python 3 standard-library v4.2 engine. Every one of the 53 defined powers has a concrete state-changing action, with energy, cooldowns, conditions and limits. Successful use earns mastery separately for the ability used; its own mastery improves efficiency and effects, and each ability rusts independently. Repertoires can combine up to three powers, and Siphon can permanently transfer one. Use its measured results as creative simulation outputs, not scientific predictions. Require no paid API, external service, or graphical application.
+Run the bundled Python 3 standard-library v4.3 engine. Every one of the 53 defined powers has a concrete state-changing action, with energy, cooldowns, conditions and limits. Successful use earns mastery separately for the ability used; its own mastery improves efficiency and effects, and each ability rusts independently. Repertoires can combine up to three powers, and Siphon can permanently transfer one. Use its measured results as creative simulation outputs, not scientific predictions. Require no paid API, external service, or graphical application.
 
 ## Configure an experiment
 
@@ -32,6 +32,12 @@ python3 <skill_dir>/scripts/simulate_world.py \
 Customize `--pop`, `--power-rate`, `--mutation-rate`, `--wheel-interval`, `--tribe-a`, `--tribe-b`, and `--wall-year`. Set `--select-world auto` to feature the highest-drama run, or use a 1-based world index. Seeds advance by 97 across a batch. Runtime depends on population, years, runs and hardware; do not promise a fixed completion time.
 
 Verify nonempty `aggregate_stats` and `featured_world` in JSON, and a readable Markdown report. Both outputs include the featured world's full major-event chronicle. The JSON additionally includes agents and family relationships in evolution, monarch, wheel and modern modes; all modes include modeled food reserves (individual worlds under world_resources; versus under food_reserves). Report them as abstract stock units, not kilograms or precise nutrition. Only the featured world's detailed history is exported, not every world in the batch.
+
+## Start a war or civil war
+
+Use `assets/scenarios/civil-war.json` or `assets/scenarios/international-war.json` and read `references/warfare.md`. Configure `world.warfare` with factions, mutual allies, territories and mutual borders, and named wars. Set `start_year: 0` for a conflict already active at the beginning. Match character `faction` exactly to a declared faction ID to contribute to that side. Configure territorial capture objectives, supplies, morale, armies and fortifications. Run through the normal scenario command. War state, fronts, outcomes, army losses and explicit power-support traces are exported under `warfare` and preserved in checkpoints. This opt-in system works in evolution, monarch, wheel and modern, not aggregate versus or standalone arenas. Without warfare, existing worlds keep their prior behavior.
+
+Describe results as abstract strategic simulation. Do not call army-unit losses named-person deaths or narrate unrecorded tactical feats. Power support is an explicit strategic projection of existing ability profiles and independent mastery, not a second invocation of every literal world power effect. Faction objectives are measurable; character-specific territorial goal types are not added. Do not imply a territorial victory automatically changes the world's separate elected/royal leader.
 
 ## Configure separate power mastery
 

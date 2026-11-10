@@ -54,7 +54,9 @@ def validate_world_settings(data):
     for field in ('tribe_a','tribe_b'):
         if field in settings and settings[field] not in ('speed','strength','intelligence'):raise ValueError('Invalid tribe')
     world=data.setdefault('world',{})
-    if not isinstance(world,dict) or set(world)-{'resources','laws','counter_tech','society'}:raise ValueError('Unknown initial world fields')
+    if not isinstance(world,dict) or set(world)-{'resources','laws','counter_tech','society','warfare'}:raise ValueError('Unknown initial world fields')
+    from war_system import validate_warfare
+    validate_warfare(world.get('warfare'))
     resources=world.get('resources',{})
     if not isinstance(resources,dict) or set(resources)-RESOURCES:raise ValueError('Unknown starting resource')
     for key,value in resources.items():bounded(value,0,10000,key)

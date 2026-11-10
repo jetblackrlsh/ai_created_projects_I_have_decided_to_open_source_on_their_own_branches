@@ -21,6 +21,7 @@ from power_effects import WorldPowers, POWER_EFFECTS
 from power_mastery import ensure_mastery,mastery_distribution
 from expanded_powers import EXPANDED_POWER_TREE, powers_of, set_powers, has_power, inherit_powers
 from modern_society import run_modern, SOCIAL_POLICIES
+from war_system import init_warfare, tick_warfare
 from story_setup import init_story, tick_story, export_story, prepare_story, MAX_YEARS
 from scenario_customization import apply_world
 from arena_runner import run_cli as run_arena_cli, load_scenario
@@ -544,6 +545,7 @@ def run_single_world_evolution_or_monarch_or_wheel(
         terminal = resume_state.get("terminal", False)
         rng.setstate(restore_tuples(resume_state["rng_state"]))
 
+    warfare = resume_state.get("warfare") if resume_state else init_warfare(scenario)
     story = resume_state.get("story") if resume_state else init_story(agents, scenario, current_year, mode=mode)
     if scenario is not None and years > MAX_YEARS:
         raise ValueError("Tracked stories support at most10000 years")
@@ -1054,6 +1056,7 @@ def run_single_world_evolution_or_monarch_or_wheel(
                                 weight=4
                             )
 
+        chronicle.extend(tick_warfare(warfare, agents, rng, year))
         arena_events = tick_story(story, agents, rng, year, mode=mode)
         chronicle.extend(arena_events)
         drama_score += len(arena_events) * 3
@@ -1091,6 +1094,7 @@ def run_single_world_evolution_or_monarch_or_wheel(
         "year": current_year,
         "powers": powers.state,
         "story": story,
+        "warfare": warfare,
         "terminal": not living_end,
         "rng_state": rng.getstate(),
         "variables": {'agents': agents, 'next_id': next_id, 'ruler_id': ruler_id, 'initial_royal_family': initial_royal_family, 'royal_family_lost_year': royal_family_lost_year, 'laws': laws, 'counter_tech': counter_tech, 'cannons_invented': cannons_invented, 'cannon_deaths': cannon_deaths, 'famine_deaths': famine_deaths, 'combat_deaths': combat_deaths, 'purge_deaths': purge_deaths, 'active_cult': active_cult, 'towns': towns, 'chronicle': chronicle, 'min_pop': min_pop, 'min_pop_year': min_pop_year, 'max_pop': max_pop, 'max_pop_year': max_pop_year, 'revenge_sworn_count': revenge_sworn_count, 'revenge_fulfilled_count': revenge_fulfilled_count, 'revenge_turned_hero_count': revenge_turned_hero_count, 'hero_turned_villain_count': hero_turned_villain_count, 'drama_score': drama_score}
@@ -1117,6 +1121,7 @@ def run_single_world_evolution_or_monarch_or_wheel(
         "clones_created": powers.state["clones_created"],
         "engine_version": 4,
         "story": export_story(story),
+        "warfare": warfare,
         "_state": state,
         "final_population": len(living_end),
         "final_powered_count": len(powered_end),

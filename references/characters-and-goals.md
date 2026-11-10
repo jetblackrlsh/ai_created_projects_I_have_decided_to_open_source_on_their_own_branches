@@ -16,7 +16,7 @@ The scenario's `settings` can also carry supported defaults. CLI flags should be
 
 ## What customization means
 
-Starting conditions are not permanent guarantees. A configured medic may lose or change jobs. A wealthy founder can lose money. A popular hero can lose followers. A main character can die, lose a fight, fail a goal or remain blocked. A `description` is narrative context, not executable instructions. `faction` is a label, not an implicit faction-war engine. Named counter technologies only have effects where the world engine recognizes them.
+Starting conditions are not permanent guarantees. A configured medic may lose or change jobs. A wealthy founder can lose money. A popular hero can lose followers. A main character can die, lose a fight, fail a goal or remain blocked. A `description` is narrative context, not executable instructions. `faction` is a label unless `world.warfare` declares its exact ID, which makes it an operative war allegiance (see `warfare.md`). Named counter technologies only have effects where the world engine recognizes them.
 
 Limits: **64 configured characters, 16 tracked mains, 8 goals per character, 3 catalog powers per character**. The founder population must accommodate configured characters. Stable `key` strings allow references without guessing numeric IDs; explicit positive founder `id` values are also supported.
 

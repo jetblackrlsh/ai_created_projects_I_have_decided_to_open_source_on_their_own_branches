@@ -1,0 +1,86 @@
+{
+  "world": {
+    "warfare": {
+      "factions": [
+        {
+          "id": "crown",
+          "nation": "Italy",
+          "army": 100
+        },
+        {
+          "id": "rebels",
+          "nation": "Italy",
+          "army": 100
+        }
+      ],
+      "territories": [
+        {
+          "id": "capital",
+          "owner": "crown",
+          "neighbors": [
+            "valley"
+          ]
+        },
+        {
+          "id": "valley",
+          "owner": "rebels",
+          "neighbors": [
+            "capital"
+          ]
+        }
+      ],
+      "wars": [
+        {
+          "id": "civil-war",
+          "kind": "civil",
+          "side_a": "crown",
+          "side_b": "rebels",
+          "objectives": {
+            "rebels": [
+              "capital"
+            ],
+            "crown": [
+              "valley"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "settings": {
+    "mode": "modern",
+    "pop": 100,
+    "years": 30,
+    "seed": 42
+  },
+  "characters": [
+    {
+      "key": "heir",
+      "name": "Mira Vale",
+      "faction": "crown",
+      "powers": [
+        "Earth",
+        "Healing"
+      ],
+      "power_mastery": {
+        "Earth": 3,
+        "Healing": 1
+      },
+      "main_character": true
+    },
+    {
+      "key": "rebel",
+      "name": "Arden Flint",
+      "faction": "rebels",
+      "powers": [
+        "Fire",
+        "Speed"
+      ],
+      "power_mastery": {
+        "Fire": 3,
+        "Speed": 1
+      },
+      "main_character": true
+    }
+  ]
+}

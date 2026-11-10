@@ -8,6 +8,7 @@ import random
 from government_systems import select_leadership
 from power_mastery import ensure_mastery,sync_mastery,mastery_distribution
 from power_effects import WorldPowers, POWER_EFFECTS
+from war_system import init_warfare, tick_warfare
 from story_setup import init_story, tick_story, export_story, prepare_story, MAX_YEARS
 from scenario_customization import apply_world
 from expanded_powers import powers_of, set_powers, has_power, inherit_powers
@@ -257,6 +258,7 @@ def run_modern(seed, years, starting_pop, power_rate, mutation_rate, power_tree,
         for _ in range(starting_pop):
             power = rng.choice(list(power_tree)) if rng.random() < power_rate else None
             create_agent(-25, age=rng.randint(18,55), power=power)
+    warfare = resume_state.get('warfare') if resume_state else init_warfare(scenario)
     story = resume_state.get('story') if resume_state else init_story(agents,scenario,current_year,mode='modern')
     if scenario is not None and years>MAX_YEARS:raise ValueError('Tracked stories support at most10000 years')
     powers = WorldPowers(agents, rng, resume_state.get('powers') if resume_state else None)
@@ -354,6 +356,7 @@ def run_modern(seed, years, starting_pop, power_rate, mutation_rate, power_tree,
             child=create_agent(year,power=power,parent_a=a['id'],parent_b=b['id'],last_name=a['last_name'])
             set_powers(child,inherited)
             a['children'].append(child['id']);b['children'].append(child['id'])
+        chronicle.extend(tick_warfare(warfare,agents,rng,year))
         chronicle.extend(tick_story(story,agents,rng,year,society=state,mode='modern'))
         state['year']=year
     powers.observe_deaths()
@@ -366,8 +369,8 @@ def run_modern(seed, years, starting_pop, power_rate, mutation_rate, power_tree,
     political='extinction' if not living else ('authoritarian' if state['regime']=='authoritarian' else ('free_democracy' if state['freedom']>=60 else 'constrained_democracy'))
     if living and state.get('leadership_system','elections')!='elections':political=state['leadership_system']+'_government'
     snapshot={'year':current_year,'agents':agents,'next_id':next_id,'society':state,'chronicle':chronicle,
-              'powers':powers.state,'story':story,'rng_state':rng.getstate(),'terminal':not living}
-    return {'seed':seed,'mode':'modern','engine_version':4,'story':export_story(story),'years_simulated':current_year,
+              'powers':powers.state,'warfare':warfare,'story':story,'rng_state':rng.getstate(),'terminal':not living}
+    return {'seed':seed,'mode':'modern','engine_version':4,'warfare':warfare,'story':export_story(story),'years_simulated':current_year,
             'outcome':'extinction' if not living else ('powers_died_out' if not powered else ('powered_majority' if share>=.5 else 'powered_minority')),
             'combined_powered_agents':sum(len(powers_of(a))>1 for a in living),
             'surviving_powers':{p:sum(p in powers_of(a) for a in living) for p in power_tree if any(p in powers_of(a) for a in living)},

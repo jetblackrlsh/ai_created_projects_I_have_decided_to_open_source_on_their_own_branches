@@ -1,0 +1,21 @@
+# Warfare v4.3
+
+## Setup
+Use the complete civil-war and international-war scenario examples. The optional `world.warfare` object contains three nonempty arrays:
+- `factions` (1–16): unique `id`, `nation`; optional `army` and `supplies` (0–10000, default100), `morale` (0–100, default70), `allies` (mutual faction IDs).
+- `territories` (1–64): unique `id`, faction `owner`; `neighbors` (mutual territory IDs), `fortification` (0–100, default0), `production` (0–100, default10).
+- `wars` (1–16): unique `id`, `kind` (`civil` or `international`), `side_a`, `side_b`; `start_year` (0–10000, default0), `peace_after` (1–10000, default10), `max_years` (1–10000, default30), and optional `objectives` mapping either side ID to nonempty lists of target territory IDs.
+
+Civil war sides share a nation; international sides have distinct nations. Each principal and its direct mutual allies comprise a coalition. Opposing coalitions cannot overlap. Duplicate principal pairs are rejected. Separate simultaneous wars are allowed and consume shared faction resources in declared order; this order is part of the scenario, not simultaneous battle resolution. No automatic declarations or new diplomacy are invented. Existing emergent macro civil-war prose is separate from this configured system.
+
+## Resolution
+One border battle at most per active war per year. Fronts are hostile adjacent territories. No borders means no remote attacks. A seeded choice selects a front and attacker. Army strength is modified by morale, supply sufficiency and exhaustion. Defense adds the target's fortification. Independent seeded rolls range75–125% of strength. Successful attacks change territorial control, damage fortifications and shift morale. Both armies incur proportional losses; coalition losses are divided by current army shares. Territorial production replenishes supplies; battle consumes supplies and increases exhaustion. No army reinforcement or demographic subtraction is modeled.
+
+Up to16 eligible named adult champions per coalition contribute. Alive, free, non-hospitalized/non-quarantined/non-stasis characters with energy>=10 and injury<.8 are selected in ID order. The strongest held ability for the attack/defense role contributes using its own mastery. Offensive damage/control or defensive guard/healing, accuracy/evasion and initiative profiles provide transparent bounded strategic scores. Each contributor spends8 energy and takes.015 injury. Actual power names and contributions appear in each battle trace. This strategic abstraction does not grant mastery XP or claim resurrection, theft, civilian deaths or other literal effects occurred; those remain the regular power engine's responsibility.
+
+Capture objectives are checked before and after battles. A side also wins through opposing military collapse (no remaining coalition territory or army<1). Simultaneous success/collapse yields no sole winner. Exhausted sides (both principals>=60 exhaustion), or disconnected fronts, can settle after `peace_after`. `max_years` guarantees a ceasefire; current control is retained. Existing political leadership and personal goals are not automatically rewritten by war victory. Armies, territory and political office are separate systems.
+
+## Evidence and persistence
+`featured_world.warfare` includes current factions/territories/wars and full war history. Events contain strengths, losses, power support, captures and outcomes. Fronts reflect the most recent pre-battle border scan; territory ownership is authoritative after capture. The normal major-event chronicle and Markdown report include war events. Existing full schema4 saves without warfare resume with warfare disabled, preserving their earlier simulation. Configured wars resume with exact RNG/state, and repeated ticks for an already processed year do nothing. Examples and tests cover each supported world mode.
+
+Limitations: abstract army units (not counted people), annual ticks, no naval/air routes, civilian casualty/refugee economy, operational tactics, automatic reinforcements, new alliances, treaty bargaining, secession constitution or leader replacement. Narrate only measured events. These are fictional toy-model results, not military forecasts.
