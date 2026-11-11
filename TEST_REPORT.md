@@ -16,3 +16,7 @@ No model downloads, fresh full voice/music/SFX production, host image generation
 - Actual pinned kokoro-onnx/espeak phonemization demonstrated `A I` → /ɐ ˈaɪ/ while explicit AI override is /ˌeɪˈaɪ/.
 - Actual Kokoro inference of a full sentence with the override produced finite, nonzero audio. This is a runtime smoke test, not certified perceptual listening.
 - Adapter applies the helper at each subtitle-page synthesis call with `is_phonemes=True`, records pronunciation version, and invalidates pre-fix caches.
+
+
+## 2026-11-11 audio safeguards
+12 new regression cases pass: exact caption-span coverage/role validation and music-presence floor validation, including negative controls. Technical gates do not replace perceptual listening.

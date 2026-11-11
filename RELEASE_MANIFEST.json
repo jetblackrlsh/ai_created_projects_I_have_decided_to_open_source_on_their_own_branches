@@ -1,6 +1,7 @@
 {
   "project": "spread-motion-comic",
   "branch": "project/spread-motion-comic",
+  "updated": "2026-11-11",
   "files": [
     {
       "path": ".gitignore",
@@ -26,16 +27,16 @@
     {
       "path": "README.md",
       "mode": "100644",
-      "bytes": 5392,
-      "sha": "a1e57e18576efd0e3b58cb162d9309115b4a8f21",
-      "sha256": "6044d055340108a6c488be02ce95c0d04ba9e2c49904134f648a6b9eb71dad44"
+      "bytes": 5862,
+      "sha": "cc1cc6945e94fa007d7b0f550a2f5976343c120b",
+      "sha256": "330281df613d5e866f891987e82e917a2065a2a12177e3b84a80f6a6b563f837"
     },
     {
       "path": "TEST_REPORT.md",
       "mode": "100644",
-      "bytes": 1495,
-      "sha": "79e2e110c2eac59120cfb26cf37b62405324c49e",
-      "sha256": "97dff193cefe536fa781ba7fc3de391a9004700c35575dd73bac17e14132d401"
+      "bytes": 2383,
+      "sha": "dd40aab28105998c4a58fd65357fdb43483fab23",
+      "sha256": "139020d421024fba5a4388facd7c5e31ccdd698e96f72d90830f03c5de70ad1d"
     },
     {
       "path": "THIRD_PARTY_NOTICES.md",
@@ -75,9 +76,9 @@
     {
       "path": "skills/create-spread-motion-comic/SKILL.md",
       "mode": "100644",
-      "bytes": 7414,
-      "sha": "52f35b46db79033892a098ed5a4b56fbf4e76078",
-      "sha256": "1b46b3cf924f1a1288a72fada2b3308b9d341d93d5f83adc93346284a463c0aa"
+      "bytes": 8579,
+      "sha": "94fbf2d1bc7c612cf7f5c8de13bb7fa25a036e86",
+      "sha256": "06e59903b20302cc62bd2402afdd4ef8d08ddd8a212d4caad37104f1cb2f95d9"
     },
     {
       "path": "skills/create-spread-motion-comic/agents/openai.yaml",
@@ -117,16 +118,16 @@
     {
       "path": "skills/create-spread-motion-comic/references/audio.md",
       "mode": "100644",
-      "bytes": 2080,
-      "sha": "846ab10d017ab2d21a749eb816c3e54669cba435",
-      "sha256": "0f1247debcf9adb9464748865baf0767fe71c3d2eec3919cb10b0ca03a8541a7"
+      "bytes": 5605,
+      "sha": "63f01bdf510b648da19ff59d5311181f611fdb13",
+      "sha256": "da518856fe775ea59c887d81dd4607c7cbca37b0d09ec7e446eced389feabb7e"
     },
     {
       "path": "skills/create-spread-motion-comic/references/manifest.md",
       "mode": "100644",
-      "bytes": 1834,
-      "sha": "9a2a134ba6c9f350f44b79656e6d608c6a545ed2",
-      "sha256": "35cff92a77ccd7fe5fdc6eb7bf85d4fa243dbd6899c769f10874c0a127191384"
+      "bytes": 1833,
+      "sha": "4f4e58b015ff4e7c1a3103a053ae886d4a8ccf3f",
+      "sha256": "98ff202165c8df4b36362c3838bdef386c29acfa0260622683e7c788b679b188"
     },
     {
       "path": "skills/create-spread-motion-comic/references/runtime-setup.md",
@@ -143,11 +144,46 @@
       "sha256": "3c5387f6f57c98d68630ebd787f181d466785d47d4856c1e904b04567041f1a3"
     },
     {
+      "path": "skills/create-spread-motion-comic/references/voice-segmentation.md",
+      "mode": "100644",
+      "bytes": 2422,
+      "sha": "0075b338f6740e41a85450d4f90c7be449c7178a",
+      "sha256": "fd69aeb6c4a28db396c7b2633540001da14888d8fc7883625422d06b5b123fab"
+    },
+    {
+      "path": "skills/create-spread-motion-comic/references/youtube-metadata.md",
+      "mode": "100644",
+      "bytes": 3207,
+      "sha": "d6b73e86abe0ed4e57ef4e03385f2ebfbb732e09",
+      "sha256": "8d26c9630850909c203ad18b7af76e0c6b95588de53c3d913a27a21ce7406451"
+    },
+    {
+      "path": "skills/create-spread-motion-comic/scripts/check_music_presence.py",
+      "mode": "100644",
+      "bytes": 1799,
+      "sha": "0bc530ae3fae9b4632c5e4a7b4eaea9ba063a0ab",
+      "sha256": "58717163c094d27258549bfb51b20849b52a8f6f5957e5bf06179a0397340f32"
+    },
+    {
+      "path": "skills/create-spread-motion-comic/scripts/check_youtube_description.py",
+      "mode": "100644",
+      "bytes": 1515,
+      "sha": "b5d5dfbbbcebabe6808699a977a1d7a221c15f14",
+      "sha256": "493269d9f67f97890c7d2b2577402ebab28238a8f14ac345fd7d8f584c04b1c0"
+    },
+    {
+      "path": "skills/create-spread-motion-comic/scripts/kokoro_pronunciation.py",
+      "mode": "100644",
+      "bytes": 1456,
+      "sha": "811d82d52dbe133ba397f126f98ef1f2aeec9a8f",
+      "sha256": "3fa1d42463d8c7219f03b2f666fd432d5f5b64d77b59c20d423282b710070bc6"
+    },
+    {
       "path": "skills/create-spread-motion-comic/scripts/kokoro_tts_vn.py",
       "mode": "100644",
-      "bytes": 33907,
-      "sha": "18080d7d3d58a63b45d19bcec81b90ef81f78574",
-      "sha256": "1f2ee681894f462690f35c33e2784ca19f443f0763083340da0a2909a7d4c427"
+      "bytes": 34360,
+      "sha": "842365534e573601e207c995ff5620110e66d447",
+      "sha256": "bb481ba90ac327213256f45eb6023c3a727b8c8231aeff84a80a9557e3c4b607"
     },
     {
       "path": "skills/create-spread-motion-comic/scripts/priority_audio_mix.py",
@@ -159,9 +195,9 @@
     {
       "path": "skills/create-spread-motion-comic/scripts/render_spread.py",
       "mode": "100644",
-      "bytes": 3975,
-      "sha": "991ec4e36e3a771007261328700cb076227a3770",
-      "sha256": "758fdd422a22d5e8675126e5c2822aaec6e78c07d0cc28ba5323378240ab15e5"
+      "bytes": 3974,
+      "sha": "ccfe3eaa7cabfea4136f69b1f14f5cbb2dcf5389",
+      "sha256": "e4618601b0c4e5b79d513a392df542f1e16437ad80fdf9eb28eaee800fa2af73"
     },
     {
       "path": "skills/create-spread-motion-comic/scripts/sa3_vn_audio.py",
@@ -192,6 +228,13 @@
       "sha256": "ff34126121e4aa89204a3370f909148ccff772cd70d89e5a91910b3a50814846"
     },
     {
+      "path": "skills/create-spread-motion-comic/scripts/test_music_presence.py",
+      "mode": "100644",
+      "bytes": 720,
+      "sha": "eebae617960a565388145b0696c2f8ede00fb4e8",
+      "sha256": "93178d4a7bb642501da3d9694215d98dc9ab7fb49450d04f9ed3c387759496d7"
+    },
+    {
       "path": "skills/create-spread-motion-comic/scripts/test_priority_audio_mix.py",
       "mode": "100644",
       "bytes": 3187,
@@ -206,6 +249,27 @@
       "sha256": "abe1897065ba7dc0bac6a70d7fc0ad83ec630fab7f148fbd17884b7bcecee455"
     },
     {
+      "path": "skills/create-spread-motion-comic/scripts/test_voice_segments.py",
+      "mode": "100644",
+      "bytes": 1222,
+      "sha": "227045b8e326f593f48c1847221f8f68cfe8bd3f",
+      "sha256": "8acfb74bdd9b60aa259ee06ef6582398c449a078b86631591e85f92a2c1013bb"
+    },
+    {
+      "path": "skills/create-spread-motion-comic/scripts/validate_voice_segments.py",
+      "mode": "100644",
+      "bytes": 1465,
+      "sha": "e1b87c7bf87ae1db53e98e36124c30f967c2581e",
+      "sha256": "a84078073a2b251f4590e1fc2c88a507470e0f8aafd801acfaa5abe328d88433"
+    },
+    {
+      "path": "skills/create-spread-motion-comic/scripts/write_youtube_metadata.py",
+      "mode": "100644",
+      "bytes": 1262,
+      "sha": "88564de3004e9771893770046e6bdc74edc70506",
+      "sha256": "0e0011227a507589a9e9682899be496a876ec0e12913eec9d5f6e5ebee3f8306"
+    },
+    {
       "path": "skills/create-spread-motion-comic/tests/test_audio_setup.py",
       "mode": "100644",
       "bytes": 5292,
@@ -213,12 +277,25 @@
       "sha256": "74cbd83e49e1f778562915dc32af1b86efb67508a37a2ac59e55c639dbde3345"
     },
     {
+      "path": "skills/create-spread-motion-comic/tests/test_pronunciation.py",
+      "mode": "100644",
+      "bytes": 1636,
+      "sha": "7a46c1dade0cf28887cf59af142bde1719b491a5",
+      "sha256": "32ada0f1048258faa2cae8eb7be66725c936ef09662174f31851fddcdde7da07"
+    },
+    {
+      "path": "skills/create-spread-motion-comic/tests/test_youtube_description.py",
+      "mode": "100644",
+      "bytes": 1443,
+      "sha": "23cb3896cc9e48bf71898076189e47ed7044ffa0",
+      "sha256": "a9def50c377e3dec6cde5ac6153bb9e9f181dea9c794999c0e16a28257f349d7"
+    },
+    {
       "path": "tests/smoke_render.py",
       "mode": "100644",
-      "bytes": 2486,
-      "sha": "cddabc5eb608ab412e4c734ca0fff9db08c230f0",
-      "sha256": "9c9e0f09dbd5e34f3e12517149ec0c67e3465d4887d2decdaf265baf946f7ebf"
+      "bytes": 2485,
+      "sha": "3626269082c64dc19248c925116ea2a309698a0a",
+      "sha256": "aaa488a9ada4546d03389b364e701f47a91207303d0eae5ed2d99c6b8942ff91"
     }
-  ],
-  "manifest_self_excluded": true
+  ]
 }

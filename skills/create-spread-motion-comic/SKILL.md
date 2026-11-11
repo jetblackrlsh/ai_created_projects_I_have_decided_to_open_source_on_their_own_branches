@@ -18,6 +18,8 @@ Turn ONE accepted spread into a complete panel-focused film. Reuse the source ar
 
 Read [audio production](references/audio.md), [runtime setup](references/runtime-setup.md), [story/audio schema](references/vn_spec_schema.md), and [mixing](references/audio-mixing.md). This public package includes the required local audio adapters and pinned runtime recipe; it does not require private skills or model weights.
 
+Before synthesis, read [caption voice segmentation](references/voice-segmentation.md). Split mixed captions into narrator and character utterances, validate exact source coverage with `scripts/validate_voice_segments.py`, and review every attribution. A caption box is not a single-speaker unit.
+
 Before synthesis, apply the AI initialism and cache-safety rules in `references/audio.md` using `scripts/kokoro_pronunciation.py`; keep captions unchanged.
 
 Use Kokoro for ALL spoken lines with one stable, distinct stock voice per narrator/character. Record actual voice IDs, speed and per-utterance files. Generate suitable instrumental music and motivated sound effects with the documented Stable Audio Small model, not synthesized beeps, stock placeholder tones, or an unannounced provider. A prompt is not a generated audio asset. If the required local generation cannot run, preserve the plan and report the exact blocker rather than calling silent or substitute audio a successful test.
@@ -41,6 +43,8 @@ Use **640 × 360 at 24 fps** as the default production and delivery resolution. 
 - Verify final AAC/master alignment and clipping/headroom using the audio backend's real checks. Record provenance for Kokoro and Stable Audio models, stems, seeds, prompts and generated file hashes.
 - Check final encoded speech, foreground effects and audible music. Record quantitative level diagnostics and their limitations. If no actual listening surface exists, keep `listeningVerified: false`, disclose that missing check, and invite review of a mixed preview. Do not equate technical validation with perceptual approval.
 - A test means an actual rendered video made from the requested image with the requested synthesized voices/music/SFX. Distinguish plan-only, renderer smoke tests, blocked audio, and complete production honestly.
+
+Failed music-presence and voice-attribution checks are production failures. Repair and recheck them before delivery.
 
 ## Public-ready YouTube metadata
 
