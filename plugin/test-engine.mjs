@@ -17,3 +17,16 @@ test('partial and natural overrides',()=>{assert.equal(resolve(declared({partial
 test('server receipt required but authenticity is host responsibility',()=>{assert.throws(()=>resolve(declared(),10,{roll_source:'server-receipt'}),/receipt/);assert.equal(resolve(declared(),10,{roll_source:'server-receipt',receipt_id:'r1'}).result.roll.source,'server-receipt');});
 test('pause preserves pending; export full log precedes summary and revision current',()=>{const s=declared();const out=apply(s,{type:'end_session',summary:'Paused before leap',next_scene_prompt:'Resolve the leap'});assert.equal(out.state.pending_check.id,'c1');assert.ok(out.result.export_markdown.includes('revision 2'));assert.ok(out.result.export_markdown.indexOf('Full chronological log')<out.result.export_markdown.indexOf('## Summary'));assert.throws(()=>resolve(out.state,10),/paused/);const resumed=apply(out.state,{type:'resume_session'});assert.equal(resumed.state.session_index,2);assert.equal(resumed.state.pending_check.id,'c1');assert.deepEqual(validateState(JSON.parse(JSON.stringify(resumed.state))),resumed.state);});
 test('backticks cannot close canonical state fence',()=>{const s=initial();s.title='Triple ``` ticks';const page=renderPage(s);assert.ok(page.includes('\n````json\n'));assert.ok(exportSession(s,'Summary').includes('Triple'));});
+
+test('long session preserves narration, updates live scene and keeps history compact',()=>{
+ let s=initial();
+ for(let i=1;i<=120;i++){
+  const next={id:'scene-'+i,title:'Scene '+i,description:'Current situation '+i,choices:[{id:'a',label:'A'},{id:'b',label:'B'},{id:'custom',label:'Custom',custom:true}]};
+  const prior=s.clues||[];let clues=[...prior,{id:'clue-'+i,description:'Clue '+i}];
+  s=applyCommand(s,{type:'record_action',event_id:'long-'+i,expected_revision:s.revision,action:'Action '+i,dialogue:'Dialogue '+i,consequence:'Consequence '+i,narration:'Narration '+i,changes:{clues},scene:next}).state;
+ }
+ assert.equal(s.turn_index,120);assert.equal(s.current_scene.id,'scene-120');assert.equal(s.chronicle.at(-1).narration,'Narration 120');assert.equal(s.chronicle.at(-1).changes.clues.added.length,1);assert.ok(JSON.stringify(s).length<350000);let resumed=validateState(JSON.parse(JSON.stringify(s)));assert.equal(resumed.chronicle.length,120);assert.match(renderPage(resumed),/Narration 120/);
+});
+test('post-roll narration can be recorded without reroll',()=>{let s=initial();s=applyCommand(s,{type:'record_narration',event_id:'narr-1',expected_revision:s.revision,narration:'The bird returns.',scene:{id:'new-scene',title:'After the roll',description:'The bird is here.',choices:[{id:'a',label:'A'},{id:'b',label:'B'},{id:'custom',label:'Custom',custom:true}]}}).state;assert.equal(s.chronicle.at(-1).narration,'The bird returns.');assert.equal(s.current_scene.id,'new-scene');});
+
+test('event fingerprints use standard SHA-256', async()=>{const {createHash}=await import('node:crypto');const s=initial();const cmd={type:'record_action',event_id:'hash-vector',expected_revision:0,action:'A',consequence:'B',narration:'N'};const next=applyCommand(s,cmd).state;const sorted=JSON.stringify({action:'A',consequence:'B',event_id:'hash-vector',narration:'N',type:'record_action'});assert.equal(next.events['hash-vector'].fingerprint,'sha256:'+createHash('sha256').update(sorted).digest('hex'));});
