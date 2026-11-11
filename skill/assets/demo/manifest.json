@@ -1,0 +1,207 @@
+{
+  "width": 640,
+  "height": 360,
+  "fps": 24,
+  "duration": 19.708333333333336,
+  "audio": "master.wav",
+  "scenes": [
+    {
+      "id": "intro",
+      "utterances": [
+        {
+          "speaker": "Host",
+          "voice": "am_michael",
+          "text": "A simple idea can become a clear video. Start with one question."
+        }
+      ],
+      "start": 0.0,
+      "duration": 6.0,
+      "speech": [
+        {
+          "start": 0.25,
+          "end": 5.375,
+          "subtitle": "A simple idea can become a clear video. Start with one question.",
+          "speaker": "Host"
+        }
+      ],
+      "title": "One idea. A clear video.",
+      "host": "neutral.png",
+      "host_talking": "neutral-open.png",
+      "layout": "host-right",
+      "bullets": [
+        "Start with one question.",
+        "Make the idea easy to follow."
+      ]
+    },
+    {
+      "id": "explain",
+      "caption": "The narrator asks: What should the audience remember?",
+      "utterances": [
+        {
+          "speaker": "Narrator",
+          "voice": "bf_emma",
+          "text": "The narrator asks: "
+        },
+        {
+          "speaker": "Host",
+          "voice": "am_michael",
+          "text": "What should the audience remember?"
+        }
+      ],
+      "start": 6.0,
+      "duration": 5.625,
+      "speech": [
+        {
+          "start": 0.25,
+          "end": 2.3249999999999993,
+          "subtitle": "The narrator asks:",
+          "speaker": "Narrator"
+        },
+        {
+          "start": 2.4450000000000003,
+          "end": 4.970000000000001,
+          "subtitle": "What should the audience remember?",
+          "speaker": "Host"
+        }
+      ],
+      "title": "Give each voice its own role",
+      "host": "pointing.png",
+      "host_talking": "pointing-open.png",
+      "layout": "host-left",
+      "bullets": [
+        "Narrator introduces the thought.",
+        "Host asks the question."
+      ]
+    },
+    {
+      "id": "finish",
+      "utterances": [
+        {
+          "speaker": "Host",
+          "voice": "am_michael",
+          "text": "Use useful pictures, readable text, and music that supports the voice. That is the whole idea."
+        }
+      ],
+      "start": 11.625,
+      "duration": 8.083333333333334,
+      "speech": [
+        {
+          "start": 0.25,
+          "end": 5.650537634408604,
+          "subtitle": "Use useful pictures, readable text, and music that supports the voice.",
+          "speaker": "Host"
+        },
+        {
+          "start": 5.650537634408604,
+          "end": 7.425000000000001,
+          "subtitle": "That is the whole idea.",
+          "speaker": "Host"
+        }
+      ],
+      "title": "Show the evidence clearly",
+      "host": "pleased.png",
+      "host_talking": "pleased-open.png",
+      "image": "evidence.png",
+      "image_sha256": "0c52de7ad3f566647ccb1b5b10f0d161437fba33a0f37b45bb3fd5aadd981aee",
+      "source_kind": "original",
+      "source_label": "Synthetic layout test, not a real website",
+      "crop": [
+        25,
+        90,
+        875,
+        220
+      ],
+      "highlights": [
+        {
+          "rect": [
+            0.02,
+            0.1,
+            0.98,
+            0.9
+          ],
+          "at": 1
+        }
+      ]
+    }
+  ],
+  "spans": [
+    {
+      "speaker": "Host",
+      "voice": "am_michael",
+      "text": "A simple idea can become a clear video. Start with one question.",
+      "scene": "intro",
+      "start": 0.25,
+      "end": 5.375,
+      "file": "speech-1f6ef3e0694f6842c943b0a6761d87640c8f85e3d2b23a5c6c02a4630dbfa8f6.wav",
+      "sha256": "568a6923adbf1973868d3c5d271e4fed556d291603161ca4cef20495ed1149e6",
+      "phonemes": "\u0250 s\u02c8\u026amp\u0259l a\u026ad\u02c8i\u0259 k\u00e6n b\u026ak\u02cc\u028cm \u0250 kl\u02c8\u026a\u0279 v\u02c8\u026ad\u026ao\u028a. st\u02c8\u0251\u02d0\u0279t w\u026a\u00f0 w\u02c8\u028cn kw\u02c8\u025bst\u0283\u0259n.",
+      "cache_key": "1f6ef3e0694f6842c943b0a6761d87640c8f85e3d2b23a5c6c02a4630dbfa8f6"
+    },
+    {
+      "speaker": "Narrator",
+      "voice": "bf_emma",
+      "text": "The narrator asks: ",
+      "scene": "explain",
+      "start": 6.25,
+      "end": 8.325,
+      "file": "speech-7cf67c67ad97801a22ad01ba86f9ab0a50e8924203e948423c7ed24fff1a984a.wav",
+      "sha256": "8fee8d66de4f49528547e5070b27b2121577ce70de22632e384e009510cbce79",
+      "phonemes": "\u00f0\u0259 n\u02c8\u00e6\u0279e\u026a\u027e\u025a\u0279 \u02c8\u00e6sks:",
+      "cache_key": "7cf67c67ad97801a22ad01ba86f9ab0a50e8924203e948423c7ed24fff1a984a"
+    },
+    {
+      "speaker": "Host",
+      "voice": "am_michael",
+      "text": "What should the audience remember?",
+      "scene": "explain",
+      "start": 8.445,
+      "end": 10.97,
+      "file": "speech-4550350536e14ef3640a9454b007b7d8c2acb4cc4f7c5b2ab547c50cb3ddeb87.wav",
+      "sha256": "fb0b44a5145f966cef7f255ba5e90b6e6105060c1734e27dcad6983a51728a59",
+      "phonemes": "w\u02cc\u028ct \u0283\u02cc\u028ad \u00f0\u026a \u02c8\u0254\u02d0di\u0259ns \u0279\u1d7bm\u02c8\u025bmb\u025a?",
+      "cache_key": "4550350536e14ef3640a9454b007b7d8c2acb4cc4f7c5b2ab547c50cb3ddeb87"
+    },
+    {
+      "speaker": "Host",
+      "voice": "am_michael",
+      "text": "Use useful pictures, readable text, and music that supports the voice. That is the whole idea.",
+      "scene": "finish",
+      "start": 11.875,
+      "end": 19.05,
+      "file": "speech-52656bf1b1d7a7e2a9b6db1607a7ca15ab8602cbe692eacf94efd1832e2458a9.wav",
+      "sha256": "5f07ad0877356c3ae3a8fbbe78e89ac80bd9696ebfdf52785e233bffe9955b90",
+      "phonemes": "j\u02c8u\u02d0s j\u02c8u\u02d0sf\u0259l p\u02c8\u026akt\u0283\u025az, \u0279\u02c8i\u02d0d\u0259b\u0259l t\u02c8\u025bkst, \u00e6nd mj\u02c8u\u02d0z\u026ak \u00f0\u00e6t s\u0259p\u02c8\u0254\u02d0\u0279ts \u00f0\u0259 v\u02c8\u0254\u026as. \u00f0\u00e6t \u026az \u00f0\u0259 h\u02c8o\u028al a\u026ad\u02c8i\u0259.",
+      "cache_key": "52656bf1b1d7a7e2a9b6db1607a7ca15ab8602cbe692eacf94efd1832e2458a9"
+    }
+  ],
+  "effects": [
+    {
+      "scene": "explain",
+      "offset": 0,
+      "seconds": 2,
+      "prompt": "A gentle rounded soft airy whoosh for a slide transition, pleasant smooth sound, no harsh frequencies, no music or speech.",
+      "seed": 457,
+      "start": 6.0,
+      "end": 8.0,
+      "comfort": {
+        "processor": "bounded_sfx_harsh_band_v1",
+        "band_hz": [
+          2500,
+          8000
+        ],
+        "window_sec": 0.1,
+        "maximum_allowed_attenuation_db": 6.0,
+        "maximum_applied_attenuation_db": 6.0,
+        "affected_duration_sec": 1.0995833333333334,
+        "limitations": "A spectral heuristic cannot guarantee listening comfort or hearing safety. Natural electricity/static remains recognizable; review on intended playback devices.",
+        "status": "processed",
+        "input_peak": 0.30578363774598505,
+        "output_peak": 0.19388356273094498
+      }
+    }
+  ],
+  "cast": {
+    "Host": "am_michael",
+    "Narrator": "bf_emma"
+  }
+}

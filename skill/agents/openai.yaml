@@ -1,0 +1,4 @@
+interface:
+  display_name: "PNGTuber Video Studio"
+  short_description: "Create voiced PNG-hosted explainers and video essays"
+  default_prompt: "Use create-pngtuber-video to turn my idea or document into a sourced 360p PNG-hosted motion graphic video with Kokoro voices and Stable Audio music and effects."
