@@ -17,3 +17,7 @@ Declare stakes before rolls; never invent random outcomes. Validate raw dice aga
 
 ## Release scope
 Version 1 preserves the snappy play loop. User reported Instant widget functionality; this release does not infer support on every interface. See TEST_REPORT.md for actual tests. Source branch is not a hosted service. Download this project branch rather than main.
+
+## Invokable plugin v1.0.0
+
+The [plugin/](plugin/) directory adds a private-deployable MCP server with real server-generated d20 receipts, Page-backed campaign state, and host-assisted Google Docs session exports. It includes setup/authentication documentation and 18 tests. The original skill, Python engine, and offline UI above remain unchanged. Deploy your own instance; this public source does not expose anyone's private Site or campaigns.

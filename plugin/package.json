@@ -1,0 +1,5 @@
+{
+ "name":"freeform-rpg-engine-plugin","version":"1.0.0","private":true,"type":"module","license":"CC0-1.0","engines":{"node":">=24"},
+ "scripts":{"test":"node --test test-engine.mjs test-worker.mjs","build":"bash scripts/build.sh","validate":"node scripts/validate-artifact.mjs"},
+ "devDependencies":{"esbuild":"0.28.0","drizzle-kit":"0.31.10","drizzle-orm":"0.45.2"}
+}
