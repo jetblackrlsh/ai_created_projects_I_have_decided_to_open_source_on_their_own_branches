@@ -1,43 +1,29 @@
-# Freeform RPG Engine Plugin v1.0.0
+# Freeform RPG Engine private plugin
 
-A setting-neutral MCP companion for fast tabletop roleplay. This is the JavaScript plugin implementation alongside the original Python skill, not a replacement for that release. Original contributions use the repository's CC0 license. Platform names and dependencies retain their own rights/licenses.
+A private Sites MCP plugin for fast, narrative tabletop play. Campaign JSON is supplied by the hosting assistant from a canonical ChatGPT Page, never stored in this plugin. Google Docs exports are returned as Markdown for the assistant to save through its connected Google Docs tools. No direct Page/Drive access or universal inline button compatibility is claimed.
 
-## What it does
-Five tools provide campaign creation, actions and declared checks, cryptographic d20 resolution, full session export, and usage guidance. A human/AI GM interprets fiction. Turns support suggested choices, custom actions, and verbatim dialogue. No paid AI service is called by this server.
-
-Campaign prose and character/world state live in a canonical **ChatGPT Page** supplied by the host assistant. At session end, the host saves the full chronological record to **Google Docs**. The plugin returns proposed Markdown/state, not direct connector writes. The host needs those connected tools and must verify saves. Without them, deliver a portable export and explicitly say it is unsaved. This is not a universal inline ChatGPT widget: typed choices work; buttons require a supported, tested host interface.
-
-## Quick start
-From this `plugin/` directory, with Node 24+ and npm:
-
-```sh
-npm install
-npm test
-npm run build
-npm run validate
-```
-
-The built ESM Worker exports `default.fetch` at `dist/server/index.js`. Read [DEPLOYMENT.md](DEPLOYMENT.md) before hosting it. No credentials, account IDs, private URLs, deployment IDs, or campaign logs are included. Tests use fictional fixtures only.
-
-After deploying and enabling the plugin in a compatible ChatGPT conversation, say:
-
-> Use Freeform RPG Engine. Start an adventure, keep our live session in a ChatGPT Page, and save the full session to Google Docs when we finish.
-
-The assistant must call `freeform_guide` first. Do not assume merely downloading source installs a plugin or connects Pages/Google Docs.
+## Invoke
+Enable Freeform RPG Engine in your ChatGPT conversation, then ask: “Use Freeform RPG Engine. Start a campaign, keep our live session in a ChatGPT Page, and save the full record to Google Docs when we finish.” The conversation needs Pages and Google Docs tools. Typed choices and custom dialogue work even when interactive widgets do not.
 
 ## Tools
-- `freeform_guide`: workflow, schemas, privacy
-- `create_campaign`: validate a proposed new campaign
-- `campaign_command`: record action/dialogue, declare check, update scene, end/resume session
-- `roll_and_resolve`: one durable real d20 per declared check; repeat requests reuse the draw
-- `export_session`: full log, state, summary and resume point
+- freeform_guide: workflow, schemas and privacy
+- create_campaign: initialize a proposed Page record
+- campaign_command: declare checks, record actions/dialogue, change scenes, end/resume sessions
+- roll_and_resolve: real d20, once per declared check, idempotent receipt
+- export_session: full chronological Markdown export
 
-Default homebrew resolution is d20 plus named modifiers against a declared DC. Natural 1/20 override and partial-success margin are configurable. Ordinary or impossible actions need no dice. This is not an SRD rules implementation. The original Python v1 and this JS Page schema are separate formats; no automatic migration is claimed.
+Before each state update, read the latest Page. Apply guarded updates and verify by readback. Do not claim a proposed state has been saved until the connector confirms it. Use the current sharded-history contract: keep compact state and a verified manifest on the canonical Page, with append-only history chunks on separate Pages. Verify contiguous sequence coverage and hashes before marking a save complete. Never silently truncate logs.
 
-## Persistence and trust
-Read the latest Page before every mutation. Write returned `page_markdown` using guards, then verify readback. Never claim `saved_to_page:false` is a saved campaign. Page revisions detect stale submitted state but the plugin cannot verify that a caller supplied the latest Page. It is not an anti-cheat authority over editable campaign fiction.
+The plugin stores only SHA-256 owner/campaign/check identifiers, declaration hashes, d20 results, and timestamps in D1. It does not retain campaign prose, contacts, or session files. Randomness uses Web Crypto with rejection sampling. Repeated calls and concurrent rolls reuse the same result. Do not reuse check IDs for different checks. Local stale Page detection uses revisions; host readback is essential because the plugin is deliberately not a campaign database.
 
-D1 retains only hashed owner/campaign/check keys, declaration hashes, raw d20 results and timestamps. No campaign prose. Randomness uses Web Crypto rejection sampling; atomic conditional updates make concurrent/retried requests use one result. Declarations cannot change after registration. No automatic TTL is applied because removing receipts would permit old checks to reroll. Campaign state has a 750,000-character JSON cap, 2,000 events/chronicle entries, and 500 entries per world-state list. Archive/checkpoint before limits, preserving full records rather than truncating silently.
+## Development
+Node 24; esbuild bundles worker/index.js and engine.mjs. `npm run build`; `npm run validate`; `node --test test-*.mjs`. Install esbuild and drizzle-kit from npm for a fresh checkout. D1 migrations are in drizzle/. Site access remains owner-private.
 
-## Verification
-18 local tests pass, covering engine validation, quotes, replay, revisions, partial/natural outcomes, pause/resume/export, authentication, receipt retry, changed declarations, and roll preflight. Wrapper tests use mocked D1, not a Cloudflare concurrency stress test. A private deployment successfully registered the MCP discovery/tool list. Browser UI and every ChatGPT surface are not certified. Authenticated production gameplay was not tested at initial publication.
+## Character-first setup and auditable checks (2026-11-11)
+New campaigns return a setup prompt and block play until `confirm_character_setup` records explicit player confirmation. Ask whether the player has an existing character or wants an interactive creation form. The host renders the form where available; otherwise use a fill-in text form. Preserve imported attribute names/values. Agree on allocation and math before confirming.
+
+`rules.check_math` supports `{mode:"attributes",formula:"direct"}` (saved value is the bonus), `formula:"d20"` (floor((score-10)/2)), or explicitly chosen `mode:"narrative"` for unstattted play. Optional `point_buy:{budget,min,max}` validates the sum of attribute values and every bound. Do not apply default budgets to imported characters without agreement. `confirm_character_setup` accepts `confirmed:true`, `player_characters:[{id,attributes:{...}}]`, and `check_math`; no confirmation during a pending check.
+
+Configured `declare_check.check` uses `actor_id`, `attribute`, and `circumstance_modifiers:[{name,value,reason}]`. Do not send `modifiers`; the engine derives them from the saved character, freezes an `attribute_snapshot` and labels attribute/circumstance bonuses. Display the full equation and DC before rolling. No double counting. Powers, weaknesses and equipment still guide permission, attribute selection and separately justified circumstances, not arbitrary extra stat bonuses.
+
+Legacy campaigns lacking `check_math` retain their exact old declarations and manual modifier behavior. Migration is opt-in with no pending check. Do not rewrite historical results. No extra campaign storage or sharing added. Engine/worker regression plus setup/stat tests: `node --test test-*.mjs`.

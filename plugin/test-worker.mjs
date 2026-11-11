@@ -9,6 +9,7 @@ const user='owner-a';
 async function setup(){
  const env={DB:new DB()};
  const c=await call('create_campaign',{input:{campaign_id:'demo',title:'Demo',current_scene:{id:'scene1',title:'Gate'}}},env,user);
+ delete c.state.rules.check_math;delete c.state.character_setup; // legacy saved-state compatibility
  const d=await call('campaign_command',{state:c.state,command:{type:'declare_check',event_id:'declare1',expected_revision:0,check:{id:'check1',scene_id:'scene1',action:'Open the gate',dc:13,modifiers:[],success:'Opened',failure:'Locked'}}},env,user);
  return {env,state:d.state};
 }

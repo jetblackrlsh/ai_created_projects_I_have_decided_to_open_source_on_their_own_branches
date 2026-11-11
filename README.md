@@ -18,6 +18,8 @@ Declare stakes before rolls; never invent random outcomes. Validate raw dice aga
 ## Release scope
 Version 1 preserves the snappy play loop. User reported Instant widget functionality; this release does not infer support on every interface. See TEST_REPORT.md for actual tests. Source branch is not a hosted service. Download this project branch rather than main.
 
-## Invokable plugin v1.0.0
+### Character setup and roll transparency
+New campaigns ask for an existing character or offer a character form before opening a scene. `assets/character-builder.html` is a standalone default-allocation form; host interfaces without interactive UI use an equivalent plain-text form. Confirm the sheet and math before play. Imported sheets retain their attributes and system. Stat-aware checks derive bonuses from the sheet and separately label circumstance modifiers. Existing saves and already-declared rolls retain their original mechanics until an explicit migration between checks.
 
-The [plugin/](plugin/) directory adds a private-deployable MCP server with real server-generated d20 receipts, Page-backed campaign state, and host-assisted Google Docs session exports. It includes setup/authentication documentation and 18 tests. The original skill, Python engine, and offline UI above remain unchanged. Deploy your own instance; this public source does not expose anyone's private Site or campaigns.
+## Invokable plugin
+The [plugin/](plugin/) directory contains the self-deployable MCP server, setup documentation, server-generated dice receipts, sharded Page history, and host-assisted Google Docs exports. Deploy your own owner-private instance; this source does not grant access to any existing deployment or campaign. See plugin/DEPLOYMENT.md.

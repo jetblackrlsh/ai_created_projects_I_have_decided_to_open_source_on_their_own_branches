@@ -9,7 +9,7 @@ def integer(v, low=None, high=None):
 
 def new_campaign(cid, title):
     s={k:[] for k in ('player_characters','companions','inventory','abilities','transformations','factions','npcs','relationships','locations','quests','clues','world_clocks','chronicle','continuity_flags','open_threads','resolved_check_ids')}
-    s.update(schema_version=1,campaign_id=cid,title=title,system='Freeform homebrew d20',created_at=now(),updated_at=now(),setting='',tone='',rules={'natural_override':True},resources={},current_scene={'id':'scene-1'},pending_check=None,turn_index=0,session_index=1,revision=0,next_scene_prompt='Begin at the damaged skybridge.')
+    s.update(schema_version=1,campaign_id=cid,title=title,system='Freeform homebrew d20',created_at=now(),updated_at=now(),setting='',tone='',rules={'natural_override':True},resources={},current_scene={'id':'scene-1'},pending_check=None,turn_index=0,session_index=1,revision=0,next_scene_prompt='Ask whether the player has a character or wants a character creation form.',character_setup={'confirmed':False})
     return s
 
 def validate(s):
@@ -30,8 +30,60 @@ def validate_check(c):
     if type(c.get('natural_override',True)) is not bool: raise ValueError('natural rule must be boolean')
     return c
 
+def configure_character(s, character, mode='attributes', formula='direct', confirmed=False):
+    """Explicit opt-in; never migrate a legacy save or change a pending roll silently."""
+    validate(s)
+    if s.get('pending_check'): raise ValueError('resolve existing check before changing rules')
+    if confirmed is not True: raise ValueError('player must confirm sheet and rules')
+    if mode not in ('attributes','narrative') or formula not in ('direct','d20'): raise ValueError('unsupported check math')
+    if not isinstance(character,dict) or not character.get('id') or not character.get('name'): raise ValueError('character id and name required')
+    if mode=='attributes':
+        attrs=character.get('attributes')
+        if not isinstance(attrs,dict) or not attrs: raise ValueError('attributes required')
+        for name,value in attrs.items():
+            if not isinstance(name,str) or not name.strip(): raise ValueError('invalid attribute name')
+            integer(value,-100,100)
+    n=copy.deepcopy(s)
+    chars=n['player_characters']; existing=next((i for i,c in enumerate(chars) if c.get('id')==character['id']),None)
+    if existing is None: chars.append(copy.deepcopy(character))
+    else: chars[existing]=copy.deepcopy(character)
+    n['rules']['check_math']={'mode':mode,'formula':formula}
+    n['character_setup']={'confirmed':True};n['next_scene_prompt']='Begin the player-approved opening scene.'
+    return n
+
+def prepare_check(s,c):
+    c=copy.deepcopy(c)
+    if s.get('character_setup',{}).get('confirmed') is False: raise ValueError('confirm character setup before play')
+    math=s.get('rules',{}).get('check_math')
+    if not math: return c # legacy declarations and pending rolls keep exact existing mechanics
+    mode=math.get('mode'); formula=math.get('formula')
+    if mode not in ('attributes','narrative') or formula not in ('direct','d20'): raise ValueError('unsupported check math')
+    circumstances=c.get('circumstance_modifiers',[])
+    if isinstance(circumstances,list):
+        names=[m.get('name') for m in circumstances if isinstance(m,dict)]
+        if len(names)!=len(circumstances) or len(set(names))!=len(names): raise ValueError('invalid or duplicate circumstances')
+        if any(not isinstance(m.get('reason'),str) or not m['reason'].strip() for m in circumstances): raise ValueError('explain each circumstance')
+        circumstances={m['name']:m['value'] for m in circumstances}
+    if not isinstance(circumstances,dict): raise ValueError('circumstances must be named')
+    for name,value in circumstances.items():
+        if not isinstance(name,str) or not name.strip(): raise ValueError('name circumstance')
+        integer(value,-100,100)
+    if c.get('modifiers'): raise ValueError('do not supply duplicate manual modifiers in stat-aware mode')
+    mods={}; source=None
+    if mode=='attributes':
+        actor=next((a for a in s['player_characters'] if a.get('id')==c.get('actor_id')),None)
+        if actor is None: raise ValueError('unknown actor')
+        attr=c.get('attribute');attrs=actor.get('attributes',{})
+        if attr not in attrs: raise ValueError('unknown attribute')
+        raw=integer(attrs[attr],-100,100);bonus=raw if formula=='direct' else (raw-10)//2
+        source={'actor_id':actor['id'],'attribute':attr,'value':raw,'formula':formula,'bonus':bonus}
+        mods['attribute:'+attr]=bonus
+    for name,value in circumstances.items(): mods['circumstance:'+name]=value
+    c['modifiers']=mods;c['attribute_snapshot']=source;c['circumstance_modifiers']=circumstances
+    return c
+
 def declare(s,c):
-    validate(s);validate_check(c)
+    validate(s);c=prepare_check(s,c);validate_check(c)
     if s['pending_check']: raise ValueError('resolve existing check first')
     if c['id'] in s['resolved_check_ids'] or c['scene_id']!=s['current_scene']['id']: raise ValueError('stale check')
     n=copy.deepcopy(s);n['pending_check']=copy.deepcopy(c);return n

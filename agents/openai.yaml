@@ -1,4 +1,14 @@
 interface:
-  display_name: "Freeform RPG Engine"
-  short_description: "Fast roleplay with honest dice and durable continuity"
-  default_prompt: "Use freeform-rpg-engine to start or resume a fast, persistent roleplaying campaign."
+  display_name: Freeform RPG Engine
+  short_description: Fast roleplay with honest dice and durable continuity
+  default_prompt: Use freeform-rpg-engine to start or resume a fast, persistent roleplaying
+    campaign.
+  icon_small: assets/icon.svg
+  icon_large: assets/icon.svg
+policy:
+  products:
+  - chatgpt
+  - codex
+  - api
+  - atlas
+  allow_implicit_invocation: true

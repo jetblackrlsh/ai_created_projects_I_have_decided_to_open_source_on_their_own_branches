@@ -2,7 +2,7 @@ import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {createCampaign,applyCommand,validateState,renderPage,exportSession,prepareHistoryShard} from './engine.mjs';
 const scene={id:'s1',title:'Arrival',description:'A gate.',choices:[{id:'a',label:'Open'},{id:'b',label:'Wait'},{id:'custom',label:'Something else',custom:true}]};
-const initial=()=>createCampaign({campaign_id:'demo',title:'Test',current_scene:scene,at:'2026-11-11T00:00:00Z'}).state;
+const initial=()=>{const s=createCampaign({campaign_id:'demo',title:'Test',current_scene:scene,at:'2026-11-11T00:00:00Z'}).state;delete s.rules.check_math;delete s.character_setup;return s;};
 const apply=(s,c)=>applyCommand(s,{event_id:'e'+(s.revision+1),expected_revision:s.revision,at:'2026-11-11T00:00:01Z',...c});
 const declared=(extra={})=>apply(initial(),{type:'declare_check',check:{id:'c1',scene_id:'s1',action:'Leap',dc:13,modifiers:[{name:'Agility',value:2}],success:'Across',failure:'Fall',...extra}}).state;
 const resolve=(s,roll,extra={})=>apply(s,{type:'resolve_check',check_id:'c1',scene_id:'s1',raw_roll:roll,roll_source:'player-reported',...extra});

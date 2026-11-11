@@ -16,3 +16,9 @@ Local toolkit saves are atomic with a lock and expected revision; commit state a
 Connected Drive adapter is an agent workflow, not bundled credentials: locate authorized folder/file, read latest revision/checksum, compare expected version, upload changed canonical state, re-read and compare content/checksum. Use a connector with conditional updates where available. If no compare-and-swap is available, avoid concurrent writers and disclose that boundary. On conflict, reconcile, never silently overwrite. Keep immutable turn snapshots if needed. Never store access tokens inside campaign state. A Google Doc is a human-readable export, not a replacement for JSON.
 
 On pause, include the full chronological log and then a summary plus exact pending check/resume point. Do not omit unsuccessful actions. Avoid needless tool calls for story flavor but do not sacrifice the per-action save requirement. Batch only state+log writes belonging to the same action, not unresolved rolls.
+
+
+### Explicit character math and compatibility
+New campaigns begin with `character_setup.confirmed=false`; character review precedes the first scene/check. Stat-aware rules use `rules.check_math={"mode":"attributes","formula":"direct"}` or `formula:"d20"`. Store the player's original attribute values on the character, not only a summarized total. Each declaration carries actor_id, attribute, named circumstance_modifiers; the engine derives and freezes attribute_snapshot and modifiers. Legacy states with no check_math retain their original mechanics. Narrative mode is explicit, not an accidental missing sheet. Pending checks always resolve from the declared snapshot. No migration mid-check.
+
+Plugin circumstance entries are `{name,value,reason}` objects in an array; the Python adapter also accepts a named mapping for legacy local callers. The host must always present reasons.

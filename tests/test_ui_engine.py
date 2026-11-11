@@ -9,7 +9,8 @@ class Contract(unittest.TestCase):
   c=fixture['check'];engine.validate_check(c)
   for p in fixture['payloads']:
    with self.subTest(raw=p['raw_d20']):
-    s=engine.new_campaign(c['campaign_id'],'Test');s['current_scene']={'id':c['scene_id']};s=engine.declare(s,c)
+    s=engine.new_campaign(c['campaign_id'],'Test');s.pop('character_setup'); # explicit legacy fixture
+    s['current_scene']={'id':c['scene_id']};s=engine.declare(s,c)
     resolved=engine.resolve(s,p,'Test narration')
     self.assertEqual(resolved['chronicle'][-1]['roll'],{k:p[k] for k in ['raw_d20','modifier','total','dc','outcome']})
     with self.assertRaises(ValueError):engine.resolve(resolved,p,'Duplicate')
