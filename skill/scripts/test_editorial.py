@@ -21,4 +21,16 @@ class EditorialTests(unittest.TestCase):
   d=copy.deepcopy(BASE);d['script']='';self.assertTrue(validate(d))
  def test_exception_requires_reason(self):
   d=copy.deepcopy(BASE);d.update(script='The document says hello.',allowed_phrases=['the document says']);self.assertTrue(validate(d))
+ def test_obvious_visual_explanation(self):
+  d=copy.deepcopy(BASE);d['script']='These are my illustrations, not screenshots of the argument.';self.assertTrue(validate(d))
+ def test_unsolicited_procedural_disclaimer(self):
+  d=copy.deepcopy(BASE);d['script']='This is not a moderator ruling.';self.assertTrue(validate(d))
+ def test_direct_experience(self):
+  d=copy.deepcopy(BASE);d['script']='They insulted me. I am glad the moderators stepped in.';self.assertEqual(validate(d),[])
+ def test_genuine_uncertainty_not_banned(self):
+  d=copy.deepcopy(BASE);d['script']='I hope the new feature arrives soon. The release date is unknown.';self.assertEqual(validate(d),[])
+ def test_missing_human_voice_review(self):
+  d=copy.deepcopy(BASE);d['checks'].pop('speaker_certainty_preserved');self.assertTrue(validate(d))
+ def test_specific_necessary_exception(self):
+  d=copy.deepcopy(BASE);d.update(script='This is not a moderator ruling.',allowed_phrases=['this is not a moderator ruling'],exception_reason='The requested video explains how a proposal differs from a formal ruling.');self.assertEqual(validate(d),[])
 if __name__=='__main__': unittest.main()
