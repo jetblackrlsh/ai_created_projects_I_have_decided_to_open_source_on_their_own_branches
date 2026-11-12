@@ -1,5 +1,5 @@
 /* Legal-choice builder shared by manual/headless callers and builder autopilot. */
-(function(root,factory){if(typeof module==='object'&&module.exports)module.exports=factory(require('./engine'));else root.CRPG_BUILDER=factory(root.CRPG);})(typeof globalThis!=='undefined'?globalThis:this,function(C){
+(function(root,factory){if(typeof module==='object'&&module.exports)module.exports=factory(require('./engine'),require('node:crypto').webcrypto);else root.CRPG_BUILDER=factory(root.CRPG,root.crypto);})(typeof globalThis!=='undefined'?globalThis:this,function(C,platformCrypto){
 'use strict';
 const copy=x=>JSON.parse(JSON.stringify(x)),range=(a,b)=>Array.from({length:Math.max(0,b-a+1)},(_,i)=>a+i),types=C.EFFECT_TYPES.filter(t=>t!=='restore_energy');
 const weight=e=>(['damage','heal','shield','drain'].includes(e.type)?Math.ceil((e.amount||1)/3):(e.amount||1))+Math.max(0,(e.duration||1)-1)+(['grant_tag','transform'].includes(e.type)?Math.max(0,(e.tags||[]).length-1):0);
@@ -52,4 +52,23 @@ function replay(choices,options={}){if(!Array.isArray(choices)||choices.length>1
 // manual character. The caller can replay this tape to verify mechanical reachability.
 function traceCharacter(character){const errors=C.validateCharacter(character);if(errors.length)throw Error(errors.join('; '));const tags=character.powers.flatMap(p=>p.effects.flatMap(e=>e.tags||[]));const options={name:character.name,description:character.description||'',tags},b=new Builder(options);for(const stat of C.STATS)b.choose(character.stats[stat]);b.choose(character.powers.length);
  for(const p of character.powers){b.choose(p.cost);b.choose(p.cooldown||0);b.choose(p.stat||null);b.choose(p.effects.length);for(const e of p.effects){b.choose(e.type);b.choose(e.amount===undefined?1:e.amount);b.choose(e.duration===undefined?1:e.duration);b.choose(e.stat||null);if(['inflict_condition','remove_condition'].includes(e.type))b.choose(e.condition);b.choose((e.tags||[]).length);for(const tag of e.tags||[])b.choose(tag)}}return {choices:b.trace,options,character:b.character};}
-return {Builder,autopilot,replay,traceCharacter};});
+// One fresh, unbiased bounded draw per builder choice. No fixed-width seed
+// compresses the complete path. The variable-length seed records chosen indices.
+function drawIndex(n){if(!platformCrypto?.getRandomValues)throw Error('Secure randomness is unavailable. Use a recorded choice seed or explicit deterministic seed; no silent PRNG fallback.');const cutoff=4294967296-(4294967296%n),word=new Uint32Array(1);for(let retry=0;retry<128;retry++){platformCrypto.getRandomValues(word);if(word[0]<cutoff)return word[0]%n}throw Error('Randomness source failed the bounded rejection safeguard');}
+function randomAutopilot(options={}){
+ const b=new Builder(options),indices=[];
+ for(let i=0;!b.done&&i<1000;i++){const choices=b.choices(),index=drawIndex(choices.length);indices.push(index);b.choose(choices[index].value)}
+ if(!b.done)throw Error('Builder safety limit');
+ const seed='cfb1:'+JSON.stringify({version:1,options:{tags:options.tags||[],name:b.character.name,description:b.character.description},indices});
+ return {character:copy(b.character),choices:copy(b.trace),seed};
+}
+function replaySeed(seed){
+ if(typeof seed!=='string'||!seed.startsWith('cfb1:')||seed.length>1000000)throw Error('Invalid builder choice seed');
+ const data=JSON.parse(seed.slice(5));if(data.version!==1||!Array.isArray(data.indices)||data.indices.length>1000)throw Error('Unsupported or oversized builder choice seed');
+ const b=new Builder(data.options||{});
+ for(const index of data.indices){if(b.done)throw Error('Choice seed continues after completion');const choices=b.choices();if(!Number.isInteger(index)||index<0||index>=choices.length)throw Error('Choice seed index is not legal');b.choose(choices[index].value)}
+ if(!b.done)throw Error('Choice seed is incomplete');return {character:copy(b.character),choices:copy(b.trace),seed};
+}
+function seedForCharacter(character){const target=traceCharacter(character),b=new Builder(target.options),indices=[];for(const step of target.choices){const choices=b.choices(),index=choices.findIndex(c=>JSON.stringify(c.value)===JSON.stringify(step.value));if(index<0)throw Error('Target choice is not supported');indices.push(index);b.choose(step.value)}return 'cfb1:'+JSON.stringify({version:1,options:target.options,indices});}
+return {Builder,autopilot,replay,traceCharacter,randomAutopilot,replaySeed,seedForCharacter};
+});

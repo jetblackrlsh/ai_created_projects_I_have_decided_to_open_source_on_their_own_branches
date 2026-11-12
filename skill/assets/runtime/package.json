@@ -1,6 +1,6 @@
 {
   "name": "crpg-forge",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "private": true,
   "description": "Offline, data-driven text CRPG engine with six-stat d20 checks and composable custom powers",
   "license": "CC0-1.0",

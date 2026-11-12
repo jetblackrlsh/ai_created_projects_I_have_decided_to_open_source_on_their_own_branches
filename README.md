@@ -126,3 +126,9 @@ This does **not** guarantee that every valid manually authored character can be 
 The new default **Builder autopilot** makes a sequence of legal character-building choices instead of selecting a fixed recipe: scores, 0–8 powers, costs/cooldowns, and 1–5 configured effects per power. Every offered choice leaves enough budget to complete the build. Power names and descriptions are editable in the character editor.
 
 The builder can reproduce a manually designed legal mechanical build through a validated choice trace, including custom check tags. The headless `builderTrace` command constructs that witness and `builderReplay` checks it. This is the precise coverage claim: every valid canonical mechanical build has a supported builder path when its tags are supplied. It does **not** mean the finite random seed space is guaranteed to select every path, or that every random build is strong or well matched to a particular adventure.
+
+## Fresh random building with complete replay seeds (v1.5.0)
+
+**Generate character → Builder autopilot** now draws fresh secure randomness for every legal choice, rather than deriving the entire build from one 32-bit seed. Every finite supported mechanical choice path has positive probability, for the supplied tag vocabulary. This does not make finished builds equally likely or make rare combinations common.
+
+The full choice sequence is saved in the **Last builder choice seed** field. Copy it or use **Replay builder choice seed** to reproduce the character exactly. Add custom check tags through the optional JSON-array vocabulary if your adventure uses them. Power flavor remains editable. Numeric world seeds still reproduce worlds and their default characters; they do not limit this fresh-random character button. The legacy deterministic seeded builder is still available to agents.

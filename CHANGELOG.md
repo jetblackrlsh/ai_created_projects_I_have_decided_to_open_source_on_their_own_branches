@@ -1,3 +1,7 @@
+## 1.5.0
+
+Fresh cryptographic random draw per legal builder choice, avoiding fixed-width whole-build seed limits; complete variable-length replay seeds, custom tag vocabulary UI, manual-build seed witnesses and reachability tests.
+
 ## 1.4.0
 
 Default legal-choice character-builder autopilot; replayable traces and manual-build witness paths; full supported mechanical builder paths with supplied custom tags; editable power flavor; explicit distinction from finite random-seed coverage.

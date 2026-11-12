@@ -1,6 +1,6 @@
 npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
 
-> crpg-forge@1.4.0 test
+> crpg-forge@1.5.0 test
 > node engine.test.js && node adventure.test.js && node ui.test.js && node qa.test.js && node auto.test.js && node generators.test.js && node sandbox.test.js && node character-builder.test.js
 
 PASS valid example
@@ -109,6 +109,7 @@ BROAD PASS: 2000 deterministic valid characters and complete auto missions; cove
 }
 SANDBOX PASS: 240 seeded roaming runs; lazy content, deterministic revisits, six-direction travel, complete radius-2 map reachability, bounded maps, portable exact continuation, legal nonpowered auto choices; outcomes { playing: 129, escape: 66, defeat: 45 } location descriptions 17
 BUILDER PASS: 1200 deterministic legal-choice traces and replays; 1200 broad manual-style witness paths; all power counts/effect families, custom mechanical tags, budget boundaries, invalid choices. Maximum observed choices: 268
+RANDOM-REACHABILITY PASS: 200 secure-random builds/full-seed replays, 300 manual-build codes, invalid seeds, rejection boundary and explicit random-word witness for a target build. No 32-bit path-seed bottleneck.
 npm notice
 npm notice New major version of npm available! 11.9.0 -> 12.2.2
 npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
