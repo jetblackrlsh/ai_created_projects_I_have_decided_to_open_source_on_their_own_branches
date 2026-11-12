@@ -16,7 +16,7 @@ Turn ONE accepted spread into a complete panel-focused film. Reuse the source ar
 
 ## Build the measured soundtrack first
 
-Read [audio production](references/audio.md), [runtime setup](references/runtime-setup.md), [story/audio schema](references/vn_spec_schema.md), and [mixing](references/audio-mixing.md). This public package includes the required local audio adapters and pinned runtime recipe; it does not require private skills or model weights.
+Read [audio production](references/audio.md). Resolve the installed `create-heroic-motion-comic` or `create-motion-manga` by exact frontmatter name and read its current local-audio restoration, model manifest, setup, adapter and production references before executing audio. Reuse its proven local adapters and verification scripts when present. Do not assume its files exist at a scratch or obsolete installed path.
 
 Before synthesis, read [caption voice segmentation](references/voice-segmentation.md). Split mixed captions into narrator and character utterances, validate exact source coverage with `scripts/validate_voice_segments.py`, and review every attribution. A caption box is not a single-speaker unit.
 
@@ -39,12 +39,11 @@ Use **640 × 360 at 24 fps** as the default production and delivery resolution. 
 ## Verify before claiming completion
 
 - Check source SHA-256, in-bounds panel rectangles, no missing/duplicate panels, coverage of all transcript lines, unique stable cast voices, measured shot timing and intentional pauses.
-- Inspect every final panel and transition at output size, including first/last frames. Verify no clipped captions, distorted art, reordered events or accidental gutter-only shots. Confirm video/audio duration and full decode with ffprobe/ffmpeg.
+- Mandatory delivery gate: follow `references/caption-readability-qa.md` for **every panel and every caption**, using actual frames from the final encoded delivery video at its native output size. Read all text against the source; check complete caption bounds through holds, zooms, pans and transitions. Partially clipped words fail even when narration supplies them. Fix, rerender, and reinspect before delivery. Save the per-caption review ledger with the video hash. Automated crop/OCR/decode checks alone never establish visual readability. Also verify no distorted art, reordered events or gutter-only shots and confirm full decode/durations with ffprobe/ffmpeg.
 - Verify final AAC/master alignment and clipping/headroom using the audio backend's real checks. Record provenance for Kokoro and Stable Audio models, stems, seeds, prompts and generated file hashes.
+- Treat failed music-presence or voice-attribution checks as production failures to repair, not merely caveats accompanying a finished video.
 - Check final encoded speech, foreground effects and audible music. Record quantitative level diagnostics and their limitations. If no actual listening surface exists, keep `listeningVerified: false`, disclose that missing check, and invite review of a mixed preview. Do not equate technical validation with perceptual approval.
 - A test means an actual rendered video made from the requested image with the requested synthesized voices/music/SFX. Distinguish plan-only, renderer smoke tests, blocked audio, and complete production honestly.
-
-Failed music-presence and voice-attribution checks are production failures. Repair and recheck them before delivery.
 
 ## Public-ready YouTube metadata
 
@@ -54,6 +53,6 @@ Read [YouTube metadata](references/youtube-metadata.md) before delivery. Always 
 
 At meaningful milestones save durable private checkpoints when requested: original/manifest/transcript, synthesized stems, and final deliverables. Checkpoint before lengthy synthesis/rendering. Respect the user's requested progress cadence without claiming a timed monitor exists unless configured.
 
-Deliver full-quality videos through the user's authorized destination. Upload to private Drive only when the user has authorized that upload and account. Preserve default private permissions and verify them; never enable link sharing. Deliver a verified Drive viewer link plus native video attachment when feasible. Also deliver transcript/captions and a compact QA receipt; preserve the editable manifest and audio provenance in the checkpoint package. Make a companion static-title audio-drama video only when requested, and deliver it through the authorized destination too.
+Upload full-quality finished videos to the user's own Drive with owner-only permissions under the current standing delivery authorization. Preserve default private permissions and verify them; never enable link sharing. Deliver a verified Drive viewer link plus native video attachment when feasible. Also deliver transcript/captions and a compact QA receipt; preserve the editable manifest and audio provenance in the checkpoint package. Make a companion static-title audio-drama video only when requested or required by the chosen production skill, and deliver it privately too.
 
-Install the two bundled skill directories through the host’s supported skill installer. Public publication, additional uploads and paid services require the applicable user authorization.
+For requests to create or update this skill, follow `skill-creator` for installation. A user-requested Drive skill copy must contain the complete final installed package with matching hashes, not merely a prose summary. Do not create a GitHub repository or publish a comic unless separately authorized.

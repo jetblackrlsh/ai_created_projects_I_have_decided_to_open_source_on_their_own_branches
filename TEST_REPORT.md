@@ -20,3 +20,6 @@ No model downloads, fresh full voice/music/SFX production, host image generation
 
 ## 2026-11-11 audio safeguards
 12 new regression cases pass: exact caption-span coverage/role validation and music-presence floor validation, including negative controls. Technical gates do not replace perceptual listening.
+
+## 2026-11-12 caption readability review
+Added mandatory per-caption final-encoded-video review, complete-caption coverage ledger, native-resolution visual inspection, continuous readable holds, and repair/rerender/recheck gate. This is a workflow/documentation change, not a claim that automated tests certify visual readability or that any prior video was revised. Skill structure validation passed.

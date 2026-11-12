@@ -1,7 +1,7 @@
 {
   "project": "spread-motion-comic",
   "branch": "project/spread-motion-comic",
-  "updated": "2026-11-11",
+  "updated": "2026-11-12",
   "files": [
     {
       "path": ".gitignore",
@@ -34,9 +34,9 @@
     {
       "path": "TEST_REPORT.md",
       "mode": "100644",
-      "bytes": 2383,
-      "sha": "dd40aab28105998c4a58fd65357fdb43483fab23",
-      "sha256": "139020d421024fba5a4388facd7c5e31ccdd698e96f72d90830f03c5de70ad1d"
+      "bytes": 2786,
+      "sha": "f3552cd79e355648bff3c1acb7bae8cacbae71dc",
+      "sha256": "1e49ea9db70a76d72d34fa3031822d866c1c576f431a5ec16b0d2154df7c7cfe"
     },
     {
       "path": "THIRD_PARTY_NOTICES.md",
@@ -76,9 +76,9 @@
     {
       "path": "skills/create-spread-motion-comic/SKILL.md",
       "mode": "100644",
-      "bytes": 8579,
-      "sha": "94fbf2d1bc7c612cf7f5c8de13bb7fa25a036e86",
-      "sha256": "06e59903b20302cc62bd2402afdd4ef8d08ddd8a212d4caad37104f1cb2f95d9"
+      "bytes": 9229,
+      "sha": "3844657f0af9874dfa3052a6b074985c8aa0c7cb",
+      "sha256": "52d0181eeb53436bb3949af4981c36b3164ba3a270a51b677817b24a7397bce7"
     },
     {
       "path": "skills/create-spread-motion-comic/agents/openai.yaml",
@@ -123,11 +123,18 @@
       "sha256": "da518856fe775ea59c887d81dd4607c7cbca37b0d09ec7e446eced389feabb7e"
     },
     {
+      "path": "skills/create-spread-motion-comic/references/caption-readability-qa.md",
+      "mode": "100644",
+      "bytes": 4264,
+      "sha": "64d23dd93c801f5322c13ce0b1d5c18191c2c6b2",
+      "sha256": "cb1b65d7d135b1e93e104064947afafe52596a10a7dc23146fdecabf16c5a7ac"
+    },
+    {
       "path": "skills/create-spread-motion-comic/references/manifest.md",
       "mode": "100644",
-      "bytes": 1833,
-      "sha": "4f4e58b015ff4e7c1a3103a053ae886d4a8ccf3f",
-      "sha256": "98ff202165c8df4b36362c3838bdef386c29acfa0260622683e7c788b679b188"
+      "bytes": 2315,
+      "sha": "5f1892b0f426f385464ef750a6fc8c5b09f32e63",
+      "sha256": "c9007fb4c6b9b391eb6bef34d69d6ae5e3ee089bf0447e257184f62deb2c9e64"
     },
     {
       "path": "skills/create-spread-motion-comic/references/runtime-setup.md",

@@ -10,3 +10,7 @@ Use JSON paths relative to the manifest directory, or absolute paths. Source coo
 Production-specific fields should include panel/page IDs, speaker/line assignments, sample-clock starts/ends, cast mapping, text-safety review, model/stem provenance and listening review. The renderer ignores extra fields and cannot validate those semantic claims.
 
 The helper measures audio duration with ffprobe and rejects duration mismatch beyond one frame plus 25 ms. Each shot becomes at least one frame; frame rounding is checked against the final soundtrack. It renders to a temporary workspace, validates a full final decode, and retains the source master separately. It does not silently truncate audio or pad an unknown timing mismatch. A transition may interpolate from the full-spread rectangle to a panel rectangle with a different aspect ratio: each frame is contained and letterboxed, never stretched. Use a brief silent transition followed by a separate full-panel hold for its spoken lines. Confirm all text is safe in both rectangles before rendering.
+
+## Mandatory production readability evidence
+
+Maintain a per-caption ledger as specified in `caption-readability-qa.md`, linked to the exact final video hash. Include source bounds, expected text, shot mapping, continuous readable interval, extracted final-frame timestamps, native-size visual observations and repair/recheck results. `render_spread.py` does not validate this semantic ledger or certify caption readability; a successful render or decode is not delivery approval.
