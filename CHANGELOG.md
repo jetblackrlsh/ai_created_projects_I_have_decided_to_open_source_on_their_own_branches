@@ -1,3 +1,7 @@
+## 1.2.0
+
+Seeded budget-valid character/power generation; eight-genre branching adventure template grammar; setup UI, portable generated-world saves and JSON export; CLI generation; 500-seed/1,500-playthrough regression suite.
+
 # Changelog
 
 ## 1.1.0 — 2026-11-12

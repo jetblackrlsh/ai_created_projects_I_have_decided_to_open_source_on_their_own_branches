@@ -91,3 +91,15 @@ The original code, example material, and accompanying skill are released under *
 Validation: 33 engine tests, 7 independent regression groups, 2,500 seeded demo runs exercising 74 actions and all 31 scenes, and UI DOM-contract tests. Random-policy outcome counts are coverage tests, not measured game balance or typical player odds.
 
 Release 1.1.0 auto-mode validation: 1,000 seeded powered/nonpowered runs produced 147 victories, 445 mixed endings and 408 defeats, with 1,000 distinct choice paths. These are test-policy outcomes, not player win-rate forecasts. Legal selection, bounded loops, deadlock detection, old-save compatibility, RNG continuation, log round-trips, and scheduled UI start/pause/step were tested. Browser visual QA remains unavailable as noted above.
+
+## Seeded character and adventure generator
+
+Use the **Seeded generator** section before starting. Enter a seed and choose Fantasy, Science fiction, Superhero, Weird west, Cyberpunk, Horror, Post-apocalyptic or Noir. **Generate character** fills the editable sheet with legal stats and 3–5 custom powers. **Generate adventure** creates a branching world and its own default hero; you can instead use your custom/imported character. Then play yourself or press **Start auto**.
+
+The same seed and genre reproduce the same content. Change the seed for another variation. This uses a bounded library of scene and power templates, not online AI or limitless new mechanics. Defaults produce 4–6 stages, with two routes per stage, a finale and meaningful victory/mixed/defeat outcomes. Every obstacle has a legal nonpowered approach, but attempts can fail. Evidence and rescues open finale opportunities.
+
+**Export adventure JSON** saves the generated setting for rebuilding a standalone HTML. Generated saves include their world, so they can travel to another copy of the game. Export your save and chronicle before starting a new run. Character export remains independent of the adventure.
+
+For agents, see `engine-api.md` and the `generateCharacter`, `generateAdventure`, `exportAdventure` CLI commands. `generators.js` is a pure seeded data generator using the existing rules. Generator version 1 is recorded with each world and character.
+
+Choose a mission type or let the seed pick: recovery, investigation, escort, sabotage, reconciliation or containment. Locations, opposition and items are generic descriptive roles rather than recurring proper nouns. Mission goals and finale checks change; the underlying two-route stage structure is shared and some obstacle text will recur.

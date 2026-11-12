@@ -184,7 +184,7 @@ class Engine {
   while(steps<maxSteps){result=this.autoStep();if(result.choice)steps++;if(result.stopped)break;}
   return {...result,steps,stopped:result.stopped||'step-limit'};
  }
- exportSave(){return JSON.stringify({format:'crpg-forge-save',version:VERSION,adventureId:this.adventure.id,adventureVersion:this.adventure.version||1,character:this.character,state:this.state},null,2);}
+ exportSave(){return JSON.stringify({format:'crpg-forge-save',version:VERSION,adventureId:this.adventure.id,adventureVersion:this.adventure.version||1,...(this.adventure.generation?{adventure:this.adventure}:{}),character:this.character,state:this.state},null,2);}
  importSave(json){assert(typeof json==='string'&&json.length<5000000,'Save must be text under 5 MB');let s=JSON.parse(json);assert(s.format==='crpg-forge-save'&&s.version===VERSION,'Unsupported save format');assert(s.adventureId===this.adventure.id&&s.adventureVersion===(this.adventure.version||1),'Save belongs to another adventure/version');assert(!validateCharacter(s.character).length,'Invalid saved character');const st=s.state;
   assert(st&&this.adventure.scenes[st.scene]&&st.adventureId===this.adventure.id,'Invalid saved scene');assert(Number.isInteger(st.turn)&&st.turn>=0,'Invalid turn');assert(st.maxHp===20+mod(s.character.stats.CON)*2&&num(st.hp,0,st.maxHp),'Invalid HP');assert(st.maxEnergy===12+Math.max(0,mod(s.character.stats.WIS))&&num(st.energy,0,st.maxEnergy),'Invalid energy');assert(num(st.shield,0,st.maxHp)&&Number.isInteger(st.rng)&&num(st.rng,1,4294967295),'Invalid state');
   if(st.autoRng!==undefined)assert(Number.isInteger(st.autoRng)&&num(st.autoRng,1,4294967295),'Invalid auto RNG');
