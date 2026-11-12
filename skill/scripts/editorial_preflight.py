@@ -1,7 +1,7 @@
 """Structural editorial gate; not a truth or intent verifier."""
 import json, re, sys
-CHECKS = ('intent_preserved','host_voice','source_conflicts_resolved','visuals_and_metadata_aligned','no_unnecessary_hedging')
-PHRASES = ('the document says','the document argues','the author argues','in the source document','this video was generated from','the supplied document')
+CHECKS = ('intent_preserved','host_voice','source_conflicts_resolved','visuals_and_metadata_aligned','no_unnecessary_hedging','no_obvious_explanations','speaker_certainty_preserved')
+PHRASES = ('the document says','the document argues','the author argues','in the source document','this video was generated from','the supplied document','these are my illustrations, not screenshots','this is not a moderator ruling','the screenshots do not settle','the screenshots don’t settle','it could be perceived as','this should not be taken as proof')
 def validate(data):
     errors=[]
     for key in ('host','thesis','audience','takeaway','script'):
