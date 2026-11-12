@@ -62,6 +62,10 @@ Inspect the returned action IDs before choosing one:
 
 Other commands include `new`, `previewPower`, `power`, `rest`, `importSave`, `exportCharacter`, `validateCharacter`, and `validatePower`. See `cli.js` for the exact command fields and the engine API reference for schemas. Agents should inspect previews, respect failure results, and never fabricate rolls or edit saves to manufacture a successful playthrough.
 
+## Optional illustrated character sheets
+
+The creation skill can generate illustrated character sheets when requested. It validates the character first and checks printed statistics and abilities against the authoritative JSON. The picture is a visual reference, not an import format: import its companion JSON to play. Unsupported concepts are represented only by disclosed, bounded mechanics. Private likeness references and franchise character art are not bundled with this CC0 engine.
+
 ## Storage, privacy, and limits
 
 The game makes no network calls. Saves and logs stay on the player’s device unless the player uploads or shares them. Saves and logs are ordinary editable data, **not tamper-proof records or secure against their owner editing them**. Do not use them as competitive anti-cheat evidence or a security boundary.

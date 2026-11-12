@@ -1,6 +1,6 @@
 ---
 name: create-offline-crpg
-description: Create and playtest complete offline text CRPG adventures for desktop browsers using CRPG Forge, with branching stories, real d20 checks, custom characters and powers, saves, and headless agent play. Use for new CRPG sessions or adventures and compatible character/power packs, not live freeform chat GMing.
+description: Create and playtest complete offline text CRPG adventures for desktop browsers using CRPG Forge, with branching stories, real d20 checks, custom characters and powers, saves, and headless agent play. Use for new CRPG sessions or adventures and compatible character/power packs and optional illustrated character sheets, not live freeform chat GMing.
 ---
 # Create Offline CRPG
 
@@ -32,3 +32,7 @@ Use `node cli.js adventure.json SEED` in the working runtime copy and the API do
 Deliver a standalone `.html` game plus a source package with adventure data, rules, power documentation, CLI, tests and build tooling. Back up milestones to the user's private Google Drive when authorized; verify file contents and access. Never call a scratch copy installed. Do not silently replace an existing game's saves or overwrite the same Drive file without checking identity. Keep release/version records so future updates target the same project and flag save incompatibility clearly.
 
 Open-source publication requires a user request covering this project. When authorized, follow `publish-ai-project-on-own-branch`, retain licenses and exclude personal data. Update the known project branch rather than creating disconnected duplicate releases.
+
+## Optional illustrated character sheets
+
+Generate a character-sheet image only when requested, not for every adventure or character. Read `references/character-sheet-images.md`. Validate the character JSON first and derive every printed statistic, modifier, resource, power cost and limit from that exact data and the current engine. Keep the importable JSON authoritative; an image is a visual reference, not an import format. Use supplied identity references when available. Deliver the image alongside its matching validated JSON; explicitly disclose unsupported concepts and their bounded implementations. Never change engine rules to match attractive artwork.
