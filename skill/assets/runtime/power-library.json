@@ -1,0 +1,341 @@
+[
+  {
+    "id": "boost_str",
+    "name": "Titan Muscle",
+    "cost": 2,
+    "cooldown": 1,
+    "stat": "INT",
+    "effects": [
+      {
+        "type": "stat_boost",
+        "stat": "STR",
+        "amount": 4,
+        "duration": 3
+      }
+    ]
+  },
+  {
+    "id": "boost_dex",
+    "name": "Accelerated Reflexes",
+    "cost": 2,
+    "cooldown": 1,
+    "stat": "INT",
+    "effects": [
+      {
+        "type": "stat_boost",
+        "stat": "DEX",
+        "amount": 4,
+        "duration": 3
+      }
+    ]
+  },
+  {
+    "id": "boost_con",
+    "name": "Enduring Form",
+    "cost": 2,
+    "cooldown": 1,
+    "stat": "INT",
+    "effects": [
+      {
+        "type": "stat_boost",
+        "stat": "CON",
+        "amount": 4,
+        "duration": 3
+      }
+    ]
+  },
+  {
+    "id": "boost_int",
+    "name": "Cognitive Overclock",
+    "cost": 2,
+    "cooldown": 1,
+    "stat": "INT",
+    "effects": [
+      {
+        "type": "stat_boost",
+        "stat": "INT",
+        "amount": 4,
+        "duration": 3
+      }
+    ]
+  },
+  {
+    "id": "boost_wis",
+    "name": "Expanded Awareness",
+    "cost": 2,
+    "cooldown": 1,
+    "stat": "INT",
+    "effects": [
+      {
+        "type": "stat_boost",
+        "stat": "WIS",
+        "amount": 4,
+        "duration": 3
+      }
+    ]
+  },
+  {
+    "id": "boost_cha",
+    "name": "Magnetic Presence",
+    "cost": 2,
+    "cooldown": 1,
+    "stat": "INT",
+    "effects": [
+      {
+        "type": "stat_boost",
+        "stat": "CHA",
+        "amount": 4,
+        "duration": 3
+      }
+    ]
+  },
+  {
+    "id": "wings",
+    "name": "Luminous Wings",
+    "cost": 3,
+    "cooldown": 1,
+    "stat": "INT",
+    "effects": [
+      {
+        "type": "grant_tag",
+        "tags": [
+          "flight"
+        ],
+        "duration": 3
+      },
+      {
+        "type": "check_bonus",
+        "stat": "DEX",
+        "amount": 2,
+        "duration": 3
+      }
+    ]
+  },
+  {
+    "id": "phase",
+    "name": "Phase Step",
+    "cost": 3,
+    "cooldown": 1,
+    "stat": "INT",
+    "effects": [
+      {
+        "type": "grant_tag",
+        "tags": [
+          "intangibility"
+        ],
+        "duration": 3
+      },
+      {
+        "type": "check_bonus",
+        "stat": "DEX",
+        "amount": 2,
+        "duration": 3
+      }
+    ]
+  },
+  {
+    "id": "portal",
+    "name": "Short Portal",
+    "cost": 3,
+    "cooldown": 1,
+    "stat": "INT",
+    "effects": [
+      {
+        "type": "grant_tag",
+        "tags": [
+          "teleportation"
+        ],
+        "duration": 3
+      },
+      {
+        "type": "check_bonus",
+        "stat": "INT",
+        "amount": 2,
+        "duration": 3
+      }
+    ]
+  },
+  {
+    "id": "empath",
+    "name": "Empathic Reading",
+    "cost": 3,
+    "cooldown": 1,
+    "stat": "INT",
+    "effects": [
+      {
+        "type": "grant_tag",
+        "tags": [
+          "empathy"
+        ],
+        "duration": 3
+      },
+      {
+        "type": "check_bonus",
+        "stat": "CHA",
+        "amount": 2,
+        "duration": 3
+      }
+    ]
+  },
+  {
+    "id": "interface",
+    "name": "Machine Interface",
+    "cost": 3,
+    "cooldown": 1,
+    "stat": "INT",
+    "effects": [
+      {
+        "type": "grant_tag",
+        "tags": [
+          "hacking"
+        ],
+        "duration": 3
+      },
+      {
+        "type": "check_bonus",
+        "stat": "INT",
+        "amount": 2,
+        "duration": 3
+      }
+    ]
+  },
+  {
+    "id": "divination",
+    "name": "Remote Glimpse",
+    "cost": 3,
+    "cooldown": 1,
+    "stat": "INT",
+    "effects": [
+      {
+        "type": "grant_tag",
+        "tags": [
+          "remote_sight"
+        ],
+        "duration": 3
+      },
+      {
+        "type": "check_bonus",
+        "stat": "WIS",
+        "amount": 2,
+        "duration": 3
+      }
+    ]
+  },
+  {
+    "id": "medic",
+    "name": "Repairing Swarm",
+    "cost": 3,
+    "cooldown": 1,
+    "stat": "INT",
+    "effects": [
+      {
+        "type": "heal",
+        "amount": 9
+      },
+      {
+        "type": "remove_condition",
+        "condition": "weakened"
+      }
+    ]
+  },
+  {
+    "id": "barrier",
+    "name": "Force Barrier",
+    "cost": 2,
+    "cooldown": 1,
+    "stat": "INT",
+    "effects": [
+      {
+        "type": "shield",
+        "amount": 9
+      }
+    ]
+  },
+  {
+    "id": "bolt",
+    "name": "Force Bolt",
+    "cost": 2,
+    "cooldown": 1,
+    "stat": "INT",
+    "effects": [
+      {
+        "type": "damage",
+        "amount": 6
+      }
+    ]
+  },
+  {
+    "id": "siphon",
+    "name": "Vital Siphon",
+    "cost": 3,
+    "cooldown": 1,
+    "stat": "INT",
+    "effects": [
+      {
+        "type": "drain",
+        "amount": 6
+      }
+    ]
+  },
+  {
+    "id": "companion",
+    "name": "Scout Companion",
+    "cost": 2,
+    "cooldown": 1,
+    "stat": "INT",
+    "effects": [
+      {
+        "type": "summon",
+        "stat": "WIS",
+        "amount": 2,
+        "duration": 4
+      }
+    ]
+  },
+  {
+    "id": "dragon",
+    "name": "Winged Transformation",
+    "cost": 3,
+    "cooldown": 1,
+    "stat": "INT",
+    "effects": [
+      {
+        "type": "transform",
+        "stat": "STR",
+        "amount": 4,
+        "tags": [
+          "flight"
+        ],
+        "duration": 3
+      }
+    ]
+  },
+  {
+    "id": "ward",
+    "name": "Kinetic Ward",
+    "cost": 2,
+    "cooldown": 1,
+    "stat": "INT",
+    "effects": [
+      {
+        "type": "resistance",
+        "amount": 3,
+        "duration": 3
+      }
+    ]
+  },
+  {
+    "id": "bind",
+    "name": "Binding Field",
+    "cost": 2,
+    "cooldown": 1,
+    "stat": "INT",
+    "effects": [
+      {
+        "type": "inflict_condition",
+        "condition": "restrained",
+        "duration": 3
+      }
+    ]
+  }
+]

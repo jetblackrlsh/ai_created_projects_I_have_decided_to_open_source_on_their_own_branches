@@ -1,0 +1,4 @@
+interface:
+  display_name: "Create Offline CRPG"
+  short_description: "Build offline RPG adventures with rolls and custom powers"
+  default_prompt: "Create a complete offline CRPG adventure using the bundled rules engine."

@@ -1,0 +1,58 @@
+Automated release tests, 2026-11-12. Real browser testing blocked by cloud socket permissions; UI tested with DOM stubs only.
+
+> crpg-forge@1.0.0 test
+> node engine.test.js && node adventure.test.js && node ui.test.js && node qa.test.js
+
+PASS valid example
+PASS modifiers
+PASS preview actual attributes and circumstances
+PASS seed reproducibility
+PASS different seeds change rolls
+PASS save resume preserves RNG
+PASS every d20 in bounds
+PASS failure has real consequences
+PASS context power affects check and costs
+PASS effects expire
+PASS cooldown enforced and advances
+PASS zero cooldown allows repeat until energy empty
+PASS one rest per location
+PASS rest not everywhere
+PASS combat gate
+PASS offensive standalone powers really roll
+PASS fixed damage on hit
+PASS no-target offensive power blocked
+PASS offensive power cannot bypass check through unchecked action
+PASS unknown power rejected
+PASS energy restoration power rejected
+PASS oversized powers rejected
+PASS unknown effect rejected
+PASS NaN and fractional stats rejected
+PASS score budget enforced
+PASS game can be lost
+PASS deadline real loss
+PASS malformed saves rejected without state change
+PASS invalid save hp rejected
+PASS invalid saves cooldown or effect rejected
+PASS detached snapshots
+PASS character JSON export
+PASS event log is full JSONL
+33 tests passed
+{
+  "validated": true,
+  "scenes": 31,
+  "exercisedActions": 74,
+  "runs": 2500,
+  "victory": 350,
+  "mixed": 1023,
+  "defeat": 1127,
+  "nonpoweredVictories": 23
+}
+UI DOM-contract tests passed: initialization, default/custom start, power builder, action preview/commit, state rendering, valid/invalid save imports, static template IDs. Not a browser/layout test.
+PASS matching tags cannot grant free capabilities
+PASS social checks cannot bypass enemy combat defense
+PASS resistance lasts documented activation turn
+PASS zero adventure damage preserved
+PASS DEX boost affects defense
+PASS impossible HP/status and shield saves rejected
+PASS invalid destination and negative heal rejected
+Independent QA regression suite passed
