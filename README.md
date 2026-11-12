@@ -117,6 +117,12 @@ Random character powers now cover all 15 currently permitted custom effect famil
 
 ### Broad random character sampling
 
-The default **Broad rules sampling** mode now samples 0–8 powers, scores 6–18 within the 78-point ceiling (it need not spend every point), all 15 allowed effect types, 1–5 effects per power, full supported magnitude/duration/cost/cooldown ranges, and valid combinations. Rejection sampling enforces the existing validator and power budget. It can produce weak, unusual or poorly synergized builds; review/edit them before play. **Curated recipes** remains available for more directed 3–5-power builds.
+The optional **Broad rules sampling** mode now samples 0–8 powers, scores 6–18 within the 78-point ceiling (it need not spend every point), all 15 allowed effect types, 1–5 effects per power, full supported magnitude/duration/cost/cooldown ranges, and valid combinations. Rejection sampling enforces the existing validator and power budget. It can produce weak, unusual or poorly synergized builds; review/edit them before play. **Curated recipes** remains available for more directed 3–5-power builds.
 
 This does **not** guarantee that every valid manually authored character can be generated. A 32-bit seed provides a finite output set, while arbitrary names, descriptions, custom check tags and valid combinations are vastly larger. Broad mode samples canonical supported tags and fields, not every possible text string or JSON representation. Existing manual character creation/import remains the way to request an exact build. No manual validity rules were loosened.
+
+## Character-builder autopilot (v1.4.0)
+
+The new default **Builder autopilot** makes a sequence of legal character-building choices instead of selecting a fixed recipe: scores, 0–8 powers, costs/cooldowns, and 1–5 configured effects per power. Every offered choice leaves enough budget to complete the build. Power names and descriptions are editable in the character editor.
+
+The builder can reproduce a manually designed legal mechanical build through a validated choice trace, including custom check tags. The headless `builderTrace` command constructs that witness and `builderReplay` checks it. This is the precise coverage claim: every valid canonical mechanical build has a supported builder path when its tags are supplied. It does **not** mean the finite random seed space is guaranteed to select every path, or that every random build is strong or well matched to a particular adventure.

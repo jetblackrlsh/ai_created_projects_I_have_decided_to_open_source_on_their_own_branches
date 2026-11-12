@@ -36,7 +36,7 @@ console.log('VARIETY PASS:',variantRuns,'all-genre/type/variant auto runs;',vari
 
 const breadth={counts:new Set(),stats:new Set(),totals:new Set(),effects:new Set(),amounts:new Set(),durations:new Set(),costs:new Set(),cooldowns:new Set(),effectCounts:new Set()};
 for(let seed=1;seed<=2000;seed++){
- const c=G.generateCharacter(seed);assert.deepEqual(c,G.generateCharacter(seed));assert.deepEqual(C.validateCharacter(c),[]);breadth.counts.add(c.powers.length);Object.values(c.stats).forEach(n=>breadth.stats.add(n));breadth.totals.add(Object.values(c.stats).reduce((a,b)=>a+b,0));
+ const c=G.generateCharacter(seed,{characterMode:'broad'});assert.deepEqual(c,G.generateCharacter(seed,{characterMode:'broad'}));assert.deepEqual(C.validateCharacter(c),[]);breadth.counts.add(c.powers.length);Object.values(c.stats).forEach(n=>breadth.stats.add(n));breadth.totals.add(Object.values(c.stats).reduce((a,b)=>a+b,0));
  for(const p of c.powers){breadth.costs.add(p.cost);breadth.cooldowns.add(p.cooldown);breadth.effectCounts.add(p.effects.length);for(const e of p.effects){breadth.effects.add(e.type);breadth.amounts.add(e.amount);breadth.durations.add(e.duration)}}
  const a=G.generateAdventure(seed,{mission:'recovery',stages:3});const e=new C.Engine(a,c,seed);assert.notEqual(e.runAuto().status,'playing');
 }

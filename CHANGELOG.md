@@ -1,3 +1,7 @@
+## 1.4.0
+
+Default legal-choice character-builder autopilot; replayable traces and manual-build witness paths; full supported mechanical builder paths with supplied custom tags; editable power flavor; explicit distinction from finite random-seed coverage.
+
 ## 1.3.0
 
 Ten mission types, thirty objective variants with pressure/consequence/preparation mechanics; generator version 2; broader validated custom-power recipes; separate lazy-discovery finite hex sandbox with four variations, UI/map/CLI, portable saves and auto roaming; expanded regression tests.

@@ -1,5 +1,5 @@
 /* Seeded bounded procedural content. Pure data, no AI calls or rules extensions. */
-(function(root,factory){if(typeof module==='object'&&module.exports)module.exports=factory(require('./engine'));else root.CRPG_GENERATORS=factory(root.CRPG);})(typeof globalThis!=='undefined'?globalThis:this,function(C){
+(function(root,factory){if(typeof module==='object'&&module.exports)module.exports=factory(require('./engine'),require('./character-builder'));else root.CRPG_GENERATORS=factory(root.CRPG,root.CRPG_BUILDER);})(typeof globalThis!=='undefined'?globalThis:this,function(C,B){
 'use strict';
 const VERSION=2,copy=x=>JSON.parse(JSON.stringify(x));
 function rng(seed){if(!Number.isInteger(seed)||seed<1||seed>4294967295)throw Error('Seed must be an integer from 1 to 4294967295');let x=seed;return n=>{x^=x<<13;x^=x>>>17;x^=x<<5;x>>>=0;return Math.floor(x/4294967296*n)}}
@@ -100,6 +100,8 @@ function curatedCharacter(seed,options={}){const r=rng(seed),genre=themeFor(r,op
  p.description='A bounded '+genre.replaceAll('_',' ')+' technique. Its listed effects, costs and durations define what it does.';if(C.validatePower(p).length)throw Error('Generator produced invalid power');powers.push(p)}const c={name:'The '+['patient','restless','watchful','scarred','quiet','fearless','resourceful','wandering'][r(8)]+' '+['scout','investigator','guardian','outcast','courier','healer'][r(6)],description:'A '+genre.replaceAll('_',' ')+' wanderer, generated from seed '+seed+'.',stats,powers,generation:{version:VERSION,seed,genre}};if(C.validateCharacter(c).length)throw Error('Generator produced invalid character');return c}
 // Broad sampling spans the supported bounded numeric schema, not arbitrary text.
 function generateCharacter(seed,options={}){
+ if(!Number.isInteger(seed)||seed<1||seed>4294967295)throw Error('Seed must be an integer 1–4294967295');
+ if(options.characterMode===undefined||options.characterMode==='builder'){if(options.genre!==undefined&&!themes[options.genre])throw Error('Unknown genre');const result=B.autopilot(seed,{tags:options.tags});result.character.generation={version:VERSION,seed,characterMode:'builder'};return result.character;}
  if(options.characterMode==='curated')return curatedCharacter(seed,options);
  if(options.characterMode!==undefined&&options.characterMode!=='broad')throw Error('Unknown character generation mode');
  const r=rng(seed),genre=themeFor(r,options.genre),stats={},powers=[];let remaining=78;
