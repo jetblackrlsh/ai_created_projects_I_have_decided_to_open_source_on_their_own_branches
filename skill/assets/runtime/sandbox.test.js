@@ -1,0 +1,15 @@
+'use strict';
+const assert=require('assert'),C=require('./engine'),S=require('./sandbox');
+let outcomes={},discovered=new Set(),runs=0;
+for(const variant of S.variants)for(let seed=1;seed<=60;seed++){
+ const a=S.generateSandbox(seed,{sandboxVariant:variant});assert.deepEqual(a,S.generateSandbox(seed,{sandboxVariant:variant}));assert.equal(Object.keys(a.scenes).length,38);assert.equal(Object.values(a.scenes).filter(s=>s.unexplored).length,37);
+ let e=S.createEngine(a,null,seed);assert.equal(e.getState().map.length,1);assert.equal(Object.values(e.adventure.scenes).filter(s=>s.unexplored).length,36);assert.equal(e.getState().status,'playing');assert(!e.preview('finish').allowed);
+ e.act('travel_north');assert.equal(e.getState().map.length,2);assert.equal(e.getState().scene,'hex_0_-1');const arrived=JSON.stringify(e.adventure.scenes.hex_0_-1);e.act('travel_south');e.act('travel_north');assert.equal(JSON.stringify(e.adventure.scenes.hex_0_-1),arrived);
+ const raw=e.exportSave(),restored=S.createEngine(JSON.parse(raw).adventure);restored.importSave(raw);assert.equal(restored.exportSave(),raw);assert.deepEqual(e.runAuto(30),restored.runAuto(30));assert.equal(e.exportSave(),restored.exportSave());
+ e=S.createEngine(a,{...a.defaultCharacter,powers:[]},seed);for(let i=0;i<80&&e.getState().status==='playing';i++){const opts=e.listAutoOptions(),step=e.autoStep();assert(step.choice);assert(opts.some(x=>JSON.stringify(x)===JSON.stringify(step.choice)));assert(e.getState().hp>=0);for(const t of e.getState().map)discovered.add(t.title)}const state=e.getState();outcomes[state.status]=(outcomes[state.status]||0)+1;runs++;assert.deepEqual(C.validateAdventure(e.adventure),[]);
+}
+// Visit every hex in a bounded world with a legal path (test-only healing between
+// steps isolates reachability from combat). No content or core RNG edits are needed.
+const e=S.createEngine(S.generateSandbox(991,{radius:2}));function visit(q,r,seen=new Set()){const id='hex_'+q+'_'+r;if(seen.has(id))return;seen.add(id);for(const [dir,dq,dr] of S.directions){const target='hex_'+(q+dq)+'_'+(r+dr);if(!e.adventure.scenes[target]||seen.has(target))continue;e.state.hp=e.state.maxHp;e.act('travel_'+dir);visit(q+dq,r+dr,seen);e.state.hp=e.state.maxHp;const reverse=S.directions.find(d=>d[1]===-dq&&d[2]===-dr)[0];e.act('travel_'+reverse)}return seen}assert.equal(visit(0,0).size,19);assert.equal(e.getState().map.length,19);assert(e.preview('finish').allowed);e.act('finish');assert.equal(e.getState().status,'escape');assert.equal(e.autoStep().stopped,'ended');
+for(const radius of [1,7,2.5])assert.throws(()=>S.generateSandbox(1,{radius}));assert.throws(()=>S.generateSandbox(1,{sandboxVariant:'unknown'}));assert.throws(()=>S.generateSandbox(0));assert(discovered.size>=12);
+console.log('SANDBOX PASS:',runs,'seeded roaming runs; lazy content, deterministic revisits, six-direction travel, complete radius-2 map reachability, bounded maps, portable exact continuation, legal nonpowered auto choices; outcomes',outcomes,'location descriptions',discovered.size);

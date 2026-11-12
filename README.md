@@ -94,12 +94,29 @@ Release 1.1.0 auto-mode validation: 1,000 seeded powered/nonpowered runs produce
 
 ## Seeded character and adventure generator
 
-Use the **Seeded generator** section before starting. Enter a seed and choose Fantasy, Science fiction, Superhero, Weird west, Cyberpunk, Horror, Post-apocalyptic or Noir. **Generate character** fills the editable sheet with legal stats and 3–5 custom powers. **Generate adventure** creates a branching world and its own default hero; you can instead use your custom/imported character. Then play yourself or press **Start auto**.
+Use the **Seeded generator** section before starting. Enter a seed and choose Fantasy, Science fiction, Superhero, Weird west, Cyberpunk, Horror, Post-apocalyptic or Noir. **Generate character** fills the editable sheet with legal stats and either broad-rule powers or curated recipes. **Generate adventure** creates a branching world and its own default hero; you can instead use your custom/imported character. Then play yourself or press **Start auto**.
 
-The same seed and genre reproduce the same content. Change the seed for another variation. This uses a bounded library of scene and power templates, not online AI or limitless new mechanics. Defaults produce 4–6 stages, with two routes per stage, a finale and meaningful victory/mixed/defeat outcomes. Every obstacle has a legal nonpowered approach, but attempts can fail. Evidence and rescues open finale opportunities.
+The same seed and genre reproduce the same content. Change the seed for another variation. This uses a bounded library of scene and power templates, not online AI or limitless new mechanics. Defaults produce 4–6 stages, with two routes per stage, a finale and meaningful victory/mixed/defeat outcomes. Every obstacle has a legal nonpowered approach, but attempts can fail. Evidence and variant preparation open finale opportunities.
 
 **Export adventure JSON** saves the generated setting for rebuilding a standalone HTML. Generated saves include their world, so they can travel to another copy of the game. Export your save and chronicle before starting a new run. Character export remains independent of the adventure.
 
-For agents, see `engine-api.md` and the `generateCharacter`, `generateAdventure`, `exportAdventure` CLI commands. `generators.js` is a pure seeded data generator using the existing rules. Generator version 1 is recorded with each world and character.
+For agents, see `engine-api.md` and the `generateCharacter`, `generateAdventure`, `exportAdventure` CLI commands. `generators.js` is a pure seeded data generator using the existing rules. Generator version 2 is recorded with each world and character.
 
-Choose a mission type or let the seed pick: recovery, investigation, escort, sabotage, reconciliation or containment. Locations, opposition and items are generic descriptive roles rather than recurring proper nouns. Mission goals and finale checks change; the underlying two-route stage structure is shared and some obstacle text will recur.
+Choose a mission type or let the seed pick: recovery, investigation, escort, sabotage, reconciliation, containment, evacuation, rescue, defense or exploration. Locations, opposition and items are generic descriptive roles rather than recurring proper nouns. Mission goals and finale checks change; the underlying two-route stage structure is shared and some obstacle text will recur.
+
+## Mission variations and hex sandbox (v1.3.0)
+
+Each of the 10 mission types has three selectable objective variations. For example, evacuation can involve rising water, a closing siege or an airborne hazard. Their preparation encounters change the ability/capability checks, deadline pressure, failure consequences and preparation rewards. Preparation opens a lower-DC finale approach; skipping or failing it does not block all other approaches. Thirty narrative variations currently use 23 distinct combinations of preparation mechanics, sharing four pressure profiles and the route-stage structure.
+
+For open-ended play choose **Generate hex sandbox**, separately from Generate adventure. Choose Frontier, Ruin scavenging, Island hopping or Haunted wilds. The default world has 37 hexes (radius 3). Travel north, northeast, southeast, south, southwest or northwest. Locations are filled in on first arrival and remain the same when revisited. The discovered-map panel records coordinates and locations. Choose local activities, survey, gather useful records, help people or simply roam. A hostile patrol can make a location risky; ordinary movement has no mandatory resource charge. Return to camp and choose to end when ready. There is no mandatory mission or deadline.
+
+Sandbox saves carry the partially discovered world and character. Auto mode uses the same legal choices; it may finish at camp, lose in danger, or keep roaming until the 200-choice safety pause. This is a bounded map and template-based activities, not infinite terrain or a live AI game master. The API supports radius 2–6 (19–127 hexes). The genre selector determines the generated default character; sandbox variation determines terrain/activities.
+
+Random character powers now cover all 15 currently permitted custom effect families (energy restoration remains an adventure effect, not a power). The generator samples 19 recipes, with legal randomized parameters and occasional composite resistance. In 1,000 seeded characters, tests observed 2,917 distinct mechanical power configurations, all 44 capability tags, energy costs 1–4, durations 1–3 and cooldowns 0–2. These are observed samples, not a claim of unlimited powers or that every capability is useful at every location.
+
+
+### Broad random character sampling
+
+The default **Broad rules sampling** mode now samples 0–8 powers, scores 6–18 within the 78-point ceiling (it need not spend every point), all 15 allowed effect types, 1–5 effects per power, full supported magnitude/duration/cost/cooldown ranges, and valid combinations. Rejection sampling enforces the existing validator and power budget. It can produce weak, unusual or poorly synergized builds; review/edit them before play. **Curated recipes** remains available for more directed 3–5-power builds.
+
+This does **not** guarantee that every valid manually authored character can be generated. A 32-bit seed provides a finite output set, while arbitrary names, descriptions, custom check tags and valid combinations are vastly larger. Broad mode samples canonical supported tags and fields, not every possible text string or JSON representation. Existing manual character creation/import remains the way to request an exact build. No manual validity rules were loosened.

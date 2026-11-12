@@ -1,7 +1,7 @@
 npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
 
-> crpg-forge@1.2.0 test
-> node engine.test.js && node adventure.test.js && node ui.test.js && node qa.test.js && node auto.test.js && node generators.test.js
+> crpg-forge@1.3.0 test
+> node engine.test.js && node adventure.test.js && node ui.test.js && node qa.test.js && node auto.test.js && node generators.test.js && node sandbox.test.js
 
 PASS valid example
 PASS modifiers
@@ -58,7 +58,56 @@ PASS invalid destination and negative heal rejected
 Independent QA regression suite passed
 AUTO PASS: legal selection, capability assists, no illegal target/energy/cooldown/silenced actions, spent rests, ended/deadlock/bounded loops, old saves, exact auto RNG continuation, full log round-trip.
 1000 seeded runs: {"defeat":408,"mixed":445,"victory":147} ; distinct paths: 1000
-GENERATORS PASS: 500 reproducible distinct worlds and characters; graph reachability, legal zero-energy/nonpowered routes, supported power budgets, 1,500 complete auto runs, generated save portability/continuation, invalid input rejection. Outcomes: { mixed: 961, victory: 350, defeat: 189 } Effect families: 12
+GENERATORS PASS: 500 reproducible distinct worlds and characters; graph reachability, legal zero-energy/nonpowered routes, supported power budgets, 1,500 complete auto runs, generated save portability/continuation, invalid input rejection. Outcomes: { mixed: 996, victory: 401, defeat: 103 } Effect families: 15
+VARIETY PASS: 960 all-genre/type/variant auto runs; 23 distinct objective mechanical patterns; 2917 distinct power mechanics; 44 capabilities; costs [ 1, 2, 3, 4 ] durations [ 1, 2, 3 ] cooldowns [ 0, 1, 2 ]
+BROAD PASS: 2000 deterministic valid characters and complete auto missions; coverage {
+  counts: [
+    0, 1, 2, 3, 4,
+    5, 6, 7, 8
+  ],
+  stats: [
+     6,  7,  8,  9, 10, 11,
+    12, 13, 14, 15, 16, 17,
+    18
+  ],
+  totals: [
+    44, 45, 48, 49, 50, 51, 52, 53, 54,
+    55, 56, 57, 58, 59, 60, 61, 62, 63,
+    64, 65, 66, 67, 68, 69, 70, 71, 72,
+    73, 74, 75, 76, 77, 78
+  ],
+  effects: [
+    'inflict_condition', 'stat_debuff',
+    'cleanse',           'summon',
+    'resistance',        'shield',
+    'heal',              'drain',
+    'stat_boost',        'transform',
+    'check_bonus',       'remove_condition',
+    'check_penalty',     'grant_tag',
+    'damage'
+  ],
+  amounts: [
+     1,  2, 3, 4,  5,
+     6,  7, 8, 9, 10,
+    11, 12
+  ],
+  durations: [
+    1, 2, 3, 4,  5,
+    6, 7, 8, 9, 10
+  ],
+  costs: [
+     1,  2, 3, 4,  5,
+     6,  7, 8, 9, 10,
+    11, 12
+  ],
+  cooldowns: [
+     0, 1, 2, 3, 4,
+     5, 6, 7, 8, 9,
+    10
+  ],
+  effectCounts: [ 1, 2, 3, 4, 5 ]
+}
+SANDBOX PASS: 240 seeded roaming runs; lazy content, deterministic revisits, six-direction travel, complete radius-2 map reachability, bounded maps, portable exact continuation, legal nonpowered auto choices; outcomes { playing: 136, escape: 65, defeat: 39 } location descriptions 17
 npm notice
 npm notice New major version of npm available! 11.9.0 -> 12.2.2
 npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
