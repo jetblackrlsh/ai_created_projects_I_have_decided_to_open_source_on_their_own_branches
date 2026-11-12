@@ -113,3 +113,17 @@ console.log(engine.exportLog());
 - `exportLog()`: one full JSON event per line, with all actual checks, rolls, costs and results.
 
 Saves are user-editable files, not anti-cheat signatures. Import validation rejects malformed or incompatible states, not every deliberate fictional edit. UI must treat names/text as text, never executable HTML. Browser autosave is convenience; explicit exported saves are the portable source of truth.
+
+## Auto mode (release 1.1.0)
+
+Auto mode uses the exact normal action, power, rest, check, energy, cooldown, enemy-response and ending rules. It is a random legal player, not an optimizer. `listAutoOptions()` returns every currently allowed ordinary action, action with one legal attached power, standalone power, and unspent rest. Each concrete option has equal selection probability, so an action with more legal power combinations has more entries. There is no lookahead at future scenes or outcomes; legal but unwise choices remain possible.
+
+- `autoStep()` commits at most one randomly selected option; returns `{choice?, stopped, status}`. Reasons are `ended`, `no-valid-options`, or null. Inspect `choice.kind`, `actionId`, and `powerId` as applicable.
+- `runAuto(maxSteps=200)` is a bounded headless run (integer 1–1000). Returns final result plus `steps`; `step-limit` means paused, not defeat or an invented ending. A deadlocked adventure stops without changing its status.
+- Auto choices use a separate seeded RNG stored as optional `state.autoRng`. Old version-1 saves remain compatible. Same initial seed/character and same sequence of manual/auto calls reproduces results; a saved run resumes exactly. Starting a new game in the UI generates a new seed, editable before play.
+- `exportLog()` retains all normal events plus `auto_choice` (chosen option, scene and count of legal options) and `auto_arrival` narrative events. UI **Export log** remains readable text; raw JSONL is available through CLI.
+- CLI commands: `autoOptions`, `autoStep`, and `auto` with optional `maxSteps`. Use `new` with a validated `character` before auto play, or `importSave` to continue any existing run.
+- Browser: start any default/custom/imported character, then **Start auto**, **Pause auto**, or **One auto turn**. Speed is 1.5 seconds or 0.25 seconds per turn. Auto pauses after 200 turns; resume explicitly. Manual choice/power/rest controls pause auto before acting. New game/import also pause it. Imported saves never silently enable auto.
+- `window.CRPG_GAME` also exposes `listAutoOptions`, `autoStep`, `startAuto`, `stopAuto`, and `exportLog`. Normal save/export surfaces remain available.
+
+Existing distributed standalone HTML games must be rebuilt from their adventure JSON using this runtime to gain the new UI. Any valid adventure can use auto mode; reaching an ending is not guaranteed for authored loops or deadlocks. These stop safely with the current log and save intact.

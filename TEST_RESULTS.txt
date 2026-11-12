@@ -1,7 +1,7 @@
-Automated release tests, 2026-11-12. Real browser testing blocked by cloud socket permissions; UI tested with DOM stubs only.
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
 
-> crpg-forge@1.0.0 test
-> node engine.test.js && node adventure.test.js && node ui.test.js && node qa.test.js
+> crpg-forge@1.1.0 test
+> node engine.test.js && node adventure.test.js && node ui.test.js && node qa.test.js && node auto.test.js
 
 PASS valid example
 PASS modifiers
@@ -56,3 +56,10 @@ PASS DEX boost affects defense
 PASS impossible HP/status and shield saves rejected
 PASS invalid destination and negative heal rejected
 Independent QA regression suite passed
+AUTO PASS: legal selection, capability assists, no illegal target/energy/cooldown/silenced actions, spent rests, ended/deadlock/bounded loops, old saves, exact auto RNG continuation, full log round-trip.
+1000 seeded runs: {"defeat":408,"mixed":445,"victory":147} ; distinct paths: 1000
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+npm notice To update run: npm install -g npm@12.2.2
+npm notice

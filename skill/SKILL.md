@@ -23,6 +23,12 @@ Powers must support investigation, traversal, crafting, social interaction, perc
 5. Validate all targets, effects, flags, checks and characters. Run the engine and adventure tests; play several successful and losing routes headlessly. Test custom characters without powers as well as powered characters. Verify import/export continuation including RNG state and complete log.
 6. Build using `node build.js adventure.json Adventure.html` from that working runtime copy; open the produced HTML from disk in a cloud browser. Verify setup, choices, power builder, displayed math, saves, character imports, endings and log downloads. Do not use a personal computer without explicit authorization. Clearly disclose browser/platform checks not actually performed.
 
+## Auto play
+
+Keep the runtime’s Auto mode controls in every generated adventure. The player chooses or imports a character normally, then starts random legal CPU play, pauses to take over, or advances one auto turn. Do not substitute a scripted winning route, privileged foresight, or invented actions. Legal options include available power assistance, standalone powers and rest, with all normal checks and costs enforced. Export the full normal chronicle and saves. Explain that auto play can lose, and that a deadlock or safety step limit pauses without fabricating an ending. Existing HTML games need rebuilding with this runtime.
+
+Use `autoOptions`, `autoStep`, and bounded `auto` CLI commands, or `Engine.listAutoOptions()`, `autoStep()`, `runAuto(maxSteps)`. Test new adventures under several seeds with default, custom, imported and nonpowered characters; verify every selected option was valid and save/import preserves continuation. Read the auto-mode section in `references/engine-api.md` for exact behavior and limits.
+
 ## Headless authoring and play
 
 Use `node cli.js adventure.json SEED` in the working runtime copy and the API documentation. Read `references/adventure-guide.md` for a complete authored example. `assets/runtime/power-library.json` provides validated composable recipes; they are options, not free innate powers. Inspect state and action previews before acting; never fabricate a roll result or edit state to force a preferred outcome. Seeded tests are reproducible; normal play starts with a fresh seed. Preserve actual events in exported logs. Use synthetic fixtures for public tests.

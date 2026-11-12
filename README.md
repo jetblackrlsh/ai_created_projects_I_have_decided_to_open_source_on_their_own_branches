@@ -6,9 +6,17 @@ A reusable, offline, text-first CRPG engine for authored adventures with branchi
 
 Download the complete project or its packaged HTML adventure. Open **Adventure.html** in a current desktop Chrome browser. It contains the rules, interface, and adventure in one file; no installation is required to play. Choose the prepared protagonist or build/import your own character before starting.
 
-The target platforms are current Linux, Windows, and macOS computers with Chrome. The engine and headless interface are tested in Linux. Interactive browser testing could not be completed because this cloud environment blocks Chromium socket creation. This is not a claim of hands-on testing on Windows, macOS, or Linux browser UI.
+The target platforms are current Linux, Windows, and macOS computers with Chrome. The engine and headless interface are tested in Linux. Interactive browser testing could not be completed: the cloud browser disallowed local-file URLs and could not reach the workspace HTTP preview. This is not a claim of hands-on testing on Windows, macOS, or Linux browser UI.
 
 Use **Export save** to keep portable checkpoints outside the browser. Import the save into the same adventure/version on another computer to continue. Browser autosaves are convenient, but can be cleared or behave differently for local files. Keep explicit exports. Character and adventure-log exports are available too.
+
+## Auto mode
+
+Start with the prepared character, create one, or import a character, then choose **Start auto**. The CPU randomly chooses among actions it can currently perform, including power-assisted actions, powers and rests. It follows the same rules and can win, lose, or reach a mixed ending. **Pause auto** lets you take over; **One auto turn** advances one choice. Choose Watch or Fast pacing. Export the usual readable adventure log and portable save at any time.
+
+No online AI or adventure-specific scripting is required. The CPU does not strategize, invent actions, or guarantee victory. It pauses on no legal options or after 200 auto turns to avoid an infinite loop; the game is preserved, not marked defeated. Resume if desired. The saved random state makes continuation reproducible; a fresh new game starts with a fresh seed.
+
+For headless play: `{"command":"auto","maxSteps":200}`. Use `autoStep` for one turn and `autoOptions` to inspect current legal options. Export logs with `exportLog` and saves with `exportSave`. All valid adventures built with the updated runtime support this feature. Previously downloaded HTML games need rebuilding to gain it.
 
 ## Rules and powers
 
@@ -81,3 +89,5 @@ The original code, example material, and accompanying skill are released under *
 **Meridian: Borrowed Dawn** is a complete original adventure with 31 scenes and 10 endings. See `ADVENTURE_GUIDE.md` for spoiler-aware routes and authored consequences. `power-library.json` supplies 20 validated power recipes. `engine-api.md` documents the full data contract; `skill/` is the portable creation skill with its own matching runtime.
 
 Validation: 33 engine tests, 7 independent regression groups, 2,500 seeded demo runs exercising 74 actions and all 31 scenes, and UI DOM-contract tests. Random-policy outcome counts are coverage tests, not measured game balance or typical player odds.
+
+Release 1.1.0 auto-mode validation: 1,000 seeded powered/nonpowered runs produced 147 victories, 445 mixed endings and 408 defeats, with 1,000 distinct choice paths. These are test-policy outcomes, not player win-rate forecasts. Legal selection, bounded loops, deadlock detection, old-save compatibility, RNG continuation, log round-trips, and scheduled UI start/pause/step were tested. Browser visual QA remains unavailable as noted above.

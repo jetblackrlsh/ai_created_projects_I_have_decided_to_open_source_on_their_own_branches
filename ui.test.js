@@ -15,12 +15,15 @@ let ids=new Map([...html.matchAll(/id="([^"]+)"/g)].map(x=>[x[1],new Node(x[1]==
 for(const m of source.matchAll(/\$\('([^']+)'\)/g))assert(ids.has(m[1]),'Missing static DOM ID '+m[1]);
 let document={getElementById(id){return ids.get(id)||null},createElement(tag){let n=new Node(tag);Object.defineProperty(n,'id',{set(v){ids.set(v,n)}});return n},body:new Node('body')};
 ids.get('seedInput').value='20261112';ids.get('customName').value='Test hero';ids.get('customDescription').value='';ids.get('powerName').value='Insight';ids.get('powerCost').value='2';ids.get('powerCooldown').value='0';ids.get('powerDescription').value='';
-let storage=new Map(),ctx={CRPG,ADVENTURE:adventure,document,window:{},console,Option:function(text,value){let n=new Node('option');n.textContent=text;n.value=value;return n},localStorage:{getItem:k=>storage.get(k)||null,setItem:(k,v)=>storage.set(k,v)},confirm:()=>true,URL:{createObjectURL:()=> 'blob:test',revokeObjectURL(){}},Blob:global.Blob,setTimeout:f=>f()};
+let timers=new Map(),timerId=0;
+let storage=new Map(),ctx={CRPG,ADVENTURE:adventure,document,window:{},console,Option:function(text,value){let n=new Node('option');n.textContent=text;n.value=value;return n},localStorage:{getItem:k=>storage.get(k)||null,setItem:(k,v)=>storage.set(k,v)},confirm:()=>true,URL:{createObjectURL:()=> 'blob:test',revokeObjectURL(){}},Blob:global.Blob,setTimeout:f=>{timers.set(++timerId,f);return timerId},clearTimeout:id=>timers.delete(id)};
 vm.createContext(ctx);vm.runInContext(source,ctx,{filename:'app.js'});
 const ui=ctx.window.CRPG_GAME;
 assert.equal(document.title,adventure.title+' · CRPG Forge');assert.equal(ids.get('scoreInputs').children.length,6);
 ids.get('defaultBtn').click();assert.equal(ui.getState().character.name,adventure.defaultCharacter.name);assert(ids.get('actions').children.length>0);assert(storage.size===1);
 const action=ui.listActions().find(x=>x.preview.allowed);assert(action);vm.runInContext(`openChoice(${JSON.stringify(action.id)})`,ctx);assert(ids.get('choiceDialog').open);assert(ids.get('choicePreview').children.length>0);ids.get('confirmChoice').click();assert(!ids.get('choiceDialog').open);assert(ui.getState().turn>=1);assert(ids.get('journal').children.length>0);
+// Exercise scheduled CPU turns and cancellation without claiming browser rendering.
+ui.startAuto();assert.equal(ids.get('autoBtn').textContent,'Pause auto');assert(ids.get('autoStepBtn').disabled);let timer=[...timers.keys()][0],run=timers.get(timer);timers.delete(timer);let turnBefore=ui.getState().turn;run();assert.equal(ui.getState().turn,turnBefore+1);ui.stopAuto();assert.equal(timers.size,0);const paused=ui.exportSave();assert.equal(ui.exportSave(),paused);ids.get('autoStepBtn').click();assert.equal(ui.getState().turn,turnBefore+2);
 const saved=ui.exportSave();ui.importSave(saved);assert.equal(ui.exportSave(),saved);
 (async()=>{
  ids.get('loadBtn').click();await ids.get('fileInput').onchange({target:{files:[{size:saved.length,text:async()=>saved}],value:''}});assert.equal(ui.exportSave(),saved);

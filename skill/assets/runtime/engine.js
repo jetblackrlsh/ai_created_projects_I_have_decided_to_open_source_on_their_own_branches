@@ -150,9 +150,44 @@ class Engine {
  }
  _deadline(){if(this.adventure.turnLimit&&this.state.turn>=this.adventure.turnLimit&&this.state.status==='playing'){this.state.status='defeat';this._log('deadline',{text:this.adventure.deadlineText||'Time ran out.'});}}
  rest(){assert(this.state.status==='playing','Game has ended');assert(this._scene().rest,'Rest is not available here');assert(!this.state.flags['rest:'+this.state.scene],'This rest opportunity is spent');this._tick();this.state.flags['rest:'+this.state.scene]=true;this.state.energy=this.state.maxEnergy;this.state.hp=Math.min(this.state.maxHp,this.state.hp+6);this.state.conditions=[];this._log('rest',{text:'Recovered all energy and 6 health.'});this._deadline();return this.getState();}
+ // Auto mode is a random legal player, not a solver or a separate rules engine.
+ listAutoOptions(){
+  if(this.state.status!=='playing')return [];
+  const options=[];
+  for(const a of this._scene().actions||[]){
+   for(const powerId of [undefined,...this.character.powers.map(p=>p.id)]){
+    const preview=this.preview(a.id,powerId);
+    if(preview.allowed)options.push({kind:'action',actionId:a.id,powerId:powerId||null,label:a.label+(powerId?' + '+this.character.powers.find(p=>p.id===powerId).name:'' )});
+   }
+  }
+  for(const p of this.character.powers)if(this.previewPower(p.id).allowed)options.push({kind:'power',powerId:p.id,label:'Use '+p.name});
+  if(this._scene().rest&&!this.state.flags['rest:'+this.state.scene])options.push({kind:'rest',label:'Rest'});
+  return options;
+ }
+ autoStep(){
+  if(this.state.status!=='playing')return {stopped:'ended',status:this.state.status};
+  const options=this.listAutoOptions();
+  if(!options.length)return {stopped:'no-valid-options',status:this.state.status};
+  // Separate saved RNG stream: selecting an option never consumes a dice roll.
+  let x=this.state.autoRng===undefined?((this.state.rng^0x9e3779b9)>>>0)||1:this.state.autoRng;
+  x^=x<<13;x^=x>>>17;x^=x<<5;this.state.autoRng=x>>>0;
+  const choice=options[Math.floor(this.state.autoRng/4294967296*options.length)],scene=this.state.scene;
+  this._log('auto_choice',{choice,scene,optionCount:options.length,text:'Auto chooses: '+choice.label+' ['+(this._scene().title||scene)+']'});
+  if(choice.kind==='action')this.act(choice.actionId,choice.powerId||undefined);
+  else if(choice.kind==='power')this.usePower(choice.powerId);else this.rest();
+  if(this.state.scene!==scene)this._log('auto_arrival',{scene:this.state.scene,text:(this._scene().title||this.state.scene)+'\n'+this._scene().text});
+  return {choice,stopped:this.state.status==='playing'?null:'ended',status:this.state.status};
+ }
+ runAuto(maxSteps=200){
+  assert(Number.isInteger(maxSteps)&&maxSteps>=1&&maxSteps<=1000,'Auto step limit must be an integer from 1 to 1000');
+  let steps=0,result={stopped:null};
+  while(steps<maxSteps){result=this.autoStep();if(result.choice)steps++;if(result.stopped)break;}
+  return {...result,steps,stopped:result.stopped||'step-limit'};
+ }
  exportSave(){return JSON.stringify({format:'crpg-forge-save',version:VERSION,adventureId:this.adventure.id,adventureVersion:this.adventure.version||1,character:this.character,state:this.state},null,2);}
  importSave(json){assert(typeof json==='string'&&json.length<5000000,'Save must be text under 5 MB');let s=JSON.parse(json);assert(s.format==='crpg-forge-save'&&s.version===VERSION,'Unsupported save format');assert(s.adventureId===this.adventure.id&&s.adventureVersion===(this.adventure.version||1),'Save belongs to another adventure/version');assert(!validateCharacter(s.character).length,'Invalid saved character');const st=s.state;
   assert(st&&this.adventure.scenes[st.scene]&&st.adventureId===this.adventure.id,'Invalid saved scene');assert(Number.isInteger(st.turn)&&st.turn>=0,'Invalid turn');assert(st.maxHp===20+mod(s.character.stats.CON)*2&&num(st.hp,0,st.maxHp),'Invalid HP');assert(st.maxEnergy===12+Math.max(0,mod(s.character.stats.WIS))&&num(st.energy,0,st.maxEnergy),'Invalid energy');assert(num(st.shield,0,st.maxHp)&&Number.isInteger(st.rng)&&num(st.rng,1,4294967295),'Invalid state');
+  if(st.autoRng!==undefined)assert(Number.isInteger(st.autoRng)&&num(st.autoRng,1,4294967295),'Invalid auto RNG');
   for(const k of ['items','conditions','effects','log'])assert(Array.isArray(st[k]),'Invalid '+k);for(const k of ['flags','cooldowns','enemies'])assert(st[k]&&typeof st[k]==='object'&&!Array.isArray(st[k]),'Invalid '+k);assert(['playing','victory','defeat','escape','mixed'].includes(st.status)&&!(st.hp===0&&st.status!=='defeat'),'Invalid ending status');assert(st.conditions.every(c=>CONDITIONS.includes(c))&&st.items.every(i=>typeof i==='string'&&i.length<200),'Invalid conditions/items');for(const [k,v] of Object.entries(st.cooldowns))assert(s.character.powers.some(p=>p.id===k)&&Number.isInteger(v)&&num(v,0,10),'Invalid cooldown');for(const [k,v] of Object.entries(st.enemies))assert(this.adventure.scenes[k]?.enemy&&num(v,0,this.adventure.scenes[k].enemy.hp),'Invalid enemy');assert(Object.keys(st.flags).every(safeKey)&&Object.values(st.flags).every(v=>v===null||typeof v==='boolean'||typeof v==='string'||(typeof v==='number'&&Number.isFinite(v))),'Invalid flags');assert(st.effects.length<=100&&st.effects.every(e=>this._validSavedEffect(e,s.character)),'Invalid effects');this.character=clone(s.character);this.state=clone(st);return this.getState();
  }
  _validSavedEffect(e,character){if(!e||typeof e!=='object')return false;if(harmful(e)&&!this.adventure.scenes[e.targetScene])return false;if(!e||!EFFECT_TYPES.includes(e.type)||!Number.isInteger(e.remaining)||!num(e.remaining,1,10))return false;const candidates=e.source?((character.powers||[]).find(p=>p.id===e.source)?.effects||[]):Object.values(this.adventure.scenes).flatMap(s=>(s.actions||[]).flatMap(a=>['success','failure'].flatMap(k=>a[k]?.effects||[])));return candidates.some(c=>['type','amount','stat','condition','target'].every(k=>c[k]===e[k])&&JSON.stringify(c.tags||[])===JSON.stringify(e.tags||[])&&(e.duration||1)<=(c.duration||1)&&e.remaining<=(c.duration||1));}
