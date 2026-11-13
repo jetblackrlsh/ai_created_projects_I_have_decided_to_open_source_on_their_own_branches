@@ -27,10 +27,11 @@ Produce a coherent, sourced video with a reusable host rather than a slideshow o
 
 Read [audio workflow](references/audio.md) before synthesis. Use the bundled audio adapter and official runtime setup path. Generate **Kokoro** speech, **Stable Audio Small Music** instrumental beds, and motivated **Stable Audio Small SFX**. Restore official model/runtime files in the cloud when authorized; no paid API, personal computer, new legal agreement or credentials are implied.
 
+- **SFX fail closed.** No opening SFX by default (first three seconds). Optional effects without an actual audition of the exact asset and its mixed preview must be omitted, not merely attenuated or delivered for the user to discover. Read the effect gate in [audio workflow](references/audio.md). Never invent listening receipts; RMS, spectral filtering, peak checks and a prompt saying “soft” do not establish comfort. Keep narration and audible music when omitting effects.
 - Split each line into speaker spans before synthesis. “The narrator explains: [character quote]” is two spans, not one voice. Labels and stage directions are not spoken unless intentional. Keep display text separate from pronunciation-normalized TTS text; pronounce AI as initials. Stable voices, sample-rate, model version, normalized text and speaker mapping must enter cache keys.
 - Build and retain separate speech, effect and music stems on the same sample clock. Measure actual speech duration, add natural pauses, then align scene ends to frames. Never truncate words or accelerate speech to satisfy a guessed runtime.
 - Voices must remain clearer/louder than foreground SFX, which remain louder than **audible** music while overlapping. Silence between motivated effects is normal; do not silence music just because no effect is playing. Use gentle SFX processing and bounded phrase-level ducking, not repeated attenuation around every syllable. Check final post-master stems and encoded audio, not just source gains.
-- Run the music-presence validator and inspect its diagnostics; failed checks require repair before “complete.” Numerical ratios are not a listening test. Listen to representative speech+music, effects, transitions, quiet passages, and start/end when a listening surface is available. If not, disclose `listeningVerified:false` and deliver a mixed preview for the user to judge without claiming perceptual approval.
+- Run the music-presence validator and inspect its diagnostics; failed checks require repair before “complete.” Numerical ratios are not a listening test. Listen to representative speech+music, effects, transitions, quiet passages, and start/end when a listening surface is available. If listening is unavailable, omit unauditioned optional SFX, retain `listeningVerified:false`, and state the remaining limitation without claiming perceptual approval. Do not use the user as the first audition of optional generated effects.
 
 ## Render and verify
 
@@ -48,3 +49,6 @@ Read [manifest and renderer](references/manifest.md). Use `python scripts/render
 - Provide SRT/VTT and editable project checkpoint, including the host pack. State runtime and any actual QA limitation. A renderer-only test, silent sample or placeholder audio is not a completed production test.
 - For a requested public skill release, publish only generic code/docs and synthetic fixtures with licenses. Do not include Jet's avatar, scripts, source screenshots, private links, models, voice weights or credentials. Audio models retain their own licenses and are fetched separately.
 
+## Installed personal host library
+
+For Jet or Nova, first consult [private host pack](references/private-hosts.md) and reuse `assets/private-hosts/catalog.json`. This section and those private files are installed-only and must be removed from public exports.
