@@ -8,7 +8,7 @@ test('valid example',()=>assert.deepEqual(C.validateAdventure(adv),[]));
 test('modifiers',()=>assert.deepEqual([6,8,10,12,18].map(C.modifier),[-2,-1,0,1,4]));
 test('preview actual attributes and circumstances',()=>{const e=E();const p=e.preview('test');assert.equal(p.check.totalModifier,3);assert.equal(p.check.dc,15);});
 test('seed reproducibility',()=>{const a=E(),b=E();for(let i=0;i<4;i++){a.act('test');b.act('test');}assert.equal(a.exportSave(),b.exportSave());});
-test('different seeds change rolls',()=>{const a=E(100),b=E(1000000);a.act('test');b.act('test');assert.notEqual(a.state.log.at(-1).roll,b.state.log.at(-1).roll);});
+test('different seeds change rolls',()=>{const a=E(100),b=E(1000000);a.act('test');b.act('test');assert.notEqual(a.state.log.findLast(e=>e.type==='action').roll,b.state.log.findLast(e=>e.type==='action').roll);});
 test('save resume preserves RNG',()=>{const a=E();a.act('test');const b=E(77);b.importSave(a.exportSave());a.act('test');b.act('test');assert.equal(a.exportSave(),b.exportSave());});
 test('every d20 in bounds',()=>{const e=E();for(let i=0;i<1000;i++){const n=e._roll();assert(n>=1&&n<=20&&Number.isInteger(n));}});
 test('failure has real consequences',()=>{const e=E(1);e.act('test');assert.equal(e.state.hp,e.state.maxHp-3);});
@@ -36,5 +36,5 @@ test('invalid save hp rejected',()=>{const e=E(),s=JSON.parse(e.exportSave());s.
 test('invalid saves cooldown or effect rejected',()=>{const e=E(),s=JSON.parse(e.exportSave());s.state.effects=[{type:'win',remaining:1}];assert.throws(()=>e.importSave(JSON.stringify(s)));});
 test('detached snapshots',()=>{const e=E(),s=e.getState();s.hp=1000;s.character.stats.STR=1;assert.notEqual(e.state.hp,1000);assert.equal(e.character.stats.STR,14);});
 test('character JSON export',()=>assert.deepEqual(JSON.parse(E().exportCharacter()),char));
-test('event log is full JSONL',()=>{const e=E();e.act('test');assert.equal(e.exportLog().split('\n').length,2);assert.equal(JSON.parse(e.exportLog().split('\n')[1]).type,'action');});
+test('event log is full JSONL',()=>{const e=E();e.act('test');assert.equal(e.exportLog().split('\n').length,e.state.log.length);assert(e.exportLog().split('\n').map(JSON.parse).some(x=>x.type==='action'));});
 console.log(passed+' tests passed');

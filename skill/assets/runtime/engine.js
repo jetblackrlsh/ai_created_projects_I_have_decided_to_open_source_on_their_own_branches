@@ -83,7 +83,8 @@ class Engine {
  }
  _log(type,data){this.state.log.push({index:this.state.log.length,turn:this.state.turn,type,...clone(data)});}
  _roll(){let x=this.state.rng;x^=x<<13;x^=x>>>17;x^=x<<5;this.state.rng=x>>>0;return Math.floor((this.state.rng/4294967296)*20)+1;}
- _enter(id){assert(this.adventure.scenes[id],'Unknown scene');this.state.scene=id;const s=this.adventure.scenes[id];if(s.enemy&&this.state.enemies[id]===undefined)this.state.enemies[id]=s.enemy.hp;if(s.ending)this.state.status=s.ending;}
+ _enter(id){assert(this.adventure.scenes[id],'Unknown scene');this.state.scene=id;const s=this.adventure.scenes[id];if(s.enemy&&this.state.enemies[id]===undefined)this.state.enemies[id]=s.enemy.hp;if(s.ending)this.state.status=s.ending;this._log('scene_context',this._context());}
+ _context(){const s=this._scene();return {scene:this.state.scene,title:s.title||this.state.scene,text:s.text,options:(s.actions||[]).filter(a=>this._available(a)).map(a=>({id:a.id,label:a.label,preview:this.preview(a.id)}))};}
  _scene(){return this.adventure.scenes[this.state.scene];}
  _available(a){let r=a.requires;if(!r)return true;if(Array.isArray(r))return r.every(x=>this._require(x));return this._require(r);}
  _require(r){if(r.flag!==undefined)return (this.state.flags[r.flag]===undefined?false:this.state.flags[r.flag])===(r.value===undefined?true:r.value);if(r.item)return this.state.items.includes(r.item);if(r.tag)return this._tags().includes(r.tag);if(r.enemyAlive)return (this.state.enemies[this.state.scene]||0)>0;if(r.enemyDefeated)return (this.state.enemies[this.state.scene]||0)<=0;if(r.energy!==undefined)return this.state.energy>=r.energy;return false;}
@@ -106,7 +107,7 @@ class Engine {
   if(a.check?.capabilityBonus)for(const [tag,b] of Object.entries(a.check.capabilityBonus))if(this._tags(p?.effects||[]).includes(tag))bonus+=b;
   return {actionId,powerId:powerId||null,label:a.label,allowed:!reasons.length,reasons,cost,check:a.check?{stat:a.check.stat,score:this.character.stats[a.check.stat],effectiveScore:this._effectiveScore(a.check.stat,effects),statModifier:mod(this.character.stats[a.check.stat]),situationalModifier:situational,powerBonus:Math.min(8,bonus),baseDc:a.check.dc,dc,totalModifier:mod(this.character.stats[a.check.stat])+situational+Math.min(8,bonus)}:null,success:a.success?.text||'',failure:a.failure?.text||'',enemyResponse:!!this._scene().enemy&&(this.state.enemies[this.state.scene]||0)>0};
  }
- _tick(){this.state.turn++;this.state.effects=this.state.effects.map(e=>({...e,remaining:(e.remaining||1)-1})).filter(e=>e.remaining>0);for(const k of Object.keys(this.state.cooldowns))this.state.cooldowns[k]=Math.max(0,this.state.cooldowns[k]-1);}
+ _tick(){this._log('turn_context',{...this._context(),turn:this.state.turn+1});this.state.turn++;this.state.effects=this.state.effects.map(e=>({...e,remaining:(e.remaining||1)-1})).filter(e=>e.remaining>0);for(const k of Object.keys(this.state.cooldowns))this.state.cooldowns[k]=Math.max(0,this.state.cooldowns[k]-1);}
  _hurt(amount,tags=['physical']){const r=this.state.effects.filter(e=>e.type==='resistance'&&(!e.tags?.length||e.tags.some(t=>tags.includes(t)))).reduce((a,e)=>a+(e.amount||1),0);let dmg=Math.max(0,amount-Math.min(8,r));const shield=Math.min(dmg,this.state.shield);this.state.shield-=shield;dmg-=shield;this.state.hp=Math.max(0,this.state.hp-dmg);if(this.state.hp===0)this.state.status='defeat';return dmg;}
  _apply(e,power=false){if(harmful(e))e={...e,targetScene:this.state.scene};const s=this.state,a=e.amount??1,target=e.target||(['damage','drain','inflict_condition'].includes(e.type)?'enemy':'self');
  switch(e.type){
@@ -125,7 +126,7 @@ class Engine {
  default:s.effects=s.effects.filter(old=>!(old.source===e.source&&old.type===e.type&&old.stat===e.stat));s.effects.push({...clone(e),remaining:e.duration||1});
  }
  }
- _power(p,checkResolved=false,success=true){this.state.energy-=p.cost;this.state.cooldowns[p.id]=p.cooldown||0;for(const e of p.effects){if(harmful(e)&&!success)continue;if(checkResolved&&['check_bonus','stat_boost','summon','transform','grant_tag'].includes(e.type)){if((e.duration||1)>1)this._apply({...e,source:p.id,duration:e.duration-1},true);}else this._apply({...e,source:p.id},true);}this._log('power',{power:p.id,name:p.name,cost:p.cost});}
+ _power(p,checkResolved=false,success=true){this.state.energy-=p.cost;this.state.cooldowns[p.id]=p.cooldown||0;for(const e of p.effects){if(harmful(e)&&!success)continue;if(checkResolved&&['check_bonus','stat_boost','summon','transform','grant_tag'].includes(e.type)){if((e.duration||1)>1)this._apply({...e,source:p.id,duration:e.duration-1},true);}else this._apply({...e,source:p.id},true);}this._log('power',{power:p.id,name:p.name,cost:p.cost,effects:p.effects,success});}
  _enemyResponse(sceneId){const scene=this.adventure.scenes[sceneId];if(!scene.enemy||this.state.status!=='playing'||(this.state.enemies[sceneId]||0)<=0)return;
   const roll=this._roll(),defense=10+mod(this._effectiveScore('DEX'))+(this.state.conditions.includes('exposed')?-2:0);const targeted=this.state.effects.filter(e=>e.targetScene===sceneId);const debuffs=targeted.filter(e=>e.type==='check_penalty'&&(!e.stat||e.stat===(scene.enemy.stat||'STR'))&&(!e.tags?.length||e.tags.some(t=>['attack',...(scene.enemy.tags||[])].includes(t)))).reduce((a,e)=>a+(e.amount||1),0)+Math.ceil(targeted.filter(e=>e.type==='stat_debuff'&&e.stat===(scene.enemy.stat||'STR')).reduce((a,e)=>a+(e.amount||1),0)/2);
   const penalty=Math.min(8,debuffs)+(targeted.some(e=>e.type==='inflict_condition'&&['weakened','distracted','restrained'].includes(e.condition))?2:0);
@@ -135,8 +136,14 @@ class Engine {
   let roll=null,total=null,success=true;if(preview.check){roll=this._roll();total=roll+preview.check.totalModifier;success=total>=preview.check.dc;}
   this._tick();this.state.energy-=(a.cost||0);if(p)this._power(p,true,success);
   const outcome=success?a.success:a.failure;this._log('action',{actionId,label:a.label,roll,total,check:preview.check,success,cost:preview.cost,text:outcome?.text||''});
-  for(const e of outcome?.effects||[])this._apply(e);if(outcome?.next&&this.state.status!=='defeat')this._enter(outcome.next);
-  this._enemyResponse(sceneId);this._deadline();return this.getState();
+  let destination=outcome?.next;const before={hp:this.state.hp,energy:this.state.energy,shield:this.state.shield,enemyHp:this.state.enemies[sceneId]||0};
+  for(const e of outcome?.effects||[]){if(e.type==='next'){if(!outcome?.next)destination=e.scene;}else this._apply(e);}
+  this._log('consequences',{effects:outcome?.effects||[],before,after:{hp:this.state.hp,energy:this.state.energy,shield:this.state.shield,enemyHp:this.state.enemies[sceneId]||0}});
+  // A successful departure escapes this encounter. Failed departures resolve
+  // retaliation in the source scene before any arrival; death prevents travel.
+  if(!(success&&destination&&destination!==sceneId))this._enemyResponse(sceneId);
+  if(destination&&this.state.status==='playing')this._enter(destination);
+  this._deadline();return this.getState();
  }
  previewPower(powerId){const p=this.character.powers.find(p=>p.id===powerId);assert(p,'Unknown power');const offensive=p.effects.some(harmful),reasons=[];
   if(this.state.status!=='playing')reasons.push('Game has ended');if(this.state.energy<p.cost)reasons.push('Not enough energy');if(this.state.cooldowns[p.id]>0)reasons.push('Power is cooling down');if(this.state.conditions.includes('silenced'))reasons.push('Powers are suppressed');if(offensive&&(!this._scene().enemy||!(this.state.enemies[this.state.scene]>0)))reasons.push('No active enemy target');
@@ -192,6 +199,31 @@ class Engine {
  }
  _validSavedEffect(e,character){if(!e||typeof e!=='object')return false;if(harmful(e)&&!this.adventure.scenes[e.targetScene])return false;if(!e||!EFFECT_TYPES.includes(e.type)||!Number.isInteger(e.remaining)||!num(e.remaining,1,10))return false;const candidates=e.source?((character.powers||[]).find(p=>p.id===e.source)?.effects||[]):Object.values(this.adventure.scenes).flatMap(s=>(s.actions||[]).flatMap(a=>['success','failure'].flatMap(k=>a[k]?.effects||[])));return candidates.some(c=>['type','amount','stat','condition','target'].every(k=>c[k]===e[k])&&JSON.stringify(c.tags||[])===JSON.stringify(e.tags||[])&&(e.duration||1)<=(c.duration||1)&&e.remaining<=(c.duration||1));}
  exportLog(){return this.state.log.map(e=>JSON.stringify(e)).join('\n');}
+ exportReadableLog(){
+  const lines=[this.adventure.title,'Character: '+this.character.name],groups=new Map();
+  for(const e of this.state.log){const turn=e.type==='auto_choice'?e.turn+1:e.turn;if(!groups.has(turn))groups.set(turn,[]);groups.get(turn).push(e);}
+  let lastContext='';
+  for(const [turn,events] of [...groups].sort((a,b)=>a[0]-b[0])){
+   lines.push('',turn===0?'INITIAL SCENE':'TURN '+turn);
+   for(const e of events){
+    const actor=e.actorName?'['+e.actorName+(e.controller?' / '+e.controller:'')+'] ':'';
+    if(['scene_context','turn_context'].includes(e.type)){
+     const signature=JSON.stringify([e.scene,e.text,e.options]);if(signature===lastContext)continue;lastContext=signature;
+     lines.push('',(e.type==='scene_context'?'Location: ':'Situation: ')+e.title,e.text,'Available choices:');
+     for(const o of e.options||[]){const p=o.preview,c=p?.check;lines.push('- '+o.label+(c?' ['+c.stat+' '+(c.totalModifier>=0?'+':'')+c.totalModifier+' vs DC '+c.dc+']':' [no check]')+(p?.cost?' Energy '+p.cost:'')+(!p?.allowed?' (unavailable: '+(p?.reasons||[]).join('; ')+')':''));}
+    }else if(['action','power_check'].includes(e.type)){
+     lines.push(actor+(e.label||'Use power '+e.powerId));
+     if(e.check)lines.push('Roll: d20 '+e.roll+' + '+e.check.stat+' modifier '+e.check.statModifier+' + situation '+(e.check.situationalModifier||0)+' + powers '+(e.check.powerBonus??(e.check.totalModifier-e.check.statModifier-(e.check.situationalModifier||0)))+' (total modifier '+e.check.totalModifier+')'+' = '+e.total+' vs DC '+e.check.dc+' → '+(e.success?'SUCCESS':'FAILURE'));
+     if(e.text)lines.push(e.text);
+    }else if(e.type==='enemy')lines.push(actor+e.name+': d20 '+e.roll+' + '+e.modifier+' = '+e.total+' vs defense '+e.dc+'; '+(e.success?'hit for '+e.damage+' damage':'miss'));
+    else if(e.type==='consequences'){if(e.effects.length)lines.push('Mechanical effects: '+JSON.stringify(e.effects));lines.push('After outcome: HP '+e.after.hp+', energy '+e.after.energy+', shield '+e.after.shield+', enemy HP '+e.after.enemyHp);}
+    else if(e.type==='power')lines.push(actor+e.name+' costs '+e.cost+' energy. '+JSON.stringify(e.effects||[])+(e.success===false&&(e.effects||[]).some(harmful)?' Offensive effects failed.':''));
+    else if(e.type!=='auto_arrival')lines.push(actor+(e.text||JSON.stringify(e)));
+   }
+  }
+  lines.push('','Final status: '+this.state.status+' | HP '+this.state.hp+'/'+this.state.maxHp+' | Energy '+this.state.energy+'/'+this.state.maxEnergy);
+  return lines.join('\n');
+ }
  exportCharacter(){return JSON.stringify(this.character,null,2);}
 }
 return {VERSION,STATS,EFFECT_TYPES,CAPABILITIES,CONDITIONS,modifier:mod,validatePower,validateCharacter,validateAdventure,Engine};

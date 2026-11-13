@@ -117,3 +117,11 @@ npm notice New major version of npm available! 11.9.0 -> 12.2.2
 npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
 npm notice To update run: npm install -g npm@12.2.2
 npm notice
+
+v1.7.0 validation (2026-11-13 UTC):
+33 engine tests; independent QA; UI DOM contract; causal/death/escape and complete grouped logs.
+2,500 sample adventure runs: victory 347, mixed 1027, defeat 1126; every scene/action exercised; nonpowered wins.
+1,500 generated mission runs, 960 all genre/mission/variant runs, 2,000 broad-character mission runs passed.
+240 sandbox roaming runs: 163 still playing (bounded run), 59 escape, 18 defeat; 19-cell full-map reachability; exact save continuation.
+150 party mission runs: 104 mixed, 45 victory, 1 defeat. Party isolation, turns, saves, solo compatibility pass.
+Visual layout was not tested in a real browser; DOM contract only.

@@ -1,3 +1,6 @@
+# v1.7.0
+Causal encounter transitions, complete contextual grouped log export, checked generated actions and sandbox travel, direct authoring guidance. Existing party/solo save schemas preserved.
+
 ## 1.6.0
 
 Unified solo/party turn wrapper with legacy solo compatibility; local hot-seat rosters/controllers; active-only checks/powers and personal resources/effects; shared movement/story/inventory/enemies; pass, incapacitation, party saves/import/export and auto-mode support.
