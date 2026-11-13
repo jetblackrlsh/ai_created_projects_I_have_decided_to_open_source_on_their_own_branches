@@ -6,6 +6,10 @@ description: Create and playtest complete offline text CRPG adventures for deskt
 
 Copy `assets/runtime/` to a working project, then use the bundled CRPG Forge runtime unchanged. Author adventures and characters as data, then build a self-contained HTML game. Target current Chrome-class browsers on Windows, macOS and Linux; mobile support is not a requirement. Do not create a hosted Site or require servers, online AI, CDNs, accounts, or installation to play.
 
+## Mandatory story-first release gate
+
+Before implementing an adventure, read [Narrative review](references/narrative-review.md). Draft a plain-language branching CYOA manuscript first, about one paragraph per scene. Read valid success and failure paths as an uninformed newcomer, establish information before it is acted on, and revise causal failures before translating into engine data. Reconcile actual play logs with the reviewed draft. Save a coverage/revision report; mechanical tests are not a substitute.
+
 ## Rules and power boundaries
 
 Read `references/engine-api.md` and `references/power-design.md` before authoring. All checks use actual `1d20 + floor((ability_score-10)/2) + explicit situational modifiers >= DC`. Use STR, DEX, CON, INT, WIS, CHA. Damage is fixed. This is a distinct system, not D&D compatibility; do not import spell lists or other SRD subsystems.

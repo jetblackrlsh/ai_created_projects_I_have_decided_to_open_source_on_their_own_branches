@@ -7,3 +7,7 @@ e=game(false);e.act('go');assert.equal(e.state.status,'defeat');assert.equal(e.s
 e=game(true,[{type:'next',scene:'end'}],null);e.act('go');assert.equal(e.state.scene,'end');assert(!e.state.log.some(x=>x.type==='enemy'));
 const log=e.exportReadableLog();assert(log.includes('Initial context.'));assert(log.includes('You are outside.'));assert(log.includes('Cross doorway'));assert.equal((log.match(/^TURN 1$/gm)||[]).length,1);assert(log.includes('Roll: d20'));assert.equal(e.exportLog().split('\n').length,e.state.log.length);
 console.log('PASS causality, defeated/escaped enemies, death blocks travel, next effects, contextual grouped export');
+
+const boosted={...char,powers:[{id:'focus',name:'Focus',cost:2,cooldown:0,effects:[{type:'check_bonus',amount:3,duration:3,stat:'INT'}]}]};
+const world={id:'refresh',title:'Refresh',start:'room',defaultCharacter:boosted,scenes:{room:{text:'A quiet workshop.',actions:[{id:'think',label:'Think',check:{stat:'INT',dc:12},success:{text:'Solved.'},failure:{text:'Still unclear.'}},{id:'lift',label:'Lift',check:{stat:'STR',dc:12},success:{},failure:{}}]}}};
+const refresh=new C.Engine(world);refresh.usePower('focus');assert.equal(refresh.preview('think','focus').check.powerBonus,3);assert.equal(refresh.preview('lift','focus').check.powerBonus,0);refresh.act('think','focus');assert.equal(refresh.preview('think').check.powerBonus,3);console.log('PASS same-power reactivation refreshes without duplicate bonus and respects ability restriction');

@@ -222,3 +222,6 @@ Export the whole played session as a readable chronicle: adventure/character ide
 QA must include targeted reproductions, not just thousands of random runs: early easy-action rolls, every authored enemy-defeat action, successful escape with no later enemy attack, failed escape with a single valid response, exact scene/choice preservation in manual and Auto exports, player death without a later fabricated arrival, all endings, custom and no-power characters, and deterministic save/resume. Inspect representative complete exported stories for causal and prose quality. Headless tests do not replace visual review; disclose what was not tested.
 
 Runtime v1.7: exportReadableLog() provides grouped readable chronicles; exportLog() retains raw JSONL. Successful scene departure prevents old-enemy retaliation; failed departures retaliate before arrival, and defeat blocks arrival. Generated mission actions and sandbox travel have explicit checks; ending an expedition is a meta choice. Legacy saves remain loadable; missing historical scene snapshots in old saves cannot be recovered automatically.
+
+### Reactivation
+Attaching an already-active power replaces that power’s preview contribution rather than stacking it with itself. Different power sources still combine within existing caps. Ability/tag restrictions still apply.

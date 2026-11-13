@@ -1,3 +1,6 @@
+# v1.8.0
+Scene-first desktop interface, collapsed secondary panels, in-context selected-power descriptions, single unified result without repeated narrative, mandatory story-first CYOA review. Same-power reactivation refreshes instead of doubling preview bonuses. Mechanics/save formats otherwise preserved.
+
 # v1.7.0
 Causal encounter transitions, complete contextual grouped log export, checked generated actions and sandbox travel, direct authoring guidance. Existing party/solo save schemas preserved.
 

@@ -145,3 +145,7 @@ The roster panel shows who acts, their controller and individual resources. Auto
 
 ## v1.7 encounter and chronicle fixes
 Successful scene exits escape the old encounter. Failed exits resolve the enemy response before arrival; defeat prevents arrival. Defeated enemies cannot respond. Logs include scene/choice snapshots, actual rolls and consequences; UI Export Log uses a grouped readable chronicle, while exportLog() remains raw JSONL. Older saves load, but absent historical context cannot be reconstructed. Generated missions use checked actions, including easy routes; new sandbox travel checks routefinding. Ending an expedition is a player meta choice.
+
+## v1.8 interface and story authoring
+Play focuses on the current scene and choices. Character sheet, abilities, party controls, automation and chronicle are expandable; saves/exports live in Game menu. Selecting an assist displays its description, effects, cost and cooldown before commitment. A result appears once, before the next scene. Build/import/generation remain supported.
+New adventures must begin as a reviewed CYOA manuscript; see skill/references/narrative-review.md. This release does not claim a fresh narrative review of existing stories.

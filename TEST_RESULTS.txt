@@ -1,3 +1,6 @@
+v1.8.0 verification
+Targeted engine, QA, UI DOM-contract, causality and party tests passed. UI tests verify one outcome text, current scene separate, selected power descriptions, and preserved creation/import/auto. Same-source power refresh regression passed. Real Chromium visual rendering unavailable in this cloud sandbox; DOM tests are not screenshot QA. Previous release results retained below.
+
 npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
 
 > crpg-forge@1.6.0 test

@@ -94,7 +94,7 @@ class Engine {
  getState(){return clone({...this.state,character:this.character,sceneData:this._scene(),capabilities:this._tags(),enemyHp:this.state.enemies[this.state.scene]||0});}
  listActions(){if(this.state.status!=='playing')return [];return (this._scene().actions||[]).filter(a=>this._available(a)).map(a=>({...clone(a),preview:this.preview(a.id)}));}
  preview(actionId,powerId){const a=(this._scene().actions||[]).find(a=>a.id===actionId);assert(a,'Unknown action');let p=powerId?this.character.powers.find(p=>p.id===powerId):null;assert(!powerId||p,'Unknown power');
-  const cost=(a.cost||0)+(p?.cost||0);const effects=[...this.state.effects.filter(e=>!harmful(e)||e.targetScene===this.state.scene),...(p?.effects||[])];let reasons=[];
+  const cost=(a.cost||0)+(p?.cost||0);const effects=[...this.state.effects.filter(e=>(!p||e.source!==p.id)&&(!harmful(e)||e.targetScene===this.state.scene)),...(p?.effects||[])];let reasons=[];
   if(this.state.status!=='playing')reasons.push('Game has ended');if(!this._available(a))reasons.push('Requirements not met');if(cost>this.state.energy)reasons.push('Not enough energy');if(p&&(this.state.cooldowns[p.id]||0)>0)reasons.push('Power is cooling down');if(p&&this.state.conditions.includes('silenced'))reasons.push('Powers are suppressed');
   if(p&&p.effects.some(e=>['damage','drain','inflict_condition'].includes(e.type))&&(!this._scene().enemy||!(this.state.enemies[this.state.scene]>0)))reasons.push('No active enemy target');
   if(p&&p.effects.some(e=>['stat_debuff','check_penalty'].includes(e.type))&&!this._scene().enemy&&!a.check?.oppositionStat)reasons.push('No opposing check target');
