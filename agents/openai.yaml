@@ -1,8 +1,8 @@
 interface:
   display_name: Jet Paint Template Art
-  short_description: Create art in Jet’s original MS Paint template style
-  default_prompt: Use $create-jet-paint-template-art to make an original character
-    in my old MS Paint template style.
+  short_description: Create finished color art from Jet’s MS Paint bases
+  default_prompt: Use $create-jet-paint-template-art to make a finished, fully colored original character
+    in my old MS Paint style, completing the template with hair, limbs, clothing and distinctive features.
   icon_small: assets/icon.svg
   icon_large: assets/icon.svg
 policy:
