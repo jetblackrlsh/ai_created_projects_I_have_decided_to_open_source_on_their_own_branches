@@ -1,3 +1,7 @@
+## 1.6.0
+
+Unified solo/party turn wrapper with legacy solo compatibility; local hot-seat rosters/controllers; active-only checks/powers and personal resources/effects; shared movement/story/inventory/enemies; pass, incapacitation, party saves/import/export and auto-mode support.
+
 ## 1.5.0
 
 Fresh cryptographic random draw per legal builder choice, avoiding fixed-width whole-build seed limits; complete variable-length replay seeds, custom tag vocabulary UI, manual-build seed witnesses and reachability tests.

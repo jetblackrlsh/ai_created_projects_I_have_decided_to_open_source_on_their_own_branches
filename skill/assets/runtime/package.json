@@ -1,11 +1,11 @@
 {
   "name": "crpg-forge",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "private": true,
   "description": "Offline, data-driven text CRPG engine with six-stat d20 checks and composable custom powers",
   "license": "CC0-1.0",
   "scripts": {
     "build": "node build.js adventure.json Adventure.html",
-    "test": "node engine.test.js && node adventure.test.js && node ui.test.js && node qa.test.js && node auto.test.js && node generators.test.js && node sandbox.test.js && node character-builder.test.js"
+    "test": "node engine.test.js && node adventure.test.js && node ui.test.js && node qa.test.js && node auto.test.js && node generators.test.js && node sandbox.test.js && node character-builder.test.js && node party.test.js"
   }
 }
