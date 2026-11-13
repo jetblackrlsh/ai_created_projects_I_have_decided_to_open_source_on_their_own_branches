@@ -10,7 +10,7 @@ Source: seven original Microsoft Paint character templates supplied by Jet Black
 - `../assets/06-monster-armor.png`: pointed eye interiors, jagged fur-like edges and patterned shoulder shapes.
 - `../assets/07-posed-figure.png`: landscape framed drawing, same head/eye language with eyelashes and fuller lips; raised bent arm and hand on hip, strongly exaggerated torso. Shows the style supports poses, not only a static base.
 
-All seven are primarily black outlines on white without rendered color or shading. Avoid mistaking raster line contours for conventional tile/sprite pixel art.
+All seven are primarily black outlines on white without rendered color or shading because they are unfinished reusable bases. Their blank head tops leave room for hair; missing arms/legs and tail stubs leave room for completed anatomy. For finished art, draw those features onto the chosen base and fill the character with suitable flat colors. Do not preserve these omissions or default to monochrome. Avoid mistaking raster line contours for conventional tile/sprite pixel art.
 
 ## Calibration
 Initial version derived from the originals and their supplied explanation. On 2026-11-13, Jet approved the first generated goblin example as very accurate and like something he would draw. Treat that as positive calibration, not permission to replace the original reference drawings or claim every future image matches. Preserve the same simple handmade contours and proportion language; refine only in response to specific observed issues or user feedback.
