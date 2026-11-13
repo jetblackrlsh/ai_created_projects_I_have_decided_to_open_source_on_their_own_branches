@@ -62,9 +62,9 @@
     {
       "path": "skills/create-eight-page-comic-spreads/agents/openai.yaml",
       "mode": "100644",
-      "bytes": 491,
-      "sha": "dbce16928bca41b96c5ed13d8699cfc4be4a2e51",
-      "sha256": "98d3f48b1523f814698b108c8e26a43cf759a0b3f78c7de5168f21b5e8d6d7a1"
+      "bytes": 495,
+      "sha": "6941b3a5b9d25f968be63afec150bcf00fa4e437",
+      "sha256": "6bf68eadbe1f3dbe45483622fe817c4b29e68f020a6a5a0fcc588062c930559d"
     },
     {
       "path": "skills/create-eight-page-comic-spreads/assets/icon.svg",

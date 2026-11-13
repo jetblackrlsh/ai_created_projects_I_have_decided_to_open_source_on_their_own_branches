@@ -2,7 +2,8 @@ interface:
   display_name: Create Eight-Page Comic Spreads
   short_description: Create clear, fuller-caption comics in Jet’s MS Paint style
   default_prompt: Use $create-eight-page-comic-spreads to create an original comic
-    as one image per eight pages, with fuller captions and every character based on Jet’s MS Paint templates.
+    as one image per eight pages, with fuller captions and every character based on
+    Jet’s MS Paint templates.
   icon_small: assets/icon.svg
   icon_large: assets/icon.svg
 policy:
