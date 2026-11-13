@@ -19,3 +19,12 @@ Mix at 48kHz: normalize active speech toward -18dBFS RMS, meaningful foreground 
 The adapter fails if quantitative gates fail. Retain voice/effects/music/master stems so repairs do not require new art or resynthesis. Technical pass is not listening approval: record `listeningVerified:false` until a real listening check occurs. Source generation, human attribution review and perception cannot be certified by RMS checks. Probe/decode the final video and measure encoded peak/true peak (target <= -1dBTP) and stem-to-encoded speech timing after AAC encoding; never infer it from uncompressed WAV success. Record the exact speaker/voice, model hashes, cue prompts/seeds, output hashes, final duration and any limitation in the QA receipt.
 
 Run `python scripts/audio_tests.py` using the pinned runtime for deterministic regression checks. The bundled local test does not contact external services.
+
+
+## Mandatory optional-effect admission gate
+
+Default `effects` to `[]`; commentary does not need an opening sound. The first three seconds prohibit SFX unless `allow_opening_sfx: true` explicitly overrides that default AND the normal audition requirements pass. This is an editorial opt-in, not a substitute for listening.
+
+`audio_build.py` omits every effect lacking an `audition` receipt with `listening_verified: true`, `mixed_preview_verified: true`, nonempty `reviewer`, `reviewed_at`, `notes`, and the exact raw asset `source_sha256`. It checks the generated source hash before admission. A changed source invalidates review. Receipts record actual listening to the isolated sound AND a preview at the intended final mix level, including entry/exit and underlying narration/music. Previously trusted assets need the same hash-bound real review and a mix check; a label saying trusted is insufficient. Never fabricate these fields.
+
+Generate candidates separately for audition, not in a deliverable. If no perceptual listening surface is available, omit all optional SFX. `omitted_effects` in QA/timeline reports records why; report omissions, do not silently claim a full SFX production. Numerical gates remain useful but cannot certify freedom from harsh static, jarring timbre or startle. If a listener reports harshness, remove the offending effect rather than trusting its low RMS or applying repeated EQ. Recheck the encoded opening and every retained effect.
