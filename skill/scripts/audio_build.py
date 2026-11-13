@@ -10,6 +10,7 @@ from scipy.signal import resample_poly
 from scipy.ndimage import gaussian_filter1d
 from audio_pronunciation import phonemize_for_kokoro, PRONUNCIATION_VERSION
 from audio_comfort import soften_sfx
+from audio_effect_gate import effect_rejection
 from audio_presence import audit
 SR=48000
 VERSION='pngtuber-audio-v1'
@@ -91,11 +92,18 @@ def build(manifest,runtime,out):
  env=np.ones(n)
  for u in spans:env[round(u['start']*SR):round(u['end']*SR)]=10**(-3/20)
  env=gaussian_filter1d(env[::480],20);music*=np.interp(np.arange(n),np.arange(len(env))*480,env)[:,None]
- effect_events=[]
+ effect_events=[];omitted_effects=[]
  for i,e in enumerate(m.get('effects',[])):
   scene=next(z for z in scenes if z['id']==e['scene']);st=scene['start']+float(e.get('offset',0))
-  x=normalize(generate('sm-sfx',e['prompt'],float(e.get('seconds',2)),int(e.get('seed',100+i))),-23)
-  x,comfort=soften_sfx(x);x=normalize(x,-23)
+  reason=effect_rejection(e,st)
+  if reason:
+   omitted_effects.append(dict(scene=e['scene'],start=st,reason=reason));continue
+  raw=generate('sm-sfx',e['prompt'],float(e.get('seconds',2)),int(e.get('seed',100+i)))
+  reason=effect_rejection(e,st,generated[-1]['sha256'])
+  if reason:
+   omitted_effects.append(dict(scene=e['scene'],start=st,reason=reason));continue
+  x=normalize(raw,-23)
+  x,comfort=soften_sfx(x) # Never re-amplify a conditioned effect to undo attenuation.
   a=round(st*SR);b=min(n,a+len(x))
   if a<0 or a>=n:raise ValueError('Effect outside timeline')
   s[a:b]+=x[:b-a];effect_events.append(dict(e,start=st,end=b/SR,comfort=comfort))
@@ -115,7 +123,7 @@ def build(manifest,runtime,out):
    if b-a<SR//4:continue
    vv=v[a:b];ss=s[a:b];mask=(np.max(np.abs(vv),axis=1)>np.max(np.abs(vv))*.08)&(np.max(np.abs(ss),axis=1)>np.max(np.abs(ss))*.08)
    if mask.sum()>SR//10:voice_effects_margins.append(db(vv[mask])-db(ss[mask]))
- report=dict(version=VERSION,voice_effects_margins_db=voice_effects_margins,pass_=min(voice_effects_margins,default=99)>=3 and presence['pass'] and min(voice_margins,default=99)>=6 and min(effects_margins,default=99)>=3,peak=float(np.max(np.abs(master))),common_gain=float(scale),voice_music_margins_db=voice_margins,effects_music_margins_db=effects_margins,music_presence=presence,listeningVerified=False,limitation='RMS diagnostics do not establish perceived audibility or true-peak headroom. Listen and inspect encoded master.')
+ report=dict(version=VERSION,omitted_effects=omitted_effects,effect_gate="audition_required_v1",voice_effects_margins_db=voice_effects_margins,pass_=min(voice_effects_margins,default=99)>=3 and presence['pass'] and min(voice_margins,default=99)>=6 and min(effects_margins,default=99)>=3,peak=float(np.max(np.abs(master))),common_gain=float(scale),voice_music_margins_db=voice_margins,effects_music_margins_db=effects_margins,music_presence=presence,listeningVerified=False,limitation='RMS diagnostics do not establish perceived audibility or true-peak headroom. Listen and inspect encoded master.')
  for name,x in [('voice',v),('effects',s),('music',music),('master',master)]:sf.write(out/(name+'.wav'),x,SR,subtype='FLOAT')
  for scene in scenes:
   scene['speech']=[]
@@ -127,7 +135,7 @@ def build(manifest,runtime,out):
     end=pos+(u['end']-u['start'])*len(c)/weight
     scene['speech'].append(dict(start=pos-scene['start'],end=end-scene['start'],subtitle=c,speaker=u['speaker']))
     pos=end
- save(out/'timeline.json',dict(width=m.get('width',640),height=m.get('height',360),fps=fps,duration=cursor,audio='master.wav',scenes=scenes,spans=spans,effects=effect_events,cast=cast))
+ save(out/'timeline.json',dict(width=m.get('width',640),height=m.get('height',360),fps=fps,duration=cursor,audio='master.wav',scenes=scenes,spans=spans,effects=effect_events,omitted_effects=omitted_effects,cast=cast))
  save(out/'audio-provenance.json',dict(version=VERSION,kokoro_model_sha256=model_hash,kokoro_voices_sha256=voice_hash,pronunciation=PRONUNCIATION_VERSION,generated=generated));save(out/'audio-qa.json',report)
  if not report['pass_']:raise ValueError('Audio mix gate failed; inspect audio-qa.json and repair')
  print(json.dumps({'timeline':str(out/'timeline.json'),'seconds':cursor,'pass':True}))
