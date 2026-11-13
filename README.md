@@ -10,7 +10,8 @@ This is a source release, not a hosted service or an automatic fact checker. A h
 - Restrained speech-reactive bob and optional open/closed mouth switching (not lip sync)
 - Text reveals, animated bars, screenshot crops and highlight rectangles
 - Kokoro speech with stable speaker voices, mixed narrator/dialogue spans and initialism handling
-- Stable Audio Small generated instrumental music and motivated, softened SFX
+- Stable Audio Small instrumental music; optional SFX require hash-bound actual listening and mixed-preview review
+- No opening SFX by default; missing listening evidence omits optional effects rather than relying on RMS/EQ
 - Measured timing, separate stems, music-presence and foreground hierarchy checks
 - Source hash/provenance validation and documented private delivery/YouTube metadata workflow
 
