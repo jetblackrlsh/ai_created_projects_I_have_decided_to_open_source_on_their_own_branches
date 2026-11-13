@@ -1,7 +1,7 @@
 {
   "project": "spread-motion-comic",
   "branch": "project/spread-motion-comic",
-  "updated": "2026-11-12",
+  "updated": "2026-11-13",
   "files": [
     {
       "path": ".gitignore",
@@ -27,9 +27,9 @@
     {
       "path": "README.md",
       "mode": "100644",
-      "bytes": 5862,
-      "sha": "cc1cc6945e94fa007d7b0f550a2f5976343c120b",
-      "sha256": "330281df613d5e866f891987e82e917a2065a2a12177e3b84a80f6a6b563f837"
+      "bytes": 7024,
+      "sha": "10a1bf4c187997b6ad49a51d8a66cd3b0535ef8a",
+      "sha256": "7d26d09db413b2b42e938f74d8340250656cb223e1a8e5b8bd668c18e4ff36c3"
     },
     {
       "path": "TEST_REPORT.md",
@@ -55,16 +55,16 @@
     {
       "path": "skills/create-eight-page-comic-spreads/SKILL.md",
       "mode": "100644",
-      "bytes": 6023,
-      "sha": "cd149d34c2acf00bed91a73bf1bc4494f58a2ab2",
-      "sha256": "044527af55560f398e1e2ba8beffc8f55ea299d496822719f89c2939258718fa"
+      "bytes": 10786,
+      "sha": "c8a21f9d0c53ff445875103d1fbe6922b2cc7ad8",
+      "sha256": "5c7385bd604a11f62fe6e5fbca227075fabe15adbd1839b0e2c61a653fe9b90b"
     },
     {
       "path": "skills/create-eight-page-comic-spreads/agents/openai.yaml",
       "mode": "100644",
-      "bytes": 429,
-      "sha": "a125e4ec4e229e8606d3cdcd9ed0bf0c96a97cd5",
-      "sha256": "64179141b89ee6c83db208921ebf224ad515e7a121c49f3585fdf69ba815ff8e"
+      "bytes": 491,
+      "sha": "dbce16928bca41b96c5ed13d8699cfc4be4a2e51",
+      "sha256": "98d3f48b1523f814698b108c8e26a43cf759a0b3f78c7de5168f21b5e8d6d7a1"
     },
     {
       "path": "skills/create-eight-page-comic-spreads/assets/icon.svg",

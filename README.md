@@ -10,7 +10,7 @@ Use branch `project/spread-motion-comic`, not `main`. In GitHub select this bran
 
 ## Included
 
-- `skills/create-eight-page-comic-spreads`: whole-image generation, page/panel planning and visual QA. Requires an image-generation-capable host; no model or service account is included.
+- `skills/create-eight-page-comic-spreads`: whole-image generation, fuller contextual captions, causal-story review, and template-based visual QA for the entire cast. Requires an image-generation-capable host; no model or service account is included.
 - `skills/create-spread-motion-comic`: adaptation workflow, reviewed pixel-crop renderer, local speech/music/effects adapters, pinned model/runtime recipe, audio-mix checks and regression tests.
 - `tests/smoke_render.py`: self-contained synthetic render and negative controls. It creates no real story and requires no model download.
 
@@ -58,3 +58,9 @@ Audio numerical tests require NumPy/SciPy/SoundFile. See TEST_REPORT.md for comm
 Original project contributions are offered under the repository's CC0 1.0 Universal license, only to the extent the contributors hold those rights. External models, packages, FFmpeg and image-generation services retain their own terms. See THIRD_PARTY_NOTICES.md and PROVENANCE.md. No model weights, private comic, private conversation, generated test video, credentials or personal archive is distributed.
 
 YouTube deliverables include a public-ready plain-text description and matching Markdown metadata, starting with the title and ending with comma-separated tags, with separate title and tags fields also retained. Private delivery and QA information stays outside public copy.
+
+## Comic art and storytelling defaults
+
+Comic spreads default to Jet Black's MS Paint template style. Obtain the companion `create-jet-paint-template-art` skill and approved template pack from this repository's [`create-jet-paint-template-art` branch](https://github.com/jetblackrlsh/ai_created_projects_I_have_decided_to_open_source_on_their_own_branches/tree/create-jet-paint-template-art). Assign every character an appropriate base, including supporting characters, then finish the design with hair, full anatomy, clothing and flat colors. The main character alone matching the style is not sufficient. Personal portraits are not included; use only user-authorized private references.
+
+Fuller captions explain motivations, actions, consequences and transitions before artwork is generated. Keep them readable by planning caption space and restrained panel counts, not by dropping context or shrinking text. Explicit alternate styles and shorter/verbatim text requests take precedence. This update changes the workflow; it does not claim that a new comic has been generated or visually tested.
