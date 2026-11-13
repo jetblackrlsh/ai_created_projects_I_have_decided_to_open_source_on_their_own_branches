@@ -21,6 +21,12 @@ Jet clarified on 2026-11-13: the original drawings are reusable construction tem
 
 Read [reference-guide.md](references/reference-guide.md). Open relevant original PNGs in `assets/` with the available image-viewing tool before generation. Use the base plus the nearest variant for a new character; use the exact chosen original for a template edit. Attach the viewed reference paths to the built-in image tool using its supported image-reference parameters. Do not rely on descriptions alone when the originals are available. If tool limits require a subset, prioritize the base and the closest variant; do not silently replace originals with earlier AI samples.
 
+## Approved personal references
+
+When drawing a known person or recurring avatar, check for a private `references/personal-reference-guide.md` and use the matching approved sheet if available. View it alongside the original style base, then provide both to image generation. Preserve the person's recognizable appearance, colors, hair and identifying details while changing pose, clothing or setting as requested. These completed sheets are identity references, not replacement generic templates. When reference slots are limited, prioritize each requested person's sheet and one original style anchor.
+
+Personal portraits and their identity guide are private optional additions: keep them in the installed/private backup copy and exclude them from public releases unless separately authorized. Public copies can use this workflow with the user's own approved references; they must not claim bundled personal portraits are available. Saving a reference does not authorize public sharing.
+
 ## Preserve the visual identity
 
 - Make the head unusually broad and large: a broad underlying head base with rounded upper corners, simple side contours, rounded cheeks and a small chin. Preserve the reference's actual proportions rather than regularizing them into standard anime anatomy.
