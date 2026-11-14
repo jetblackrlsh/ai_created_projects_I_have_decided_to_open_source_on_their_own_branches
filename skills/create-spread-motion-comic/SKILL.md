@@ -16,7 +16,7 @@ Turn ONE accepted spread into a complete panel-focused film. Reuse the source ar
 
 ## Build the measured soundtrack first
 
-Read [audio production](references/audio.md). Resolve the installed `create-heroic-motion-comic` or `create-motion-manga` by exact frontmatter name and read its current local-audio restoration, model manifest, setup, adapter and production references before executing audio. Reuse its proven local adapters and verification scripts when present. Do not assume its files exist at a scratch or obsolete installed path.
+First run the bundled `scripts/setup_audio_runtime.py` check using [runtime setup](references/runtime-setup.md). When restoration is authorized, run it with `--restore --test`; it reuses verified files and retrieves missing pinned components. Confirm the report and smoke tests before synthesis. If the script or its manifest is missing, restore the complete skill package before proceeding; do not assume downloads are blocked without testing. Read [audio production](references/audio.md). Resolve the installed `create-heroic-motion-comic` or `create-motion-manga` by exact frontmatter name and read its current local-audio restoration, model manifest, setup, adapter and production references before executing audio. Reuse its proven local adapters and verification scripts when present. Do not assume its files exist at a scratch or obsolete installed path.
 
 Before synthesis, read [caption voice segmentation](references/voice-segmentation.md). Split mixed captions into narrator and character utterances, validate exact source coverage with `scripts/validate_voice_segments.py`, and review every attribution. A caption box is not a single-speaker unit.
 
