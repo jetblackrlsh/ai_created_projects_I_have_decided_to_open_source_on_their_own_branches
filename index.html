@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ironbound Wilds — 3D Action-Adventure</title>
+  <link rel="stylesheet" href="/src/styles.css" />
+</head>
+<body>
+  <canvas id="game-canvas"></canvas>
+
+  <!-- In-Game HUD -->
+  <div id="hud" class="hud">
+    <!-- Top Left: Vitals & Controller Status -->
+    <div class="hud-panel hud-vitals">
+      <div class="title-row">
+        <span class="game-title">IRONBOUND WILDS</span>
+        <span id="controller-badge" class="controller-badge disconnected">
+          <span class="dot"></span>
+          <span id="controller-label">No Xbox Pad (KB/M Active)</span>
+        </span>
+      </div>
+
+      <div class="bar-group">
+        <div class="bar-label">
+          <span>HEALTH</span>
+          <span id="hp-text">100 / 100</span>
+        </div>
+        <div class="bar-track">
+          <div id="hp-fill" class="bar-fill hp-fill" style="width: 100%"></div>
+        </div>
+      </div>
+
+      <div class="bar-group">
+        <div class="bar-label">
+          <span>STAMINA <small id="stamina-warn" class="warn-tag hidden">REST NEEDED!</small></span>
+          <span id="stamina-text">100 / 100</span>
+        </div>
+        <div class="bar-track">
+          <div id="stamina-fill" class="bar-fill stamina-fill" style="width: 100%"></div>
+        </div>
+      </div>
+
+      <div class="biome-row">
+        <span id="biome-name">Emerald Meadows</span>
+        <span id="time-weather">Day 1 • Dawn • Clear</span>
+      </div>
+      <div class="biome-row" style="border-top: none; padding-top: 2px; margin-top: 2px;">
+        <span id="stats-mini">Slain: 0</span>
+        <span id="rec-badge" class="rec-badge">● REC</span>
+      </div>
+    </div>
+
+    <!-- Top Right: Minimap & Compass -->
+    <div class="hud-panel hud-minimap">
+      <canvas id="minimap-canvas" width="164" height="164"></canvas>
+      <div class="minimap-legend">
+        <span><i class="leg-camp"></i>Camp</span>
+        <span><i class="leg-mine"></i>Mine</span>
+        <span><i class="leg-mob"></i>Foe</span>
+      </div>
+    </div>
+
+    <!-- Bottom Left: Equipped Gear & Durability -->
+    <div class="hud-panel hud-gear">
+      <div class="gear-header">
+        <span>EQUIPPED GEAR</span>
+        <span class="hint-pill"><kbd class="xb xb-y">Y</kbd> Swap Weapon</span>
+      </div>
+      <div id="gear-blade-card" class="gear-slot active-weapon">
+        <div class="gear-row">
+          <span class="gear-type">BLADE</span>
+          <span id="blade-name" class="gear-name">Iron Broadsword</span>
+          <span id="blade-dur-pct" class="gear-pct">100%</span>
+        </div>
+        <div id="blade-effect" class="gear-effect">Balanced reach, speed, and slash damage.</div>
+        <div class="dur-track"><div id="blade-dur-bar" class="dur-fill" style="width: 100%"></div></div>
+      </div>
+      <div id="gear-wand-card" class="gear-slot">
+        <div class="gear-row">
+          <span class="gear-type">WAND</span>
+          <span id="wand-name" class="gear-name">Spark Ashwand</span>
+          <span id="wand-dur-pct" class="gear-pct">100%</span>
+        </div>
+        <div id="wand-effect" class="gear-effect">Fast lightning bolts with high projectile velocity.</div>
+        <div class="dur-track"><div id="wand-dur-bar" class="dur-fill" style="width: 100%"></div></div>
+      </div>
+      <div id="gear-armor-card" class="gear-slot">
+        <div class="gear-row">
+          <span class="gear-type">ARMOR</span>
+          <span id="armor-name" class="gear-name">Leather Jerkin</span>
+          <span id="armor-dur-pct" class="gear-pct">100%</span>
+        </div>
+        <div id="armor-effect" class="gear-effect">Standard physical protection.</div>
+        <div class="dur-track"><div id="armor-dur-bar" class="dur-fill" style="width: 100%"></div></div>
+      </div>
+    </div>
+
+    <!-- Bottom Right: Materials & Quick Controls -->
+    <div class="hud-panel hud-materials">
+      <div class="gear-header">
+        <span>MATERIALS</span>
+        <span class="hint-pill"><kbd class="xb xb-start">☰</kbd> Menu</span>
+      </div>
+      <div id="materials-grid" class="materials-grid"></div>
+      <div class="controls-strip">
+        <span><kbd class="xb xb-rt">RT</kbd> Attack</span>
+        <span><kbd class="xb xb-lt">LT</kbd> Guard</span>
+        <span><kbd class="xb xb-b">B</kbd> Dodge</span>
+        <span><kbd class="xb xb-x">X</kbd> Interact</span>
+      </div>
+    </div>
+
+    <!-- Center Context Prompt -->
+    <div id="context-prompt" class="context-prompt hidden">
+      <kbd class="xb xb-x">X</kbd>
+      <span id="context-text">Mine Iron Vein</span>
+    </div>
+
+    <!-- Toast / Event Banner -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <!-- Cinematic Day Transition Screen -->
+    <div id="day-transition" class="day-transition hidden">
+      <div class="day-transition-inner">
+        <div id="day-trans-title" class="day-trans-title">DAY 1</div>
+        <div id="day-trans-sub" class="day-trans-sub">Weather: Clear • Emerald Meadows</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Campfire & Forge Modal -->
+  <dialog id="forge-dialog" class="game-dialog" aria-labelledby="forge-title" closedby="closerequest">
+    <div class="dialog-shell">
+      <header class="dialog-header">
+        <div>
+          <h2 id="forge-title">Campsite &amp; Field Forge</h2>
+          <p class="dialog-sub">Rest to recover stamina, repair worn gear, or forge customized weapons, armor &amp; wands.</p>
+        </div>
+        <button id="forge-close-btn" type="button" class="btn-ghost" autofocus>Close <kbd class="xb xb-b">B</kbd></button>
+      </header>
+
+      <div class="tab-bar" role="tablist">
+        <button type="button" class="tab-btn active" data-tab="rest">Camp &amp; Repair</button>
+        <button type="button" class="tab-btn" data-tab="craft">Forge Custom Gear</button>
+        <button type="button" class="tab-btn" data-tab="satchel">Satchel &amp; Loadout</button>
+      </div>
+
+      <div id="tab-rest" class="tab-panel active">
+        <div class="camp-actions">
+          <div class="action-card">
+            <h3>Rest by the Fire</h3>
+            <p>Sleep until dawn to restore <strong>100% Health</strong> and <strong>100% Stamina</strong>. Nearby monsters reset.</p>
+            <button id="btn-rest-camp" type="button" class="btn-primary">Rest at Campfire (Full Restore)</button>
+          </div>
+          <div class="action-card">
+            <h3>Repair Equipped Gear</h3>
+            <p>Reinforce weakened gear before it shatters! Broken gear cannot be repaired.</p>
+            <div id="repair-list" class="repair-list"></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="tab-craft" class="tab-panel">
+        <div class="craft-layout">
+          <div class="craft-selectors">
+            <div class="field-group">
+              <label for="craft-category">Gear Category</label>
+              <select id="craft-category">
+                <option value="blade">Bladed Weapon</option>
+                <option value="armor">Armor</option>
+                <option value="wand">Magic Wand</option>
+              </select>
+            </div>
+            <div class="field-group">
+              <label id="label-part-a" for="craft-part-a">Blade Material</label>
+              <select id="craft-part-a"></select>
+            </div>
+            <div class="field-group">
+              <label id="label-part-b" for="craft-part-b">Blade Style</label>
+              <select id="craft-part-b"></select>
+            </div>
+            <div class="field-group">
+              <label id="label-part-c" for="craft-part-c">Enchantment</label>
+              <select id="craft-part-c"></select>
+            </div>
+          </div>
+          <div class="craft-preview">
+            <h3 id="craft-preview-name">Iron Broadsword</h3>
+            <p id="craft-preview-effect" class="effect-desc"></p>
+            <div id="craft-preview-stats" class="preview-stats"></div>
+            <h4>Required Materials</h4>
+            <div id="craft-cost-list" class="cost-list"></div>
+            <button id="btn-forge-item" type="button" class="btn-primary">Forge &amp; Equip</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="tab-satchel" class="tab-panel">
+        <p class="satchel-note">Warning: If all your equipped gear breaks or is discarded and you have no spare gear, you will be lost to the wilds!</p>
+        <div id="satchel-list" class="satchel-list"></div>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Pause / Help Dialog -->
+  <dialog id="pause-dialog" class="game-dialog" aria-labelledby="pause-title" closedby="closerequest">
+    <div class="dialog-shell small-dialog">
+      <header class="dialog-header">
+        <h2 id="pause-title">Ironbound Wilds — Paused</h2>
+        <button id="pause-resume-btn" type="button" class="btn-primary" autofocus>Resume</button>
+      </header>
+      <div class="pause-body">
+        <p class="seed-line">World Seed: <strong id="world-seed-display">104729</strong></p>
+        <div class="controls-grid">
+          <div>
+            <h4>Xbox Controller</h4>
+            <ul>
+              <li><strong>Left Stick</strong>: Move (Click L3 to Sprint)</li>
+              <li><strong>Right Stick</strong>: Orbit Camera</li>
+              <li><strong>RT</strong>: Attack (Blade Slash / Wand Bolt)</li>
+              <li><strong>LT</strong>: Guard / Arcane Shield</li>
+              <li><strong>RB</strong>: Heavy Strike / Power Cast</li>
+              <li><strong>B</strong>: Dodge Roll</li>
+              <li><strong>X</strong>: Mine / Rest / Open Forge</li>
+              <li><strong>Y</strong>: Swap Blade &harr; Wand</li>
+              <li><strong>Menu (☰)</strong>: Pause / Help</li>
+            </ul>
+          </div>
+          <div>
+            <h4>Keyboard &amp; Mouse</h4>
+            <ul>
+              <li><strong>WASD</strong>: Move (Shift to Sprint)</li>
+              <li><strong>Mouse Move / Click</strong>: Aim &amp; Attack (Click canvas to lock)</li>
+              <li><strong>Right Click</strong>: Guard / Shield</li>
+              <li><strong>Q / Space</strong>: Dodge Roll</li>
+              <li><strong>E / F</strong>: Mine / Rest / Open Forge</li>
+              <li><strong>R / Tab</strong>: Swap Blade &harr; Wand</li>
+              <li><strong>Esc</strong>: Pause / Menu</li>
+            </ul>
+          </div>
+        </div>
+        <div class="pause-actions">
+          <button id="btn-pause-log" type="button" class="btn-ghost">Download Log (.txt)</button>
+          <button id="btn-pause-replay" type="button" class="btn-ghost">Save Replay (.webm)</button>
+          <button id="btn-toggle-audio" type="button" class="btn-ghost">Sound: ON</button>
+          <button id="btn-new-world" type="button" class="btn-danger">Generate New World</button>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Game Over Dialog -->
+  <dialog id="gameover-dialog" class="game-dialog" aria-labelledby="gameover-title" closedby="none">
+    <div class="dialog-shell small-dialog gameover-shell">
+      <h2 id="gameover-title" class="gameover-title">FALLEN IN THE WILDS</h2>
+      <p id="gameover-reason" class="gameover-reason">You collapsed from exhaustion.</p>
+      <div id="gameover-stats" class="gameover-stats"></div>
+      <div class="gameover-actions" style="flex-wrap: wrap;">
+        <button id="btn-download-replay" type="button" class="btn-ghost">Save Replay Video (.webm)</button>
+        <button id="btn-download-log" type="button" class="btn-ghost">Download Event Log (.txt)</button>
+      </div>
+      <div class="gameover-actions">
+        <button id="btn-retry-seed" type="button" class="btn-primary" autofocus>Retry This World <kbd class="xb xb-a">A</kbd></button>
+        <button id="btn-gameover-new" type="button" class="btn-ghost">New Procedural Seed</button>
+      </div>
+    </div>
+  </dialog>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
