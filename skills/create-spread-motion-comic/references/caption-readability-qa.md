@@ -1,24 +1,13 @@
-# Final-video caption readability gate
+# Final-video artwork and visible-text review
 
-This is mandatory for every delivered motion comic, including 360p versions, re-encodes, and revised exports. A complete soundtrack does not excuse incomplete readable text. Review the actual final encoded MP4, not only the source spread, crop coordinates, an enlarged preview, or a thumbnail contact sheet.
+The default motion-comic format shows artwork while the corresponding dialogue or narration plays. Do not add caption-only reading holds unless requested. Retain a complete source-verified transcript and export timed SRT/VTT for accessibility. Inspect the actual final encoded video at native output size.
 
-## Before rendering: account for every caption
+## Plan and verify
 
-1. Inventory every panel in reading order and every caption box within it. Record stable panel/caption IDs, exact expected text, source-image pixel bounds including the whole box and all glyphs, assigned shot IDs, and planned readable time intervals. Include short captions and bottom/edge boxes, not just narration excerpts.
-2. Frame each text-reading hold to contain the entire caption with visible breathing room. Target at least 8 output pixels from the crop/frame edge at 640x360; increase when needed for borders or effects. Check start/end crop rectangles and intermediate camera positions. Keep overlays/subtitles clear of the text. Automatic containment checks assist but cannot prove the recorded box bounds are correct.
-3. If fitting a panel makes lettering too small, use a closer static caption-reading view followed by the art view, or multiple clearly ordered reading views, each containing complete caption boxes. Do not solve clipping by making all lettering microscopic. Preserve original wording and reading order. Do not silently regenerate or rewrite the source lettering.
-4. Give viewers time to read: provision at least max(3 seconds, word_count / 2.5) per reading view, then assess actual pacing. Add time for dense or difficult lettering. Narration timing is a minimum, not evidence that visual reading is possible.
+1. Inventory every panel in reading order, its source bounds, substantive text, speakers and story beats. Create a transcript-to-shot table; read source text visually rather than assuming OCR is correct.
+2. Time spoken lines and motivated sound effects to the matching visual action. Visit every panel, preserve faces and essential action, and avoid text fragments when cropping. Keep narration intelligible and effects comfortable.
+3. If text is visible, show its complete readable words and box boundaries throughout its display. If the user specifically requests visible captions, frame and hold them long enough to read. Do not add reading holds to the default art-first format.
+4. Inspect actual final frames at native size for each shot and any visible lettering; inspect beginning, midpoint, end and transitions where crops or movement can change. Check for clipped text, obscured faces, distorted art and reordered action. Audit transcript and timing against the source.
+5. Record each panel, visual and timing check, visible-text issue and repair in a ledger linked to the final video hash. Automated checks do not replace visual or listening checks. Record audio measurements and disclose when no listening was possible.
 
-## After rendering: inspect what the audience will see
-
-- Extract and open full-size frames from the final delivery MP4 at the beginning, midpoint and end of **each** readable hold, plus maximum zoom/tightest crop and each transition boundary. Inspect additional frames where motion/effects can obscure lettering. Watch each pan/zoom segment through its entire interval; endpoint screenshots alone can miss transient clipping.
-- At native playback size, read every word, punctuation mark, first/last line and box edge against the source inventory. Check for cut-off glyphs, partial last lines, blur, illegibly small text, compression artifacts, overlay obstruction and too-short holds. Enlargement may diagnose a problem but does not count as native-size readability.
-- Brief establishing/transition shots may show small or incomplete text only outside the designated reading interval. Each caption still requires a sufficient continuous unobscured readable hold. Do not start narration over unreadable transition framing and count that as the reading hold.
-- Record a ledger row per caption: panel ID, caption ID, expected text/source bounds, shot IDs, readable interval, inspected frame timestamps/paths, native dimensions, reviewer observation, pass/fail, repair and recheck result. Link the ledger to the final MP4 SHA-256. Reconcile inventory count to reviewed count: zero missing captions and zero unresolved failures.
-- OCR, rectangle containment, frame extraction, FFmpeg decode, tests and contact sheets are useful preflight tools, not visual approval. Never mark a perceptual check passed unless you actually inspected the images/video. If visual inspection is unavailable, explicitly leave the gate unverified; do not describe the deliverable as fully QA-approved.
-
-## Repair and delivery
-
-For any partial clipping, widen/reposition the crop, reduce/stop the zoom, remove conflicting overlays, add an appropriate dedicated reading hold, or lengthen the hold. Rerender and repeat review of all affected shots and adjacent transitions. Recheck complete caption coverage on the final export; any further resize/re-encode requires native-size reinspection. Deliver only when all captions pass, or clearly disclose an unresolved limitation rather than claiming it was fixed. Keep existing audio mix, speaker segmentation, pronunciation and provenance gates intact.
-
-This workflow changes future quality control. It does not authorize modifying or replacing a previously accepted/published video without a user request.
+If text or action is clipped, adjust the framing or remove the partial text from view without changing the source. Rerender and reinspect affected shots and transitions. Preserve the existing audio, voice attribution and provenance gates.
