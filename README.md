@@ -14,6 +14,7 @@ A 100% offline, single-player browser adaptation of **Roll for Shoes** (the CC0 
 - **Difficulty & Static Targets:** Choose `Auto (Tension)` or set task difficulty using the official **Roll for Shoes** table (`Easy 1d6 / 3`, `Moderate 2d6 / 6`, `Hard 3d6 / 9`, `Very Hard 4d6 / 12`), with a **Static** toggle to use static target numbers instead of rolling opposing dice.
 - **Tactile SVG Dice & Rule 6 XP Advancement:** Rolling all 6s unlocks a new `Level + 1` skill specific to your action. Failed rolls grant `+1 XP`, which you can spend to flip non-6 dice to 6s for advancement purposes only.
 - **Solo Oracle:** Ask Yes/No questions weighted by `Unlikely`, `50/50`, or `Likely` odds, or generate grounded **✦ Sparks**, **⚡ Twists**, and **👤 NPCs**.
+- **Optional Starting Skills:** Define custom starting skills with individual levels (`1–10`) when starting a **New Sandbox**, or add custom skills anytime via **+ Custom Skill** in the Character sidebar.
 - **Custom Statuses:** Add and remove flavor status tags on your character sheet.
 - **Portable Exports & Imports:**
   - **Export Story Log (`.md`)** or **Copy Story Log** for a clean, readable session chronicle.

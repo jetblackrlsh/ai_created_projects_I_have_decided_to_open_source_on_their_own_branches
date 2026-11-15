@@ -84,8 +84,17 @@
       <div class="skills-section">
         <div class="section-subheader">
           <h3>Skills</h3>
-          <span class="hint-text">Click to use</span>
+          <button type="button" id="btn-toggle-add-skill" class="btn btn-ghost btn-xs" aria-expanded="false" aria-controls="add-skill-form">
+            + Custom Skill
+          </button>
         </div>
+        <form id="add-skill-form" class="add-skill-form" hidden>
+          <label for="custom-skill-name" class="visually-hidden">Custom skill name</label>
+          <input type="text" id="custom-skill-name" placeholder="Skill name..." maxlength="48" required>
+          <label for="custom-skill-level" class="visually-hidden">Skill level</label>
+          <input type="number" id="custom-skill-level" min="1" max="10" value="2" title="Skill level (1–10)" required>
+          <button type="submit" class="btn btn-secondary btn-sm">Add</button>
+        </form>
         <ul id="skills-list" class="skills-list" aria-label="Character skills"></ul>
       </div>
 
@@ -333,6 +342,21 @@
       <div class="form-checkbox-row">
         <input type="checkbox" id="keep-character-check" name="keepCharacter">
         <label for="keep-character-check">Keep my current character, skills, and XP</label>
+      </div>
+
+      <div id="starting-skills-section" class="starting-skills-box">
+        <div class="section-subheader">
+          <h3>Starting Skills (Optional)</h3>
+          <span class="hint-text">In addition to Do Anything 1</span>
+        </div>
+        <div class="starting-skills-row">
+          <label for="ss-name-input" class="visually-hidden">Starting skill name</label>
+          <input type="text" id="ss-name-input" placeholder="e.g., Swordsmanship" maxlength="48">
+          <label for="ss-level-input" class="visually-hidden">Starting skill level</label>
+          <input type="number" id="ss-level-input" min="1" max="10" value="2" title="Level (1–10)">
+          <button type="button" id="btn-add-starting-skill" class="btn btn-secondary btn-sm">+ Add</button>
+        </div>
+        <ul id="starting-skills-list" class="statuses-list" aria-label="Starting skills"></ul>
       </div>
 
       <div class="dialog-footer">

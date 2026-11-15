@@ -315,7 +315,30 @@
     return `${role} ${trait}, ${goal}`;
   }
 
-  function createFreshCharacter(name) {
+  function createFreshCharacter(name, startingSkills) {
+    const skills = [
+      {
+        id: 'do-anything',
+        name: 'Do Anything',
+        level: 1,
+        parentId: null
+      }
+    ];
+
+    if (Array.isArray(startingSkills)) {
+      startingSkills.forEach((s, idx) => {
+        if (s && typeof s.name === 'string' && s.name.trim()) {
+          const lvl = Math.max(1, Math.min(20, Math.floor(Number(s.level) || 1)));
+          skills.push({
+            id: `start-skill-${idx}-${Date.now()}`,
+            name: s.name.trim().slice(0, 48),
+            level: lvl,
+            parentId: null
+          });
+        }
+      });
+    }
+
     return {
       name: (name || 'Unnamed Adventurer').trim() || 'Unnamed Adventurer',
       xp: 0,
@@ -324,14 +347,7 @@
         rolls: 0,
         wins: 0
       },
-      skills: [
-        {
-          id: 'do-anything',
-          name: 'Do Anything',
-          level: 1,
-          parentId: null
-        }
-      ]
+      skills
     };
   }
 

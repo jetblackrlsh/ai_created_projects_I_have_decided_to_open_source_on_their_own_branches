@@ -238,6 +238,12 @@ body {
   font-size: 0.84rem;
 }
 
+.btn-xs {
+  min-height: 30px;
+  padding: 0.2rem 0.55rem;
+  font-size: 0.76rem;
+}
+
 .btn-icon {
   min-width: 44px;
   min-height: 44px;
@@ -456,6 +462,50 @@ body {
   gap: 0.45rem;
   max-height: 250px;
   overflow-y: auto;
+}
+
+.add-skill-form {
+  display: grid;
+  grid-template-columns: 1fr 64px auto;
+  gap: 0.4rem;
+  margin-bottom: 0.55rem;
+}
+
+.add-skill-form[hidden] {
+  display: none;
+}
+
+.add-skill-form input,
+.starting-skills-row input {
+  min-width: 0;
+  font: inherit;
+  font-size: max(1rem, 0.88rem);
+  padding: 0.35rem 0.6rem;
+  min-height: 40px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background-color: var(--bg-elevated);
+  color: var(--text-main);
+}
+
+.starting-skills-box {
+  background-color: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 0.8rem 0.9rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.starting-skills-box[hidden] {
+  display: none;
+}
+
+.starting-skills-row {
+  display: grid;
+  grid-template-columns: 1fr 70px auto;
+  gap: 0.45rem;
 }
 
 .skill-btn {

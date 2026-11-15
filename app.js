@@ -18,6 +18,7 @@
   let manualSkillOverride = false;
   let lastRoll = state.lastRoll || null;
   let pendingAdvancement = null;
+  let pendingStartingSkills = [];
 
   const el = {
     btnNewSandbox: document.getElementById('btn-new-sandbox'),
@@ -30,6 +31,10 @@
     statWins: document.getElementById('stat-wins'),
     statSkills: document.getElementById('stat-skills'),
     skillsList: document.getElementById('skills-list'),
+    btnToggleAddSkill: document.getElementById('btn-toggle-add-skill'),
+    addSkillForm: document.getElementById('add-skill-form'),
+    customSkillName: document.getElementById('custom-skill-name'),
+    customSkillLevel: document.getElementById('custom-skill-level'),
     statusForm: document.getElementById('status-form'),
     statusInput: document.getElementById('status-input'),
     statusesList: document.getElementById('statuses-list'),
@@ -81,6 +86,11 @@
     customGenreInput: document.getElementById('custom-genre-input'),
     customOpeningInput: document.getElementById('custom-opening-input'),
     keepCharacterCheck: document.getElementById('keep-character-check'),
+    startingSkillsSection: document.getElementById('starting-skills-section'),
+    ssNameInput: document.getElementById('ss-name-input'),
+    ssLevelInput: document.getElementById('ss-level-input'),
+    btnAddStartingSkill: document.getElementById('btn-add-starting-skill'),
+    startingSkillsList: document.getElementById('starting-skills-list'),
     btnCancelNewAdv: document.getElementById('btn-cancel-new-adv'),
 
     dialogJsonIo: document.getElementById('dialog-json-io'),
@@ -447,6 +457,33 @@
     renderAdventureHeader();
   });
 
+  el.btnToggleAddSkill.addEventListener('click', () => {
+    const isHidden = el.addSkillForm.hidden;
+    el.addSkillForm.hidden = !isHidden;
+    el.btnToggleAddSkill.setAttribute('aria-expanded', isHidden ? 'true' : 'false');
+    if (isHidden) el.customSkillName.focus();
+  });
+
+  el.addSkillForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const name = el.customSkillName.value.trim();
+    const level = Math.max(1, Math.min(20, Math.floor(Number(el.customSkillLevel.value) || 1)));
+    if (!name) return;
+
+    state.character.skills.push({
+      id: 'skill-' + Date.now() + '-' + Math.random().toString(36).slice(2, 6),
+      name: name.slice(0, 48),
+      level,
+      parentId: null
+    });
+    el.customSkillName.value = '';
+    el.customSkillLevel.value = '2';
+    el.addSkillForm.hidden = true;
+    el.btnToggleAddSkill.setAttribute('aria-expanded', 'false');
+    saveState();
+    renderAll();
+  });
+
   el.statusForm.addEventListener('submit', (e) => {
     e.preventDefault();
     const raw = el.statusInput.value.trim();
@@ -672,12 +709,69 @@
     el.dialogRules.showModal();
   });
 
+  function renderStartingSkillsList() {
+    el.startingSkillsList.innerHTML = '';
+    pendingStartingSkills.forEach((sk, idx) => {
+      const li = document.createElement('li');
+      li.className = 'status-chip';
+
+      const textSpan = document.createElement('span');
+      textSpan.textContent = `${sk.name} (${sk.level}d6)`;
+      li.appendChild(textSpan);
+
+      const removeBtn = document.createElement('button');
+      removeBtn.type = 'button';
+      removeBtn.className = 'status-remove-btn';
+      removeBtn.setAttribute('aria-label', `Remove starting skill ${sk.name}`);
+      removeBtn.textContent = '×';
+      removeBtn.addEventListener('click', () => {
+        pendingStartingSkills.splice(idx, 1);
+        renderStartingSkillsList();
+      });
+      li.appendChild(removeBtn);
+
+      el.startingSkillsList.appendChild(li);
+    });
+  }
+
+  function addPendingStartingSkill() {
+    const name = el.ssNameInput.value.trim();
+    const level = Math.max(1, Math.min(20, Math.floor(Number(el.ssLevelInput.value) || 1)));
+    if (!name) {
+      el.ssNameInput.focus();
+      return;
+    }
+    pendingStartingSkills.push({ name: name.slice(0, 48), level });
+    el.ssNameInput.value = '';
+    el.ssLevelInput.value = '2';
+    renderStartingSkillsList();
+    el.ssNameInput.focus();
+  }
+
+  el.btnAddStartingSkill.addEventListener('click', addPendingStartingSkill);
+
+  el.ssNameInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && !e.isComposing) {
+      e.preventDefault();
+      addPendingStartingSkill();
+    }
+  });
+
+  el.keepCharacterCheck.addEventListener('change', () => {
+    el.startingSkillsSection.hidden = el.keepCharacterCheck.checked;
+  });
+
   // New Sandbox Dialog
   el.btnNewSandbox.addEventListener('click', () => {
     el.customTitleInput.value = '';
     el.customGenreInput.value = '';
     el.customOpeningInput.value = '';
     el.keepCharacterCheck.checked = false;
+    el.startingSkillsSection.hidden = false;
+    pendingStartingSkills = [];
+    el.ssNameInput.value = '';
+    el.ssLevelInput.value = '2';
+    renderStartingSkillsList();
     el.dialogNewSandbox.showModal();
   });
 
@@ -690,7 +784,7 @@
     const keepChar = el.keepCharacterCheck.checked;
 
     if (!keepChar) {
-      state.character = RFS.createFreshCharacter(state.character.name);
+      state.character = RFS.createFreshCharacter(state.character.name, pendingStartingSkills);
     }
 
     state.adventure = RFS.createSandboxState(
