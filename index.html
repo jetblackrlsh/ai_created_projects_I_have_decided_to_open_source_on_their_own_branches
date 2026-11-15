@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light dark">
+  <title>Mechanized Magic — Offline Card Maker</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="app-header">
+      <div class="brand">
+        <h1>Mechanized Magic <span class="badge">Card Maker</span></h1>
+        <p class="subtitle">Offline studio for Dumivid's CC0 2D Vector Cards Pack (Free Pack)</p>
+      </div>
+      <div class="header-actions">
+        <button type="button" id="btn-new-card" class="btn btn-secondary">New</button>
+        <button type="button" id="btn-save-library" class="btn btn-secondary">Save to Library</button>
+        <button type="button" id="btn-import-json" class="btn btn-secondary">Import JSON</button>
+        <button type="button" id="btn-export-json" class="btn btn-secondary">Export JSON</button>
+        <button type="button" id="btn-export-png" class="btn btn-primary">Export PNG</button>
+        <input type="file" id="json-file-input" accept=".json,application/json" class="visually-hidden" aria-label="Import card JSON file">
+      </div>
+    </header>
+
+    <div id="file-protocol-warning" class="protocol-warning" hidden role="alert">
+      <strong>Opened via file://</strong> — Browser security blocks PNG export when opening local HTML files directly.
+      Run <code>./start.sh</code> (or <code>python3 -m http.server</code>) in the <code>app/</code> folder and open <code>http://localhost:8080</code>.
+    </div>
+
+    <main class="studio-layout">
+      <aside class="controls-panel" aria-label="Card properties">
+        <form id="card-form" aria-labelledby="form-heading">
+          <h2 id="form-heading" class="visually-hidden">Studio Controls</h2>
+
+          <fieldset class="control-group">
+            <legend>Studio Mode</legend>
+            <div class="mode-switcher" role="radiogroup" aria-label="Asset mode">
+              <label class="mode-option">
+                <input type="radio" name="studioMode" value="minion" checked>
+                <span>Minion Card</span>
+              </label>
+              <label class="mode-option">
+                <input type="radio" name="studioMode" value="card_back">
+                <span>Card Back</span>
+              </label>
+              <label class="mode-option">
+                <input type="radio" name="studioMode" value="booster">
+                <span>Booster Pack</span>
+              </label>
+            </div>
+            <p class="hint mode-note">Note: The free CC0 pack includes Minion cards, Card Backs, and Booster templates (Spell/Talent/Landmark frames are in Dumivid's paid tiers).</p>
+          </fieldset>
+
+          <!-- ==================== MINION MODE ==================== -->
+          <div id="panel-minion">
+            <fieldset class="control-group">
+              <legend>Card Identity</legend>
+
+              <div class="field">
+                <label for="card-name">Card Name</label>
+                <input type="text" id="card-name" name="name" maxlength="40" autocomplete="off">
+              </div>
+
+              <div class="field-row">
+                <div class="field">
+                  <label for="card-mana">Mana Cost</label>
+                  <input type="text" id="card-mana" name="mana" maxlength="6" autocomplete="off">
+                </div>
+                <div class="field">
+                  <label for="card-type">Card Type</label>
+                  <input type="text" id="card-type" name="type" maxlength="18" list="card-type-suggestions" autocomplete="off">
+                  <datalist id="card-type-suggestions">
+                    <option value="minion"></option>
+                    <option value="spell"></option>
+                    <option value="talent"></option>
+                    <option value="landmark"></option>
+                    <option value="construct"></option>
+                    <option value="mech"></option>
+                  </datalist>
+                </div>
+              </div>
+
+              <div class="field">
+                <label for="card-description">Ability / Description</label>
+                <textarea id="card-description" name="description" rows="4" aria-describedby="desc-hint"></textarea>
+                <span id="desc-hint" class="hint">Tip: Wrap words in <code>**double asterisks**</code> for bold text.</span>
+              </div>
+            </fieldset>
+
+            <fieldset class="control-group">
+              <legend>Combat Stats</legend>
+
+              <label class="checkbox-field" for="show-stats">
+                <input type="checkbox" id="show-stats" name="showStats" class="styled-check">
+                <span>Show Attack &amp; Health hexes</span>
+              </label>
+
+              <div class="field-row" id="stats-inputs">
+                <div class="field">
+                  <label for="card-attack">Attack</label>
+                  <input type="text" id="card-attack" name="attack" maxlength="4" autocomplete="off">
+                </div>
+                <div class="field">
+                  <label for="card-health">Health</label>
+                  <input type="text" id="card-health" name="health" maxlength="4" autocomplete="off">
+                </div>
+              </div>
+            </fieldset>
+
+            <fieldset class="control-group">
+              <legend>Artwork</legend>
+
+              <div class="field">
+                <label for="art-preset">Included Art</label>
+                <select id="art-preset" name="artPreset"></select>
+              </div>
+
+              <div class="field">
+                <label for="art-upload">Or Upload Custom Art</label>
+                <input type="file" id="art-upload" name="artUpload" accept="image/*" class="file-input">
+                <span class="hint">You can also drag &amp; drop an image onto the card preview.</span>
+              </div>
+
+              <div class="field">
+                <label for="art-zoom">Art Zoom (<span id="art-zoom-val">100%</span>)</label>
+                <input type="range" id="art-zoom" name="artZoom" min="50" max="250" value="100">
+              </div>
+
+              <div class="field-row">
+                <div class="field">
+                  <label for="art-x">Pan X (<span id="art-x-val">0</span>)</label>
+                  <input type="range" id="art-x" name="artX" min="-300" max="300" value="0">
+                </div>
+                <div class="field">
+                  <label for="art-y">Pan Y (<span id="art-y-val">0</span>)</label>
+                  <input type="range" id="art-y" name="artY" min="-300" max="300" value="0">
+                </div>
+              </div>
+
+              <button type="button" id="btn-reset-art" class="btn btn-small btn-secondary">Reset Art Position</button>
+            </fieldset>
+
+            <fieldset class="control-group">
+              <legend>Frame, Rarity &amp; Emblem</legend>
+
+              <div class="field-row">
+                <div class="field">
+                  <label for="frame-style">Frame Style</label>
+                  <select id="frame-style" name="frameStyle">
+                    <option value="standard">Standard</option>
+                    <option value="alt1">Alternate 1</option>
+                    <option value="alt2">Alternate 2</option>
+                    <option value="alt3">Alternate 3</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="frame-color">Frame Tint</label>
+                  <div class="color-row">
+                    <input type="color" id="frame-color" name="frameColor" value="#f5c542">
+                    <label class="checkbox-field compact" for="enable-tint">
+                      <input type="checkbox" id="enable-tint" name="enableTint" class="styled-check">
+                      <span>Tint</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="swatches" role="group" aria-label="Quick faction color presets">
+                <button type="button" class="swatch" data-color="" title="Original Gold" style="--swatch: #e7b93c;">Orig</button>
+                <button type="button" class="swatch" data-color="#d94e4e" title="Crimson" style="--swatch: #d94e4e;"></button>
+                <button type="button" class="swatch" data-color="#3b82f6" title="Cobalt" style="--swatch: #3b82f6;"></button>
+                <button type="button" class="swatch" data-color="#10b981" title="Emerald" style="--swatch: #10b981;"></button>
+                <button type="button" class="swatch" data-color="#8b5cf6" title="Arcane" style="--swatch: #8b5cf6;"></button>
+                <button type="button" class="swatch" data-color="#64748b" title="Steel" style="--swatch: #64748b;"></button>
+              </div>
+
+              <div class="field-row">
+                <div class="field">
+                  <label for="rarity-select">Rarity Gem</label>
+                  <select id="rarity-select" name="rarity">
+                    <option value="none">None</option>
+                    <option value="1">Gem 1</option>
+                    <option value="2">Gem 2</option>
+                    <option value="3">Gem 3</option>
+                    <option value="4">Gem 4</option>
+                    <option value="5">Gem 5</option>
+                    <option value="6">Gem 6</option>
+                    <option value="7">Gem 7</option>
+                    <option value="8">Gem 8</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="emblem-select">Box Emblem</label>
+                  <select id="emblem-select" name="emblem">
+                    <option value="none">None</option>
+                    <option value="1">Emblem 1</option>
+                    <option value="2">Emblem 2</option>
+                    <option value="3">Emblem 3</option>
+                    <option value="4">Emblem 4</option>
+                    <option value="5">Emblem 5</option>
+                    <option value="6">Emblem 6</option>
+                  </select>
+                </div>
+              </div>
+            </fieldset>
+          </div>
+
+          <!-- ==================== CARD BACK MODE ==================== -->
+          <div id="panel-card-back" hidden>
+            <fieldset class="control-group">
+              <legend>Card Back Source</legend>
+              <div class="field">
+                <label for="cb-source">Build Mode</label>
+                <select id="cb-source" name="cbSource">
+                  <option value="modular">Modular Builder (84 Elements)</option>
+                  <option value="preset">Pre-Made Card Backs (27 Designs)</option>
+                </select>
+              </div>
+
+              <div id="cb-preset-controls" hidden>
+                <div class="field">
+                  <label for="cb-preset">Pre-Made Design</label>
+                  <select id="cb-preset" name="cbPreset"></select>
+                </div>
+              </div>
+            </fieldset>
+
+            <div id="cb-modular-controls">
+              <fieldset class="control-group">
+                <legend>Base &amp; Colors</legend>
+                <div class="field-row">
+                  <div class="field">
+                    <label for="cb-base">Base Shape</label>
+                    <select id="cb-base" name="cbBase">
+                      <option value="full">Full Back</option>
+                      <option value="broken">Broken Back</option>
+                    </select>
+                  </div>
+                  <div class="field">
+                    <label for="cb-base-color">Base Tint</label>
+                    <div class="color-row">
+                      <input type="color" id="cb-base-color" name="cbBaseColor" value="#3b82f6">
+                      <label class="checkbox-field compact" for="cb-base-tint">
+                        <input type="checkbox" id="cb-base-tint" name="cbBaseTint" class="styled-check">
+                        <span>Tint</span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </fieldset>
+
+              <fieldset class="control-group">
+                <legend>Modular Decorations</legend>
+                <div class="field">
+                  <label for="cb-decor">Center Pattern</label>
+                  <select id="cb-decor" name="cbDecor"></select>
+                </div>
+                <div class="field-row">
+                  <div class="field">
+                    <label for="cb-corners">Corners</label>
+                    <select id="cb-corners" name="cbCorners"></select>
+                  </div>
+                  <div class="field">
+                    <label for="cb-vsides">Vertical Sides</label>
+                    <select id="cb-vsides" name="cbVsides"></select>
+                  </div>
+                </div>
+                <div class="field">
+                  <label for="cb-hsides">Horizontal Sides</label>
+                  <select id="cb-hsides" name="cbHsides"></select>
+                </div>
+                <div class="field">
+                  <label for="cb-decor-color">Decorations Tint</label>
+                  <div class="color-row">
+                    <input type="color" id="cb-decor-color" name="cbDecorColor" value="#f5c542">
+                    <label class="checkbox-field compact" for="cb-decor-tint">
+                      <input type="checkbox" id="cb-decor-tint" name="cbDecorTint" class="styled-check">
+                      <span>Tint Decorations</span>
+                    </label>
+                  </div>
+                </div>
+              </fieldset>
+
+              <fieldset class="control-group">
+                <legend>Center Key Element</legend>
+                <div class="field-row">
+                  <div class="field">
+                    <label for="cb-key">Key Element</label>
+                    <select id="cb-key" name="cbKey"></select>
+                  </div>
+                  <div class="field">
+                    <label for="cb-key-color">Element Tint</label>
+                    <div class="color-row">
+                      <input type="color" id="cb-key-color" name="cbKeyColor" value="#38bdf8">
+                      <label class="checkbox-field compact" for="cb-key-tint">
+                        <input type="checkbox" id="cb-key-tint" name="cbKeyTint" class="styled-check">
+                        <span>Tint</span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </fieldset>
+            </div>
+          </div>
+
+          <!-- ==================== BOOSTER MODE ==================== -->
+          <div id="panel-booster" hidden>
+            <fieldset class="control-group">
+              <legend>Booster Wrapper</legend>
+              <div class="field-row">
+                <div class="field">
+                  <label for="bst-body">Body Style</label>
+                  <select id="bst-body" name="bstBody">
+                    <option value="wave">Wave Edge</option>
+                    <option value="smooth">Smooth Edge</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="bst-color">Wrapper Tint</label>
+                  <div class="color-row">
+                    <input type="color" id="bst-color" name="bstColor" value="#3b82f6">
+                    <label class="checkbox-field compact" for="bst-tint">
+                      <input type="checkbox" id="bst-tint" name="bstTint" class="styled-check">
+                      <span>Tint</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="field">
+                <label for="bst-bg">Background Art</label>
+                <select id="bst-bg" name="bstBg"></select>
+              </div>
+
+              <div class="field">
+                <label for="bst-bg-upload">Or Upload Custom Background</label>
+                <input type="file" id="bst-bg-upload" name="bstBgUpload" accept="image/*" class="file-input">
+              </div>
+            </fieldset>
+
+            <fieldset class="control-group">
+              <legend>Booster Labels &amp; Logos</legend>
+              <div class="field">
+                <label for="bst-top-text">Top Banner Text</label>
+                <input type="text" id="bst-top-text" name="bstTopText" maxlength="30" autocomplete="off">
+              </div>
+              <div class="field">
+                <label for="bst-bottom-text">Bottom Label Text</label>
+                <input type="text" id="bst-bottom-text" name="bstBottomText" maxlength="30" autocomplete="off">
+              </div>
+              <label class="checkbox-field" for="bst-show-game-logo">
+                <input type="checkbox" id="bst-show-game-logo" name="bstShowGameLogo" class="styled-check">
+                <span>Show Game Logo</span>
+              </label>
+              <label class="checkbox-field" for="bst-show-company-logo">
+                <input type="checkbox" id="bst-show-company-logo" name="bstShowCompanyLogo" class="styled-check">
+                <span>Show Company Logo</span>
+              </label>
+            </fieldset>
+          </div>
+
+          <!-- ==================== SHARED FINISH ==================== -->
+          <fieldset class="control-group">
+            <legend>Surface Texture</legend>
+            <div class="field">
+              <label for="texture-select">Overlay Finish</label>
+              <select id="texture-select" name="texture">
+                <option value="none">Clean Vector (No Texture)</option>
+                <option value="plastic_3">Plastic Card (Classic)</option>
+                <option value="plastic_1">Plastic Texture 1</option>
+                <option value="plastic_2">Plastic Texture 2</option>
+                <option value="metalic_1">Metallic 1 (Subtract)</option>
+                <option value="metalic_2">Metallic 2 (Color Burn)</option>
+                <option value="metalic_3">Metallic 3 (Multiply)</option>
+                <option value="metalic_4">Metallic 4 (Linear Burn)</option>
+                <option value="metalic_5">Metallic 5 (Overlay)</option>
+              </select>
+            </div>
+          </fieldset>
+        </form>
+      </aside>
+
+      <section class="preview-stage" aria-label="Live card preview">
+        <div class="canvas-wrapper" id="drop-zone">
+          <canvas id="card-canvas" width="1062" height="1471" aria-label="Rendered card preview"></canvas>
+          <p class="canvas-hint">Drag on card to pan artwork • Drop an image or .json file here</p>
+        </div>
+
+        <section class="library-panel" aria-labelledby="library-heading">
+          <div class="library-header">
+            <h2 id="library-heading">Saved Card Library</h2>
+            <div class="library-actions">
+              <button type="button" id="btn-export-deck" class="btn btn-small btn-secondary">Export All JSON</button>
+            </div>
+          </div>
+          <div id="library-list" class="library-grid" role="list">
+            <p class="empty-library">No saved items yet. Click "Save to Library" to store cards locally in your browser.</p>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <div id="status-announcer" class="visually-hidden" role="status" aria-live="polite"></div>
+  </div>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
