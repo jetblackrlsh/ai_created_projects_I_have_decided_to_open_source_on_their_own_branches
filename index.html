@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light dark">
+  <title>Roll for Shoes — Solo Sandbox RPG</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-brand">
+      <div class="logo-die" aria-hidden="true">
+        <svg viewBox="0 0 36 36" width="26" height="26" fill="currentColor">
+          <circle cx="11" cy="9" r="3"></circle>
+          <circle cx="25" cy="9" r="3"></circle>
+          <circle cx="11" cy="18" r="3"></circle>
+          <circle cx="25" cy="18" r="3"></circle>
+          <circle cx="11" cy="27" r="3"></circle>
+          <circle cx="25" cy="27" r="3"></circle>
+        </svg>
+      </div>
+      <div>
+        <h1>Roll for Shoes</h1>
+        <p class="subtitle">Offline Solo Sandbox &amp; Oracle</p>
+      </div>
+    </div>
+
+    <nav class="topbar-actions" aria-label="Game controls">
+      <button type="button" id="btn-new-sandbox" class="btn btn-secondary">New Sandbox</button>
+      <button type="button" id="btn-json-io" class="btn btn-secondary">Export / Import</button>
+      <button type="button" id="btn-rules" class="btn btn-ghost">Rules</button>
+    </nav>
+  </header>
+
+  <main class="workspace">
+    <!-- Left Column: Character Sheet & Solo Oracle -->
+    <aside class="panel character-panel" aria-labelledby="char-heading">
+      <div class="panel-header">
+        <h2 id="char-heading">Character</h2>
+        <div class="xp-badge" title="Earned on failed rolls. Spend 1 XP to turn a die into a 6 for advancement only.">
+          <span class="xp-label">XP</span>
+          <strong id="char-xp">0</strong>
+        </div>
+      </div>
+
+      <div class="char-identity">
+        <label for="char-name-input" class="visually-hidden">Character Name</label>
+        <input
+          type="text"
+          id="char-name-input"
+          class="char-name-input"
+          value="Unnamed Adventurer"
+          maxlength="48"
+          autocorrect="off"
+          spellcheck="false"
+        >
+        <div class="char-stats-row">
+          <div class="stat-chip"><span>Rolls</span><strong id="stat-rolls">0</strong></div>
+          <div class="stat-chip"><span>Wins</span><strong id="stat-wins">0</strong></div>
+          <div class="stat-chip"><span>Skills</span><strong id="stat-skills">1</strong></div>
+        </div>
+      </div>
+
+      <div class="statuses-section">
+        <div class="section-subheader">
+          <h3>Statuses</h3>
+          <span class="hint-text">Flavor tags</span>
+        </div>
+        <form id="status-form" class="status-form">
+          <label for="status-input" class="visually-hidden">Add a custom status</label>
+          <input
+            type="text"
+            id="status-input"
+            name="status"
+            placeholder="e.g., Wounded, Silver Sword..."
+            maxlength="36"
+          >
+          <button type="submit" class="btn btn-secondary btn-sm" aria-label="Add status">+</button>
+        </form>
+        <ul id="statuses-list" class="statuses-list" aria-label="Character statuses"></ul>
+      </div>
+
+      <div class="skills-section">
+        <div class="section-subheader">
+          <h3>Skills</h3>
+          <span class="hint-text">Click to use</span>
+        </div>
+        <ul id="skills-list" class="skills-list" aria-label="Character skills"></ul>
+      </div>
+
+      <!-- Solo Oracle -->
+      <section class="oracle-box" aria-labelledby="oracle-heading">
+        <div class="section-subheader">
+          <h3 id="oracle-heading">Solo Oracle</h3>
+          <span class="hint-text">Fate &amp; Sparks</span>
+        </div>
+
+        <form id="oracle-form" class="oracle-form">
+          <div class="oracle-likelihood-row" role="group" aria-label="Odds">
+            <label class="odds-pill">
+              <input type="radio" name="odds" value="unlikely">
+              <span>Unlikely</span>
+            </label>
+            <label class="odds-pill">
+              <input type="radio" name="odds" value="even" checked>
+              <span>50 / 50</span>
+            </label>
+            <label class="odds-pill">
+              <input type="radio" name="odds" value="likely">
+              <span>Likely</span>
+            </label>
+          </div>
+
+          <div class="oracle-input-row">
+            <label for="oracle-question" class="visually-hidden">Ask the Oracle a yes/no question</label>
+            <input
+              type="text"
+              id="oracle-question"
+              name="oracleQuestion"
+              placeholder="Ask a yes/no question..."
+              enterkeyhint="go"
+            >
+            <button type="submit" class="btn btn-secondary btn-sm">Ask</button>
+          </div>
+        </form>
+
+        <div class="oracle-sparks-row oracle-sparks-three">
+          <button type="button" id="btn-spark-prompt" class="btn btn-ghost btn-sm spark-btn">
+            ✦ Spark
+          </button>
+          <button type="button" id="btn-spark-twist" class="btn btn-ghost btn-sm spark-btn">
+            ⚡ Twist
+          </button>
+          <button type="button" id="btn-spark-npc" class="btn btn-ghost btn-sm spark-btn">
+            👤 NPC
+          </button>
+        </div>
+
+        <div id="oracle-result" class="oracle-result" role="status" aria-live="polite"></div>
+      </section>
+    </aside>
+
+    <!-- Right / Main Column: Sandbox Chronicle, Dice Tray & Free-Text Action -->
+    <section class="panel play-panel" aria-labelledby="adventure-title">
+      <div class="adventure-banner">
+        <div class="adventure-meta">
+          <span id="adventure-genre" class="badge">Solo Sandbox</span>
+          <h2 id="adventure-title">Untitled Sandbox</h2>
+        </div>
+
+        <div class="scene-meters">
+          <div class="meter" title="Higher tension increases opposing GM dice (click - / + to adjust)">
+            <span class="meter-label">Tension</span>
+            <div class="tension-controls">
+              <button type="button" id="btn-tension-down" class="pip-btn" aria-label="Decrease tension">−</button>
+              <div id="tension-pips" class="pips" aria-label="Tension level"></div>
+              <button type="button" id="btn-tension-up" class="pip-btn" aria-label="Increase tension">+</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scrollable Story & Roll Log -->
+      <div id="story-log" class="story-log" role="log" aria-live="polite" aria-label="Adventure chronicle"></div>
+
+      <!-- Interactive Dice & XP Advancement Tray -->
+      <div id="dice-tray" class="dice-tray" hidden>
+        <div class="dice-tray-grid">
+          <div class="dice-side player-side">
+            <div class="dice-side-header">
+              <span id="tray-player-label">Your Roll</span>
+              <strong id="tray-player-sum" class="dice-sum">0</strong>
+            </div>
+            <div id="player-dice-row" class="dice-row"></div>
+          </div>
+
+          <div class="dice-vs" aria-hidden="true">VS</div>
+
+          <div class="dice-side gm-side">
+            <div class="dice-side-header">
+              <span id="tray-gm-label">Opposition</span>
+              <strong id="tray-gm-sum" class="dice-sum">0</strong>
+            </div>
+            <div id="gm-dice-row" class="dice-row"></div>
+          </div>
+        </div>
+
+        <div id="tray-outcome-bar" class="tray-outcome-bar" role="status" aria-live="polite"></div>
+
+        <div id="xp-advance-bar" class="xp-advance-bar" hidden>
+          <p id="xp-advance-hint"></p>
+          <button type="button" id="btn-spend-all-xp" class="btn btn-accent btn-sm">
+            Flip All to 6s
+          </button>
+        </div>
+      </div>
+
+      <!-- Free-Text Action Input -->
+      <form id="action-form" class="action-form">
+        <div class="action-context-bar">
+          <div class="context-left">
+            <span>Skill: <strong id="selected-skill-badge">Do Anything 1</strong></span>
+            <span id="match-hint" class="match-hint">Auto-matched</span>
+          </div>
+          <div class="context-right">
+            <label for="opp-override" class="opp-label">Difficulty:</label>
+            <select id="opp-override" class="opp-select" name="oppOverride">
+              <option value="auto">Auto (Tension)</option>
+              <option value="1">Easy (1d6 / 3)</option>
+              <option value="2">Moderate (2d6 / 6)</option>
+              <option value="3">Hard (3d6 / 9)</option>
+              <option value="4">Very Hard (4d6 / 12)</option>
+            </select>
+            <label class="static-toggle" title="Use a static target (3, 6, 9, 12) instead of rolling GM dice">
+              <input type="checkbox" id="static-target-check" name="staticTarget">
+              <span>Static</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="action-input-row">
+          <label for="action-input" class="visually-hidden">Say what you do or write a scene note</label>
+          <textarea
+            id="action-input"
+            name="action"
+            rows="2"
+            placeholder="Say what you do (Enter to roll), or write a starter hook / scene note and click Add Note..."
+            required
+            enterkeyhint="send"
+          ></textarea>
+          <div class="action-btn-group">
+            <button type="button" id="btn-add-note" class="btn btn-secondary" title="Add a starter hook or scene note without rolling dice">
+              Add Note
+            </button>
+            <button type="submit" id="btn-roll" class="btn btn-primary btn-roll">
+              Roll D6s
+            </button>
+          </div>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <!-- Dialog: Rules Reference -->
+  <dialog id="dialog-rules" aria-labelledby="rules-title" closedby="any">
+    <div class="dialog-header">
+      <h2 id="rules-title">Roll for Shoes — Rules</h2>
+      <form method="dialog">
+        <button type="submit" class="btn btn-ghost btn-icon" aria-label="Close rules">✕</button>
+      </form>
+    </div>
+    <div class="dialog-body">
+      <p class="rules-intro">
+        <strong>Roll for Shoes</strong> is a tabletop RPG micro-system created by Ben Wray (CC0 1.0):
+      </p>
+      <ol class="rules-list">
+        <li>Say what you do and roll a number of D6s, determined by the level of relevant skill you have.</li>
+        <li>If the sum of your roll is higher than an opposing roll, the thing you wanted to happen, happens.</li>
+        <li>At start, you have only one skill: <em>Do Anything 1</em>.</li>
+        <li>If you roll all 6s, you get a new skill specific to the action, one level higher than the one you used.</li>
+        <li>For every roll you fail, you get 1 XP.</li>
+        <li>XP can be used to change a die into a 6 for advancement purposes only.</li>
+      </ol>
+      <div class="rules-solo-note">
+        <h3>Solo Sandbox &amp; Oracle</h3>
+        <ul>
+          <li><strong>Type anything:</strong> Describe your action freely. Your best matching skill is auto-selected, or click any skill in the sidebar.</li>
+          <li><strong>Solo Oracle:</strong> Ask Yes/No questions with odds (Unlikely, 50/50, Likely), or roll <strong>Spark</strong> and <strong>Twist / NPC</strong> prompts whenever you want inspiration.</li>
+          <li><strong>Advancing with XP:</strong> After any roll where not all dice are 6s, click individual dice (1 XP each) or <em>Flip All to 6s</em> to unlock a higher-level skill.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="dialog-footer">
+      <form method="dialog">
+        <button type="submit" class="btn btn-primary" autofocus>Got it</button>
+      </form>
+    </div>
+  </dialog>
+
+  <!-- Dialog: New Skill Unlocked (All 6s!) -->
+  <dialog id="dialog-new-skill" aria-labelledby="new-skill-title" closedby="none">
+    <div class="dialog-header">
+      <h2 id="new-skill-title">All 6s! New Skill Unlocked</h2>
+    </div>
+    <form id="new-skill-form" class="dialog-body">
+      <p id="new-skill-desc">
+        Your <strong id="ns-parent-skill">Do Anything 1</strong> rolled all 6s! Name your new Level <strong id="ns-new-level">2</strong> skill specific to what you just did:
+      </p>
+      <div class="form-field">
+        <label for="new-skill-name">New Skill Name</label>
+        <input
+          type="text"
+          id="new-skill-name"
+          name="skillName"
+          required
+          minlength="2"
+          maxlength="48"
+          autofocus
+        >
+        <span class="field-hint">Example: "Pick Brass Locks", "Sweet-Talk Guards", "Vault Chandeliers"</span>
+      </div>
+      <div class="dialog-footer">
+        <button type="submit" class="btn btn-primary">Add Skill</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- Dialog: New Custom Sandbox -->
+  <dialog id="dialog-new-sandbox" aria-labelledby="new-adv-title" closedby="any">
+    <div class="dialog-header">
+      <h2 id="new-adv-title">New Custom Sandbox</h2>
+      <form method="dialog">
+        <button type="submit" class="btn btn-ghost btn-icon" aria-label="Close">✕</button>
+      </form>
+    </div>
+    <form id="new-sandbox-form" class="dialog-body">
+      <div class="form-field">
+        <label for="custom-title-input">Sandbox Title</label>
+        <input type="text" id="custom-title-input" maxlength="60" placeholder="Neon Rain over Sector 7" autofocus>
+      </div>
+
+      <div class="form-field">
+        <label for="custom-genre-input">Genre / Tone Tag</label>
+        <input type="text" id="custom-genre-input" maxlength="32" placeholder="Cyberpunk Noir, Weird Fantasy, Cozy Mystery...">
+      </div>
+
+      <div class="form-field">
+        <label for="custom-opening-input">Opening Scene (optional)</label>
+        <textarea id="custom-opening-input" rows="3" placeholder="Set your own opening scene, or leave blank to start with a random Oracle spark..."></textarea>
+      </div>
+
+      <div class="form-checkbox-row">
+        <input type="checkbox" id="keep-character-check" name="keepCharacter">
+        <label for="keep-character-check">Keep my current character, skills, and XP</label>
+      </div>
+
+      <div class="dialog-footer">
+        <button type="button" id="btn-cancel-new-adv" class="btn btn-secondary">Cancel</button>
+        <button type="submit" class="btn btn-primary">Start Sandbox</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- Dialog: Export / Import JSON -->
+  <dialog id="dialog-json-io" aria-labelledby="json-io-title" closedby="any">
+    <div class="dialog-header">
+      <h2 id="json-io-title">Export / Import JSON</h2>
+      <form method="dialog">
+        <button type="submit" class="btn btn-ghost btn-icon" aria-label="Close">✕</button>
+      </form>
+    </div>
+    <div class="dialog-body json-io-body">
+      <section class="io-section">
+        <h3>Export</h3>
+        <p class="field-hint">Download a readable Story Log (Markdown) or portable JSON backups.</p>
+        <div class="io-btn-row">
+          <button type="button" id="btn-export-story-md" class="btn btn-primary">Export Story Log (.md)</button>
+          <button type="button" id="btn-copy-story-md" class="btn btn-secondary">Copy Story Log</button>
+        </div>
+        <div class="io-btn-row">
+          <button type="button" id="btn-export-character" class="btn btn-secondary">Export Character JSON</button>
+          <button type="button" id="btn-export-adventure" class="btn btn-secondary">Export Full Sandbox JSON</button>
+        </div>
+        <div id="export-status" class="import-status" role="status" aria-live="polite"></div>
+      </section>
+
+      <hr class="io-divider">
+
+      <section class="io-section">
+        <h3>Import</h3>
+        <p class="field-hint">Load a Character JSON or a Full Sandbox Save JSON.</p>
+        <div class="form-field">
+          <label for="import-file-input">Choose a <code>.json</code> file</label>
+          <input type="file" id="import-file-input" accept=".json,application/json">
+        </div>
+        <div class="form-field">
+          <label for="import-json-text">Or paste JSON directly</label>
+          <textarea id="import-json-text" rows="5" placeholder='{"type": "rfs-character", ...}' spellcheck="false"></textarea>
+        </div>
+        <div id="import-status" class="import-status" role="status" aria-live="polite"></div>
+        <div class="io-btn-row">
+          <button type="button" id="btn-import-paste" class="btn btn-secondary">Import Pasted JSON</button>
+        </div>
+      </section>
+    </div>
+  </dialog>
+
+  <script defer src="engine.js"></script>
+  <script defer src="app.js"></script>
+</body>
+</html>
