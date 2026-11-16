@@ -1,4 +1,13 @@
 interface:
-  display_name: "Create 360 Panoramas"
-  short_description: "Create and inspect 360-degree panorama artwork"
-  default_prompt: "Create and test a 360-degree panorama from my idea."
+  display_name: Create 360 Panoramas
+  short_description: Create and inspect 360-degree panorama artwork
+  default_prompt: Create and test a 360-degree panorama from my idea.
+  icon_small: assets/icon.svg
+  icon_large: assets/icon.svg
+policy:
+  products:
+  - chatgpt
+  - codex
+  - api
+  - atlas
+  allow_implicit_invocation: true
