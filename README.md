@@ -6,15 +6,23 @@ A single-player browser game & Game Master emulator for **The Elf Game** (by S&A
 
 ## Screenshots
 
-### 1. Main Adventure Workspace — Light Mode vs Dark Mode
+### 1. General Solo Gameplay (Inspiration → Oracle → Check → Note)
 
 | Light Mode | Dark Mode |
 | :---: | :---: |
-| ![Main Adventure Workspace in Light Mode](screenshots/main-light.png) | ![Main Adventure Workspace in Dark Mode](screenshots/main-dark.png) |
+| ![General Solo Gameplay in Light Mode](screenshots/main-light.png) | ![General Solo Gameplay in Dark Mode](screenshots/main-dark.png) |
 
 ---
 
-### 2. Character Creator & Step-by-Step Randomizer (Full View)
+### 2. Back-and-Forth Combat (Player Attack vs Enemy Attack)
+
+| Light Mode | Dark Mode |
+| :---: | :---: |
+| ![Back-and-Forth Combat in Light Mode](screenshots/combat-light.png) | ![Back-and-Forth Combat in Dark Mode](screenshots/combat-dark.png) |
+
+---
+
+### 3. Character Creator & Step-by-Step Randomizer (Full View)
 
 #### Light Mode
 | Top (Randomizer Summary & Character Details) | Bottom (Armor, Abilities & Save) |
@@ -28,7 +36,7 @@ A single-player browser game & Game Master emulator for **The Elf Game** (by S&A
 
 ---
 
-### 3. Rules & Solo Guide (Full View)
+### 4. Rules & Solo Guide (Full View)
 
 #### Light Mode
 | Top (Core Solo Loop & Roll-Under Rules) | Bottom (Classes, Stances & Slash Commands) |
@@ -42,7 +50,7 @@ A single-player browser game & Game Master emulator for **The Elf Game** (by S&A
 
 ---
 
-### 4. Save, Export & Import — Light Mode vs Dark Mode
+### 5. Save, Export & Import — Light Mode vs Dark Mode
 
 | Light Mode | Dark Mode |
 | :---: | :---: |
