@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light dark">
+  <script>
+    try {
+      const savedScheme = localStorage.getItem('elfgame-color-scheme');
+      if (savedScheme === 'light' || savedScheme === 'dark') {
+        document.querySelector('meta[name="color-scheme"]').content = savedScheme;
+      }
+    } catch (_) {}
+  </script>
+  <title>The Elf Game — Solo GM Emulator</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <!-- Top Bar -->
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-emblem" aria-hidden="true">⚔️</span>
+        <div>
+          <h1 class="brand-title">The Elf Game</h1>
+          <p class="brand-subtitle">Solo Adventure &amp; GM Emulator</p>
+        </div>
+      </div>
+
+      <div class="topbar-controls">
+        <div class="difficulty-pill" title="Adjust check difficulty on the fly">
+          <label for="difficulty-preset">Difficulty:</label>
+          <select id="difficulty-preset" aria-label="Difficulty preset">
+            <option value="-3">Easy (-3 roll)</option>
+            <option value="0" selected>Standard (0)</option>
+            <option value="3">Hard (+3 roll)</option>
+            <option value="6">Heroic (+6 roll)</option>
+            <option value="custom">Custom...</option>
+          </select>
+          <input
+            type="number"
+            id="difficulty-custom"
+            class="custom-diff-input"
+            value="0"
+            min="-20"
+            max="20"
+            step="1"
+            aria-label="Custom difficulty roll modifier"
+            title="Roll modifier: negative makes checks easier, positive makes checks harder"
+          >
+        </div>
+
+        <div class="topbar-buttons">
+          <button type="button" id="btn-open-rules" class="btn btn-secondary">
+            📖 Rules &amp; Solo Guide
+          </button>
+          <button type="button" id="btn-open-io" class="btn btn-secondary">
+            💾 Save / Export
+          </button>
+          <button type="button" id="btn-theme-toggle" class="btn btn-icon" aria-label="Toggle color theme" title="Toggle Light/Dark theme">
+            <span class="theme-icon-light" aria-hidden="true">☀️</span>
+            <span class="theme-icon-dark" aria-hidden="true">🌙</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Two-Column Workspace -->
+    <main class="workspace">
+      <!-- Left Sidebar: Character Sheet -->
+      <aside class="sidebar" aria-label="Character Sheet">
+        <section class="card character-card">
+          <div class="card-header">
+            <div>
+              <h2 id="char-display-name" class="char-name">Unnamed Elf</h2>
+              <p id="char-display-meta" class="char-meta">Level 0 · Medium · Mundane</p>
+            </div>
+            <div class="char-header-actions">
+              <button type="button" id="btn-random-char-quick" class="btn btn-small btn-secondary" title="Build a full random legal character step-by-step">
+                🎲 Random
+              </button>
+              <button type="button" id="btn-edit-char" class="btn btn-small btn-primary">
+                ✏️ Edit / Create
+              </button>
+            </div>
+          </div>
+
+          <!-- HP & Combat Toggles -->
+          <div class="hp-panel">
+            <div class="hp-row">
+              <span class="hp-label">Hit Points</span>
+              <div class="hp-controls">
+                <button type="button" id="btn-hp-minus" class="btn btn-tiny" aria-label="Decrease Hit Points by 1">−1</button>
+                <span id="char-hp-display" class="hp-value">6 / 6</span>
+                <button type="button" id="btn-hp-plus" class="btn btn-tiny" aria-label="Increase Hit Points by 1">+1</button>
+                <button type="button" id="btn-rest-heal" class="btn btn-tiny btn-secondary" title="Rest ~8 hours to heal 1 HP">🛏️ Rest (+1)</button>
+              </div>
+            </div>
+            <div class="hp-bar-track" aria-hidden="true">
+              <div id="hp-bar-fill" class="hp-bar-fill" style="width: 100%"></div>
+            </div>
+          </div>
+
+          <!-- Status Toggles -->
+          <div class="toggles-row">
+            <label class="toggle-chip">
+              <input type="checkbox" id="toggle-armor">
+              <span>🛡️ Wearing Armor (-1 AC)</span>
+            </label>
+            <label class="toggle-chip">
+              <input type="checkbox" id="toggle-defend">
+              <span>⚔️ Defending (-1 AC)</span>
+            </label>
+          </div>
+
+          <!-- Derived Combat & Save Stats -->
+          <div class="derived-grid" id="derived-stats-grid">
+            <!-- Populated by JS with formula tooltips -->
+          </div>
+
+          <!-- 6 Ability Scores -->
+          <div class="abilities-section">
+            <div class="section-label-row">
+              <h3 class="section-heading">Ability Scores</h3>
+              <span class="hint-text">Roll 1D20 ≤ Score</span>
+            </div>
+            <div class="abilities-grid" id="abilities-grid">
+              <!-- Populated by JS; clicking an ability opens a quick check -->
+            </div>
+          </div>
+
+          <!-- Inventory / Notes -->
+          <div class="notes-section">
+            <div class="section-label-row">
+              <label for="char-gear" class="section-heading">Gear, Spells &amp; Notes</label>
+              <span class="hint-text">Auto-saved</span>
+            </div>
+            <textarea
+              id="char-gear"
+              class="gear-textarea"
+              rows="5"
+              placeholder="Torch, rations, rusty sword, spellbook..."
+            ></textarea>
+          </div>
+        </section>
+      </aside>
+
+      <!-- Right Main Area: Chat / GM Emulator -->
+      <section class="emulator-panel" aria-label="Adventure Chat and GM Emulator">
+        <!-- Adventure Log / Chat Stream -->
+        <div
+          id="chat-log"
+          class="chat-log"
+          role="log"
+          aria-live="polite"
+          aria-label="Adventure log"
+        >
+          <!-- Messages rendered by JS -->
+        </div>
+
+        <!-- Action Dock -->
+        <div class="action-dock">
+          <!-- Quick Action Tabs -->
+          <div class="quick-tools" role="region" aria-label="Solo GM Tools">
+            <div class="tool-group">
+              <span class="tool-group-label">Checks:</span>
+              <button type="button" class="btn btn-chip" data-quick-check="STR">STR</button>
+              <button type="button" class="btn btn-chip" data-quick-check="DEX">DEX</button>
+              <button type="button" class="btn btn-chip" data-quick-check="CON">CON</button>
+              <button type="button" class="btn btn-chip" data-quick-check="INT">INT</button>
+              <button type="button" class="btn btn-chip" data-quick-check="WIS">WIS</button>
+              <button type="button" class="btn btn-chip" data-quick-check="CHA">CHA</button>
+              <button type="button" class="btn btn-chip btn-save" data-quick-check="SAVE">🛡️ Save</button>
+            </div>
+
+            <div class="tool-group">
+              <span class="tool-group-label">Combat:</span>
+              <button type="button" id="btn-attack-melee" class="btn btn-chip btn-combat">⚔️ Melee</button>
+              <button type="button" id="btn-attack-ranged" class="btn btn-chip btn-combat">🏹 Ranged</button>
+              <label class="inline-ac-label" title="Target Enemy Armor Class (lower is harder to hit)">
+                vs AC
+                <input type="number" id="target-ac-input" value="10" min="-5" max="20" class="tiny-num-input">
+              </label>
+            </div>
+
+            <div class="tool-group">
+              <span class="tool-group-label">Oracle:</span>
+              <select id="oracle-likelihood" class="compact-select" aria-label="Yes/No Oracle likelihood">
+                <option value="very-unlikely">Very Unlikely (15%)</option>
+                <option value="unlikely">Unlikely (35%)</option>
+                <option value="even" selected>50 / 50</option>
+                <option value="likely">Likely (65%)</option>
+                <option value="very-likely">Very Likely (85%)</option>
+              </select>
+              <button type="button" id="btn-oracle-yesno" class="btn btn-chip btn-oracle">🔮 Yes/No</button>
+
+              <select id="oracle-scale" class="compact-select" aria-label="How Many Oracle scale">
+                <option value="few">Few (1d4)</option>
+                <option value="small" selected>Small Group (1d6)</option>
+                <option value="several">Several (2d6)</option>
+                <option value="crowd">Crowd (3d6)</option>
+                <option value="horde">Horde (2d10)</option>
+              </select>
+              <button type="button" id="btn-oracle-howmany" class="btn btn-chip btn-oracle">🔢 How Many</button>
+            </div>
+
+            <div class="tool-group">
+              <span class="tool-group-label">Inspire:</span>
+              <select id="inspire-category" class="compact-select" aria-label="Inspiration category">
+                <option value="creatures">🐉 Creatures</option>
+                <option value="treasures">💰 Treasures</option>
+                <option value="magicItems">✨ Magic Items</option>
+                <option value="spellEffects">🪄 Spell Effects</option>
+                <option value="settings">🏰 Settings</option>
+                <option value="classes">🧙 NPCs &amp; Classes</option>
+                <option value="twists">🎭 Plot Twists</option>
+              </select>
+              <button type="button" id="btn-inspire" class="btn btn-chip btn-inspire">🎲 Inspire Me</button>
+            </div>
+          </div>
+
+          <!-- Chat / Note Input Form -->
+          <form id="chat-form" class="chat-form">
+            <label for="chat-input" class="visually-hidden">
+              Write a story note, or type a question for an Oracle or Check
+            </label>
+            <textarea
+              id="chat-input"
+              class="chat-input"
+              rows="2"
+              placeholder="Write a story note, describe your action, or type a question for the Oracle (Enter to log note, Shift+Enter for new line)..."
+            ></textarea>
+            <div class="chat-submit-col">
+              <button type="submit" id="btn-send-note" class="btn btn-primary">
+                📝 Log Note
+              </button>
+            </div>
+          </form>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- MODAL 1: Character Creator & Editor -->
+  <dialog id="char-dialog" closedby="any" aria-labelledby="char-dialog-title">
+    <div class="dialog-header">
+      <h2 id="char-dialog-title">Character Creator &amp; Editor</h2>
+      <button type="button" class="btn btn-icon dialog-close" data-close-dialog="char-dialog" aria-label="Close dialog">✕</button>
+    </div>
+    <form id="char-form" class="dialog-body">
+      <div class="newbie-banner newbie-banner-row">
+        <div>
+          <strong>New to The Elf Game?</strong> Roll a complete legal character automatically (you still choose the name!), or tweak any stat below.
+        </div>
+        <button type="button" id="btn-random-char-modal" class="btn btn-small btn-primary">
+          🎲 Create Random Character
+        </button>
+      </div>
+
+      <div id="random-steps-box" class="random-steps-box" hidden></div>
+
+      <div class="form-grid-2">
+        <div class="field">
+          <label for="edit-name">Character Name</label>
+          <input type="text" id="edit-name" required maxlength="40" placeholder="e.g. Lyra Mossfoot">
+        </div>
+        <div class="field">
+          <label for="edit-level">Level (0–3)</label>
+          <select id="edit-level">
+            <option value="0">Level 0 (Fresh Adventurer)</option>
+            <option value="1">Level 1</option>
+            <option value="2">Level 2</option>
+            <option value="3">Level 3 (Max Level)</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="edit-class">Class</label>
+          <select id="edit-class">
+            <option value="none">None / Standard</option>
+            <option value="fighter">Fighter (+1d6 HP per level &gt; 0, Actions can Attack)</option>
+            <option value="tradesman">Tradesman (Subtract Level from non-Attack tests)</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="edit-stance">Stance</label>
+          <select id="edit-stance">
+            <option value="mundane">Mundane (+1 HP, Speed, Save, Melee, Ranged, -1 AC)</option>
+            <option value="magical">Magical (May use Actions to cast Spells)</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="edit-size">Size</label>
+          <select id="edit-size">
+            <option value="small">Small (¼ Square, Speed 2)</option>
+            <option value="medium">Medium (1 Square, Speed 4)</option>
+            <option value="large">Large (2 Squares, Speed 8)</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="edit-max-hp">Max Hit Points</label>
+          <div class="inline-field-group">
+            <input type="number" id="edit-max-hp" min="1" max="99" value="6">
+            <button type="button" id="btn-roll-hp" class="btn btn-small btn-secondary" title="Roll Hit Points using Elf Game rules">🎲 Roll HP</button>
+          </div>
+          <small id="hp-formula-hint" class="field-hint"></small>
+        </div>
+      </div>
+
+      <div class="modal-checkbox-row">
+        <label class="toggle-chip">
+          <input type="checkbox" id="edit-wearing-armor">
+          <span>🛡️ Wearing Armor (-1 AC)</span>
+        </label>
+      </div>
+
+      <div class="ability-editor-header">
+        <h3>Ability Scores (3–18)</h3>
+        <button type="button" id="btn-roll-3d6" class="btn btn-small btn-primary">🎲 Roll 3d6 × 6</button>
+      </div>
+
+      <div id="rolled-pool-banner" class="rolled-pool-banner" hidden></div>
+
+      <div class="ability-edit-grid">
+        <div class="ability-edit-item">
+          <label for="edit-STR">STR <span class="adj-badge" id="adj-STR">0</span></label>
+          <input type="number" id="edit-STR" min="1" max="25" value="10">
+        </div>
+        <div class="ability-edit-item">
+          <label for="edit-DEX">DEX <span class="adj-badge" id="adj-DEX">0</span></label>
+          <input type="number" id="edit-DEX" min="1" max="25" value="10">
+        </div>
+        <div class="ability-edit-item">
+          <label for="edit-CON">CON <span class="adj-badge" id="adj-CON">0</span></label>
+          <input type="number" id="edit-CON" min="1" max="25" value="10">
+        </div>
+        <div class="ability-edit-item">
+          <label for="edit-INT">INT <span class="adj-badge" id="adj-INT">0</span></label>
+          <input type="number" id="edit-INT" min="1" max="25" value="10">
+        </div>
+        <div class="ability-edit-item">
+          <label for="edit-WIS">WIS <span class="adj-badge" id="adj-WIS">0</span></label>
+          <input type="number" id="edit-WIS" min="1" max="25" value="10">
+        </div>
+        <div class="ability-edit-item">
+          <label for="edit-CHA">CHA <span class="adj-badge" id="adj-CHA">0</span></label>
+          <input type="number" id="edit-CHA" min="1" max="25" value="10">
+        </div>
+      </div>
+
+      <div class="dialog-footer">
+        <button type="button" class="btn btn-secondary" data-close-dialog="char-dialog">Cancel</button>
+        <button type="submit" class="btn btn-primary" autofocus>Save Character</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- MODAL 2: Rules & Solo Guide -->
+  <dialog id="rules-dialog" closedby="any" aria-labelledby="rules-dialog-title">
+    <div class="dialog-header">
+      <h2 id="rules-dialog-title">How to Play The Elf Game Solo</h2>
+      <button type="button" class="btn btn-icon dialog-close" data-close-dialog="rules-dialog" aria-label="Close dialog">✕</button>
+    </div>
+    <div class="dialog-body prose">
+      <h3>1. The Core Loop (No GM Needed!)</h3>
+      <p>Playing solo is like having a conversation with yourself and the dice:</p>
+      <ol>
+        <li><strong>Set the scene:</strong> Use <em>Inspire Me</em> (Settings/Creatures/Twists) or write a short note in the chat box.</li>
+        <li><strong>Ask the Oracle:</strong> When you want to know something a GM would normally decide (e.g., <em>"Is the bridge guarded?"</em>), type your question and click <strong>Yes/No</strong> or <strong>How Many</strong>.</li>
+        <li><strong>Take action:</strong> When your character tries something risky, click an <strong>Ability Check</strong> (STR, DEX, CON, INT, WIS, CHA) or <strong>Attack</strong>. The app does all the math and explains why you succeeded or failed!</li>
+        <li><strong>Write what happens:</strong> Log the outcome as a story note and keep going.</li>
+      </ol>
+
+      <h3>2. How Elf Game Checks Work (Roll-Under D20)</h3>
+      <p>Unlike games where you want a high roll, <strong>The Elf Game is a roll-under system</strong>: lower rolls are better!</p>
+      <ul>
+        <li><strong>Ability Tests:</strong> Roll <code>1D20</code>, subtract any bonuses (like a Tradesman's Level), and add any Difficulty penalty. If the result is <strong>less than or equal to (≤)</strong> your Ability Score, you <strong>Succeed</strong>!</li>
+        <li><strong>Natural 1 &amp; Natural 20:</strong> Rolling a <strong>1</strong> on the D20 is <em>always</em> a Success. Rolling a <strong>20</strong> is <em>always</em> a Failure.</li>
+        <li><strong>Attack Rolls:</strong> Roll <code>1D20</code> and subtract your <strong>Melee</strong> or <strong>Ranged</strong> score. If the result is <strong>≤ Target's Armor Class (AC)</strong>, you hit and deal <code>1D6</code> damage!</li>
+        <li><strong>Armor Class (AC):</strong> Starts at 10 and goes <em>down</em> with good stats, armor, and defending. A lower AC is harder to hit!</li>
+        <li><strong>Saving Throws:</strong> Roll against your Saving Throw score (<code>CON + WIS Adj + Level</code>) to resist magic or survive dropping to 0 HP.</li>
+      </ul>
+
+      <h3>3. Classes &amp; Stances</h3>
+      <ul>
+        <li><strong>Fighter:</strong> Rolls an extra <code>1D6</code> for HP at each Level beyond 0, and can use combat Actions to Attack.</li>
+        <li><strong>Tradesman:</strong> Subtracts their Level from all non-Attack Ability Tests, and can use Attacks in combat to perform Actions.</li>
+        <li><strong>Magical Stance:</strong> May use Actions to cast Spells.</li>
+        <li><strong>Mundane Stance:</strong> Gains <code>+1</code> to HP, Speed, Saving Throw, Melee, and Ranged, and <code>-1</code> to Armor Class.</li>
+      </ul>
+
+      <h3>4. Chat Slash Commands (Optional Shortcuts)</h3>
+      <ul>
+        <li><code>/str</code>, <code>/dex</code>, <code>/con</code>, <code>/int</code>, <code>/wis</code>, <code>/cha</code>, <code>/save</code> — Roll a check (e.g. <code>/dex dodge the trap</code>)</li>
+        <li><code>/melee</code> or <code>/ranged</code> — Roll an attack (e.g. <code>/melee swing at goblin</code>)</li>
+        <li><code>/oracle</code> — Ask the Yes/No Oracle (e.g. <code>/oracle Is the chest trapped?</code>)</li>
+        <li><code>/howmany</code> — Ask the How Many Oracle (e.g. <code>/howmany guards?</code>)</li>
+        <li><code>/inspire [category]</code> — Roll random inspiration</li>
+      </ul>
+    </div>
+    <div class="dialog-footer">
+      <button type="button" class="btn btn-primary" data-close-dialog="rules-dialog" autofocus>Got It — Let's Play!</button>
+    </div>
+  </dialog>
+
+  <!-- MODAL 3: Import / Export & Reset -->
+  <dialog id="io-dialog" closedby="any" aria-labelledby="io-dialog-title">
+    <div class="dialog-header">
+      <h2 id="io-dialog-title">Save, Export &amp; Import</h2>
+      <button type="button" class="btn btn-icon dialog-close" data-close-dialog="io-dialog" aria-label="Close dialog">✕</button>
+    </div>
+    <div class="dialog-body io-grid">
+      <div class="io-card">
+        <h3>Character (JSON)</h3>
+        <p>Save your character sheet to a file or load an existing character into this adventure.</p>
+        <div class="io-actions">
+          <button type="button" id="btn-export-char" class="btn btn-primary">⬇️ Export Character JSON</button>
+          <label class="btn btn-secondary file-btn">
+            ⬆️ Import Character JSON
+            <input type="file" id="input-import-char" accept=".json,application/json" hidden>
+          </label>
+        </div>
+      </div>
+
+      <div class="io-card">
+        <h3>Full Adventure (JSON)</h3>
+        <p>Export or restore your entire session: character, full chat log, gear notes, and difficulty.</p>
+        <div class="io-actions">
+          <button type="button" id="btn-export-adv" class="btn btn-primary">⬇️ Export Adventure JSON</button>
+          <label class="btn btn-secondary file-btn">
+            ⬆️ Import Adventure JSON
+            <input type="file" id="input-import-adv" accept=".json,application/json" hidden>
+          </label>
+        </div>
+      </div>
+
+      <div class="io-card">
+        <h3>Adventure Story Log (TXT)</h3>
+        <p>Download a clean, readable plain-text transcript of your story, rolls, and oracle answers.</p>
+        <div class="io-actions">
+          <button type="button" id="btn-export-txt" class="btn btn-primary">📄 Export Log as TXT</button>
+        </div>
+      </div>
+
+      <div class="io-card io-danger">
+        <h3>New Adventure</h3>
+        <p>Clear the current adventure log and start fresh (your character stays unless you edit it).</p>
+        <div class="io-actions">
+          <button type="button" id="btn-clear-log" class="btn btn-danger">🗑️ Clear Adventure Log</button>
+        </div>
+      </div>
+    </div>
+    <div class="dialog-footer">
+      <button type="button" class="btn btn-secondary" data-close-dialog="io-dialog" autofocus>Close</button>
+    </div>
+  </dialog>
+
+  <script src="data.js"></script>
+  <script src="engine.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
