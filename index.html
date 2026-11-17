@@ -181,6 +181,11 @@
                 vs AC
                 <input type="number" id="target-ac-input" value="10" min="-5" max="20" class="tiny-num-input">
               </label>
+              <button type="button" id="btn-enemy-attack" class="btn btn-chip btn-combat" title="Roll an enemy attack against your current Armor Class">👹 Enemy Atk</button>
+              <label class="inline-ac-label" title="Enemy Melee/Ranged attack bonus">
+                Bonus
+                <input type="number" id="enemy-atk-input" value="0" min="-10" max="15" class="tiny-num-input">
+              </label>
             </div>
 
             <div class="tool-group">
@@ -392,6 +397,7 @@
       <ul>
         <li><code>/str</code>, <code>/dex</code>, <code>/con</code>, <code>/int</code>, <code>/wis</code>, <code>/cha</code>, <code>/save</code> — Roll a check (e.g. <code>/dex dodge the trap</code>)</li>
         <li><code>/melee</code> or <code>/ranged</code> — Roll an attack (e.g. <code>/melee swing at goblin</code>)</li>
+        <li><code>/enemy</code> — Roll an enemy attack against your AC (e.g. <code>/enemy Goblin lunges</code>)</li>
         <li><code>/oracle</code> — Ask the Yes/No Oracle (e.g. <code>/oracle Is the chest trapped?</code>)</li>
         <li><code>/howmany</code> — Ask the How Many Oracle (e.g. <code>/howmany guards?</code>)</li>
         <li><code>/inspire [category]</code> — Roll random inspiration</li>

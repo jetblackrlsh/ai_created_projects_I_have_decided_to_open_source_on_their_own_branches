@@ -206,6 +206,28 @@
     return { ...result, checkType: 'attack', attackType, damage, note };
   }
 
+  function resolveEnemyAttackRoll(char, enemyAttackBonus = 0, note = '') {
+    const derived = calculateDerivedStats(char);
+    const bonus = Number(enemyAttackBonus) || 0;
+    const rawRoll = rollDie(20);
+    const modifiers = [];
+
+    if (bonus !== 0) {
+      modifiers.push({ label: 'Enemy Atk Bonus', value: -bonus });
+    }
+
+    const result = evaluateD20RollUnder({
+      rawRoll,
+      modifiers,
+      target: derived.ac,
+      targetLabel: `Your AC`,
+      statReason: `The enemy's attack bonus (${formatSigned(bonus)}) subtracted ${bonus} from the D20 roll against your Armor Class of ${derived.ac} (${derived.formulas.ac}).`,
+    });
+
+    const damage = result.success ? rollDie(6) : 0;
+    return { ...result, checkType: 'enemy-attack', enemyAttackBonus: bonus, playerAC: derived.ac, damage, note };
+  }
+
   function resolveYesNoOracle(question, likelihoodKey = 'even') {
     const cfg = ORACLE_LIKELIHOODS[likelihoodKey] || ORACLE_LIKELIHOODS.even;
     const roll = rollDie(100);
@@ -333,6 +355,7 @@
     resolveAbilityTest,
     resolveSavingThrow,
     resolveAttackRoll,
+    resolveEnemyAttackRoll,
     resolveYesNoOracle,
     resolveHowManyOracle,
     rollInspiration,

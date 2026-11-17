@@ -54,6 +54,7 @@
       character: createDefaultCharacter(),
       difficulty: 0,
       targetAC: 10,
+      enemyAttackBonus: 0,
       log: createWelcomeLog(),
     };
   }
@@ -71,6 +72,7 @@
   const diffPresetEl = document.getElementById('difficulty-preset');
   const diffCustomEl = document.getElementById('difficulty-custom');
   const targetAcEl = document.getElementById('target-ac-input');
+  const enemyAtkEl = document.getElementById('enemy-atk-input');
   const gearEl = document.getElementById('char-gear');
   const armorToggleEl = document.getElementById('toggle-armor');
   const defendToggleEl = document.getElementById('toggle-defend');
@@ -90,6 +92,7 @@
     );
     diffPresetEl.value = matchingOption ? matchingOption.value : 'custom';
     targetAcEl.value = String(state.targetAC ?? 10);
+    enemyAtkEl.value = String(state.enemyAttackBonus ?? 0);
   }
 
   function renderCharacterSheet() {
@@ -181,8 +184,9 @@
 
       if (entry.type === 'check') {
         const badge = document.createElement('span');
-        badge.className = `badge ${entry.success ? 'badge-success' : 'badge-fail'}`;
-        badge.textContent = entry.success ? 'Success' : 'Failure';
+        const isGood = entry.badgeGood !== undefined ? entry.badgeGood : entry.success;
+        badge.className = `badge ${isGood ? 'badge-success' : 'badge-fail'}`;
+        badge.textContent = entry.badgeText || (entry.success ? 'Success' : 'Failure');
         title.appendChild(badge);
       }
 
@@ -286,6 +290,41 @@
     });
   }
 
+  function triggerEnemyAttack(customNote = null) {
+    const note = customNote !== null ? customNote : consumeInputText();
+    const bonus = Number(enemyAtkEl.value) || 0;
+    const res = Engine.resolveEnemyAttackRoll(state.character, bonus, note);
+    let dmgLine = 'The enemy missed you!';
+
+    if (res.success) {
+      const before = state.character.currentHp;
+      const after = Math.max(0, before - res.damage);
+      state.character.currentHp = after;
+      saveState();
+      renderCharacterSheet();
+      dmgLine = `Enemy hit you for ${res.damage} Hit Point damage (1D6)! HP: ${before} → ${after}.`;
+    }
+
+    appendLogEntry({
+      type: 'check',
+      title: `👹 Enemy Attack (Bonus ${Engine.formatSigned(bonus)} vs Your AC ${res.playerAC})`,
+      success: !res.success,
+      badgeGood: !res.success,
+      badgeText: res.success ? 'Enemy Hit' : 'Enemy Miss',
+      body: note ? `"${note}" — ${dmgLine}` : dmgLine,
+      steps: res.steps,
+      explain: res.explain,
+    });
+
+    if (res.success && state.character.currentHp === 0) {
+      appendLogEntry({
+        type: 'system',
+        title: '⚠️ Reduced to 0 Hit Points!',
+        body: 'By Elf Game rules, roll a Saving Throw to determine the outcome!',
+      });
+    }
+  }
+
   function triggerYesNoOracle(customQuestion = null) {
     const question = customQuestion !== null ? customQuestion : consumeInputText();
     const likelihood = document.getElementById('oracle-likelihood').value;
@@ -338,6 +377,7 @@
       if (cmd === 'save') return triggerSavingThrow(arg);
       if (cmd === 'melee') return triggerAttack('melee', arg);
       if (cmd === 'ranged') return triggerAttack('ranged', arg);
+      if (cmd === 'enemy') return triggerEnemyAttack(arg);
       if (cmd === 'oracle' || cmd === 'yn') return triggerYesNoOracle(arg);
       if (cmd === 'howmany' || cmd === 'hm') return triggerHowManyOracle(arg);
       if (cmd === 'inspire') {
@@ -373,6 +413,7 @@
 
   document.getElementById('btn-attack-melee').addEventListener('click', () => triggerAttack('melee'));
   document.getElementById('btn-attack-ranged').addEventListener('click', () => triggerAttack('ranged'));
+  document.getElementById('btn-enemy-attack').addEventListener('click', () => triggerEnemyAttack());
   document.getElementById('btn-oracle-yesno').addEventListener('click', () => triggerYesNoOracle());
   document.getElementById('btn-oracle-howmany').addEventListener('click', () => triggerHowManyOracle());
   document.getElementById('btn-inspire').addEventListener('click', () => triggerInspiration());
@@ -396,6 +437,11 @@
 
   targetAcEl.addEventListener('input', () => {
     state.targetAC = Number(targetAcEl.value) || 10;
+    saveState();
+  });
+
+  enemyAtkEl.addEventListener('input', () => {
+    state.enemyAttackBonus = Number(enemyAtkEl.value) || 0;
     saveState();
   });
 
