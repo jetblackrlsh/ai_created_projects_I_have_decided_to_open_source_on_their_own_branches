@@ -6,23 +6,47 @@ A single-player browser game & Game Master emulator for **The Elf Game** (by S&A
 
 ## Screenshots
 
-### Main Adventure Workspace — Light Mode vs Dark Mode
+### 1. Main Adventure Workspace — Light Mode vs Dark Mode
 
 | Light Mode | Dark Mode |
 | :---: | :---: |
 | ![Main Adventure Workspace in Light Mode](screenshots/main-light.png) | ![Main Adventure Workspace in Dark Mode](screenshots/main-dark.png) |
 
-### Character Creator & Step-by-Step Randomizer
+---
+
+### 2. Character Creator & Step-by-Step Randomizer (Full View)
+
+#### Light Mode
+| Top (Randomizer Summary & Character Details) | Bottom (Armor, Abilities & Save) |
+| :---: | :---: |
+| ![Character Creator Light Top](screenshots/character-creator-light-top.png) | ![Character Creator Light Bottom](screenshots/character-creator-light-bottom.png) |
+
+#### Dark Mode
+| Top (Randomizer Summary & Character Details) | Bottom (Armor, Abilities & Save) |
+| :---: | :---: |
+| ![Character Creator Dark Top](screenshots/character-creator-dark-top.png) | ![Character Creator Dark Bottom](screenshots/character-creator-dark-bottom.png) |
+
+---
+
+### 3. Rules & Solo Guide (Full View)
+
+#### Light Mode
+| Top (Core Solo Loop & Roll-Under Rules) | Bottom (Classes, Stances & Slash Commands) |
+| :---: | :---: |
+| ![Rules Guide Light Top](screenshots/rules-guide-light-top.png) | ![Rules Guide Light Bottom](screenshots/rules-guide-light-bottom.png) |
+
+#### Dark Mode
+| Top (Core Solo Loop & Roll-Under Rules) | Bottom (Classes, Stances & Slash Commands) |
+| :---: | :---: |
+| ![Rules Guide Dark Top](screenshots/rules-guide-dark-top.png) | ![Rules Guide Dark Bottom](screenshots/rules-guide-dark-bottom.png) |
+
+---
+
+### 4. Save, Export & Import — Light Mode vs Dark Mode
 
 | Light Mode | Dark Mode |
 | :---: | :---: |
-| ![Character Creator and Randomizer in Light Mode](screenshots/character-creator-light.png) | ![Character Creator and Randomizer in Dark Mode](screenshots/character-creator-dark.png) |
-
-### Rules & Solo Guide / Save, Export & Import
-
-| Rules & Solo Guide (Light Mode) | Save, Export & Import (Dark Mode) |
-| :---: | :---: |
-| ![Rules and Solo Guide Modal](screenshots/rules-guide-light.png) | ![Save, Export and Import Modal](screenshots/save-export-dark.png) |
+| ![Save, Export and Import Light Mode](screenshots/save-export-light.png) | ![Save, Export and Import Dark Mode](screenshots/save-export-dark.png) |
 
 ---
 
