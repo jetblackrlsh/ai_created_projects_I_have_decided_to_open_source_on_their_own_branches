@@ -1,0 +1,8 @@
+/.venv/
+/Fableglass/.build/
+/Fableglass/runtime/
+*.gguf
+*.log
+__pycache__/
+/benchmark*.json
+/experiment/

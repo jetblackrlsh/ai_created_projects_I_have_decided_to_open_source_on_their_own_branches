@@ -1,0 +1,1334 @@
+{
+  "format": 3,
+  "bos": 1,
+  "eos": 2,
+  "turn": 259,
+  "signals": {
+    "arena": 260,
+    "arena-careful": 261,
+    "arena-exposed": 262,
+    "arena-feedback": 263,
+    "arena-finisher": 264,
+    "arena-repeat": 265,
+    "arena-rival-known": 266,
+    "blocked": 267,
+    "carried": 268,
+    "check:action": 269,
+    "check:blocked": 270,
+    "check:boolean": 271,
+    "check:information": 272,
+    "check:known": 273,
+    "check:name": 274,
+    "check:no": 275,
+    "check:number": 276,
+    "check:open": 277,
+    "check:ready": 278,
+    "check:retry": 279,
+    "check:risk": 280,
+    "check:yes": 281,
+    "control-known": 282,
+    "destination": 283,
+    "examined": 284,
+    "exposed": 285,
+    "fit": 286,
+    "handoff": 287,
+    "intent:arena-attack": 288,
+    "intent:arena-bite": 289,
+    "intent:arena-boost": 290,
+    "intent:arena-clarify": 291,
+    "intent:arena-combine": 292,
+    "intent:arena-ended": 293,
+    "intent:arena-enter": 294,
+    "intent:arena-identify": 295,
+    "intent:arena-read": 296,
+    "intent:arena-ready": 297,
+    "intent:arena-reverse": 298,
+    "intent:arena-tactic": 299,
+    "intent:arena-talk": 300,
+    "intent:arena-yield": 301,
+    "intent:begin": 302,
+    "intent:declare": 303,
+    "intent:explain": 304,
+    "intent:inspect": 305,
+    "intent:offer": 306,
+    "intent:pursuit-advice": 307,
+    "intent:pursuit-focus": 308,
+    "intent:pursuit-inspect": 309,
+    "intent:pursuit-obtain": 310,
+    "intent:pursuit-source": 311,
+    "intent:pursuit-use": 312,
+    "intent:question": 313,
+    "intent:recall": 314,
+    "intent:solve": 315,
+    "intent:status": 316,
+    "intent:take": 317,
+    "intent:travel": 318,
+    "intent:use": 319,
+    "intent:wait": 320,
+    "interface": 321,
+    "memory": 322,
+    "no-conflict": 323,
+    "pressure": 324,
+    "pursuit": 325,
+    "subject": 326,
+    "target": 327,
+    "tech": 328,
+    "tested": 329,
+    "trust": 330,
+    "unrecognized": 331,
+    "urgent": 332
+  },
+  "architecture": {
+    "parameters": 500412160,
+    "nonzeroFp16Parameters": 154545,
+    "context": 256,
+    "layers": 25,
+    "width": 1280,
+    "hidden": 4128,
+    "heads": 20,
+    "kvHeads": 5
+  },
+  "events": {
+    "333": "opening",
+    "338": "status",
+    "344": "urgent",
+    "349": "explain",
+    "355": "history",
+    "360": "question",
+    "365": "learn",
+    "372": "interface",
+    "378": "revisit",
+    "383": "test",
+    "390": "repeat-test",
+    "395": "partial",
+    "400": "compromised",
+    "405": "resolve",
+    "410": "approach",
+    "415": "blocked",
+    "420": "offer",
+    "425": "agreement",
+    "430": "declare",
+    "435": "take",
+    "440": "carried",
+    "445": "escalate",
+    "450": "next-signal",
+    "455": "next-witness",
+    "460": "next-cost",
+    "465": "wait",
+    "470": "respond",
+    "476": "arena-opening",
+    "479": "arena-clarify",
+    "482": "arena-ready",
+    "485": "arena-enter",
+    "488": "arena-light",
+    "491": "arena-heavy",
+    "494": "arena-rival",
+    "497": "arena-counter",
+    "500": "arena-hit",
+    "503": "arena-bite",
+    "506": "arena-repeat-bite",
+    "509": "arena-boost",
+    "512": "arena-feedback",
+    "515": "arena-axe",
+    "518": "arena-reverse",
+    "521": "arena-reverse-unknown",
+    "524": "arena-read",
+    "527": "arena-tactic",
+    "530": "arena-talk",
+    "533": "arena-yield",
+    "536": "arena-ended",
+    "539": "arena-win",
+    "542": "open-grounded",
+    "546": "respond-grounded",
+    "549": "clarify-action",
+    "552": "pursuit-advice",
+    "555": "pursuit-focus",
+    "558": "pursuit-source",
+    "561": "pursuit-inspect",
+    "564": "pursuit-obtain",
+    "567": "pursuit-use",
+    "570": "check-yes",
+    "573": "check-no",
+    "576": "check-unknown",
+    "579": "check-yes",
+    "582": "check-no",
+    "585": "check-number-known",
+    "588": "check-name-known",
+    "591": "check-information",
+    "594": "check-action-success",
+    "597": "check-action-success",
+    "600": "check-action-partial",
+    "603": "check-action-failure",
+    "606": "check-action-failure",
+    "609": "check-action-failure",
+    "612": "check-number-0",
+    "615": "check-name-0",
+    "618": "check-number-1",
+    "621": "check-name-1",
+    "624": "check-number-2",
+    "627": "check-name-2",
+    "630": "check-number-3",
+    "633": "check-name-3",
+    "636": "check-number-4",
+    "639": "check-name-4",
+    "642": "check-number-5",
+    "645": "check-name-5"
+  },
+  "fragments": {
+    "334": [
+      "opening",
+      "prose",
+      "{premise}\n\n{npc} takes stock of the situation. {status}"
+    ],
+    "335": [
+      "opening",
+      "prose",
+      "{premise}\n\n{status} {npc} stays close enough to hear you."
+    ],
+    "336": [
+      "opening",
+      "dialogue",
+      "\n\n“What’s your first move?”"
+    ],
+    "337": [
+      "opening",
+      "dialogue",
+      ""
+    ],
+    "339": [
+      "status",
+      "prose",
+      "{npc} gives you the short version. {status}"
+    ],
+    "340": [
+      "status",
+      "prose",
+      "{npc} glances toward {problem}. {status}"
+    ],
+    "341": [
+      "status",
+      "prose",
+      "{status} {npc} lets you take that in."
+    ],
+    "342": [
+      "status",
+      "dialogue",
+      "\n\n“{stakes}”"
+    ],
+    "343": [
+      "status",
+      "dialogue",
+      "\n\n“{lead}”"
+    ],
+    "345": [
+      "urgent",
+      "prose",
+      "{warning} {npc} catches you up. {status}"
+    ],
+    "346": [
+      "urgent",
+      "prose",
+      "{status} Then {warningLower}"
+    ],
+    "347": [
+      "urgent",
+      "dialogue",
+      "\n\n“{stakes}”"
+    ],
+    "348": [
+      "urgent",
+      "dialogue",
+      "\n\n“{lead}”"
+    ],
+    "350": [
+      "explain",
+      "prose",
+      "{npc} studies {target}. “{capability}”"
+    ],
+    "351": [
+      "explain",
+      "prose",
+      "“About {target}?” {npc} considers it. “{capability}”"
+    ],
+    "352": [
+      "explain",
+      "prose",
+      "{npc} points to {target}. “{capability}”"
+    ],
+    "353": [
+      "explain",
+      "dialogue",
+      "\n\n{hint}"
+    ],
+    "354": [
+      "explain",
+      "dialogue",
+      ""
+    ],
+    "356": [
+      "history",
+      "prose",
+      "“Here’s what we found,” {npc} says. {memory}"
+    ],
+    "357": [
+      "history",
+      "prose",
+      "{npc} goes over the sequence with you. {memory}"
+    ],
+    "358": [
+      "history",
+      "dialogue",
+      ""
+    ],
+    "359": [
+      "history",
+      "dialogue",
+      "\n\n“{lead}”"
+    ],
+    "361": [
+      "question",
+      "prose",
+      "“About {subject}?” {npc} looks up. “I don’t have the whole story. {lead}”"
+    ],
+    "362": [
+      "question",
+      "prose",
+      "{npc} takes the question seriously. “I can tell you what I’ve seen. {lead}”"
+    ],
+    "363": [
+      "question",
+      "dialogue",
+      ""
+    ],
+    "364": [
+      "question",
+      "dialogue",
+      "\n\n“What have you heard?”"
+    ],
+    "366": [
+      "learn",
+      "prose",
+      "Up close, {target} yields something concrete. {observation}"
+    ],
+    "367": [
+      "learn",
+      "prose",
+      "{npc} watches while you examine {target}. {observation}"
+    ],
+    "368": [
+      "learn",
+      "prose",
+      "{observation} You couldn’t have seen it from where you were standing."
+    ],
+    "369": [
+      "learn",
+      "dialogue",
+      "\n\n“{inference}”"
+    ],
+    "370": [
+      "learn",
+      "dialogue",
+      ""
+    ],
+    "371": [
+      "learn",
+      "dialogue",
+      "\n\n“{test}”"
+    ],
+    "373": [
+      "interface",
+      "prose",
+      "{observation} {npc} looks back at you."
+    ],
+    "374": [
+      "interface",
+      "prose",
+      "Looking specifically for a control pays off. {observation}"
+    ],
+    "375": [
+      "interface",
+      "prose",
+      "You work your way around {target}. {observation}"
+    ],
+    "376": [
+      "interface",
+      "dialogue",
+      "\n\n“{test}”"
+    ],
+    "377": [
+      "interface",
+      "dialogue",
+      "\n\n“{inference}”"
+    ],
+    "379": [
+      "revisit",
+      "prose",
+      "On a second look, {target} matches what you saw before. {observation}"
+    ],
+    "380": [
+      "revisit",
+      "prose",
+      "The details of {target} haven’t changed. {observation}"
+    ],
+    "381": [
+      "revisit",
+      "dialogue",
+      "\n\n“{test}”"
+    ],
+    "382": [
+      "revisit",
+      "dialogue",
+      ""
+    ],
+    "384": [
+      "test",
+      "prose",
+      "You {method}. {effect}"
+    ],
+    "385": [
+      "test",
+      "prose",
+      "{effect} {npc} follows the change all the way back to {problem}."
+    ],
+    "386": [
+      "test",
+      "prose",
+      "{npc} gives you room as you {method}. {effect}"
+    ],
+    "387": [
+      "test",
+      "dialogue",
+      "\n\n“{inference}”"
+    ],
+    "388": [
+      "test",
+      "dialogue",
+      "\n\n“{lead}”"
+    ],
+    "389": [
+      "test",
+      "dialogue",
+      ""
+    ],
+    "391": [
+      "repeat-test",
+      "prose",
+      "The second attempt produces the same result. {effect}"
+    ],
+    "392": [
+      "repeat-test",
+      "prose",
+      "{targetCap} responds as it did before. The result holds for a moment, then fades."
+    ],
+    "393": [
+      "repeat-test",
+      "dialogue",
+      "\n\n“{lead}”"
+    ],
+    "394": [
+      "repeat-test",
+      "dialogue",
+      ""
+    ],
+    "396": [
+      "partial",
+      "prose",
+      "You try to {attempt}. {setback}"
+    ],
+    "397": [
+      "partial",
+      "prose",
+      "{npc} works beside you. {setback}"
+    ],
+    "398": [
+      "partial",
+      "dialogue",
+      "\n\n“{lead}”"
+    ],
+    "399": [
+      "partial",
+      "dialogue",
+      "\n\n“{test}”"
+    ],
+    "401": [
+      "compromised",
+      "prose",
+      "The plan reaches the weak point, then you have to pull back. {warning}"
+    ],
+    "402": [
+      "compromised",
+      "prose",
+      "{npc} stops you just short of committing to the attempt. {warning}"
+    ],
+    "403": [
+      "compromised",
+      "dialogue",
+      "\n\n“{lead}”"
+    ],
+    "404": [
+      "compromised",
+      "dialogue",
+      "\n\n“We can still try it, if someone holds the other side.”"
+    ],
+    "406": [
+      "resolve",
+      "prose",
+      "You {attempt}. {resolution}"
+    ],
+    "407": [
+      "resolve",
+      "prose",
+      "{resolution} {npc} watches long enough to be sure the change holds."
+    ],
+    "408": [
+      "resolve",
+      "dialogue",
+      "\n\n“{handoff}”"
+    ],
+    "409": [
+      "resolve",
+      "dialogue",
+      "\n\n{handoff}"
+    ],
+    "411": [
+      "approach",
+      "prose",
+      "You make your way to {destination}. {arrival}"
+    ],
+    "412": [
+      "approach",
+      "prose",
+      "{npc} follows you as far as {destination}. {arrival}"
+    ],
+    "413": [
+      "approach",
+      "dialogue",
+      ""
+    ],
+    "414": [
+      "approach",
+      "dialogue",
+      "\n\n“{lead}”"
+    ],
+    "416": [
+      "blocked",
+      "prose",
+      "You reach the edge of the way forward. {setback}"
+    ],
+    "417": [
+      "blocked",
+      "prose",
+      "{npc} stops beside you instead of pressing ahead. {setback}"
+    ],
+    "418": [
+      "blocked",
+      "dialogue",
+      "\n\n“{lead}”"
+    ],
+    "419": [
+      "blocked",
+      "dialogue",
+      ""
+    ],
+    "421": [
+      "offer",
+      "prose",
+      "{npc} hears out your offer, then commits to helping. {help}"
+    ],
+    "422": [
+      "offer",
+      "prose",
+      "{npc} takes a moment to weigh what you’re offering. Then {helpLower}"
+    ],
+    "423": [
+      "offer",
+      "dialogue",
+      "\n\n“{lead}”"
+    ],
+    "424": [
+      "offer",
+      "dialogue",
+      ""
+    ],
+    "426": [
+      "agreement",
+      "prose",
+      "{npc} stays with the deal you already made. {help}"
+    ],
+    "427": [
+      "agreement",
+      "prose",
+      "{npc} gives you a quick nod. “You have my word.”"
+    ],
+    "428": [
+      "agreement",
+      "dialogue",
+      ""
+    ],
+    "429": [
+      "agreement",
+      "dialogue",
+      "\n\n“{lead}”"
+    ],
+    "431": [
+      "declare",
+      "prose",
+      "{npc} takes that in. {declaration}"
+    ],
+    "432": [
+      "declare",
+      "prose",
+      "That changes what the two of you know. {declaration}"
+    ],
+    "433": [
+      "declare",
+      "dialogue",
+      ""
+    ],
+    "434": [
+      "declare",
+      "dialogue",
+      "\n\n“{lead}”"
+    ],
+    "436": [
+      "take",
+      "prose",
+      "You take {target}. {npc} keeps watch while you secure it."
+    ],
+    "437": [
+      "take",
+      "prose",
+      "{targetCap} is yours to carry now. {npc} waits for you to be ready."
+    ],
+    "438": [
+      "take",
+      "dialogue",
+      ""
+    ],
+    "439": [
+      "take",
+      "dialogue",
+      "\n\n{hint}"
+    ],
+    "441": [
+      "carried",
+      "prose",
+      "You already have {target} with you."
+    ],
+    "442": [
+      "carried",
+      "prose",
+      "{targetCap} is still among the things you took with you."
+    ],
+    "443": [
+      "carried",
+      "dialogue",
+      ""
+    ],
+    "444": [
+      "carried",
+      "dialogue",
+      "\n\n“{lead}”"
+    ],
+    "446": [
+      "escalate",
+      "prose",
+      "{warning} This time, the change doesn’t go away on its own."
+    ],
+    "447": [
+      "escalate",
+      "prose",
+      "{npc} breaks off in mid-sentence. {warning}"
+    ],
+    "448": [
+      "escalate",
+      "dialogue",
+      "\n\n“{stakes}”"
+    ],
+    "449": [
+      "escalate",
+      "dialogue",
+      "\n\n“{lead}”"
+    ],
+    "451": [
+      "next-signal",
+      "prose",
+      "{continuation} {npc} traces it back to {newProblem}."
+    ],
+    "452": [
+      "next-signal",
+      "prose",
+      "{npc} listens for a second time. {continuation}"
+    ],
+    "453": [
+      "next-signal",
+      "dialogue",
+      "\n\n“{newLead}”"
+    ],
+    "454": [
+      "next-signal",
+      "dialogue",
+      ""
+    ],
+    "456": [
+      "next-witness",
+      "prose",
+      "{continuation} {newLead}"
+    ],
+    "457": [
+      "next-witness",
+      "prose",
+      "{npc} had started to relax. Then {continuationLower} {newLead}"
+    ],
+    "458": [
+      "next-witness",
+      "dialogue",
+      ""
+    ],
+    "459": [
+      "next-witness",
+      "dialogue",
+      "\n\n“{newStakes}”"
+    ],
+    "461": [
+      "next-cost",
+      "prose",
+      "The first problem stays solved. Then {continuationLower}"
+    ],
+    "462": [
+      "next-cost",
+      "prose",
+      "{continuation} {npc} takes a step back to think."
+    ],
+    "463": [
+      "next-cost",
+      "dialogue",
+      "\n\n“{newLead}”"
+    ],
+    "464": [
+      "next-cost",
+      "dialogue",
+      "\n\n“{newStakes}”"
+    ],
+    "466": [
+      "wait",
+      "prose",
+      "You let a moment pass. {status}"
+    ],
+    "467": [
+      "wait",
+      "prose",
+      "{npc} keeps watch while you wait. {status}"
+    ],
+    "468": [
+      "wait",
+      "dialogue",
+      ""
+    ],
+    "469": [
+      "wait",
+      "dialogue",
+      "\n\n“{lead}”"
+    ],
+    "471": [
+      "respond",
+      "prose",
+      "{npc} takes a moment before replying. “{lead}”"
+    ],
+    "472": [
+      "respond",
+      "prose",
+      "{npc} turns back to the problem. {status}"
+    ],
+    "473": [
+      "respond",
+      "prose",
+      "{npc} makes room for you to finish. “{lead}”"
+    ],
+    "474": [
+      "respond",
+      "dialogue",
+      ""
+    ],
+    "475": [
+      "respond",
+      "dialogue",
+      "\n\n“{stakes}”"
+    ],
+    "477": [
+      "arena-opening",
+      "prose",
+      "{arenaLine}"
+    ],
+    "478": [
+      "arena-opening",
+      "dialogue",
+      "\n\n{arenaHint}"
+    ],
+    "480": [
+      "arena-clarify",
+      "prose",
+      "{arenaLine}"
+    ],
+    "481": [
+      "arena-clarify",
+      "dialogue",
+      "\n\n{arenaHint}"
+    ],
+    "483": [
+      "arena-ready",
+      "prose",
+      "{arenaLine}"
+    ],
+    "484": [
+      "arena-ready",
+      "dialogue",
+      "\n\n{arenaHint}"
+    ],
+    "486": [
+      "arena-enter",
+      "prose",
+      "{arenaLine}"
+    ],
+    "487": [
+      "arena-enter",
+      "dialogue",
+      "\n\n{arenaHint}"
+    ],
+    "489": [
+      "arena-light",
+      "prose",
+      "{arenaLine}"
+    ],
+    "490": [
+      "arena-light",
+      "dialogue",
+      "\n\n{arenaHint}"
+    ],
+    "492": [
+      "arena-heavy",
+      "prose",
+      "{arenaLine}"
+    ],
+    "493": [
+      "arena-heavy",
+      "dialogue",
+      "\n\n{arenaHint}"
+    ],
+    "495": [
+      "arena-rival",
+      "prose",
+      "{arenaLine}"
+    ],
+    "496": [
+      "arena-rival",
+      "dialogue",
+      "\n\n{arenaHint}"
+    ],
+    "498": [
+      "arena-counter",
+      "prose",
+      "{arenaLine}"
+    ],
+    "499": [
+      "arena-counter",
+      "dialogue",
+      "\n\n{arenaHint}"
+    ],
+    "501": [
+      "arena-hit",
+      "prose",
+      "{arenaLine}"
+    ],
+    "502": [
+      "arena-hit",
+      "dialogue",
+      "\n\n{arenaHint}"
+    ],
+    "504": [
+      "arena-bite",
+      "prose",
+      "{arenaLine}"
+    ],
+    "505": [
+      "arena-bite",
+      "dialogue",
+      "\n\n{arenaHint}"
+    ],
+    "507": [
+      "arena-repeat-bite",
+      "prose",
+      "{arenaLine}"
+    ],
+    "508": [
+      "arena-repeat-bite",
+      "dialogue",
+      "\n\n{arenaHint}"
+    ],
+    "510": [
+      "arena-boost",
+      "prose",
+      "{arenaLine}"
+    ],
+    "511": [
+      "arena-boost",
+      "dialogue",
+      "\n\n{arenaHint}"
+    ],
+    "513": [
+      "arena-feedback",
+      "prose",
+      "{arenaLine}"
+    ],
+    "514": [
+      "arena-feedback",
+      "dialogue",
+      "\n\n{arenaHint}"
+    ],
+    "516": [
+      "arena-axe",
+      "prose",
+      "{arenaLine}"
+    ],
+    "517": [
+      "arena-axe",
+      "dialogue",
+      "\n\n{arenaHint}"
+    ],
+    "519": [
+      "arena-reverse",
+      "prose",
+      "{arenaLine}"
+    ],
+    "520": [
+      "arena-reverse",
+      "dialogue",
+      "\n\n{arenaHint}"
+    ],
+    "522": [
+      "arena-reverse-unknown",
+      "prose",
+      "{arenaLine}"
+    ],
+    "523": [
+      "arena-reverse-unknown",
+      "dialogue",
+      "\n\n{arenaHint}"
+    ],
+    "525": [
+      "arena-read",
+      "prose",
+      "{arenaLine}"
+    ],
+    "526": [
+      "arena-read",
+      "dialogue",
+      "\n\n{arenaHint}"
+    ],
+    "528": [
+      "arena-tactic",
+      "prose",
+      "{arenaLine}"
+    ],
+    "529": [
+      "arena-tactic",
+      "dialogue",
+      "\n\n{arenaHint}"
+    ],
+    "531": [
+      "arena-talk",
+      "prose",
+      "{arenaLine}"
+    ],
+    "532": [
+      "arena-talk",
+      "dialogue",
+      "\n\n{arenaHint}"
+    ],
+    "534": [
+      "arena-yield",
+      "prose",
+      "{arenaLine}"
+    ],
+    "535": [
+      "arena-yield",
+      "dialogue",
+      "\n\n{arenaHint}"
+    ],
+    "537": [
+      "arena-ended",
+      "prose",
+      "{arenaLine}"
+    ],
+    "538": [
+      "arena-ended",
+      "dialogue",
+      "\n\n{arenaHint}"
+    ],
+    "540": [
+      "arena-win",
+      "prose",
+      "{arenaLine}"
+    ],
+    "541": [
+      "arena-win",
+      "dialogue",
+      "\n\n{arenaHint}"
+    ],
+    "543": [
+      "open-grounded",
+      "prose",
+      "{premise}\n\n{grounded}"
+    ],
+    "544": [
+      "open-grounded",
+      "dialogue",
+      "\n\nWhat do you do?"
+    ],
+    "545": [
+      "open-grounded",
+      "dialogue",
+      ""
+    ],
+    "547": [
+      "respond-grounded",
+      "prose",
+      "{grounded}"
+    ],
+    "548": [
+      "respond-grounded",
+      "dialogue",
+      ""
+    ],
+    "550": [
+      "clarify-action",
+      "prose",
+      "{clarification}"
+    ],
+    "551": [
+      "clarify-action",
+      "dialogue",
+      ""
+    ],
+    "553": [
+      "pursuit-advice",
+      "prose",
+      "{pursuitLine}"
+    ],
+    "554": [
+      "pursuit-advice",
+      "dialogue",
+      "\n\n{pursuitHint}"
+    ],
+    "556": [
+      "pursuit-focus",
+      "prose",
+      "{pursuitLine}"
+    ],
+    "557": [
+      "pursuit-focus",
+      "dialogue",
+      "\n\n{pursuitHint}"
+    ],
+    "559": [
+      "pursuit-source",
+      "prose",
+      "{pursuitLine}"
+    ],
+    "560": [
+      "pursuit-source",
+      "dialogue",
+      "\n\n{pursuitHint}"
+    ],
+    "562": [
+      "pursuit-inspect",
+      "prose",
+      "{pursuitLine}"
+    ],
+    "563": [
+      "pursuit-inspect",
+      "dialogue",
+      "\n\n{pursuitHint}"
+    ],
+    "565": [
+      "pursuit-obtain",
+      "prose",
+      "{pursuitLine}"
+    ],
+    "566": [
+      "pursuit-obtain",
+      "dialogue",
+      "\n\n{pursuitHint}"
+    ],
+    "568": [
+      "pursuit-use",
+      "prose",
+      "{pursuitLine}"
+    ],
+    "569": [
+      "pursuit-use",
+      "dialogue",
+      "\n\n{pursuitHint}"
+    ],
+    "571": [
+      "check-yes",
+      "prose",
+      "{checkBody}"
+    ],
+    "572": [
+      "check-yes",
+      "dialogue",
+      ""
+    ],
+    "574": [
+      "check-no",
+      "prose",
+      "{checkBody}"
+    ],
+    "575": [
+      "check-no",
+      "dialogue",
+      ""
+    ],
+    "577": [
+      "check-unknown",
+      "prose",
+      "{checkBody}"
+    ],
+    "578": [
+      "check-unknown",
+      "dialogue",
+      ""
+    ],
+    "580": [
+      "check-yes",
+      "prose",
+      "{checkBody}"
+    ],
+    "581": [
+      "check-yes",
+      "dialogue",
+      ""
+    ],
+    "583": [
+      "check-no",
+      "prose",
+      "{checkBody}"
+    ],
+    "584": [
+      "check-no",
+      "dialogue",
+      ""
+    ],
+    "586": [
+      "check-number-known",
+      "prose",
+      "{checkBody}"
+    ],
+    "587": [
+      "check-number-known",
+      "dialogue",
+      ""
+    ],
+    "589": [
+      "check-name-known",
+      "prose",
+      "{checkBody}"
+    ],
+    "590": [
+      "check-name-known",
+      "dialogue",
+      ""
+    ],
+    "592": [
+      "check-information",
+      "prose",
+      "{checkBody}"
+    ],
+    "593": [
+      "check-information",
+      "dialogue",
+      ""
+    ],
+    "595": [
+      "check-action-success",
+      "prose",
+      "{checkBody}"
+    ],
+    "596": [
+      "check-action-success",
+      "dialogue",
+      ""
+    ],
+    "598": [
+      "check-action-success",
+      "prose",
+      "{checkBody}"
+    ],
+    "599": [
+      "check-action-success",
+      "dialogue",
+      ""
+    ],
+    "601": [
+      "check-action-partial",
+      "prose",
+      "{checkBody}"
+    ],
+    "602": [
+      "check-action-partial",
+      "dialogue",
+      ""
+    ],
+    "604": [
+      "check-action-failure",
+      "prose",
+      "{checkBody}"
+    ],
+    "605": [
+      "check-action-failure",
+      "dialogue",
+      ""
+    ],
+    "607": [
+      "check-action-failure",
+      "prose",
+      "{checkBody}"
+    ],
+    "608": [
+      "check-action-failure",
+      "dialogue",
+      ""
+    ],
+    "610": [
+      "check-action-failure",
+      "prose",
+      "{checkBody}"
+    ],
+    "611": [
+      "check-action-failure",
+      "dialogue",
+      ""
+    ],
+    "613": [
+      "check-number-0",
+      "prose",
+      "{checkBody}"
+    ],
+    "614": [
+      "check-number-0",
+      "dialogue",
+      ""
+    ],
+    "616": [
+      "check-name-0",
+      "prose",
+      "{checkBody}"
+    ],
+    "617": [
+      "check-name-0",
+      "dialogue",
+      ""
+    ],
+    "619": [
+      "check-number-1",
+      "prose",
+      "{checkBody}"
+    ],
+    "620": [
+      "check-number-1",
+      "dialogue",
+      ""
+    ],
+    "622": [
+      "check-name-1",
+      "prose",
+      "{checkBody}"
+    ],
+    "623": [
+      "check-name-1",
+      "dialogue",
+      ""
+    ],
+    "625": [
+      "check-number-2",
+      "prose",
+      "{checkBody}"
+    ],
+    "626": [
+      "check-number-2",
+      "dialogue",
+      ""
+    ],
+    "628": [
+      "check-name-2",
+      "prose",
+      "{checkBody}"
+    ],
+    "629": [
+      "check-name-2",
+      "dialogue",
+      ""
+    ],
+    "631": [
+      "check-number-3",
+      "prose",
+      "{checkBody}"
+    ],
+    "632": [
+      "check-number-3",
+      "dialogue",
+      ""
+    ],
+    "634": [
+      "check-name-3",
+      "prose",
+      "{checkBody}"
+    ],
+    "635": [
+      "check-name-3",
+      "dialogue",
+      ""
+    ],
+    "637": [
+      "check-number-4",
+      "prose",
+      "{checkBody}"
+    ],
+    "638": [
+      "check-number-4",
+      "dialogue",
+      ""
+    ],
+    "640": [
+      "check-name-4",
+      "prose",
+      "{checkBody}"
+    ],
+    "641": [
+      "check-name-4",
+      "dialogue",
+      ""
+    ],
+    "643": [
+      "check-number-5",
+      "prose",
+      "{checkBody}"
+    ],
+    "644": [
+      "check-number-5",
+      "dialogue",
+      ""
+    ],
+    "646": [
+      "check-name-5",
+      "prose",
+      "{checkBody}"
+    ],
+    "647": [
+      "check-name-5",
+      "dialogue",
+      ""
+    ]
+  }
+}

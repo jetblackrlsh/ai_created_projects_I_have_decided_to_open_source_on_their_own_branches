@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Fableglass</title>
+  <link rel="stylesheet" href="/scene.css">
+  <script type="module" src="/scene.js"></script>
+</head>
+<body>
+  <aside>
+    <div class="identity">Fableglass<span>Local game master</span></div>
+    <div class="story-library">
+      <button id="new-story" type="button">New story</button>
+      <nav aria-label="Your stories" id="stories"></nav>
+    </div>
+    <div class="engine">
+      <div id="status" role="status">Starting CPU model</div>
+      <button id="stop" class="link" type="button">Stop model</button>
+    </div>
+  </aside>
+  <main>
+    <header>
+      <div>
+        <p id="chapter" class="genre" hidden></p>
+        <h1 id="title">Start a story</h1>
+        <p id="location" class="description" hidden></p>
+      </div>
+      <div class="actions">
+        <button id="rename" class="outline" type="button" hidden>Rename</button>
+        <button id="undo" class="outline" type="button" hidden>Undo turn</button>
+        <button id="view-memory" class="outline" type="button" hidden>Story notes</button>
+        <button id="replay" class="outline" type="button" hidden>Replay story</button>
+        <button id="delete-story" class="outline" type="button" hidden>Delete story</button>
+      </div>
+    </header>
+    <section id="story" class="story" role="log" aria-label="Story"></section>
+    <form id="composer">
+      <div id="notice" role="status" hidden></div>
+      <textarea id="prompt" rows="3" maxlength="4000" aria-label="Story opening" placeholder="Describe the opening in your own words. Where are you, who’s with you, and what’s happening?"></textarea>
+      <div class="send-row">
+        <span>Enter to send · Shift+Enter for a new line</span>
+        <button id="send" type="submit" disabled>Begin story</button>
+      </div>
+    </form>
+  </main>
+  <dialog id="memory" aria-labelledby="memory-title">
+    <div class="memory-inner">
+      <div class="editor-heading">
+        <h2 id="memory-title">Story notes</h2>
+        <button id="close-memory" class="outline" type="button">Close</button>
+      </div>
+      <p id="memory-summary"></p>
+      <ul id="memory-facts"></ul>
+    </div>
+  </dialog>
+  <dialog id="confirm-delete" aria-labelledby="delete-title">
+    <form method="dialog" class="memory-inner">
+      <div class="editor-heading"><h2 id="delete-title">Delete story?</h2></div>
+      <p id="delete-description"></p>
+      <div class="actions">
+        <button class="outline" value="cancel" autofocus>Cancel</button>
+        <button class="outline" value="delete">Delete</button>
+      </div>
+    </form>
+  </dialog>
+</body>
+</html>

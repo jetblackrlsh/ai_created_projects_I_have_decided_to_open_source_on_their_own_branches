@@ -1,0 +1,59 @@
+{
+  "name": "Fableglass direct questions and remembered references",
+  "endpoint": {"path": "/api/turn"},
+  "cases": [
+    {
+      "id": "named-refuge",
+      "group": "location",
+      "steps": [
+        {"id": "opening", "request": {"premise": "At a riverside depot with Inez, we are helping surveyors move away from a storm. Willow Hall is a safe shelter."}, "assert": [
+          {"path": "/world/npc", "op": "eq", "value": "Inez"}
+        ]},
+        {"id": "destination", "request": {"state": {"$ref": "/previous/world"}, "message": "Where can I take the surveyors to keep them safe?"}, "assert": [
+          {"path": "/check/kind", "op": "eq", "value": "place"},
+          {"path": "/check/value", "op": "eq", "value": "Willow Hall"},
+          {"path": "/world/place", "op": "eq", "value": {"$ref": "/steps/opening/world/place"}}
+        ]},
+        {"id": "paraphrase", "request": {"state": {"$ref": "/previous/world"}, "message": "Where should we evacuate the surveyors?"}, "assert": [
+          {"path": "/check/value", "op": "eq", "value": {"$ref": "/steps/destination/check/value"}}
+        ]},
+        {"id": "follow-through", "request": {"state": {"$ref": "/previous/world"}, "message": "I lead them there."}, "assert": [
+          {"path": "/world/place", "op": "eq", "value": "Willow Hall"},
+          {"path": "/check/outcome", "op": "eq", "value": "success"}
+        ]}
+      ]
+    },
+    {
+      "id": "station-cafe",
+      "group": "facts-and-checks",
+      "steps": [
+        {"id": "opening", "request": {"premise": "At a station café with Tessa. Vera Dale runs the café. There are three lamps by the door. The brass gate is locked."}, "assert": [
+          {"path": "/world/npc", "op": "eq", "value": "Tessa"}
+        ]},
+        {"id": "person", "request": {"state": {"$ref": "/previous/world"}, "message": "Who runs the café?"}, "assert": [
+          {"path": "/check/kind", "op": "eq", "value": "person"},
+          {"path": "/check/value", "op": "eq", "value": "Vera Dale"}
+        ]},
+        {"id": "quantity", "request": {"state": {"$ref": "/previous/world"}, "message": "How many lamps are there?"}, "assert": [
+          {"path": "/check/value", "op": "eq", "value": 3},
+          {"path": "/reply", "op": "regex", "value": "^3"}
+        ]},
+        {"id": "yes-no", "request": {"state": {"$ref": "/previous/world"}, "message": "Is the brass gate open, yes or no?"}, "assert": [
+          {"path": "/check/value", "op": "eq", "value": false},
+          {"path": "/reply", "op": "regex", "value": "^No\\."},
+          {"path": "/world/pressure", "op": "eq", "value": 0}
+        ]},
+        {"id": "attempt", "request": {"state": {"$ref": "/previous/world"}, "message": "I try to open the brass gate."}, "assert": [
+          {"path": "/check/outcome", "op": "eq", "value": "failure"}
+        ]},
+        {"id": "take", "request": {"state": {"$ref": "/previous/world"}, "message": "I pick up a violet umbrella."}, "assert": [
+          {"path": "/check/outcome", "op": "eq", "value": "success"}
+        ]},
+        {"id": "object", "request": {"state": {"$ref": "/previous/world"}, "message": "What did I pick up?"}, "assert": [
+          {"path": "/check/type", "op": "eq", "value": "information"},
+          {"path": "/reply", "op": "regex", "value": "(?i)violet umbrella"}
+        ]}
+      ]
+    }
+  ]
+}

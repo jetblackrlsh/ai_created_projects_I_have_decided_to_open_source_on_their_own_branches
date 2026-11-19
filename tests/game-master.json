@@ -1,0 +1,967 @@
+{
+  "name": "Game Master Emulator — synthetic cross-genre evaluation",
+  "endpoint": {
+    "path": "/api/turn"
+  },
+  "cases": [
+    {
+      "id": "benign-sci-fi-props",
+      "group": "grounding",
+      "steps": [
+        {
+          "id": "opening",
+          "request": {
+            "premise": "At a quiet tea shop with a friendly robot, I watch the rain."
+          },
+          "assert": [
+            {
+              "path": "/world/family",
+              "op": "eq",
+              "value": "grounded"
+            },
+            {
+              "path": "/reply",
+              "op": "not_regex",
+              "value": "(?i)intermittent|surge|safeguard|instability"
+            }
+          ]
+        },
+        {
+          "id": "status",
+          "request": {
+            "message": "What is happening?",
+            "state": {
+              "$ref": "/previous/world"
+            }
+          },
+          "assert": [
+            {
+              "path": "/reply",
+              "op": "not_regex",
+              "value": "(?i)intermittent|surge|safeguard|instability"
+            },
+            {
+              "path": "/world/pressure",
+              "op": "eq",
+              "value": 0
+            }
+          ]
+        },
+        {
+          "id": "take",
+          "request": {
+            "message": "I pick up a yellow umbrella.",
+            "state": {
+              "$ref": "/previous/world"
+            }
+          },
+          "assert": [
+            {
+              "path": "/event",
+              "op": "eq",
+              "value": "take"
+            },
+            {
+              "path": "/world/items/0/carried",
+              "op": "eq",
+              "value": true
+            },
+            {
+              "path": "/reply",
+              "op": "regex",
+              "value": "yellow umbrella"
+            }
+          ]
+        },
+        {
+          "id": "recall",
+          "request": {
+            "message": "What did we learn?",
+            "state": {
+              "$ref": "/previous/world"
+            }
+          },
+          "assert": [
+            {
+              "path": "/event",
+              "op": "eq",
+              "value": "history"
+            },
+            {
+              "path": "/reply",
+              "op": "regex",
+              "value": "yellow umbrella"
+            },
+            {
+              "path": "/reply",
+              "op": "not_regex",
+              "value": "(?i)intermittent|surge|safeguard|instability"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "flooded-ferry-stairs",
+      "group": "physical-obstacle",
+      "steps": [
+        {
+          "id": "opening",
+          "request": {
+            "premise": "At a flooded ferry dock with Asha, I have a long rope. A collapsed stairwell blocks the way. We need to cross the stairwell."
+          },
+          "assert": [
+            {
+              "path": "/world/family",
+              "op": "eq",
+              "value": "peril"
+            }
+          ]
+        },
+        {
+          "id": "premature-crossing",
+          "request": {
+            "message": "I walk through the stairwell.",
+            "state": {
+              "$ref": "/previous/world"
+            }
+          },
+          "assert": [
+            {
+              "path": "/event",
+              "op": "eq",
+              "value": "blocked"
+            },
+            {
+              "path": "/world/resolved",
+              "op": "eq",
+              "value": false
+            }
+          ]
+        },
+        {
+          "id": "inspect",
+          "request": {
+            "message": "I inspect the rope.",
+            "state": {
+              "$ref": "/previous/world"
+            }
+          },
+          "assert": [
+            {
+              "path": "/event",
+              "op": "eq",
+              "value": "learn"
+            },
+            {
+              "path": "/world/progress",
+              "op": "eq",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "id": "supported-solution",
+          "request": {
+            "message": "I tie the rope across the collapsed stairwell.",
+            "state": {
+              "$ref": "/previous/world"
+            }
+          },
+          "assert": [
+            {
+              "path": "/event",
+              "op": "eq",
+              "value": "resolve"
+            },
+            {
+              "path": "/world/resolved",
+              "op": "eq",
+              "value": true
+            }
+          ]
+        },
+        {
+          "id": "after",
+          "request": {
+            "message": "What happens now?",
+            "state": {
+              "$ref": "/previous/world"
+            }
+          },
+          "assert": [
+            {
+              "path": "/event",
+              "op": "one_of",
+              "value": [
+                "next-cost",
+                "next-witness"
+              ]
+            },
+            {
+              "path": "/world/chapter",
+              "op": "eq",
+              "value": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "disputed-record",
+      "group": "social-conflict",
+      "steps": [
+        {
+          "id": "opening",
+          "request": {
+            "premise": "At the council hall with Anika, a guard refuses to accept our account. I have a sealed letter. We need to prove who altered the record."
+          },
+          "assert": [
+            {
+              "path": "/world/family",
+              "op": "eq",
+              "value": "social"
+            }
+          ]
+        },
+        {
+          "id": "cooperation",
+          "request": {
+            "message": "I offer to bring a neutral witness.",
+            "state": {
+              "$ref": "/previous/world"
+            }
+          },
+          "assert": [
+            {
+              "path": "/event",
+              "op": "eq",
+              "value": "offer"
+            },
+            {
+              "path": "/world/trust",
+              "op": "eq",
+              "value": true
+            }
+          ]
+        },
+        {
+          "id": "inspect",
+          "request": {
+            "message": "I examine the sealed letter.",
+            "state": {
+              "$ref": "/previous/world"
+            }
+          },
+          "assert": [
+            {
+              "path": "/event",
+              "op": "eq",
+              "value": "learn"
+            },
+            {
+              "path": "/reply",
+              "op": "regex",
+              "value": "letter"
+            }
+          ]
+        },
+        {
+          "id": "check-evidence",
+          "request": {
+            "message": "I test the sealed letter.",
+            "state": {
+              "$ref": "/previous/world"
+            }
+          },
+          "assert": [
+            {
+              "path": "/event",
+              "op": "eq",
+              "value": "test"
+            },
+            {
+              "path": "/world/progress",
+              "op": "eq",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "id": "resolve",
+          "request": {
+            "message": "I prove the sealed letter belongs to the record keeper.",
+            "state": {
+              "$ref": "/previous/world"
+            }
+          },
+          "assert": [
+            {
+              "path": "/event",
+              "op": "eq",
+              "value": "resolve"
+            },
+            {
+              "path": "/world/resolved",
+              "op": "eq",
+              "value": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "vanished-gallery-ledger",
+      "group": "investigation",
+      "steps": [
+        {
+          "id": "opening",
+          "request": {
+            "premise": "At the gallery with Morgan, the copper ledger vanished. I am carrying a signed receipt."
+          },
+          "assert": [
+            {
+              "path": "/world/family",
+              "op": "eq",
+              "value": "mystery"
+            }
+          ]
+        },
+        {
+          "id": "significant-fact",
+          "request": {
+            "message": "I notice that Mira filed the receipt behind the blue painting.",
+            "state": {
+              "$ref": "/previous/world"
+            }
+          },
+          "assert": [
+            {
+              "path": "/event",
+              "op": "eq",
+              "value": "declare"
+            },
+            {
+              "path": "/reply",
+              "op": "regex",
+              "value": "blue painting"
+            }
+          ]
+        },
+        {
+          "id": "different-action",
+          "request": {
+            "message": "I inspect the signed receipt.",
+            "state": {
+              "$ref": "/previous/world"
+            }
+          },
+          "assert": [
+            {
+              "path": "/event",
+              "op": "eq",
+              "value": "learn"
+            },
+            {
+              "path": "/reply",
+              "op": "regex",
+              "value": "signed receipt"
+            }
+          ]
+        },
+        {
+          "id": "targeted-recall",
+          "request": {
+            "message": "Tell me about the blue painting.",
+            "state": {
+              "$ref": "/previous/world"
+            }
+          },
+          "assert": [
+            {
+              "path": "/event",
+              "op": "eq",
+              "value": "history"
+            },
+            {
+              "path": "/reply",
+              "op": "regex",
+              "value": "Mira filed the receipt"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "jammed-lighthouse-radio",
+      "group": "technical-problem",
+      "steps": [
+        {
+          "id": "opening",
+          "request": {
+            "premise": "At a lighthouse with Ellis, I have a jumper wire. A broken radio is preventing contact. We need to fix the radio."
+          },
+          "assert": [
+            {
+              "path": "/world/family",
+              "op": "eq",
+              "value": "tech"
+            }
+          ]
+        },
+        {
+          "id": "inspect",
+          "request": {
+            "message": "The fog is closing in. I inspect the jumper wire.",
+            "state": {
+              "$ref": "/previous/world"
+            }
+          },
+          "assert": [
+            {
+              "path": "/event",
+              "op": "eq",
+              "value": "learn"
+            },
+            {
+              "path": "/reply",
+              "op": "regex",
+              "value": "jumper wire"
+            }
+          ]
+        },
+        {
+          "id": "test",
+          "request": {
+            "message": "I test the jumper wire.",
+            "state": {
+              "$ref": "/previous/world"
+            }
+          },
+          "assert": [
+            {
+              "path": "/event",
+              "op": "eq",
+              "value": "test"
+            },
+            {
+              "path": "/world/progress",
+              "op": "eq",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "id": "repair",
+          "request": {
+            "message": "I use the jumper wire to bridge the contacts on the broken radio.",
+            "state": {
+              "$ref": "/previous/world"
+            }
+          },
+          "assert": [
+            {
+              "path": "/event",
+              "op": "eq",
+              "value": "resolve"
+            },
+            {
+              "path": "/world/resolved",
+              "op": "eq",
+              "value": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "festival-quest",
+      "group": "objective-tracking",
+      "steps": [
+        {
+          "id": "opening",
+          "request": {
+            "premise": "The festival cannot begin until the bell returns. We need a bronze bell to open the ceremony. What should we do, Lina?"
+          },
+          "assert": [
+            {
+              "path": "/world/npc",
+              "op": "eq",
+              "value": "Lina"
+            },
+            {
+              "path": "/world/pursuit/item",
+              "op": "eq",
+              "value": "a bronze bell"
+            }
+          ]
+        },
+        {
+          "id": "advice",
+          "request": {
+            "message": "I ask Lina for guidance.",
+            "state": {
+              "$ref": "/previous/world"
+            }
+          },
+          "assert": [
+            {
+              "path": "/event",
+              "op": "eq",
+              "value": "pursuit-advice"
+            },
+            {
+              "path": "/reply",
+              "op": "regex",
+              "value": "bronze bell"
+            }
+          ]
+        },
+        {
+          "id": "short-answer",
+          "request": {
+            "message": "A bronze bell.",
+            "state": {
+              "$ref": "/previous/world"
+            }
+          },
+          "assert": [
+            {
+              "path": "/event",
+              "op": "eq",
+              "value": "pursuit-focus"
+            },
+            {
+              "path": "/world/pursuit/confirmed",
+              "op": "eq",
+              "value": true
+            }
+          ]
+        },
+        {
+          "id": "search",
+          "request": {
+            "message": "I leave Lina at the square and go find a market stall that sells bells.",
+            "state": {
+              "$ref": "/previous/world"
+            }
+          },
+          "assert": [
+            {
+              "path": "/event",
+              "op": "eq",
+              "value": "pursuit-source"
+            },
+            {
+              "path": "/world/place",
+              "op": "eq",
+              "value": "a market stall that sells bells"
+            }
+          ]
+        },
+        {
+          "id": "inspect",
+          "request": {
+            "message": "I examine the bronze bell.",
+            "state": {
+              "$ref": "/previous/world"
+            }
+          },
+          "assert": [
+            {
+              "path": "/event",
+              "op": "eq",
+              "value": "pursuit-inspect"
+            },
+            {
+              "path": "/world/pursuit/stage",
+              "op": "eq",
+              "value": "verified"
+            }
+          ]
+        },
+        {
+          "id": "obtain",
+          "request": {
+            "message": "I buy the bronze bell.",
+            "state": {
+              "$ref": "/previous/world"
+            }
+          },
+          "assert": [
+            {
+              "path": "/event",
+              "op": "eq",
+              "value": "pursuit-obtain"
+            },
+            {
+              "path": "/world/pursuit/stage",
+              "op": "eq",
+              "value": "held"
+            }
+          ]
+        },
+        {
+          "id": "use",
+          "request": {
+            "message": "I use the bronze bell.",
+            "state": {
+              "$ref": "/previous/world"
+            }
+          },
+          "assert": [
+            {
+              "path": "/event",
+              "op": "eq",
+              "value": "pursuit-use"
+            },
+            {
+              "path": "/world/pursuit/stage",
+              "op": "eq",
+              "value": "used"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "stranded-travelers",
+      "group": "objective-tracking",
+      "steps": [
+        {
+          "id": "opening",
+          "request": {
+            "premise": "At an empty shelter with Noel, we need to find a rail pass to get home."
+          },
+          "assert": [
+            {
+              "path": "/world/pursuit/item",
+              "op": "eq",
+              "value": "a rail pass"
+            }
+          ]
+        },
+        {
+          "id": "premature-use",
+          "request": {
+            "message": "I use the rail pass.",
+            "state": {
+              "$ref": "/previous/world"
+            }
+          },
+          "assert": [
+            {
+              "path": "/event",
+              "op": "eq",
+              "value": "pursuit-use"
+            },
+            {
+              "path": "/world/pursuit/stage",
+              "op": "eq",
+              "value": "wanted"
+            }
+          ]
+        },
+        {
+          "id": "seek",
+          "request": {
+            "message": "Where can we find the rail pass?",
+            "state": {
+              "$ref": "/previous/world"
+            }
+          },
+          "assert": [
+            {
+              "path": "/event",
+              "op": "one_of",
+              "value": [
+                "pursuit-advice",
+                "pursuit-focus"
+              ]
+            },
+            {
+              "path": "/reply",
+              "op": "regex",
+              "value": "rail pass"
+            }
+          ]
+        },
+        {
+          "id": "travel",
+          "request": {
+            "message": "I go to the ticket office at the station and ask about a rail pass.",
+            "state": {
+              "$ref": "/previous/world"
+            }
+          },
+          "assert": [
+            {
+              "path": "/event",
+              "op": "eq",
+              "value": "pursuit-source"
+            },
+            {
+              "path": "/world/place",
+              "op": "eq",
+              "value": "the ticket office at the station"
+            }
+          ]
+        },
+        {
+          "id": "obtain",
+          "request": {
+            "message": "I ask for the rail pass.",
+            "state": {
+              "$ref": "/previous/world"
+            }
+          },
+          "assert": [
+            {
+              "path": "/event",
+              "op": "eq",
+              "value": "pursuit-obtain"
+            },
+            {
+              "path": "/world/items/0/carried",
+              "op": "eq",
+              "value": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "unrecognized-input-is-not-idling",
+      "group": "agency",
+      "steps": [
+        {
+          "id": "opening",
+          "request": {
+            "premise": "At a storm-battered dock with Vera, a collapsed staircase is blocking the landing."
+          },
+          "assert": []
+        },
+        {
+          "id": "unknown-1",
+          "request": {
+            "message": "The color of tomorrow is sideways.",
+            "state": {
+              "$ref": "/previous/world"
+            }
+          },
+          "assert": [
+            {
+              "path": "/event",
+              "op": "eq",
+              "value": "clarify-action"
+            },
+            {
+              "path": "/world/pressure",
+              "op": "eq",
+              "value": 0
+            }
+          ]
+        },
+        {
+          "id": "unknown-2",
+          "request": {
+            "message": "Squeakish mirth becomes a tumbrel.",
+            "state": {
+              "$ref": "/previous/world"
+            }
+          },
+          "assert": [
+            {
+              "path": "/event",
+              "op": "eq",
+              "value": "clarify-action"
+            },
+            {
+              "path": "/world/pressure",
+              "op": "eq",
+              "value": 0
+            },
+            {
+              "path": "/reply",
+              "op": "ne",
+              "value": {
+                "$ref": "/steps/unknown-1/reply"
+              }
+            }
+          ]
+        },
+        {
+          "id": "unknown-3",
+          "request": {
+            "message": "Difficult shades of gibbous rust.",
+            "state": {
+              "$ref": "/previous/world"
+            }
+          },
+          "assert": [
+            {
+              "path": "/event",
+              "op": "eq",
+              "value": "clarify-action"
+            },
+            {
+              "path": "/world/pressure",
+              "op": "eq",
+              "value": 0
+            }
+          ]
+        },
+        {
+          "id": "act-after",
+          "request": {
+            "message": "I inspect the nearest plank.",
+            "state": {
+              "$ref": "/previous/world"
+            }
+          },
+          "assert": [
+            {
+              "path": "/event",
+              "op": "eq",
+              "value": "learn"
+            },
+            {
+              "path": "/reply",
+              "op": "regex",
+              "value": "plank"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "duel-with-a-clear-ending",
+      "group": "encounter",
+      "steps": [
+        {
+          "id": "opening",
+          "request": {
+            "premise": "At a training hall with Pip, I am about to enter a fighting arena against Rowan."
+          },
+          "assert": [
+            {
+              "path": "/world/family",
+              "op": "eq",
+              "value": "arena"
+            },
+            {
+              "path": "/reply",
+              "op": "not_regex",
+              "value": "(?i)intermittent|surge|safeguard|instability"
+            }
+          ]
+        },
+        {
+          "id": "enter",
+          "request": {
+            "message": "I enter the arena.",
+            "state": {
+              "$ref": "/previous/world"
+            }
+          },
+          "assert": [
+            {
+              "path": "/event",
+              "op": "eq",
+              "value": "arena-enter"
+            },
+            {
+              "path": "/world/arena/phase",
+              "op": "eq",
+              "value": "fight"
+            }
+          ]
+        },
+        {
+          "id": "tactic",
+          "request": {
+            "message": "I freeze the floor under their feet.",
+            "state": {
+              "$ref": "/previous/world"
+            }
+          },
+          "assert": [
+            {
+              "path": "/event",
+              "op": "eq",
+              "value": "arena-tactic"
+            },
+            {
+              "path": "/world/arena/exposed",
+              "op": "eq",
+              "value": true
+            }
+          ]
+        },
+        {
+          "id": "strike",
+          "request": {
+            "message": "I fire a flash of energy at Rowan.",
+            "state": {
+              "$ref": "/previous/world"
+            }
+          },
+          "assert": [
+            {
+              "path": "/event",
+              "op": "eq",
+              "value": "arena-hit"
+            },
+            {
+              "path": "/world/arena/guard",
+              "op": "eq",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "id": "surrender",
+          "request": {
+            "message": "I yield.",
+            "state": {
+              "$ref": "/previous/world"
+            }
+          },
+          "assert": [
+            {
+              "path": "/event",
+              "op": "eq",
+              "value": "arena-yield"
+            },
+            {
+              "path": "/world/arena/phase",
+              "op": "eq",
+              "value": "finished"
+            }
+          ]
+        },
+        {
+          "id": "leave",
+          "request": {
+            "message": "I leave the arena.",
+            "state": {
+              "$ref": "/previous/world"
+            }
+          },
+          "assert": [
+            {
+              "path": "/event",
+              "op": "eq",
+              "value": "arena-ended"
+            },
+            {
+              "path": "/world/place",
+              "op": "eq",
+              "value": "the exit corridor"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

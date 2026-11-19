@@ -1,0 +1,319 @@
+{
+  "endpoint": {
+    "path": "/completion"
+  },
+  "cases": [
+    {
+      "id": "check-yes",
+      "steps": [
+        {
+          "id": "completion",
+          "request": {
+            "prompt": [
+              1,
+              271,
+              273,
+              281,
+              259
+            ],
+            "temperature": 0,
+            "return_tokens": true,
+            "n_predict": 6,
+            "cache_prompt": false
+          },
+          "assert": [
+            {
+              "path": "/tokens/0",
+              "op": "one_of",
+              "value": [
+                570,
+                579
+              ]
+            },
+            {
+              "path": "/tokens/3",
+              "op": "eq",
+              "value": 2
+            },
+            {
+              "path": "/tokens/4",
+              "op": "missing"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "check-no",
+      "steps": [
+        {
+          "id": "completion",
+          "request": {
+            "prompt": [
+              1,
+              271,
+              273,
+              275,
+              259
+            ],
+            "temperature": 0,
+            "return_tokens": true,
+            "n_predict": 6,
+            "cache_prompt": false
+          },
+          "assert": [
+            {
+              "path": "/tokens/0",
+              "op": "one_of",
+              "value": [
+                573,
+                582
+              ]
+            },
+            {
+              "path": "/tokens/3",
+              "op": "eq",
+              "value": 2
+            },
+            {
+              "path": "/tokens/4",
+              "op": "missing"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "check-unknown",
+      "steps": [
+        {
+          "id": "completion",
+          "request": {
+            "prompt": [
+              1,
+              271,
+              259
+            ],
+            "temperature": 0,
+            "return_tokens": true,
+            "n_predict": 6,
+            "cache_prompt": false
+          },
+          "assert": [
+            {
+              "path": "/tokens/0",
+              "op": "one_of",
+              "value": [
+                576
+              ]
+            },
+            {
+              "path": "/tokens/3",
+              "op": "eq",
+              "value": 2
+            },
+            {
+              "path": "/tokens/4",
+              "op": "missing"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "check-number-known",
+      "steps": [
+        {
+          "id": "completion",
+          "request": {
+            "prompt": [
+              1,
+              276,
+              273,
+              259
+            ],
+            "temperature": 0,
+            "return_tokens": true,
+            "n_predict": 6,
+            "cache_prompt": false
+          },
+          "assert": [
+            {
+              "path": "/tokens/0",
+              "op": "one_of",
+              "value": [
+                585
+              ]
+            },
+            {
+              "path": "/tokens/3",
+              "op": "eq",
+              "value": 2
+            },
+            {
+              "path": "/tokens/4",
+              "op": "missing"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "check-name-known",
+      "steps": [
+        {
+          "id": "completion",
+          "request": {
+            "prompt": [
+              1,
+              274,
+              273,
+              259
+            ],
+            "temperature": 0,
+            "return_tokens": true,
+            "n_predict": 6,
+            "cache_prompt": false
+          },
+          "assert": [
+            {
+              "path": "/tokens/0",
+              "op": "one_of",
+              "value": [
+                588
+              ]
+            },
+            {
+              "path": "/tokens/3",
+              "op": "eq",
+              "value": 2
+            },
+            {
+              "path": "/tokens/4",
+              "op": "missing"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "check-action-success",
+      "steps": [
+        {
+          "id": "completion",
+          "request": {
+            "prompt": [
+              1,
+              269,
+              259
+            ],
+            "temperature": 0,
+            "return_tokens": true,
+            "n_predict": 6,
+            "cache_prompt": false
+          },
+          "assert": [
+            {
+              "path": "/tokens/0",
+              "op": "one_of",
+              "value": [
+                594,
+                597
+              ]
+            },
+            {
+              "path": "/tokens/3",
+              "op": "eq",
+              "value": 2
+            },
+            {
+              "path": "/tokens/4",
+              "op": "missing"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "check-action-failure",
+      "steps": [
+        {
+          "id": "completion",
+          "request": {
+            "prompt": [
+              1,
+              269,
+              270,
+              259
+            ],
+            "temperature": 0,
+            "return_tokens": true,
+            "n_predict": 6,
+            "cache_prompt": false
+          },
+          "assert": [
+            {
+              "path": "/tokens/0",
+              "op": "one_of",
+              "value": [
+                603,
+                606,
+                609
+              ]
+            },
+            {
+              "path": "/tokens/3",
+              "op": "eq",
+              "value": 2
+            },
+            {
+              "path": "/tokens/4",
+              "op": "missing"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "check-action-partial",
+      "steps": [
+        {
+          "id": "completion",
+          "request": {
+            "prompt": [
+              1,
+              269,
+              280,
+              278,
+              259
+            ],
+            "temperature": 0,
+            "return_tokens": true,
+            "n_predict": 6,
+            "cache_prompt": false
+          },
+          "assert": [
+            {
+              "path": "/tokens/0",
+              "op": "one_of",
+              "value": [
+                594,
+                597,
+                600
+              ]
+            },
+            {
+              "path": "/tokens/3",
+              "op": "eq",
+              "value": 2
+            },
+            {
+              "path": "/tokens/4",
+              "op": "missing"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
