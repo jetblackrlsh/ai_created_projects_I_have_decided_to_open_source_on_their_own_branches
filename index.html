@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aetherbound: Chronicles of the Fourfold Temple</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div id="app">
+    <!-- Top Bar HUD -->
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-crest">✦</span>
+        <div>
+          <h1>Aetherbound</h1>
+          <p id="hud-level-name">The Temple of the Four Elements</p>
+        </div>
+      </div>
+
+      <div class="hud-vitals">
+        <div class="hero-tag">
+          <strong id="hud-hero-name">Aetheris</strong>
+          <small id="hud-hero-sub">Human Spellblade · Wanderer</small>
+        </div>
+        <div class="bars">
+          <div class="bar-row">
+            <span>HP</span>
+            <div class="bar-track"><div id="hp-fill" class="bar-fill hp"></div></div>
+            <span id="hp-text">180/180</span>
+          </div>
+          <div class="bar-row">
+            <span>MP</span>
+            <div class="bar-track"><div id="mp-fill" class="bar-fill mp"></div></div>
+            <span id="mp-text">120/120</span>
+          </div>
+        </div>
+        <div class="resources">
+          <span class="pill gold" id="hud-gold">🪙 25</span>
+          <span class="pill potion" id="hud-potions">🧪 3</span>
+          <span class="pill pad" id="hud-gamepad">🎮 Keyboard/Mouse</span>
+        </div>
+      </div>
+
+      <nav class="toolbar">
+        <button id="btn-creator" type="button" class="btn">Hero Creator</button>
+        <button id="btn-builder" type="button" class="btn">Level Builder</button>
+        <button id="btn-quest" type="button" class="btn">Story &amp; Branches</button>
+        <button id="btn-record" type="button" class="btn rec-btn">● Record MP4</button>
+        <button id="btn-mute" type="button" class="btn icon-btn" title="Toggle Audio">🔊</button>
+      </nav>
+    </header>
+
+    <!-- Main Game Viewport -->
+    <main class="stage-wrap">
+      <canvas id="game-canvas" width="1280" height="720"></canvas>
+      <div id="banner" class="banner" aria-live="polite"></div>
+
+      <!-- Bottom Action Bar (Xbox + Keyboard glyphs) -->
+      <div class="action-bar">
+        <div class="slot" id="slot-class-melee">
+          <span class="glyph xbox-x">X</span>
+          <span class="glyph key">LMB</span>
+          <strong class="slot-name">Class Melee</strong>
+        </div>
+        <div class="slot" id="slot-racial-melee">
+          <span class="glyph xbox-y">Y</span>
+          <span class="glyph key">RMB</span>
+          <strong class="slot-name">Racial Melee</strong>
+        </div>
+        <div class="slot" id="slot-class-spell">
+          <span class="glyph xbox-b">B</span>
+          <span class="glyph key">Q</span>
+          <strong class="slot-name">Class Spell</strong>
+        </div>
+        <div class="slot" id="slot-racial-spell">
+          <span class="glyph xbox-rb">RB</span>
+          <span class="glyph key">E</span>
+          <strong class="slot-name">Racial Spell</strong>
+        </div>
+        <div class="slot bonus" id="slot-bonus-spell">
+          <span class="glyph xbox-rt">RT</span>
+          <span class="glyph key">R / Tab</span>
+          <strong class="slot-name">No Pact Spell</strong>
+        </div>
+        <div class="slot utility">
+          <span class="glyph xbox-a">A</span>
+          <span class="glyph key">F / Space</span>
+          <strong class="slot-name">Talk / Dash</strong>
+        </div>
+        <div class="slot utility">
+          <span class="glyph xbox-lt">LT</span>
+          <span class="glyph key">H</span>
+          <strong class="slot-name">Potion</strong>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Native Modal Dialog: Character Creator (9 Species x 24 Classes) -->
+  <dialog id="creator-dialog" class="modal wide" aria-labelledby="creator-title">
+    <div class="modal-head">
+      <h2 id="creator-title">Hero Customization — 9 Species &amp; 24 Classes</h2>
+      <div class="head-actions">
+        <button id="creator-randomize" type="button" class="btn">🎲 Randomize</button>
+        <button id="creator-export-json" type="button" class="btn">⬇ Export JSON</button>
+        <button id="creator-import-json" type="button" class="btn">⬆ Import JSON</button>
+        <input id="creator-import-file" type="file" accept=".json,application/json" hidden />
+        <form method="dialog"><button type="submit" value="cancel" class="btn">✕</button></form>
+      </div>
+    </div>
+
+    <div class="creator-grid">
+      <!-- Left: Live Preview + Appearance -->
+      <section class="creator-col preview-col">
+        <canvas id="creator-preview" width="240" height="240"></canvas>
+        <button id="creator-test-swing" type="button" class="btn full">⚔ Preview Weapon Swing</button>
+
+        <div class="form-grid">
+          <label>Hero Name <input id="creator-name" type="text" maxlength="28" /></label>
+          <label>Hair / Crest Style <select id="creator-hair-style"></select></label>
+          <label>Eye Style <select id="creator-eye-style"></select></label>
+          <label>Build Scale (<span id="creator-scale-val">100%</span>)
+            <input id="creator-scale" type="range" min="0.85" max="1.2" step="0.05" value="1" />
+          </label>
+        </div>
+
+        <div class="color-row">
+          <label>Skin/Scale <input id="creator-skin" type="color" /></label>
+          <label>Hair/Horn <input id="creator-hair-color" type="color" /></label>
+          <label>Armor <input id="creator-armor-color" type="color" /></label>
+          <label>Accent <input id="creator-accent-color" type="color" /></label>
+        </div>
+
+        <div class="toggle-row">
+          <label for="creator-cape"><input id="creator-cape" type="checkbox" class="visually-hidden-fallback" /><span>Show Cape</span></label>
+          <label for="creator-aura"><input id="creator-aura" type="checkbox" class="visually-hidden-fallback" /><span>Show Aura</span></label>
+        </div>
+
+        <div class="panel-box">
+          <div class="box-head"><h3>Attributes</h3><span id="stat-points-left" class="badge">20 pts left</span></div>
+          <div id="stat-allocator" class="stat-list"></div>
+          <div id="derived-summary" class="derived-row"></div>
+        </div>
+      </section>
+
+      <!-- Right: 9 Species & 24 Classes -->
+      <section class="creator-col picker-col">
+        <h3>1. Choose Species (9)</h3>
+        <div id="species-grid" class="choice-grid species"></div>
+
+        <div class="box-head">
+          <h3>2. Choose Class (24)</h3>
+          <div id="class-filters" class="chip-row"></div>
+        </div>
+        <div id="class-grid" class="choice-grid classes"></div>
+
+        <h3>Unique Melee &amp; Spell Loadout</h3>
+        <div id="creator-abilities" class="ability-grid"></div>
+      </section>
+    </div>
+
+    <div class="modal-foot">
+      <form method="dialog"><button type="submit" value="cancel" class="btn">Cancel</button></form>
+      <button id="creator-save" type="button" class="btn primary" autofocus>Apply Hero &amp; Enter Dungeon</button>
+    </div>
+  </dialog>
+
+  <!-- Native Modal Dialog: Dungeon Level Builder -->
+  <dialog id="builder-dialog" class="modal wide" aria-labelledby="builder-title">
+    <div class="modal-head">
+      <h2 id="builder-title">Dungeon Level Builder</h2>
+      <div class="head-actions">
+        <input id="builder-name" type="text" placeholder="Dungeon Name" class="name-input" />
+        <button id="builder-new-blank" type="button" class="btn">New Blank</button>
+        <button id="builder-load-temple" type="button" class="btn">Load Temple Campaign</button>
+        <button id="builder-export-json" type="button" class="btn">⬇ Export JSON</button>
+        <button id="builder-import-json" type="button" class="btn">⬆ Import JSON</button>
+        <input id="builder-import-file" type="file" accept=".json,application/json" hidden />
+        <form method="dialog"><button type="submit" value="cancel" class="btn">✕</button></form>
+      </div>
+    </div>
+
+    <div class="builder-body">
+      <aside class="builder-sidebar">
+        <div class="tool-tabs">
+          <button type="button" class="chip active" data-btool="tile">Tiles</button>
+          <button type="button" class="chip" data-btool="npc">NPC / Quest</button>
+          <button type="button" class="chip" data-btool="enemy">Enemies</button>
+          <button type="button" class="chip" data-btool="trap">Traps</button>
+          <button type="button" class="chip" data-btool="chest">Chests</button>
+          <button type="button" class="chip" data-btool="spawn">Spawn</button>
+          <button type="button" class="chip" data-btool="erase">Erase</button>
+        </div>
+        <div id="builder-tool-options" class="builder-options"></div>
+      </aside>
+      <div class="builder-canvas-wrap">
+        <canvas id="builder-canvas"></canvas>
+      </div>
+    </div>
+
+    <div class="modal-foot">
+      <span class="muted">Legend: Green P = Spawn · Blue = NPC · Red = Enemy · Orange = Trap · Gold = Chest</span>
+      <div>
+        <form method="dialog" style="display:inline"><button type="submit" value="cancel" class="btn">Close</button></form>
+        <button id="builder-play" type="button" class="btn primary">▶ Play This Dungeon</button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Native Modal Dialog: Branching NPC Dialogue -->
+  <dialog id="dialogue-dialog" class="modal compact" aria-labelledby="dialogue-speaker">
+    <div class="modal-head">
+      <h2 id="dialogue-speaker">Speaker</h2>
+      <div class="head-actions">
+        <button id="btn-tts-replay" type="button" class="btn" title="Replay NPC voice">🔊 Speak</button>
+        <button id="btn-tts-toggle" type="button" class="btn" title="Toggle NPC dialogue TTS">🗣️ TTS: On</button>
+      </div>
+    </div>
+    <p id="dialogue-text" class="dialogue-body"></p>
+    <div id="dialogue-choices" class="dialogue-choices"></div>
+  </dialog>
+
+  <!-- Native Modal Dialog: Story & Branches Journal -->
+  <dialog id="quest-dialog" class="modal compact" aria-labelledby="quest-title">
+    <div class="modal-head">
+      <h2 id="quest-title">Chronicles of the Fourfold Temple</h2>
+      <form method="dialog"><button type="submit" value="close" class="btn">✕</button></form>
+    </div>
+    <div id="quest-content" class="quest-body"></div>
+    <div class="modal-foot">
+      <button id="btn-reset-temple" type="button" class="btn">↺ Reset Temple Campaign</button>
+      <form method="dialog"><button type="submit" value="close" class="btn primary" autofocus>Resume</button></form>
+    </div>
+  </dialog>
+
+  <!-- Native Modal Dialog: MP4 Recording Preview & Share -->
+  <dialog id="replay-dialog" class="modal compact" aria-labelledby="replay-title">
+    <div class="modal-head">
+      <h2 id="replay-title">Playthrough Recording Ready</h2>
+      <form method="dialog"><button type="submit" value="close" class="btn">✕</button></form>
+    </div>
+    <video id="replay-video" controls playsinline></video>
+    <p id="replay-meta" class="muted"></p>
+    <div class="modal-foot">
+      <button id="replay-download" type="button" class="btn">⬇ Download MP4</button>
+      <button id="replay-share" type="button" class="btn primary">📤 Share Video</button>
+    </div>
+  </dialog>
+
+  <!-- Native Modal Dialog: Game Over (Forces Full Level Restart) -->
+  <dialog id="gameover-dialog" class="modal compact gameover-modal" closedby="none" aria-labelledby="gameover-title">
+    <div class="modal-head">
+      <h2 id="gameover-title" class="gameover-heading">☠ GAME OVER — YOU HAVE FALLEN</h2>
+    </div>
+    <p id="gameover-cause" class="dialogue-body">Defeated in the dungeon.</p>
+    <p id="gameover-stats" class="muted"></p>
+    <p class="gameover-warning">All level progress, opened chests, and pact spells from this run have been lost. You must start over from the beginning of the level.</p>
+    <div class="modal-foot">
+      <span class="muted">Press <strong>A</strong> / <strong>Enter</strong> or click to restart</span>
+      <button id="btn-gameover-restart" type="button" class="btn danger-btn" autofocus>↺ Restart Level from Beginning</button>
+    </div>
+  </dialog>
+
+  <script type="module" src="./src/main.js"></script>
+</body>
+</html>

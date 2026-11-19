@@ -1,0 +1,9 @@
+{
+  "name": "aetherbound-rpg",
+  "version": "1.0.0",
+  "description": "Action-adventure fantasy RPG with 9 species, 24 classes, Xbox controller support, dungeon level builder, JSON import/export, MP4 playthrough recording, and the 3-branch Temple of the Four Elements campaign.",
+  "type": "module",
+  "scripts": {
+    "start": "node server.mjs"
+  }
+}
