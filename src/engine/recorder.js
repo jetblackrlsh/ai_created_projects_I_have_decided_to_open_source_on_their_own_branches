@@ -6,13 +6,15 @@ import { SPECIES_BY_ID } from '../data/species.js';
 import { CLASS_BY_ID } from '../data/classes.js';
 import { BONUS_SPELLS, MAX_POTIONS } from '../data/spells.js';
 
+export const MAX_MP4_BYTES = Math.floor(9.5 * 1024 * 1024); // Guaranteed under 10 MB
+
 export class PlaythroughRecorder {
   constructor(canvas, audioEngine) {
     this.canvas = canvas;
     this.audioEngine = audioEngine;
     this.compCanvas = document.createElement('canvas');
-    this.compCanvas.width = canvas.width || 1280;
-    this.compCanvas.height = canvas.height || 720;
+    this.compCanvas.width = 960;
+    this.compCanvas.height = 540;
     this.compCtx = this.compCanvas.getContext('2d');
 
     this.recorder = null;
@@ -52,13 +54,13 @@ export class PlaythroughRecorder {
     this.mimeType = picked.mime || 'video/mp4';
     this.extension = picked.ext;
 
-    this.compCanvas.width = this.canvas.width || 1280;
-    this.compCanvas.height = this.canvas.height || 720;
+    this.compCanvas.width = 960;
+    this.compCanvas.height = 540;
 
     // Seed first frame immediately so video stream has a valid frame at t=0
     this.compCtx.drawImage(this.canvas, 0, 0, this.compCanvas.width, this.compCanvas.height);
 
-    const videoStream = this.compCanvas.captureStream(60);
+    const videoStream = this.compCanvas.captureStream(30);
     const tracks = [...videoStream.getVideoTracks()];
     const audioStream = this.audioEngine?.getRecordStream?.();
     if (audioStream) {
@@ -69,8 +71,8 @@ export class PlaythroughRecorder {
 
     this.chunks = [];
     const opts = picked.mime
-      ? { mimeType: picked.mime, videoBitsPerSecond: 6_000_000, audioBitsPerSecond: 192_000 }
-      : { videoBitsPerSecond: 6_000_000, audioBitsPerSecond: 192_000 };
+      ? { mimeType: picked.mime, videoBitsPerSecond: 1_100_000, audioBitsPerSecond: 96_000 }
+      : { videoBitsPerSecond: 1_100_000, audioBitsPerSecond: 96_000 };
 
     this.recorder = new MediaRecorder(combined, opts);
     this.recorder.ondataavailable = (e) => {
@@ -359,24 +361,52 @@ export class PlaythroughRecorder {
     return lines;
   }
 
-  stop() {
+  stop(onCompressing = null) {
     return new Promise((resolve) => {
       if (!this.recording || !this.recorder) {
         resolve(null);
         return;
       }
-      this.recorder.onstop = () => {
+      this.recorder.onstop = async () => {
         this.recording = false;
-        const blob = new Blob(this.chunks, { type: this.mimeType || 'video/mp4' });
+        const durationSec = Math.max(1, Math.round((performance.now() - this.startTime) / 1000));
+        let blob = new Blob(this.chunks, { type: this.mimeType || 'video/mp4' });
+        let ext = this.extension;
+        let compressed = false;
+
+        // Always compress via server FFmpeg if over 9.5 MB or not MP4 so export is guaranteed < 10 MB MP4
+        if (blob.size > MAX_MP4_BYTES || ext !== 'mp4') {
+          try {
+            onCompressing?.();
+            const resp = await fetch(`/api/compress-mp4?duration=${durationSec}`, {
+              method: 'POST',
+              headers: { 'Content-Type': blob.type || 'application/octet-stream' },
+              body: blob,
+            });
+            if (resp.ok) {
+              blob = await resp.blob();
+              ext = 'mp4';
+              this.extension = 'mp4';
+              this.mimeType = 'video/mp4';
+              compressed = true;
+            }
+          } catch {
+            // Static host without /api/compress-mp4 — keep low-bitrate client recording
+          }
+        }
+
         if (this.lastUrl) URL.revokeObjectURL(this.lastUrl);
         this.lastBlob = blob;
         this.lastUrl = URL.createObjectURL(blob);
         resolve({
           blob,
           url: this.lastUrl,
-          extension: this.extension,
+          extension: ext,
           mimeType: this.mimeType,
-          durationSec: Math.max(1, Math.round((performance.now() - this.startTime) / 1000)),
+          sizeBytes: blob.size,
+          sizeMB: (blob.size / (1024 * 1024)).toFixed(2),
+          compressed,
+          durationSec,
         });
       };
       this.recorder.stop();

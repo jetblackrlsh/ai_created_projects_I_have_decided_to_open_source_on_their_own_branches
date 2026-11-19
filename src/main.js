@@ -150,14 +150,20 @@ async function toggleRecording() {
   } else {
     clearInterval(recTimer);
     btn.classList.remove('recording');
+    btn.textContent = '⏳ Finalizing...';
+    btn.disabled = true;
+    const result = await recorder.stop(() => {
+      showBanner('Compressing MP4 to stay under 10 MB...');
+    });
+    btn.disabled = false;
     btn.textContent = '● Record MP4';
-    const result = await recorder.stop();
     if (result) {
       game.paused = true;
       const vid = document.getElementById('replay-video');
       vid.src = result.url;
+      const compNote = result.compressed ? ' · FFmpeg compressed < 10 MB' : '';
       document.getElementById('replay-meta').textContent =
-        `Recorded ${result.durationSec}s (Full HUD + Dialogue + Synced Audio/TTS · ${result.extension.toUpperCase()}). Ready to download or share!`;
+        `Recorded ${result.durationSec}s · ${result.sizeMB} MB ${result.extension.toUpperCase()}${compNote} (Full HUD + Dialogue + Synced Audio/TTS).`;
       document.getElementById('replay-dialog').showModal();
     }
   }

@@ -36,6 +36,67 @@ const ROLE_VOICES = {
 };
 
 const ttsCache = new Map();
+const MAX_TARGET_BYTES = Math.floor(9.4 * 1024 * 1024); // Strictly under 10 MB
+
+async function probeDurationSec(filePath, fallbackSec = 30) {
+  try {
+    const { stdout } = await execFileAsync('ffprobe', [
+      '-v', 'error',
+      '-show_entries', 'format=duration',
+      '-of', 'default=noprint_wrappers=1:nokey=1',
+      filePath,
+    ]);
+    const parsed = parseFloat(stdout.trim());
+    if (Number.isFinite(parsed) && parsed > 0.5) return parsed;
+  } catch {}
+  return Math.max(1, fallbackSec);
+}
+
+async function compressToUnder10MB(inputBuf, durationHintSec = 30) {
+  const id = crypto.randomUUID();
+  const inFile = path.join(os.tmpdir(), `aetherbound-in-${id}.bin`);
+  const outFile = path.join(os.tmpdir(), `aetherbound-out-${id}.mp4`);
+  try {
+    await fs.writeFile(inFile, inputBuf);
+    const dur = await probeDurationSec(inFile, durationHintSec);
+
+    const runPass = async (targetMB) => {
+      const targetBits = targetMB * 1024 * 1024 * 8;
+      const audioKbps = dur > 180 ? 48 : dur > 90 ? 64 : 96;
+      const totalKbps = Math.floor(targetBits / dur / 1000);
+      const videoKbps = Math.max(96, Math.min(1400, totalKbps - audioKbps));
+      const scaleFilter = dur > 240 ? 'scale=640:-2' : dur > 90 ? 'scale=854:-2' : 'scale=960:-2';
+
+      await execFileAsync('ffmpeg', [
+        '-y',
+        '-i', inFile,
+        '-vf', scaleFilter,
+        '-r', '30',
+        '-c:v', 'libx264',
+        '-preset', 'veryfast',
+        '-pix_fmt', 'yuv420p',
+        '-b:v', `${videoKbps}k`,
+        '-maxrate', `${Math.round(videoKbps * 1.15)}k`,
+        '-bufsize', `${Math.round(videoKbps * 1.8)}k`,
+        '-c:a', 'aac',
+        '-b:a', `${audioKbps}k`,
+        '-ac', '2',
+        '-movflags', '+faststart',
+        outFile,
+      ]);
+      return fs.readFile(outFile);
+    };
+
+    let outBuf = await runPass(8.8);
+    if (outBuf.length > MAX_TARGET_BYTES) {
+      outBuf = await runPass(7.2);
+    }
+    return outBuf;
+  } finally {
+    fs.unlink(inFile).catch(() => {});
+    fs.unlink(outFile).catch(() => {});
+  }
+}
 
 async function synthesizeWav(text, role, speaker) {
   const cleanText = String(text || '').trim().slice(0, 600);
@@ -80,6 +141,31 @@ async function synthesizeWav(text, role, speaker) {
 const server = http.createServer(async (req, res) => {
   try {
     const url = new URL(req.url || '/', `http://localhost:${PORT}`);
+
+    if (url.pathname === '/api/compress-mp4' && req.method === 'POST') {
+      const durationHint = Number(url.searchParams.get('duration')) || 30;
+      const chunks = [];
+      for await (const chunk of req) chunks.push(chunk);
+      const rawBuf = Buffer.concat(chunks);
+      if (!rawBuf.length) {
+        res.writeHead(400);
+        res.end('Empty video payload');
+        return;
+      }
+      try {
+        const compressed = await compressToUnder10MB(rawBuf, durationHint);
+        res.writeHead(200, {
+          'Content-Type': 'video/mp4',
+          'Content-Length': String(compressed.length),
+          'Cache-Control': 'no-store',
+        });
+        res.end(compressed);
+      } catch (err) {
+        res.writeHead(500, { 'Content-Type': 'text/plain' });
+        res.end(`Compression error: ${err.message}`);
+      }
+      return;
+    }
 
     if (url.pathname === '/api/tts') {
       const text = url.searchParams.get('text') || '';
