@@ -21,6 +21,7 @@ An action-adventure fantasy RPG with full Xbox controller support, 9 playable sp
   2. **Branch 2 (Disciple of an Element — 4 Variants)**: Ally with one Elemental Demon to gain their Elemental Pact Spell, defeat the other 3 Elementals and High Priest Aldric, and convert the temple into that elemental's domain.
   3. **Branch 3 (Master of the Four Elements)**: Pretend to ally with all 4 Elemental Demons to gain all 4 Elemental Pact Spells, survive the combined battle against all 4 Elementals and High Priest Aldric, and claim the Central Sanctum Altar to unlock **Fourfold Convergence** and convert the temple into your own.
 - **True Game Over**: Dying resets the level from the beginning.
+- **AI Agent Skills & Creation Tools**: Includes workspace skills (`.agents/skills/create-custom-character` and `.agents/skills/create-custom-level`), `AGENTS.md`, and zero-dependency Node.js CLI tools (`tools/character-cli.mjs` and `tools/level-cli.mjs`) so you can describe a hero concept or dungeon adventure to an AI agent and have it build, validate, preview, and export an import-ready `.json` file for you.
 
 ## Running Locally
 
