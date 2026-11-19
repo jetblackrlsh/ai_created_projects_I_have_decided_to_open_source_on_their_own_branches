@@ -4,6 +4,7 @@ import { SPECIES_BY_ID } from '../data/species.js';
 import { CLASS_BY_ID } from '../data/classes.js';
 import { BONUS_SPELLS, MAX_POTIONS, computeDerivedStats } from '../data/spells.js';
 import { TILE_SIZE, TILE_DEFS } from '../data/templeLevel.js';
+import { generateProceduralFloor } from '../data/proceduralDungeon.js';
 
 const ENEMY_COLORS = {
   skeleton: '#cbd5e1',
@@ -13,6 +14,11 @@ const ENEMY_COLORS = {
   frost_wraith: '#38bdf8',
   stone_sentinel: '#16a34a',
   storm_harpy: '#a78bfa',
+  alien_jetpack: '#10b981',
+  alien_commander: '#059669',
+  bard_boss: '#ec4899',
+  harmonic_minion: '#f472b6',
+  alien_drummer_boss: '#06b6d4',
 };
 
 export class RPGGame {
@@ -49,20 +55,29 @@ export class RPGGame {
     this.kills = 0;
     this.chestsOpened = 0;
     this.equippedBonusIdx = 0;
+    this.endlessTotalKills = 0;
+    this.portalUnlocked = false;
 
     this._lastTs = 0;
     this._raf = null;
   }
 
-  load(character, levelData) {
+  load(character, levelData, opts = {}) {
     this.initialCharacter = structuredClone(character);
     this.initialLevel = structuredClone(levelData);
+    this.initialCarryVitals = opts.carryVitals ? { ...opts.carryVitals } : null;
     this.character = structuredClone(character);
     this.character.potions = Math.max(0, Math.min(MAX_POTIONS, this.character.potions ?? MAX_POTIONS));
     this.level = structuredClone(levelData);
     this.gameOver = false;
-    this.paused = false;
+    this.paused = Boolean(opts.startPaused);
     const derived = computeDerivedStats(this.character);
+    const startHp = opts.carryVitals
+      ? Math.max(1, Math.min(derived.maxHp, Math.round(opts.carryVitals.hp)))
+      : derived.maxHp;
+    const startMana = opts.carryVitals
+      ? Math.max(0, Math.min(derived.maxMana, Math.round(opts.carryVitals.mana)))
+      : derived.maxMana;
 
     this.player = {
       x: this.level.spawn?.x ?? 100,
@@ -70,9 +85,9 @@ export class RPGGame {
       vx: 0,
       vy: 0,
       radius: 15,
-      hp: derived.maxHp,
+      hp: startHp,
       maxHp: derived.maxHp,
-      mana: derived.maxMana,
+      mana: startMana,
       maxMana: derived.maxMana,
       shield: 0,
       aimAngle: -Math.PI / 2,
@@ -127,7 +142,13 @@ export class RPGGame {
     this.nearbyTarget = null;
     this.kills = 0;
     this.chestsOpened = 0;
-    this.equippedBonusIdx = 0;
+    this.equippedBonusIdx = Math.min(this.equippedBonusIdx, Math.max(0, (this.character.bonusSpells?.length || 1) - 1));
+    this.portalUnlocked = false;
+    if (!this.level.isEndlessDungeon) {
+      this.endlessTotalKills = 0;
+    }
+    this.endlessTotalKills = 0;
+    this.portalUnlocked = false;
 
     this.story = {
       questAccepted: false,
@@ -136,6 +157,12 @@ export class RPGGame {
       defeatedElements: [],
       priestDefeated: false,
       endingCompleted: null,
+      // Concert Hall Invasion campaign state
+      concertPath: 'undecided', // undecided | alien_ally | bodyguard | substitute_bard
+      bardDefeated: false,
+      commanderDefeated: false,
+      drummerDefeated: false,
+      teleportedToAlienPlanet: false,
     };
 
     this.audio?.setMusicMode('dungeon');
@@ -145,9 +172,51 @@ export class RPGGame {
   }
 
   restartLevel() {
-    if (this.initialCharacter && this.initialLevel) {
-      this.load(this.initialCharacter, this.initialLevel);
+    if (this.level?.isEndlessDungeon && this.initialCharacter) {
+      this.endlessTotalKills = 0;
+      this.load(this.initialCharacter, generateProceduralFloor(1), {
+        carryVitals: this.initialCarryVitals,
+      });
+      return;
     }
+    if (this.initialCharacter && this.initialLevel) {
+      this.load(this.initialCharacter, this.initialLevel, {
+        carryVitals: this.initialCarryVitals,
+      });
+    }
+  }
+
+  startEndlessRun(carryCurrentVitals = true) {
+    this.endlessTotalKills = 0;
+    const heroSnapshot = structuredClone(this.character);
+    const vitals = carryCurrentVitals && this.player
+      ? { hp: this.player.hp, mana: this.player.mana }
+      : null;
+    const floor1 = generateProceduralFloor(1);
+    this.load(heroSnapshot, floor1, { carryVitals: vitals });
+    this.callbacks.onBanner?.(
+      'Endless Abyss — Floor 1! Defeat all enemies & the Floor Guardian to open the Descent Portal!'
+    );
+  }
+
+  _descendEndlessFloor() {
+    const nextFloor = (this.level.endlessFloor || 1) + 1;
+    const prevHp = this.player.hp;
+    const prevMaxHp = this.player.maxHp;
+    const prevMana = this.player.mana;
+    const prevMaxMana = this.player.maxMana;
+    const savedInitialChar = structuredClone(this.initialCharacter);
+    const nextLevel = generateProceduralFloor(nextFloor);
+    this.load(this.character, nextLevel);
+    // Keep the run's starting hero snapshot for retry, and restore 40% HP + 60% Mana between floors
+    this.initialCharacter = savedInitialChar;
+    this.player.hp = Math.min(prevMaxHp, Math.round(prevHp + prevMaxHp * 0.4));
+    this.player.mana = Math.min(prevMaxMana, Math.round(prevMana + prevMaxMana * 0.6));
+    this.character.gold += 50 * nextFloor;
+    this.audio?.playFanfare();
+    this.callbacks.onBanner?.(
+      `Descended to Endless Floor ${nextFloor}! (+40% HP restored, +${50 * nextFloor} Gold)`
+    );
   }
 
   applyCharacterUpdate(character) {
@@ -586,32 +655,65 @@ export class RPGGame {
     npc.convertedToEnemy = true;
     npc.allied = false;
     const isPriest = npc.role === 'priest';
+    const isBard = npc.role === 'bard';
+    const isCmd = npc.role === 'alien_commander';
+    const isDrummer = npc.role === 'alien_drummer';
+
+    let kind = npc.role;
+    let name = npc.name;
+    let hp = npc.maxHp || 320;
+    let color = npc.color;
+    let isElementalBoss = Boolean(npc.role?.startsWith('elemental_'));
+
+    if (isPriest) {
+      kind = 'priest_boss';
+      name = 'High Priest Aldric, Warden of Light';
+      hp = 360;
+      color = '#facc15';
+    } else if (isBard) {
+      kind = 'bard_boss';
+      name = 'Lyricus, Master Bard of the Lute';
+      hp = npc.maxHp || 360;
+      color = '#f472b6';
+    } else if (isCmd) {
+      kind = 'alien_commander';
+      name = 'Commander Xylar (Jetpack Boss)';
+      hp = npc.maxHp || 340;
+      color = '#10b981';
+    } else if (isDrummer) {
+      kind = 'alien_drummer_boss';
+      name = 'Zor-Krak, Earthquake Drummer';
+      hp = npc.maxHp || 420;
+      color = '#06b6d4';
+    }
+
     this.enemies.push({
       id: `boss_${npc.id}`,
       npcId: npc.id,
-      name: isPriest ? 'High Priest Aldric, Warden of Light' : npc.name,
-      kind: isPriest ? 'priest_boss' : npc.role,
+      name,
+      kind,
       element: npc.element || 'light',
       isBoss: true,
-      isElementalBoss: !isPriest,
+      isElementalBoss,
       x: npc.x,
       y: npc.y,
-      hp: isPriest ? 360 : npc.maxHp || 320,
-      maxHp: isPriest ? 360 : npc.maxHp || 320,
+      hp,
+      maxHp: hp,
       damage: isPriest ? 20 : npc.damage || 19,
-      color: isPriest ? '#facc15' : npc.color,
+      color,
       accent: npc.accent,
       radius: 24,
       vx: 0,
       vy: 0,
       attackCd: 1.0,
+      specialCd: 2.8,
       hurtFlash: 0,
       stunTimer: 0,
       slowTimer: 0,
       dead: false,
     });
     this.audio?.setMusicMode('boss');
-    this._floatText(npc.x, npc.y - 44, `${npc.name} attacks!`, '#ef4444', true);
+    this._floatText(npc.x, npc.y - 44, `${name} attacks!`, '#ef4444', true);
   }
 
   _damageEnemy(e, dmg, isCrit, angle, knockback, stun) {
@@ -629,9 +731,21 @@ export class RPGGame {
     if (e.hp <= 0 && !e.dead) {
       e.dead = true;
       this.kills++;
+      if (this.level.isEndlessDungeon) this.endlessTotalKills++;
       this.character.gold += e.isBoss ? 120 : 18;
       this._spawnBurst(e.x, e.y, e.color, 22);
       this._floatText(e.x, e.y - 34, e.isBoss ? `BOSS DEFEATED!` : `+18 Gold`, '#facc15', e.isBoss);
+
+      if (this.level.isEndlessDungeon) {
+        const remaining = this.enemies.filter((en) => !en.dead).length;
+        if (remaining === 0 && !this.portalUnlocked) {
+          this.portalUnlocked = true;
+          this.audio?.playFanfare();
+          this.callbacks.onBanner?.(
+            `Floor ${this.level.endlessFloor} Cleared! Step to the glowing Portal [A / F] to descend to Floor ${this.level.endlessFloor + 1}!`
+          );
+        }
+      }
 
       if (e.isElementalBoss && e.element) {
         if (!this.story.defeatedElements.includes(e.element)) {
@@ -643,6 +757,15 @@ export class RPGGame {
       } else if (e.kind === 'priest_boss') {
         this.story.priestDefeated = true;
         this.callbacks.onBanner?.('High Priest Aldric Defeated!');
+      } else if (e.kind === 'bard_boss') {
+        this.story.bardDefeated = true;
+        this.callbacks.onBanner?.('Lyricus Subdued! Return to Commander Xylar to claim your reward!');
+      } else if (e.kind === 'alien_commander') {
+        this.story.commanderDefeated = true;
+        this.callbacks.onBanner?.('Commander Xylar Defeated! Clear remaining alien troopers & talk to Lyricus!');
+      } else if (e.kind === 'alien_drummer_boss') {
+        this.story.drummerDefeated = true;
+        this.callbacks.onBanner?.('Zor-Krak Defeated! Speak to Star Queen Vexara to claim the Royal Bard Throne!');
       }
 
       const anyBossAlive = this.enemies.some((en) => !en.dead && en.isBoss);
@@ -683,8 +806,10 @@ export class RPGGame {
       this.callbacks.onGameOver?.({
         killerName: sourceName,
         levelName: this.level.name,
-        kills: this.kills,
+        kills: this.level.isEndlessDungeon ? this.endlessTotalKills : this.kills,
         chestsOpened: this.chestsOpened,
+        isEndless: Boolean(this.level.isEndlessDungeon),
+        endlessFloor: this.level.endlessFloor || 0,
       });
     }
   }
@@ -735,28 +860,123 @@ export class RPGGame {
           this._damagePlayer(e.damage, e.name || 'Enemy');
         }
 
-        // Boss / ranged projectiles
+        // Boss / ranged / special attacks
         e.attackCd -= dt;
+        if (e.specialCd !== undefined) e.specialCd -= dt;
+        else e.specialCd = 2.6 + Math.random() * 1.4;
+
+        // Special 1: Bard Boss strums magical lute to summon Harmonic Minions!
+        if (e.kind === 'bard_boss' && e.specialCd <= 0) {
+          e.specialCd = 4.6;
+          const aliveMinions = this.enemies.filter((m) => !m.dead && m.kind === 'harmonic_minion').length;
+          if (aliveMinions < 4) {
+            this.effects.push({ kind: 'nova', x: e.x, y: e.y, radius: 115, color: '#f472b6', life: 0.4, maxLife: 0.4 });
+            this._floatText(e.x, e.y - 38, '♫ Lute Summon!', '#f472b6', true);
+            this.audio?.playSpell(680);
+            for (let i = 0; i < 2; i++) {
+              const ang = Math.random() * Math.PI * 2;
+              this.enemies.push({
+                id: `hminion_${Date.now()}_${i}`,
+                kind: 'harmonic_minion',
+                name: 'Harmonic Phantom',
+                x: e.x + Math.cos(ang) * 44,
+                y: e.y + Math.sin(ang) * 44,
+                hp: 55,
+                maxHp: 55,
+                damage: 11,
+                color: '#f472b6',
+                radius: 12,
+                vx: 0,
+                vy: 0,
+                attackCd: 1.4,
+                hurtFlash: 0,
+                stunTimer: 0,
+                slowTimer: 0,
+                dead: false,
+              });
+            }
+          }
+        }
+
+        // Special 2: Alien Jetpack Soldiers & Commander fire jetpack thruster boost!
+        if ((e.kind === 'alien_jetpack' || e.kind === 'alien_commander') && e.specialCd <= 0) {
+          e.specialCd = e.kind === 'alien_commander' ? 2.6 : 3.2;
+          const perp = Math.atan2(dy, dx) + (Math.random() < 0.5 ? 1.1 : -1.1);
+          e.vx = Math.cos(perp) * 340;
+          e.vy = Math.sin(perp) * 340;
+          this._spawnBurst(e.x, e.y, '#38bdf8', 10);
+          this._floatText(e.x, e.y - 26, 'Jetpack Boost!', '#38bdf8');
+        }
+
+        // Special 3: Alien Drummer Boss slams futuristic drums for Earthquake Shockwaves!
+        if (e.kind === 'alien_drummer_boss' && e.specialCd <= 0) {
+          e.specialCd = 2.7;
+          const eqRadius = 185;
+          this.effects.push({ kind: 'nova', x: e.x, y: e.y, radius: eqRadius, color: '#06b6d4', life: 0.45, maxLife: 0.45 });
+          this.effects.push({ kind: 'nova', x: e.x, y: e.y, radius: eqRadius * 0.65, color: '#f43f5e', life: 0.35, maxLife: 0.35 });
+          this.shake = Math.max(this.shake, 0.85);
+          this.audio?.playMelee(true);
+          this._spawnBurst(e.x, e.y, '#06b6d4', 18);
+          this._floatText(e.x, e.y - 42, 'EARTHQUAKE BEAT!', '#22d3ee', true);
+          if (dist <= eqRadius) {
+            this._damagePlayer(Math.round(e.damage * 1.1), 'Zor-Krak Earthquake Drum');
+          }
+          // Plus 6 radial seismic pulse orbs
+          for (let i = 0; i < 6; i++) {
+            const a = (i * Math.PI * 2) / 6 + this.time;
+            this.projectiles.push({
+              friendly: false,
+              sourceName: e.name,
+              x: e.x + Math.cos(a) * 22,
+              y: e.y + Math.sin(a) * 22,
+              vx: Math.cos(a) * 220,
+              vy: Math.sin(a) * 220,
+              damage: Math.round(e.damage * 0.8),
+              color: '#06b6d4',
+              size: 9,
+              life: 1.9,
+            });
+          }
+        }
+
         if (e.attackCd <= 0) {
           if (e.isBoss) {
-            e.attackCd = 1.65;
+            e.attackCd = e.kind === 'alien_commander' ? 1.35 : 1.65;
             const baseAng = Math.atan2(dy, dx);
-            const shots = e.kind === 'priest_boss' ? 5 : 4;
+            const shots = e.kind === 'priest_boss' ? 5 : e.kind === 'bard_boss' ? 5 : 4;
+            const projSpd = e.kind === 'alien_commander' ? 320 : 240;
+            const projColor = e.kind === 'alien_commander' ? '#22d3ee' : e.color || '#ef4444';
             for (let i = 0; i < shots; i++) {
-              const a = baseAng + (i - (shots - 1) / 2) * 0.28;
+              const a = baseAng + (i - (shots - 1) / 2) * 0.26;
               this.projectiles.push({
                 friendly: false,
                 sourceName: e.name || 'Boss',
                 x: e.x + Math.cos(a) * 20,
                 y: e.y + Math.sin(a) * 20,
-                vx: Math.cos(a) * 240,
-                vy: Math.sin(a) * 240,
+                vx: Math.cos(a) * projSpd,
+                vy: Math.sin(a) * projSpd,
                 damage: Math.round(e.damage * 0.85),
-                color: e.color || '#ef4444',
+                color: projColor,
                 size: 8,
                 life: 2.0,
               });
             }
+          } else if (e.kind === 'alien_jetpack') {
+            // Fast neon laser pistol bolt!
+            e.attackCd = 1.65;
+            const a = Math.atan2(dy, dx);
+            this.projectiles.push({
+              friendly: false,
+              sourceName: `${e.name} (Laser Pistol)`,
+              x: e.x + Math.cos(a) * 14,
+              y: e.y + Math.sin(a) * 14,
+              vx: Math.cos(a) * 330,
+              vy: Math.sin(a) * 330,
+              damage: Math.round(e.damage * 0.85),
+              color: '#22d3ee',
+              size: 6,
+              life: 1.5,
+            });
           } else if (e.kind === 'cultist' || e.kind === 'flame_imp' || e.kind === 'frost_wraith') {
             e.attackCd = 2.4;
             const a = Math.atan2(dy, dx);
@@ -919,10 +1139,32 @@ export class RPGGame {
       }
     }
 
+    // Endless Dungeon Descent Portal Check
+    if (this.level.isEndlessDungeon && this.level.portalPos) {
+      const px = this.level.portalPos.x;
+      const py = this.level.portalPos.y;
+      const d = Math.hypot(px - p.x, py - p.y);
+      if (d < 90) {
+        const remaining = this.enemies.filter((en) => !en.dead).length;
+        best = this.portalUnlocked
+          ? { type: 'portal', entity: { x: px, y: py }, label: `[A / F] Descend to Floor ${(this.level.endlessFloor || 1) + 1}` }
+          : { type: 'portal_locked', entity: { x: px, y: py }, label: `Portal Locked (${remaining} foes left)` };
+      }
+    }
+
     this.nearbyTarget = best;
   }
 
   _triggerInteract(target) {
+    if (target.type === 'portal') {
+      this._descendEndlessFloor();
+      return;
+    }
+    if (target.type === 'portal_locked') {
+      const remaining = this.enemies.filter((en) => !en.dead).length;
+      this._floatText(target.entity.x, target.entity.y - 34, `Defeat ${remaining} more foes!`, '#c084fc');
+      return;
+    }
     if (target.type === 'chest') {
       const c = target.entity;
       c.opened = true;
@@ -963,6 +1205,13 @@ export class RPGGame {
   }
 
   _openNpcDialogue(npc) {
+    // Handle Concert Hall Invasion 3-path branching campaign
+    if (this.level.isConcertCampaign) {
+      if (['bard', 'alien_commander', 'alien_queen', 'alien_drummer'].includes(npc.role)) {
+        return this._openConcertDialogue(npc);
+      }
+    }
+
     // Handle Temple Campaign branching dialogues
     if (this.level.isTempleCampaign) {
       if (npc.role === 'priest') {
@@ -1004,6 +1253,11 @@ export class RPGGame {
               if (q.rewardTitle) this.character.title = q.rewardTitle;
               this.audio?.playFanfare();
               this.callbacks.onBanner?.(`Mission Complete! Reward Claimed!`);
+              this.callbacks.onLevelComplete?.({
+                endingTitle: q.title,
+                rewardSpellName: q.rewardSpell ? BONUS_SPELLS[q.rewardSpell]?.name : null,
+                levelName: this.level.name,
+              });
             },
           });
         } else {
@@ -1014,6 +1268,321 @@ export class RPGGame {
 
     choices.push({ label: 'Farewell', action: () => {} });
     this.callbacks.onOpenDialogue?.({ speaker: npc.name, role: npc.role || 'villager', text: body, choices });
+  }
+
+  _openConcertDialogue(npc) {
+    const s = this.story;
+    const findNpc = (id) => this.npcs.find((n) => n.id === id);
+
+    // === 1. LYRICUS, MASTER BARD ===
+    if (npc.role === 'bard') {
+      if (s.endingCompleted === 'bodyguard') {
+        this.callbacks.onOpenDialogue?.({
+          speaker: npc.name,
+          role: npc.role,
+          text: `My encore plays on thanks to you, ${this.character.name}! You are the finest bodyguard in the realm.`,
+          choices: [{ label: 'Play on, Maestro!', action: () => {} }],
+        });
+        return;
+      }
+
+      if (s.concertPath === 'bodyguard') {
+        const aliensLeft = this.enemies.filter(
+          (e) => !e.dead && (e.kind === 'alien_jetpack' || e.kind === 'alien_commander')
+        ).length;
+        if (s.commanderDefeated && aliensLeft === 0) {
+          this.callbacks.onOpenDialogue?.({
+            speaker: npc.name,
+            role: npc.role,
+            text: 'Bravo! You drove back Commander Xylar and every single jetpack trooper! Take my magical Chord of the Virtuoso spell and my eternal gratitude!',
+            choices: [
+              {
+                label: 'Claim Reward: Chord of the Virtuoso (Path 2 Ending)',
+                primary: true,
+                action: () => {
+                  s.endingCompleted = 'bodyguard';
+                  this.character.title = "Virtuoso's Bodyguard";
+                  this.character.gold += 300;
+                  this._grantBonusSpell('harmonic_summon');
+                  this.level.templeTheme = 'light';
+                  this.audio?.setMusicMode('victory');
+                  this.audio?.playFanfare();
+                  this.callbacks.onBanner?.(
+                    'PATH 2 COMPLETE: Concert Saved! Learned Chord of the Virtuoso!'
+                  );
+                  this.callbacks.onLevelComplete?.({
+                    endingTitle: "Path 2 Complete — Virtuoso's Bodyguard",
+                    rewardSpellName: 'Chord of the Virtuoso',
+                    levelName: this.level.name,
+                  });
+                },
+              },
+            ],
+          });
+          return;
+        }
+        this.callbacks.onOpenDialogue?.({
+          speaker: npc.name,
+          role: npc.role,
+          text: `Hold the line, bodyguard! ${aliensLeft} alien jetpack invader(s) remain in the hall!`,
+          choices: [{ label: 'I am on it!', action: () => {} }],
+        });
+        return;
+      }
+
+      // Path selection from Lyricus
+      this.callbacks.onOpenDialogue?.({
+        speaker: npc.name,
+        role: npc.role,
+        text: npc.dialogue,
+        choices: [
+          {
+            label: 'Path 2: Become Lyricus\'s Bodyguard & fight the Jetpack Aliens!',
+            primary: true,
+            action: () => this._startConcertPath2Bodyguard(),
+          },
+          {
+            label: 'Path 1: Side with the Aliens & capture Lyricus! (Bard Summoner Boss)',
+            action: () => this._startConcertPath1Aliens(),
+          },
+          {
+            label: 'Path 3: Offer to take Lyricus\'s place on Planet Xylos!',
+            action: () => this._startConcertPath3Substitute(),
+          },
+          { label: 'Give me a moment', action: () => {} },
+        ],
+      });
+      return;
+    }
+
+    // === 2. COMMANDER XYLAR ===
+    if (npc.role === 'alien_commander') {
+      if (s.endingCompleted === 'alien_ally') {
+        this.callbacks.onOpenDialogue?.({
+          speaker: npc.name,
+          role: npc.role,
+          text: 'Queen Vexara is thrilled with our new captive musician. You make a fine mercenary for the Xylosian Empire.',
+          choices: [{ label: 'Pleasure doing business', action: () => {} }],
+        });
+        return;
+      }
+
+      if (s.concertPath === 'alien_ally') {
+        if (s.bardDefeated) {
+          this.callbacks.onOpenDialogue?.({
+            speaker: npc.name,
+            role: npc.role,
+            text: 'Excellent work! The Bard\'s lute phantoms could not stop you. We are beaming him aboard our mothership now. Take this Xylosian Laser Volley tech as payment!',
+            choices: [
+              {
+                label: 'Claim Reward: Xylosian Laser Volley (Path 1 Ending)',
+                primary: true,
+                action: () => {
+                  s.endingCompleted = 'alien_ally';
+                  this.character.title = 'Alien Bounty Hunter';
+                  this.character.gold += 300;
+                  this._grantBonusSpell('plasma_barrage');
+                  this.level.templeTheme = 'air';
+                  this.audio?.setMusicMode('victory');
+                  this.audio?.playFanfare();
+                  this.callbacks.onBanner?.(
+                    'PATH 1 COMPLETE: Bard Captured for Queen Vexara! Learned Xylosian Laser Volley!'
+                  );
+                  this.callbacks.onLevelComplete?.({
+                    endingTitle: 'Path 1 Complete — Alien Bounty Hunter',
+                    rewardSpellName: 'Xylosian Laser Volley',
+                    levelName: this.level.name,
+                  });
+                },
+              },
+            ],
+          });
+          return;
+        }
+        this.callbacks.onOpenDialogue?.({
+          speaker: npc.name,
+          role: npc.role,
+          text: 'Lyricus is still on the north stage summoning musical minions with his lute! Subdue him and return to me.',
+          choices: [{ label: 'I will capture him', action: () => {} }],
+        });
+        return;
+      }
+
+      this.callbacks.onOpenDialogue?.({
+        speaker: npc.name,
+        role: npc.role,
+        text: npc.dialogue,
+        choices: [
+          {
+            label: 'Path 1: Join the Aliens & capture Lyricus!',
+            primary: true,
+            action: () => this._startConcertPath1Aliens(),
+          },
+          {
+            label: 'Path 2: Refuse! Defend the Bard from your invasion!',
+            action: () => this._startConcertPath2Bodyguard(),
+          },
+          {
+            label: 'Path 3: Take me instead! I will become Queen Vexara\'s new Bard!',
+            action: () => this._startConcertPath3Substitute(),
+          },
+          { label: 'Step back', action: () => {} },
+        ],
+      });
+      return;
+    }
+
+    // === 3. STAR QUEEN VEXARA (Planet Xylos — Path 3) ===
+    if (npc.role === 'alien_queen') {
+      if (s.endingCompleted === 'substitute_bard') {
+        this.callbacks.onOpenDialogue?.({
+          speaker: npc.name,
+          role: npc.role,
+          text: `All hail ${this.character.name}, Royal Bard of Planet Xylos! Strike those seismic drums whenever you please!`,
+          choices: [{ label: 'Long live the Star Queen', action: () => {} }],
+        });
+        return;
+      }
+      if (s.drummerDefeated) {
+        this.callbacks.onOpenDialogue?.({
+          speaker: npc.name,
+          role: npc.role,
+          text: 'Incredible! You shattered Zor-Krak\'s earthquake rhythm and claimed the stage! I name you my new Royal Bard of Planet Xylos and grant you the Xylosian War Drums!',
+          choices: [
+            {
+              label: 'Claim Royal Bard Throne & Xylosian War Drums (Path 3 Ending)',
+              primary: true,
+              action: () => {
+                s.endingCompleted = 'substitute_bard';
+                this.character.title = 'Royal Bard of Planet Xylos';
+                this.character.gold += 400;
+                this._grantBonusSpell('seismic_drumbeat');
+                this.level.templeTheme = 'master';
+                this.audio?.setMusicMode('victory');
+                this.audio?.playFanfare();
+                this.callbacks.onBanner?.(
+                  'PATH 3 COMPLETE: Royal Bard of Planet Xylos! Learned Xylosian War Drums!'
+                );
+                this.callbacks.onLevelComplete?.({
+                  endingTitle: 'Path 3 Complete — Royal Bard of Planet Xylos',
+                  rewardSpellName: 'Xylosian War Drums',
+                  levelName: this.level.name,
+                });
+              },
+            },
+          ],
+        });
+        return;
+      }
+
+      const drummer = findNpc('alien_drummer');
+      this.callbacks.onOpenDialogue?.({
+        speaker: npc.name,
+        role: npc.role,
+        text: npc.dialogue,
+        choices: [
+          {
+            label: 'Challenge Zor-Krak to the Earthquake Drum Duel!',
+            primary: true,
+            action: () => {
+              if (drummer && !drummer.convertedToEnemy) this.convertNpcToBoss(drummer);
+            },
+          },
+          { label: 'I will prepare first', action: () => {} },
+        ],
+      });
+      return;
+    }
+
+    // === 4. ZOR-KRAK, ROYAL ALIEN DRUMMER (Planet Xylos — Path 3) ===
+    if (npc.role === 'alien_drummer') {
+      this.callbacks.onOpenDialogue?.({
+        speaker: npc.name,
+        role: npc.role,
+        text: npc.dialogue,
+        choices: [
+          {
+            label: 'Begin the Earthquake Drum Duel!',
+            primary: true,
+            action: () => this.convertNpcToBoss(npc),
+          },
+          { label: 'Wait a second', action: () => {} },
+        ],
+      });
+    }
+  }
+
+  _startConcertPath1Aliens() {
+    this.story.concertPath = 'alien_ally';
+    const cmd = this.npcs.find((n) => n.id === 'alien_commander');
+    const bard = this.npcs.find((n) => n.id === 'bard_lyricus');
+    if (cmd) cmd.allied = true;
+    // Clear ambient alien scouts so they don't attack their new ally
+    for (const e of this.enemies) {
+      if (e.kind === 'alien_jetpack') e.dead = true;
+    }
+    if (bard && !bard.convertedToEnemy) this.convertNpcToBoss(bard);
+    this.callbacks.onBanner?.(
+      'PATH 1: Allied with the Aliens! Subdue Lyricus & his lute-summoned phantoms!'
+    );
+  }
+
+  _startConcertPath2Bodyguard() {
+    this.story.concertPath = 'bodyguard';
+    const bard = this.npcs.find((n) => n.id === 'bard_lyricus');
+    const cmd = this.npcs.find((n) => n.id === 'alien_commander');
+    if (bard) bard.allied = true;
+    if (cmd && !cmd.convertedToEnemy) this.convertNpcToBoss(cmd);
+
+    // Spawn a full squad of Alien Jetpack Soldiers armed with laser pistols!
+    const trooperSpawns = [
+      { x: 4.5 * TILE_SIZE, y: 15.5 * TILE_SIZE, name: 'Jetpack Trooper Alpha' },
+      { x: 18.5 * TILE_SIZE, y: 15.5 * TILE_SIZE, name: 'Jetpack Trooper Beta' },
+      { x: 8.5 * TILE_SIZE, y: 21.5 * TILE_SIZE, name: 'Jetpack Trooper Gamma' },
+      { x: 14.5 * TILE_SIZE, y: 21.5 * TILE_SIZE, name: 'Jetpack Trooper Delta' },
+    ];
+    trooperSpawns.forEach((sp, i) => {
+      this.enemies.push({
+        id: `jp_trooper_${i}`,
+        kind: 'alien_jetpack',
+        name: sp.name,
+        x: sp.x,
+        y: sp.y,
+        hp: 90,
+        maxHp: 90,
+        damage: 13,
+        color: '#10b981',
+        radius: 14,
+        vx: 0,
+        vy: 0,
+        attackCd: 1.0 + i * 0.25,
+        specialCd: 2.0 + i * 0.4,
+        hurtFlash: 0,
+        stunTimer: 0,
+        slowTimer: 0,
+        dead: false,
+      });
+    });
+    this.callbacks.onBanner?.(
+      'PATH 2: Bard\'s Bodyguard! Defeat Commander Xylar & the Jetpack Laser Troopers!'
+    );
+  }
+
+  _startConcertPath3Substitute() {
+    this.story.concertPath = 'substitute_bard';
+    this.story.teleportedToAlienPlanet = true;
+    const dest = this.level.alienArenaSpawn || { x: 30.5 * TILE_SIZE, y: 20.5 * TILE_SIZE };
+    this.player.x = dest.x;
+    this.player.y = dest.y;
+    this.player.hp = this.player.maxHp;
+    this.player.mana = this.player.maxMana;
+    this.camX = dest.x - this.canvas.width / 2;
+    this.camY = dest.y - this.canvas.height / 2;
+    this._spawnBurst(dest.x, dest.y, '#38bdf8', 32);
+    this.audio?.playFanfare();
+    this.callbacks.onBanner?.(
+      'PATH 3: Beamed to Planet Xylos! Speak to Star Queen Vexara or Zor-Krak to duel for the Royal Bard spot!'
+    );
   }
 
   _openPriestDialogue(npc) {
@@ -1056,6 +1625,11 @@ export class RPGGame {
               this.audio?.setMusicMode('victory');
               this.audio?.playFanfare();
               this.callbacks.onBanner?.('BRANCH 1 COMPLETE: Disciple of the Light! Learned Exorcism!');
+              this.callbacks.onLevelComplete?.({
+                endingTitle: 'Branch 1 Complete — Disciple of the Fourfold Light',
+                rewardSpellName: 'Exorcism',
+                levelName: this.level.name,
+              });
             },
           },
         ],
@@ -1124,6 +1698,11 @@ export class RPGGame {
                 this.callbacks.onBanner?.(
                   `BRANCH 2 COMPLETE: Disciple of ${domainNames[elem]}! Temple Converted!`
                 );
+                this.callbacks.onLevelComplete?.({
+                  endingTitle: `Branch 2 Complete — Disciple of ${domainNames[elem]}`,
+                  rewardSpellName: BONUS_SPELLS[npc.pactSpell]?.name || 'Elemental Pact',
+                  levelName: this.level.name,
+                });
               },
             },
           ],
@@ -1222,6 +1801,11 @@ export class RPGGame {
     this.callbacks.onBanner?.(
       `BRANCH 3 COMPLETE: ${this.character.name} is Master of the Four Elements! The Temple is now YOURS!`
     );
+    this.callbacks.onLevelComplete?.({
+      endingTitle: 'Branch 3 Complete — Master of the Four Elements',
+      rewardSpellName: 'Fourfold Convergence',
+      levelName: this.level.name,
+    });
   }
 
   _grantBonusSpell(spellId) {

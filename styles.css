@@ -147,6 +147,17 @@ html, body {
   align-items: center;
 }
 
+.campaign-select {
+  background: var(--surface-2);
+  color: #fef08a;
+  border: 1px solid rgba(250, 204, 21, 0.5);
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
 .btn {
   background: var(--surface-2);
   color: var(--text);
@@ -735,6 +746,159 @@ input[type="text"], input[type="number"], select, .name-input {
 
 .btn.danger-btn:hover {
   background: linear-gradient(180deg, #ef4444, #b91c1c);
+}
+
+/* Start Screen & Victory Modals */
+dialog.start-modal {
+  width: 820px;
+}
+
+.start-grid {
+  display: grid;
+  grid-template-columns: 230px 1fr;
+  gap: 16px;
+  padding: 16px 18px;
+  overflow-y: auto;
+}
+
+.start-hero-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  background: #0f1320;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px;
+  text-align: center;
+}
+
+#start-hero-preview {
+  width: 170px;
+  height: 170px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+}
+
+.start-story-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.start-picker-label {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #fef08a;
+}
+
+.start-custom-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.campaign-order-list {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  max-height: 150px;
+  overflow-y: auto;
+}
+
+.campaign-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 6px 9px;
+  border-radius: 8px;
+  background: #101524;
+  border: 1px solid var(--border);
+  font-size: 12px;
+}
+
+.campaign-item.current {
+  border-color: var(--brand-color);
+  background: rgba(250, 204, 21, 0.1);
+}
+
+.campaign-item-actions {
+  display: flex;
+  gap: 4px;
+}
+
+.start-story-box {
+  background: #0f1320;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-size: 13px;
+  line-height: 1.55;
+  color: #e2e8f0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.start-story-box h3 {
+  margin: 0;
+  font-size: 15px;
+  color: #fef08a;
+}
+
+.start-story-box p {
+  margin: 0;
+}
+
+.start-story-box ul {
+  margin: 2px 0 0 18px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  color: #cbd5e1;
+  font-size: 12px;
+}
+
+.victory-modal {
+  border-color: #facc15;
+  box-shadow: 0 24px 64px rgba(234, 179, 8, 0.32);
+}
+
+.victory-reward {
+  margin: 0;
+  padding: 10px 12px;
+  border-radius: 9px;
+  background: rgba(250, 204, 21, 0.14);
+  border: 1px solid rgba(250, 204, 21, 0.45);
+  color: #fef08a;
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.victory-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.btn.endless-btn {
+  background: linear-gradient(180deg, #0891b2, #0e7490);
+  border-color: #22d3ee;
+  color: #ffffff;
+}
+
+.btn.endless-btn:hover {
+  background: linear-gradient(180deg, #06b6d4, #0891b2);
+}
+
+@media (max-width: 720px) {
+  .start-grid { grid-template-columns: 1fr; }
 }
 
 /* Progressive enhancement fallback for browsers without accent-color */

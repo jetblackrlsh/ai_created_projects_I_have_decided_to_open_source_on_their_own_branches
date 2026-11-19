@@ -33,6 +33,10 @@ const ROLE_VOICES = {
   elemental_earth: { voice: 'Ralph', rate: '155' },
   elemental_air: { voice: 'Karen', rate: '205' },
   villager: { voice: 'Reed', rate: '182' },
+  bard: { voice: 'Daniel', rate: '192' },
+  alien_commander: { voice: 'Fred', rate: '188' },
+  alien_queen: { voice: 'Moira', rate: '165' },
+  alien_drummer: { voice: 'Ralph', rate: '175' },
 };
 
 const ttsCache = new Map();

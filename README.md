@@ -16,12 +16,13 @@ An action-adventure fantasy RPG with full Xbox controller support, 9 playable sp
   - **Record MP4**: `View` / `F9`
 - **Dungeon Level Builder**: Paint tiles, place NPCs with custom mission assignments and rewards, place enemies, traps, treasure chests, and spawn points. Export/import levels as `.json` and playtest immediately.
 - **In-Game MP4 Playthrough Recording (< 10 MB)**: Records a WYSIWYG composite of the game, HUD, action bar, banners, NPC dialogue boxes, and Game Over screen alongside synchronized SFX, music, and NPC TTS voices, automatically compressed to stay strictly under **10 MB** for easy sharing.
-- **Built-In Campaign — *The Temple of the Four Elements***:
-  1. **Branch 1 (Disciple of the Light)**: Defeat all 4 Elemental Demons and return to High Priest Aldric to become a Disciple of the Light and unlock **Exorcism**.
-  2. **Branch 2 (Disciple of an Element — 4 Variants)**: Ally with one Elemental Demon to gain their Elemental Pact Spell, defeat the other 3 Elementals and High Priest Aldric, and convert the temple into that elemental's domain.
-  3. **Branch 3 (Master of the Four Elements)**: Pretend to ally with all 4 Elemental Demons to gain all 4 Elemental Pact Spells, survive the combined battle against all 4 Elementals and High Priest Aldric, and claim the Central Sanctum Altar to unlock **Fourfold Convergence** and convert the temple into your own.
+- **Start Screen & Pre-Game Hero Prep**: Every adventure begins paused on a Start Screen with a story briefing, live Hero preview, and one-click access to customize or import your Hero JSON before stepping into combat.
+- **Custom Multi-Level Campaigns**: Import multiple level JSONs (or combine built-in levels) and reorder them (`▲`/`▼`) on the Start Screen. Carry the exact same Hero—including earned spells, potions, gold, remaining HP, and remaining MP—from chapter to chapter.
+- **Endless Procedurally Generated Dungeons**: Completing any level lets you jump directly into escalating procedurally generated dungeons (`Floor 1`, `Floor 2`, ...) with rotating biomes, traps, treasure chests, and scaling Floor Guardian bosses so you can immediately unleash your newly unlocked reward spells.
+- **Built-In Campaigns**:
+  - ***The Temple of the Four Elements***: 3 story branches — banish all 4 Elemental Demons for **Exorcism**, ally with one elemental to convert the temple, or pretend to ally with all 4 to battle all 5 bosses and unlock **Fourfold Convergence**.
+  - ***Concert Hall Invasion: Ballad of the Star Queen***: 3 story paths — join Commander Xylar to capture **Lyricus, Master Bard** (who summons lute minions) for **Xylosian Laser Volley**, defend Lyricus as his bodyguard against alien jetpack laser troopers for **Chord of the Virtuoso**, or take the Bard's place on **Planet Xylos** and duel **Zor-Krak's** earthquake drums for **Xylosian War Drums**.
 - **True Game Over**: Dying resets the level from the beginning.
-- **AI Agent Skills & Creation Tools**: Includes workspace skills (`.agents/skills/create-custom-character` and `.agents/skills/create-custom-level`), `AGENTS.md`, and zero-dependency Node.js CLI tools (`tools/character-cli.mjs` and `tools/level-cli.mjs`) so you can describe a hero concept or dungeon adventure to an AI agent and have it build, validate, preview, and export an import-ready `.json` file for you.
 
 ## Running Locally
 

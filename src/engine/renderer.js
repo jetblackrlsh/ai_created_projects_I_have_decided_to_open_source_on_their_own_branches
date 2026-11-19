@@ -617,6 +617,11 @@ export class GameRenderer {
       this._drawChest(ctx, chest, time);
     }
 
+    // 3b. Endless Dungeon Descent Portal
+    if (game.level.isEndlessDungeon && game.level.portalPos) {
+      this._drawPortal(ctx, game.level.portalPos.x, game.level.portalPos.y, game.portalUnlocked, time);
+    }
+
     // 4. NPCs (including friendly/neutral Elementals & Worshippers & High Priest)
     for (const npc of game.npcs) {
       if (npc.convertedToEnemy) continue;
@@ -848,6 +853,36 @@ export class GameRenderer {
     ctx.restore();
   }
 
+  _drawPortal(ctx, x, y, unlocked, time) {
+    ctx.save();
+    ctx.translate(x, y);
+    const r = unlocked ? 26 + Math.sin(time * 5) * 3 : 20;
+    ctx.shadowColor = unlocked ? '#22d3ee' : '#6b21a8';
+    ctx.shadowBlur = unlocked ? 26 : 8;
+    ctx.strokeStyle = unlocked ? '#fde047' : '#7e22ce';
+    ctx.lineWidth = unlocked ? 4 : 2;
+    ctx.beginPath();
+    ctx.arc(0, 0, r, 0, Math.PI * 2);
+    ctx.stroke();
+
+    ctx.fillStyle = unlocked ? 'rgba(34, 211, 238, 0.35)' : 'rgba(88, 28, 135, 0.25)';
+    ctx.beginPath();
+    ctx.arc(0, 0, r - 4, 0, Math.PI * 2);
+    ctx.fill();
+
+    if (unlocked) {
+      ctx.rotate(time * 2.5);
+      ctx.strokeStyle = '#67e8f9';
+      ctx.lineWidth = 2.5;
+      ctx.setLineDash([8, 8]);
+      ctx.beginPath();
+      ctx.arc(0, 0, r - 7, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.setLineDash([]);
+    }
+    ctx.restore();
+  }
+
   _drawChest(ctx, chest, time) {
     ctx.save();
     ctx.translate(chest.x, chest.y);
@@ -912,6 +947,67 @@ export class GameRenderer {
         ctx.fill();
         ctx.fillStyle = '#facc15';
         ctx.fillRect(-1.5, -26, 3, 7);
+      } else if (npc.role === 'bard') {
+        // Plumed beret + enchanted lute!
+        ctx.fillStyle = '#831843';
+        ctx.beginPath();
+        ctx.ellipse(0, -20, 11, 4.5, -0.15, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = '#f472b6';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(4, -22);
+        ctx.quadraticCurveTo(14, -31, 16, -24);
+        ctx.stroke();
+        // Lute in hand
+        ctx.fillStyle = '#b45309';
+        ctx.beginPath();
+        ctx.ellipse(13, 4, 7, 5, -0.4, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = '#fde047';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(16, 0);
+        ctx.lineTo(24, -8);
+        ctx.stroke();
+      } else if (npc.role === 'alien_commander' || npc.role === 'alien_queen' || npc.role === 'alien_drummer') {
+        // Alien antennae, glowing visor, futuristic aura
+        ctx.fillStyle = npc.color;
+        ctx.beginPath();
+        ctx.arc(0, -12, 9.5, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = npc.accent;
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(-5, -20);
+        ctx.lineTo(-10, -30);
+        ctx.moveTo(5, -20);
+        ctx.lineTo(10, -30);
+        ctx.stroke();
+        ctx.fillStyle = npc.accent;
+        ctx.fillRect(-6, -14, 12, 3.5);
+        if (npc.role === 'alien_drummer') {
+          // Futuristic glowing war drums
+          ctx.fillStyle = '#0f172a';
+          ctx.strokeStyle = '#06b6d4';
+          ctx.lineWidth = 2.5;
+          ctx.beginPath();
+          ctx.ellipse(-15, 6, 8, 5, 0, 0, Math.PI * 2);
+          ctx.ellipse(15, 6, 8, 5, 0, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.stroke();
+        } else if (npc.role === 'alien_queen') {
+          // Cosmic star crown
+          ctx.fillStyle = '#fde047';
+          ctx.beginPath();
+          ctx.moveTo(-8, -20);
+          ctx.lineTo(-4, -31);
+          ctx.lineTo(0, -24);
+          ctx.lineTo(4, -31);
+          ctx.lineTo(8, -20);
+          ctx.closePath();
+          ctx.fill();
+        }
       }
     }
 
@@ -987,6 +1083,74 @@ export class GameRenderer {
       ctx.beginPath();
       ctx.arc(0, 0, 28, 0, Math.PI * 2);
       ctx.stroke();
+    } else if (e.kind === 'bard_boss') {
+      // Lyricus, Master Bard Boss with glowing musical aura & lute
+      ctx.shadowColor = '#f472b6';
+      ctx.shadowBlur = 22;
+      ctx.fillStyle = e.hurtFlash > 0 ? '#ffffff' : '#831843';
+      ctx.beginPath();
+      ctx.arc(0, 0, 22, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.shadowBlur = 0;
+      ctx.strokeStyle = '#f472b6';
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.arc(0, 0, 28 + Math.sin(time * 8) * 3, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.fillStyle = '#fde047';
+      ctx.font = '700 18px system-ui, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('♫', 0, 6);
+    } else if (e.kind === 'alien_drummer_boss') {
+      // Zor-Krak, Royal Alien Drummer Boss with twin futuristic earthquake drums
+      ctx.shadowColor = '#06b6d4';
+      ctx.shadowBlur = 24;
+      ctx.fillStyle = e.hurtFlash > 0 ? '#ffffff' : '#0891b2';
+      ctx.beginPath();
+      ctx.arc(0, 0, 24, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.shadowBlur = 0;
+      ctx.strokeStyle = '#f43f5e';
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.ellipse(-22, 8, 10, 6, 0, 0, Math.PI * 2);
+      ctx.ellipse(22, 8, 10, 6, 0, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.fillStyle = '#fef08a';
+      ctx.fillRect(-9, -6, 18, 4);
+    } else if (e.kind === 'alien_jetpack' || e.kind === 'alien_commander') {
+      // Alien soldier with jetpack thruster flames + laser pistol!
+      const isCmd = e.kind === 'alien_commander';
+      const r = isCmd ? 21 : 14;
+      ctx.fillStyle = '#38bdf8';
+      ctx.beginPath();
+      ctx.moveTo(-6, r - 2);
+      ctx.lineTo(0, r + 10 + Math.sin(time * 30) * 4);
+      ctx.lineTo(6, r - 2);
+      ctx.closePath();
+      ctx.fill();
+      ctx.fillStyle = e.hurtFlash > 0 ? '#ffffff' : isCmd ? '#059669' : '#10b981';
+      ctx.beginPath();
+      ctx.arc(0, 0, r, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = '#38bdf8';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+      ctx.fillStyle = '#a5f3fc';
+      ctx.fillRect(-r * 0.5, -4, r, 4);
+    } else if (e.kind === 'harmonic_minion') {
+      // Summoned musical phantom minion
+      ctx.shadowColor = '#f472b6';
+      ctx.shadowBlur = 12;
+      ctx.fillStyle = e.hurtFlash > 0 ? '#ffffff' : '#ec4899';
+      ctx.beginPath();
+      ctx.arc(0, 0, 12, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.shadowBlur = 0;
+      ctx.fillStyle = '#ffffff';
+      ctx.font = '700 13px system-ui, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('♪', 0, 4);
     } else {
       ctx.fillStyle = 'rgba(0,0,0,0.4)';
       ctx.beginPath();

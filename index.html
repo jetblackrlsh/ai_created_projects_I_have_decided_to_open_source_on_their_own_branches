@@ -43,6 +43,13 @@
       </div>
 
       <nav class="toolbar">
+        <select id="campaign-switcher" class="campaign-select" aria-label="Select Mode or Campaign">
+          <option value="grand_campaign">Campaign: Temple → Concert Hall</option>
+          <option value="concert">Level: Concert Hall Invasion</option>
+          <option value="temple">Level: Temple of the Four Elements</option>
+          <option value="endless">Endless Procedural Dungeon</option>
+        </select>
+        <button id="btn-start-screen" type="button" class="btn">Start Screen</button>
         <button id="btn-creator" type="button" class="btn">Hero Creator</button>
         <button id="btn-builder" type="button" class="btn">Level Builder</button>
         <button id="btn-quest" type="button" class="btn">Story &amp; Branches</button>
@@ -255,10 +262,67 @@
     </div>
     <p id="gameover-cause" class="dialogue-body">Defeated in the dungeon.</p>
     <p id="gameover-stats" class="muted"></p>
-    <p class="gameover-warning">All level progress, opened chests, and pact spells from this run have been lost. You must start over from the beginning of the level.</p>
+    <p class="gameover-warning">All progress in this level run has been lost. Restart from the beginning of the level or return to the Start Screen.</p>
     <div class="modal-foot">
-      <span class="muted">Press <strong>A</strong> / <strong>Enter</strong> or click to restart</span>
+      <button id="btn-gameover-start-screen" type="button" class="btn">🏠 Start Screen</button>
       <button id="btn-gameover-restart" type="button" class="btn danger-btn" autofocus>↺ Restart Level from Beginning</button>
+    </div>
+  </dialog>
+
+  <!-- Native Modal Dialog: Start Screen (Story Briefing, Hero Prep & Campaign Picker) -->
+  <dialog id="start-dialog" class="modal start-modal" closedby="none" aria-labelledby="start-title">
+    <div class="modal-head">
+      <h2 id="start-title">✦ AETHERBOUND — PREPARE FOR ADVENTURE</h2>
+      <span id="start-chapter-badge" class="badge">Ready to Begin</span>
+    </div>
+    <div class="start-grid">
+      <section class="start-hero-panel">
+        <canvas id="start-hero-preview" width="180" height="180"></canvas>
+        <strong id="start-hero-name">Aetheris</strong>
+        <small id="start-hero-meta" class="muted">Human Spellblade</small>
+        <div id="start-hero-vitals" class="derived-row"></div>
+        <button id="btn-start-customize" type="button" class="btn full">⚔ Customize / Import Hero First</button>
+      </section>
+      <section class="start-story-panel">
+        <label class="start-picker-label">
+          Choose Adventure / Campaign
+          <select id="start-mode-select">
+            <option value="grand_campaign">Grand Campaign: Ch.1 Fourfold Temple → Ch.2 Concert Hall → Endless Abyss</option>
+            <option value="concert">Standalone Level: Concert Hall Invasion (Ballad of the Star Queen)</option>
+            <option value="temple">Standalone Level: The Temple of the Four Elements</option>
+            <option value="endless">Endless Procedural Dungeon (Floor 1+)</option>
+          </select>
+        </label>
+        <div class="start-custom-row">
+          <button id="btn-campaign-add-json" type="button" class="btn">＋ Import Level JSON(s)</button>
+          <button id="btn-campaign-add-temple" type="button" class="btn">＋ Temple</button>
+          <button id="btn-campaign-add-concert" type="button" class="btn">＋ Concert Hall</button>
+          <button id="btn-campaign-clear" type="button" class="btn">Clear</button>
+          <input id="campaign-json-file" type="file" accept=".json,application/json" multiple hidden />
+        </div>
+        <div id="campaign-order-list" class="campaign-order-list"></div>
+        <div id="start-story-box" class="start-story-box"></div>
+      </section>
+    </div>
+    <div class="modal-foot">
+      <span class="muted">Enemies wait until you click Start · Xbox Controller <strong>A</strong> or <strong>Enter</strong> begins</span>
+      <button id="btn-start-play" type="button" class="btn primary" autofocus>▶ Start Adventure</button>
+    </div>
+  </dialog>
+
+  <!-- Native Modal Dialog: Level Complete (Next Campaign Chapter or Endless Dungeon) -->
+  <dialog id="victory-dialog" class="modal compact victory-modal" aria-labelledby="victory-title">
+    <div class="modal-head">
+      <h2 id="victory-title">🏆 LEVEL COMPLETE!</h2>
+      <form method="dialog"><button type="submit" value="close" class="btn">✕</button></form>
+    </div>
+    <p id="victory-ending" class="dialogue-body"></p>
+    <p id="victory-reward" class="victory-reward"></p>
+    <p id="victory-carry" class="muted"></p>
+    <div class="victory-actions">
+      <button id="btn-victory-next-chapter" type="button" class="btn primary full" hidden>▶ Continue to Next Campaign Chapter</button>
+      <button id="btn-victory-endless" type="button" class="btn endless-btn full" autofocus>🌀 Enter Endless Procedural Dungeon (Use Your New Spell!)</button>
+      <form method="dialog"><button type="submit" value="explore" class="btn full">Keep Exploring Current Level</button></form>
     </div>
   </dialog>
 

@@ -8,6 +8,10 @@ const ROLE_PLAYBACK = {
   elemental_earth: { playbackRate: 0.78, gain: 1.7 },
   elemental_air: { playbackRate: 1.08, gain: 1.55 },
   villager: { playbackRate: 1.0, gain: 1.5 },
+  bard: { playbackRate: 1.04, gain: 1.55 },
+  alien_commander: { playbackRate: 0.92, gain: 1.6 },
+  alien_queen: { playbackRate: 0.94, gain: 1.6 },
+  alien_drummer: { playbackRate: 0.82, gain: 1.7 },
 };
 
 export class DialogueTTS {

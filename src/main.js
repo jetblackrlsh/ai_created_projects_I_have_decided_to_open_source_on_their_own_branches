@@ -2,12 +2,14 @@
 
 import { SPECIES_BY_ID } from './data/species.js';
 import { CLASS_BY_ID } from './data/classes.js';
-import { createDefaultCharacter, MAX_POTIONS } from './data/spells.js';
+import { createDefaultCharacter, MAX_POTIONS, computeDerivedStats } from './data/spells.js';
 import { createTempleOfFourElementsLevel } from './data/templeLevel.js';
+import { createConcertHallInvasionLevel } from './data/concertLevel.js';
+import { generateProceduralFloor } from './data/proceduralDungeon.js';
 import { AudioEngine } from './engine/audio.js';
 import { DialogueTTS } from './engine/tts.js';
 import { InputManager } from './engine/input.js';
-import { GameRenderer } from './engine/renderer.js';
+import { GameRenderer, drawCharacter } from './engine/renderer.js';
 import { PlaythroughRecorder } from './engine/recorder.js';
 import { RPGGame } from './engine/game.js';
 import { CharacterCreatorUI } from './ui/creator.js';
@@ -21,22 +23,316 @@ const renderer = new GameRenderer(canvas);
 const recorder = new PlaythroughRecorder(canvas, audio);
 
 let activeCharacter = createDefaultCharacter('human', 'spellblade');
-let activeLevel = createTempleOfFourElementsLevel();
+let activeMode = 'grand_campaign'; // grand_campaign | concert | temple | endless | custom_campaign
+let campaignQueue = [createTempleOfFourElementsLevel(), createConcertHallInvasionLevel()];
+let campaignIndex = 0;
+let activeLevel = campaignQueue[0];
 let bannerTimer = null;
 let activeBannerText = '';
 let recTimer = null;
+let reopenStartAfterCreator = false;
+let startPreviewRaf = null;
+let startPreviewTime = 0;
 
-// Dialogue & Game Over state for Xbox controller + WYSIWYG MP4 recording
+// Dialogue, Start Screen, Victory & Game Over modals
 const dialogueDialog = document.getElementById('dialogue-dialog');
 const gameOverDialog = document.getElementById('gameover-dialog');
+const startDialog = document.getElementById('start-dialog');
+const victoryDialog = document.getElementById('victory-dialog');
 let dialogueChoicesData = [];
 let dialogueSelectedIdx = 0;
 let activeDialogueSnapshot = null;
 let activeGameOverSnapshot = null;
 
-function openGameOver({ killerName, levelName, kills, chestsOpened }) {
+function buildCampaignQueueForMode(mode) {
+  if (mode === 'grand_campaign') {
+    return [createTempleOfFourElementsLevel(), createConcertHallInvasionLevel()];
+  }
+  if (mode === 'concert') return [createConcertHallInvasionLevel()];
+  if (mode === 'temple') return [createTempleOfFourElementsLevel()];
+  if (mode === 'endless') return [generateProceduralFloor(1)];
+  return campaignQueue.length ? campaignQueue : [createTempleOfFourElementsLevel()];
+}
+
+function getStoryBriefingHTML(level, mode) {
+  if (mode === 'grand_campaign' || campaignQueue.length > 1) {
+    const chapterList = campaignQueue
+      .map((lv, idx) => `<li><strong>Chapter ${idx + 1}:</strong> ${lv.name}${idx === campaignIndex ? ' <em>(Next)</em>' : ''}</li>`)
+      .join('');
+    return `
+      <h3>Multi-Level Campaign (${campaignQueue.length} Chapters + Endless Abyss)</h3>
+      <p>Play straight through linked chapters as the <strong>same Hero</strong>—carrying over all earned <strong>spells, potions, gold, remaining HP, and remaining MP</strong> from level to level!</p>
+      <ul>${chapterList}<li><strong>Post-Campaign:</strong> Endless Procedurally Generated Dungeons!</li></ul>
+      <p><strong>Current Chapter Briefing:</strong> ${level.description || 'Explore the dungeon and complete your mission.'}</p>
+    `;
+  }
+  if (level.isConcertCampaign) {
+    return `
+      <h3>${level.name}</h3>
+      <p>${level.description}</p>
+      <ul>
+        <li><strong>Path 1:</strong> Join Commander Xylar to capture Lyricus (beware his lute-summoned minions!).</li>
+        <li><strong>Path 2:</strong> Become Lyricus's bodyguard against alien jetpack soldiers with laser pistols.</li>
+        <li><strong>Path 3:</strong> Volunteer to take the Bard's place and duel Zor-Krak's earthquake drums on Planet Xylos.</li>
+      </ul>
+    `;
+  }
+  if (level.isTempleCampaign) {
+    return `
+      <h3>${level.name}</h3>
+      <p>${level.description}</p>
+      <ul>
+        <li><strong>Branch 1:</strong> Banish all 4 Elemental Demons for High Priest Aldric to unlock <em>Exorcism</em>.</li>
+        <li><strong>Branch 2:</strong> Ally with one Elemental, claim their pact spell, and convert the temple to their domain.</li>
+        <li><strong>Branch 3:</strong> Pretend to ally with all 4 Elementals, survive all 5 bosses, and claim the temple as Master of the Four Elements.</li>
+      </ul>
+    `;
+  }
+  return `
+    <h3>${level.name}</h3>
+    <p>${level.description || 'Descend through procedurally generated dungeons, defeat every Floor Guardian, and see how deep you can go with your toolkit!'}</p>
+  `;
+}
+
+function startStartScreenPreview() {
+  if (startPreviewRaf) cancelAnimationFrame(startPreviewRaf);
+  const cv = document.getElementById('start-hero-preview');
+  const ctx = cv.getContext('2d');
+  const loop = () => {
+    if (!startDialog.open) return;
+    startPreviewTime += 0.016;
+    ctx.clearRect(0, 0, cv.width, cv.height);
+    const grad = ctx.createRadialGradient(90, 90, 8, 90, 90, 95);
+    grad.addColorStop(0, '#2a2d47');
+    grad.addColorStop(1, '#11131f');
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, cv.width, cv.height);
+    drawCharacter(ctx, activeCharacter, 90, 102, {
+      time: startPreviewTime,
+      moving: true,
+      aimAngle: Math.sin(startPreviewTime * 0.9) * 0.4,
+      zoom: 2.3,
+    });
+    startPreviewRaf = requestAnimationFrame(loop);
+  };
+  startPreviewRaf = requestAnimationFrame(loop);
+}
+
+function openStartScreen({ carryVitals = null } = {}) {
+  game.paused = true;
+  const sp = SPECIES_BY_ID[activeCharacter.speciesId];
+  const cl = CLASS_BY_ID[activeCharacter.classId];
+  const derived = computeDerivedStats(activeCharacter);
+  const curHp = carryVitals ? Math.round(carryVitals.hp) : derived.maxHp;
+  const curMp = carryVitals ? Math.round(carryVitals.mana) : derived.maxMana;
+
+  document.getElementById('start-hero-name').textContent = activeCharacter.name;
+  document.getElementById('start-hero-meta').textContent = `${sp.name} ${cl.name} · ${activeCharacter.title}`;
+  document.getElementById('start-hero-vitals').innerHTML = `
+    <span>HP <b>${curHp}/${derived.maxHp}</b></span>
+    <span>MP <b>${curMp}/${derived.maxMana}</b></span>
+    <span>🧪 <b>${activeCharacter.potions}/${MAX_POTIONS}</b></span>
+  `;
+
+  const modeSel = document.getElementById('start-mode-select');
+  if (activeMode !== 'custom_campaign') modeSel.value = activeMode;
+  const topSel = document.getElementById('campaign-switcher');
+  if (activeMode !== 'custom_campaign') topSel.value = activeMode;
+
+  const badge = document.getElementById('start-chapter-badge');
+  badge.textContent =
+    campaignQueue.length > 1
+      ? `Campaign: Chapter ${campaignIndex + 1} of ${campaignQueue.length}`
+      : activeLevel.isEndlessDungeon
+        ? 'Endless Mode'
+        : 'Standalone Level';
+
+  renderCampaignOrderList();
+  document.getElementById('start-story-box').innerHTML = getStoryBriefingHTML(activeLevel, activeMode);
+
+  if (!startDialog.open) startDialog.showModal();
+  startStartScreenPreview();
+}
+
+function renderCampaignOrderList() {
+  const listEl = document.getElementById('campaign-order-list');
+  if (!campaignQueue.length) {
+    listEl.innerHTML = `<span class="muted">No levels in playlist yet — import Level JSON(s) or add a built-in level above.</span>`;
+    return;
+  }
+  listEl.innerHTML = campaignQueue
+    .map(
+      (lv, idx) => `
+      <div class="campaign-item ${idx === campaignIndex ? 'current' : ''}">
+        <span><strong>${idx + 1}.</strong> ${lv.name}</span>
+        <div class="campaign-item-actions">
+          <button type="button" class="mini-btn" data-cmove="up" data-cidx="${idx}" title="Move Up" ${idx === 0 ? 'disabled' : ''}>▲</button>
+          <button type="button" class="mini-btn" data-cmove="down" data-cidx="${idx}" title="Move Down" ${idx === campaignQueue.length - 1 ? 'disabled' : ''}>▼</button>
+          <button type="button" class="mini-btn" data-cmove="del" data-cidx="${idx}" title="Remove" ${campaignQueue.length <= 1 ? 'disabled' : ''}>✕</button>
+        </div>
+      </div>`
+    )
+    .join('');
+
+  listEl.querySelectorAll('[data-cmove]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const idx = Number(btn.dataset.cidx);
+      const act = btn.dataset.cmove;
+      if (act === 'up' && idx > 0) {
+        [campaignQueue[idx - 1], campaignQueue[idx]] = [campaignQueue[idx], campaignQueue[idx - 1]];
+      } else if (act === 'down' && idx < campaignQueue.length - 1) {
+        [campaignQueue[idx + 1], campaignQueue[idx]] = [campaignQueue[idx], campaignQueue[idx + 1]];
+      } else if (act === 'del' && campaignQueue.length > 1) {
+        campaignQueue.splice(idx, 1);
+      }
+      campaignIndex = Math.min(campaignIndex, campaignQueue.length - 1);
+      activeLevel = campaignQueue[campaignIndex];
+      activeMode = campaignQueue.length > 1 ? 'custom_campaign' : activeMode;
+      game.load(activeCharacter, activeLevel, { startPaused: true });
+      openStartScreen();
+    });
+  });
+}
+
+function beginSelectedAdventure({ carryVitals = null } = {}) {
+  if (!campaignQueue.length) {
+    alert('Add or import at least one level to your campaign playlist first!');
+    return;
+  }
+  activeLevel = campaignQueue[campaignIndex] || campaignQueue[0];
+  if (startPreviewRaf) cancelAnimationFrame(startPreviewRaf);
+  if (startDialog.open) startDialog.close();
+  game.load(activeCharacter, activeLevel, { carryVitals, startPaused: false });
+  showBanner(`Entered: ${activeLevel.name}`);
+}
+
+startDialog.addEventListener('cancel', (e) => e.preventDefault());
+startDialog.addEventListener('close', () => {
+  if (startPreviewRaf) cancelAnimationFrame(startPreviewRaf);
+  startDialog.returnValue = '';
+});
+
+document.getElementById('start-mode-select').addEventListener('change', (e) => {
+  activeMode = e.target.value;
+  campaignQueue = buildCampaignQueueForMode(activeMode);
+  campaignIndex = 0;
+  activeLevel = campaignQueue[0];
+  game.load(activeCharacter, activeLevel, { startPaused: true });
+  openStartScreen();
+});
+
+const campaignFileInput = document.getElementById('campaign-json-file');
+document.getElementById('btn-campaign-add-json').addEventListener('click', () => campaignFileInput.click());
+campaignFileInput.addEventListener('change', async (e) => {
+  const files = Array.from(e.target.files || []);
+  if (!files.length) return;
+  for (const file of files) {
+    try {
+      const parsed = JSON.parse(await file.text());
+      if (!Array.isArray(parsed.tiles) || !parsed.width || !parsed.height) {
+        throw new Error(`${file.name} is not a valid level JSON.`);
+      }
+      campaignQueue.push(parsed);
+      activeMode = 'custom_campaign';
+    } catch (err) {
+      alert(err.message);
+    }
+  }
+  activeLevel = campaignQueue[campaignIndex];
+  campaignFileInput.value = '';
+  openStartScreen();
+});
+
+document.getElementById('btn-campaign-add-temple').addEventListener('click', () => {
+  campaignQueue.push(createTempleOfFourElementsLevel());
+  activeMode = 'custom_campaign';
+  activeLevel = campaignQueue[campaignIndex];
+  openStartScreen();
+});
+
+document.getElementById('btn-campaign-add-concert').addEventListener('click', () => {
+  campaignQueue.push(createConcertHallInvasionLevel());
+  activeMode = 'custom_campaign';
+  activeLevel = campaignQueue[campaignIndex];
+  openStartScreen();
+});
+
+document.getElementById('btn-campaign-clear').addEventListener('click', () => {
+  campaignQueue = [];
+  campaignIndex = 0;
+  activeMode = 'custom_campaign';
+  renderCampaignOrderList();
+});
+
+document.getElementById('btn-start-customize').addEventListener('click', () => {
+  reopenStartAfterCreator = true;
+  if (startDialog.open) startDialog.close();
+  creatorUI.open(activeCharacter);
+});
+
+document.getElementById('btn-start-play').addEventListener('click', () => {
+  audio.ensureContext();
+  beginSelectedAdventure();
+});
+
+function openVictoryModal({ endingTitle, rewardSpellName, levelName }) {
+  game.paused = true;
+  activeCharacter = structuredClone(game.character);
+  document.getElementById('victory-ending').textContent = `${endingTitle} in ${levelName}!`;
+  document.getElementById('victory-reward').textContent = rewardSpellName
+    ? `✨ New Spell Unlocked: ${rewardSpellName} (Equipped on RT / R!)`
+    : `✨ Victory achieved!`;
+  document.getElementById('victory-carry').textContent =
+    `Carrying over: ${Math.ceil(game.player.hp)}/${game.player.maxHp} HP · ${Math.floor(game.player.mana)}/${game.player.maxMana} MP · ${game.character.potions}/${MAX_POTIONS} Potions · ${game.character.bonusSpells.length} Bonus Spell(s)`;
+
+  const nextBtn = document.getElementById('btn-victory-next-chapter');
+  const hasNextChapter = campaignIndex + 1 < campaignQueue.length;
+  if (hasNextChapter) {
+    const nextLvl = campaignQueue[campaignIndex + 1];
+    nextBtn.hidden = false;
+    nextBtn.textContent = `▶ Next Chapter (${campaignIndex + 2}/${campaignQueue.length}): ${nextLvl.name}`;
+  } else {
+    nextBtn.hidden = true;
+  }
+
+  if (!victoryDialog.open) victoryDialog.showModal();
+}
+
+victoryDialog.addEventListener('close', () => {
+  victoryDialog.returnValue = '';
+  if (!startDialog.open && !dialogueDialog.open && !gameOverDialog.open) {
+    game.paused = false;
+  }
+});
+
+document.getElementById('btn-victory-next-chapter').addEventListener('click', () => {
+  const vitals = { hp: game.player.hp, mana: game.player.mana };
+  activeCharacter = structuredClone(game.character);
+  campaignIndex++;
+  activeLevel = campaignQueue[campaignIndex];
+  victoryDialog.close();
+  // Show Start Screen briefing for the next chapter with carried-over vitals & hero!
+  game.load(activeCharacter, activeLevel, { carryVitals: vitals, startPaused: true });
+  openStartScreen({ carryVitals: vitals });
+  // Ensure clicking Start Adventure preserves carried vitals for this chapter transition
+  document.getElementById('btn-start-play').onclick = () => {
+    audio.ensureContext();
+    document.getElementById('btn-start-play').onclick = null;
+    beginSelectedAdventure({ carryVitals: vitals });
+  };
+});
+
+document.getElementById('btn-victory-endless').addEventListener('click', () => {
+  victoryDialog.close();
+  activeCharacter = structuredClone(game.character);
+  game.startEndlessRun(true);
+});
+
+function openGameOver({ killerName, levelName, kills, chestsOpened, isEndless, endlessFloor }) {
   const cause = `${game.character.name} was slain by ${killerName} in ${levelName}.`;
-  const stats = `Run Summary: ${kills} enemies vanquished · ${chestsOpened} treasure chests opened.`;
+  const stats = isEndless
+    ? `Endless Run Summary: Reached Floor ${endlessFloor} · ${kills} total enemies vanquished · ${chestsOpened} chests opened.`
+    : `Run Summary: ${kills} enemies vanquished · ${chestsOpened} treasure chests opened.`;
   document.getElementById('gameover-cause').textContent = cause;
   document.getElementById('gameover-stats').textContent = stats;
   activeGameOverSnapshot = { cause, stats };
@@ -62,6 +358,13 @@ gameOverDialog.addEventListener('close', () => {
 
 document.getElementById('btn-gameover-restart').addEventListener('click', () => {
   restartFromGameOver();
+});
+
+document.getElementById('btn-gameover-start-screen').addEventListener('click', () => {
+  activeGameOverSnapshot = null;
+  if (gameOverDialog.open) gameOverDialog.close();
+  game.load(activeCharacter, activeLevel, { startPaused: true });
+  openStartScreen();
 });
 
 function showBanner(msg) {
@@ -178,6 +481,7 @@ const game = new RPGGame({
     onBanner: showBanner,
     onOpenDialogue: openDialogue,
     onGameOver: openGameOver,
+    onLevelComplete: openVictoryModal,
     onToggleRecord: toggleRecording,
     onAfterRender: (g) => {
       if (recorder.recording) {
@@ -189,9 +493,16 @@ const game = new RPGGame({
       }
     },
     onPause: () => {
-      if (!game.gameOver) openQuestJournal();
+      if (!game.gameOver && !startDialog.open) openQuestJournal();
     },
     onPausedInput: (inp) => {
+      if (startDialog.open) {
+        if (inp.uiConfirm) {
+          audio.ensureContext();
+          document.getElementById('btn-start-play').click();
+        }
+        return;
+      }
       if (gameOverDialog.open) {
         if (inp.uiConfirm) restartFromGameOver();
         return;
@@ -249,14 +560,22 @@ const creatorDialog = document.getElementById('creator-dialog');
 const creatorUI = new CharacterCreatorUI(creatorDialog, (updatedChar) => {
   activeCharacter = updatedChar;
   game.applyCharacterUpdate(activeCharacter);
-  showBanner(`Hero updated: ${updatedChar.name} (${SPECIES_BY_ID[updatedChar.speciesId].name} ${CLASS_BY_ID[updatedChar.classId].name})`);
+  if (reopenStartAfterCreator) {
+    reopenStartAfterCreator = false;
+    openStartScreen();
+  } else {
+    showBanner(`Hero updated: ${updatedChar.name} (${SPECIES_BY_ID[updatedChar.speciesId].name} ${CLASS_BY_ID[updatedChar.classId].name})`);
+  }
 });
 
 const builderDialog = document.getElementById('builder-dialog');
 const builderUI = new LevelBuilderUI(builderDialog, (customLevel) => {
+  activeMode = 'custom_campaign';
+  campaignQueue = [customLevel];
+  campaignIndex = 0;
   activeLevel = customLevel;
-  game.load(activeCharacter, activeLevel);
-  showBanner(`Loaded Dungeon: ${customLevel.name}`);
+  game.load(activeCharacter, activeLevel, { startPaused: true });
+  openStartScreen();
 });
 
 const questDialog = document.getElementById('quest-dialog');
@@ -264,7 +583,25 @@ function openQuestJournal() {
   game.paused = true;
   const s = game.story;
   const body = document.getElementById('quest-content');
-  if (game.level.isTempleCampaign) {
+  if (game.level.isConcertCampaign) {
+    document.getElementById('quest-title').textContent = 'Concert Hall Invasion: Story Paths';
+    body.innerHTML = `
+      <p><strong>Current Path:</strong> <code>${s.concertPath.toUpperCase()}</code> · Bard: <b>${s.bardDefeated ? 'Subdued' : 'On Stage'}</b> · Commander Xylar: <b>${s.commanderDefeated ? 'Defeated' : 'Active'}</b> · Zor-Krak: <b>${s.drummerDefeated ? 'Defeated' : 'Planet Xylos'}</b></p>
+      <div class="branch-card ${s.concertPath === 'alien_ally' ? 'active' : ''}">
+        <strong>Path 1 — Join the Aliens (Capture the Bard)</strong>
+        <p>Ally with Commander Xylar to capture Lyricus, Master Bard. Watch out—his magical lute summons Harmonic Phantom minions to defend him! Reward: <b>Xylosian Laser Volley</b>.</p>
+      </div>
+      <div class="branch-card ${s.concertPath === 'bodyguard' ? 'active' : ''}">
+        <strong>Path 2 — Bard's Personal Bodyguard</strong>
+        <p>Join forces with Lyricus to protect him from slavery. Repel Commander Xylar and Alien Soldiers armed with laser pistols and jet packs! Reward: <b>Chord of the Virtuoso</b>.</p>
+      </div>
+      <div class="branch-card ${s.concertPath === 'substitute_bard' ? 'active' : ''}">
+        <strong>Path 3 — Take the Bard's Place (Planet Xylos Drum Duel)</strong>
+        <p>Volunteer to replace Lyricus. The aliens beam you to Planet Xylos where you must defeat Zor-Krak—the Queen's alien drummer who unleashes shockwaves and earthquakes—to claim the Royal Bard throne! Reward: <b>Xylosian War Drums</b>.</p>
+      </div>
+    `;
+  } else if (game.level.isTempleCampaign) {
+    document.getElementById('quest-title').textContent = 'Chronicles of the Fourfold Temple';
     body.innerHTML = `
       <p><strong>Temple Status:</strong> Theme = <code>${game.level.templeTheme.toUpperCase()}</code> · Elementals Defeated: <b>${s.defeatedElements.length}/4</b> · Elementals Allied: <b>${s.alliedElements.length}/4</b> · High Priest: <b>${s.priestDefeated ? 'Defeated' : 'Alive'}</b></p>
       <div class="branch-card ${s.branch === 'light' || s.branch === 'undecided' ? 'active' : ''}">
@@ -315,13 +652,25 @@ document.getElementById('replay-share').addEventListener('click', async () => {
 });
 
 // Pause/resume game when modals open/close
-for (const dlg of [creatorDialog, builderDialog]) {
-  dlg.addEventListener('close', () => {
+creatorDialog.addEventListener('close', () => {
+  if (reopenStartAfterCreator) {
+    reopenStartAfterCreator = false;
+    openStartScreen();
+  } else if (!startDialog.open && !victoryDialog.open && !gameOverDialog.open) {
     game.paused = false;
-  });
-}
+  }
+});
+builderDialog.addEventListener('close', () => {
+  if (!startDialog.open && !victoryDialog.open && !gameOverDialog.open) {
+    game.paused = false;
+  }
+});
 
 // Topbar buttons
+document.getElementById('btn-start-screen').addEventListener('click', () => {
+  openStartScreen();
+});
+
 document.getElementById('btn-creator').addEventListener('click', () => {
   audio.ensureContext();
   game.paused = true;
@@ -347,11 +696,24 @@ document.getElementById('btn-mute').addEventListener('click', (e) => {
   e.target.textContent = audio.muted ? '🔇' : '🔊';
 });
 
+document.getElementById('campaign-switcher').addEventListener('change', (e) => {
+  activeMode = e.target.value;
+  campaignQueue = buildCampaignQueueForMode(activeMode);
+  campaignIndex = 0;
+  activeLevel = campaignQueue[0];
+  game.load(activeCharacter, activeLevel, { startPaused: true });
+  openStartScreen();
+});
+
 document.getElementById('btn-reset-temple').addEventListener('click', () => {
-  activeLevel = createTempleOfFourElementsLevel();
-  game.load(activeCharacter, activeLevel);
+  activeLevel = game.level.isConcertCampaign
+    ? createConcertHallInvasionLevel()
+    : game.level.isEndlessDungeon
+      ? generateProceduralFloor(1)
+      : createTempleOfFourElementsLevel();
+  game.load(activeCharacter, activeLevel, { startPaused: true });
   questDialog.close();
-  showBanner('Temple of the Four Elements reset!');
+  openStartScreen();
 });
 
 window.addEventListener('gamepad-status', (e) => {
@@ -366,7 +728,7 @@ window.addEventListener('gamepad-status', (e) => {
   }
 });
 
-// Boot the game!
-game.load(activeCharacter, activeLevel);
+// Boot the game paused behind the Start Screen so the player can read the story & customize/import their Hero first!
+game.load(activeCharacter, activeLevel, { startPaused: true });
 game.start();
-showBanner('Welcome to the Temple of the Four Elements! Talk to High Priest Aldric [A / F] or customize your Hero!');
+openStartScreen();
