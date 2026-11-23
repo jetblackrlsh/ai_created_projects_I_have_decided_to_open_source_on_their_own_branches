@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="dark">
+  <title>LUCID DUEL: SPELLGAUNTLET — Storyverse Roguelike Card Game</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <div class="void-bg" aria-hidden="true"></div>
+
+  <header class="top-bar">
+    <div class="brand-cluster">
+      <div class="brand-emblem" aria-hidden="true">🌌</div>
+      <div>
+        <h1 class="brand-title">LUCID DUEL</h1>
+        <p class="brand-sub">SPELLGAUNTLET • STORYVERSE</p>
+      </div>
+    </div>
+
+    <div class="player-status-cluster">
+      <div class="rank-pill" id="rank-display">Lv.1 Novice Dreamer</div>
+      <div class="currency-pill shards" title="Lucid Shards (Gacha & Upgrades)">
+        <span aria-hidden="true">💎</span>
+        <strong id="shards-display">1,000</strong>
+      </div>
+      <div class="currency-pill dust" title="Arcane Dust (Craft & Mastery)">
+        <span aria-hidden="true">✨</span>
+        <strong id="dust-display">150</strong>
+      </div>
+      <button type="button" class="icon-btn" id="btn-daily-rewards" aria-label="Daily Rewards">
+        <span aria-hidden="true">🎁</span>
+        <span class="btn-label">Daily</span>
+        <span class="notif-dot" id="dot-rewards" hidden></span>
+      </button>
+      <button type="button" class="icon-btn" id="btn-daily-missions" aria-label="Daily Missions">
+        <span aria-hidden="true">📋</span>
+        <span class="btn-label">Missions</span>
+        <span class="notif-dot" id="dot-missions" hidden></span>
+      </button>
+      <button type="button" class="icon-btn" id="btn-mute" aria-label="Toggle Sound">🔊</button>
+    </div>
+  </header>
+
+  <nav class="main-nav" aria-label="Primary sections">
+    <button type="button" class="nav-tab active" data-tab="run">⚔️ Roguelike Run</button>
+    <button type="button" class="nav-tab" data-tab="deck">🃏 Deckbuilder</button>
+    <button type="button" class="nav-tab" data-tab="gacha">🌌 Void Gacha</button>
+    <button type="button" class="nav-tab" data-tab="lab">🦾 Gauntlet Lab</button>
+    <button type="button" class="nav-tab" data-tab="codex">📖 Fusion Codex</button>
+  </nav>
+
+  <main id="app-main" class="app-main">
+    <!-- Dynamic view rendered by src/main.js -->
+  </main>
+
+  <!-- Native Modal Dialogs (closedby="any" + explicit Close button for accessibility) -->
+  <dialog id="modal-rewards" class="holo-dialog" closedby="any" aria-labelledby="rewards-title">
+    <div class="dialog-header">
+      <h2 id="rewards-title">🎁 Daily Lucid Login Rewards</h2>
+      <form method="dialog"><button type="submit" class="close-btn" aria-label="Close">✕</button></form>
+    </div>
+    <div id="rewards-body" class="dialog-body"></div>
+  </dialog>
+
+  <dialog id="modal-missions" class="holo-dialog" closedby="any" aria-labelledby="missions-title">
+    <div class="dialog-header">
+      <h2 id="missions-title">📋 Daily Dream Missions</h2>
+      <form method="dialog"><button type="submit" class="close-btn" aria-label="Close">✕</button></form>
+    </div>
+    <div id="missions-body" class="dialog-body"></div>
+  </dialog>
+
+  <dialog id="modal-gacha" class="holo-dialog wide" closedby="any" aria-labelledby="gacha-modal-title">
+    <div class="dialog-header">
+      <h2 id="gacha-modal-title">🌌 Holographic Pack Reveal</h2>
+      <form method="dialog"><button type="submit" class="close-btn" aria-label="Close">✕</button></form>
+    </div>
+    <div id="gacha-modal-body" class="dialog-body"></div>
+  </dialog>
+
+  <dialog id="modal-overlay" class="holo-dialog wide" aria-labelledby="overlay-title">
+    <div class="dialog-header">
+      <h2 id="overlay-title">Event</h2>
+      <button type="button" class="close-btn" id="overlay-close-btn" aria-label="Close">✕</button>
+    </div>
+    <div id="overlay-body" class="dialog-body"></div>
+  </dialog>
+
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <script type="module" src="./src/main.js"></script>
+</body>
+</html>

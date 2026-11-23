@@ -1,0 +1,123 @@
+// LUCID DUEL: SPELLGAUNTLET — Spell Fusions & Spirit Possession Divinities
+
+export const POSSESSION_FORMS = {
+  water_nymph: {
+    id: 'water_nymph',
+    name: 'Water Nymph',
+    icon: '🧜‍♀️',
+    affinity: 'water',
+    weakness: 'lightning',
+    bonusCard: 'hydro',
+    color: '#06b6d4',
+    desc: 'Divine Water Affinity (+40% Water dmg & overflows Aegis shields). Vulnerable to Lightning (1.6×)!',
+  },
+  flame_ifrit: {
+    id: 'flame_ifrit',
+    name: 'Flame Ifrit',
+    icon: '👹',
+    affinity: 'fire',
+    weakness: 'water',
+    bonusCard: 'pyro',
+    color: '#f97316',
+    desc: 'Divine Fire Affinity (+40% Fire dmg & overflows Aegis shields). Vulnerable to Water (1.6×)!',
+  },
+  storm_archon: {
+    id: 'storm_archon',
+    name: 'Storm Archon',
+    icon: '⚡',
+    affinity: 'lightning',
+    weakness: 'earth',
+    bonusCard: 'kurenos',
+    color: '#facc15',
+    desc: 'Divine Lightning Affinity (+40% Lightning dmg & overflows Aegis shields). Vulnerable to Earth (1.6×)!',
+  },
+  void_wraith: {
+    id: 'void_wraith',
+    name: 'Void Wraith',
+    icon: '👻',
+    affinity: 'shadow',
+    weakness: 'light',
+    bonusCard: 'umbra',
+    color: '#a855f7',
+    desc: 'Divine Shadow Affinity (+40% Shadow dmg & overflows Aegis shields). Vulnerable to Light (1.6×)!',
+  },
+};
+
+export const POSSESSION_LIST = Object.values(POSSESSION_FORMS);
+
+export const FUSIONS = {
+  pocket_dimension: {
+    id: 'pocket_dimension',
+    name: 'Pocket Dimension',
+    icon: '🌀',
+    recipe: 'Porta + Porta',
+    color: '#a855f7',
+    duration: 3,
+    desc: 'Portals fused! Porta is SEALED for both duelists. Contested d20 roll decides Domain Control (+40% ATK). The outsider can cast Pyro inside to create a Hell Dimension!',
+  },
+  hell_dimension: {
+    id: 'hell_dimension',
+    name: 'Hell Dimension',
+    icon: '🔥',
+    recipe: 'Pyro + Pocket Dimension',
+    color: '#ef4444',
+    duration: 3,
+    desc: 'Flames engulf the entire Pocket Dimension! The trapped duelist takes 900 LP burn damage every turn with no escape until extinguished by Water/Ice!',
+  },
+  steam_flood: {
+    id: 'steam_flood',
+    name: 'Steam Flood',
+    icon: '🌊',
+    recipe: 'Hydro/Aqua + Hell Dimension',
+    color: '#06b6d4',
+    duration: 2,
+    desc: 'The Hell Dimension is extinguished in a massive steam explosion! Both duelists become Soaking Wet (massive Lightning conductivity!).',
+  },
+  divine_conduction: {
+    id: 'divine_conduction',
+    name: 'Divine Conduction',
+    icon: '⚡',
+    recipe: 'Kurenos/Fulmen + Soaking Wet',
+    color: '#facc15',
+    duration: 0,
+    desc: 'Lightning rides the water stream straight through! Multiplies damage by 1.75× (up to 2.5× if target is Lightning-Weak & Unshielded)!',
+  },
+  inferno_vortex: {
+    id: 'inferno_vortex',
+    name: 'Inferno Vortex',
+    icon: '🌪️',
+    recipe: 'Pyro + Ventus',
+    color: '#f97316',
+    duration: 2,
+    desc: 'Wind fans the flames into a blazing vortex! Both duelists take 500 Fire dmg per turn, and Fire spells gain +30% power.',
+  },
+  glacial_prison: {
+    id: 'glacial_prison',
+    name: 'Glacial Prison',
+    icon: '❄️',
+    recipe: 'Hydro/Aqua + Cryo',
+    color: '#38bdf8',
+    duration: 2,
+    desc: 'Water flash-freezes across the arena! Both duelists must roll d20 > 10 each turn or suffer Frozen (-40% ATK).',
+  },
+  cosmic_eclipse: {
+    id: 'cosmic_eclipse',
+    name: 'Cosmic Eclipse',
+    icon: '🌑',
+    recipe: 'Umbra + Lux',
+    color: '#818cf8',
+    duration: 3,
+    desc: 'Light and Shadow collide! Spirit & Lucid spells deal +40% damage and healing is halved.',
+  },
+  singularity_rift: {
+    id: 'singularity_rift',
+    name: 'Singularity Rift',
+    icon: '🕳️',
+    recipe: 'Gravitas + Porta',
+    color: '#c084fc',
+    duration: 0,
+    desc: 'A collapsing gravity portal shatters ALL active shields and deals 750 Space dmg to both duelists!',
+  },
+};
+
+export const FUSION_LIST = Object.values(FUSIONS);
